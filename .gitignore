@@ -1,0 +1,15 @@
+*.iml
+.gradle
+/local.properties
+/.idea/
+.DS_Store
+/build
+/captures
+.externalNativeBuild
+/app/build/
+/app/src/androidTest/
+/app/src/test/
+/gradle/
+/app/src/desktop.ini
+app/desktop.ini
+app/libs/
