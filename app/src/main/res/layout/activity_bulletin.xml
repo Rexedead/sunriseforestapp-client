@@ -19,7 +19,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
 
-    <include layout="@layout/recycler_main"/>
+    <include layout="@layout/recycler_bulletin"/>
 
     <FrameLayout
         android:id="@+id/frame_container"
