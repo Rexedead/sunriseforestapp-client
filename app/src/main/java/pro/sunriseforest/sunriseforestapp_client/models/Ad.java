@@ -29,9 +29,19 @@ public class Ad {
         mIsBooked = booked;
     }
 
+    public Ad copy(){
+        return new Ad(this.mId, this.mTextAd, this.mIsBooked);
+    }
+
     public Ad(int id, String textAd) {
         mId = id;
         mTextAd = textAd;
         mIsBooked = false;
     }
+    private Ad(int id, String textAd, boolean isBooked) {
+        mId = id;
+        mTextAd = textAd;
+        mIsBooked = isBooked;
+    }
+
 }
