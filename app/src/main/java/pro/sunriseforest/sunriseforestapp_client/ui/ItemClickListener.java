@@ -1,4 +1,4 @@
-package pro.sunriseforest.sunriseforestapp_client;
+package pro.sunriseforest.sunriseforestapp_client.ui;
 
 import android.view.View;
 

@@ -6,4 +6,7 @@
     <string name="enter_login_hint">Введите логин</string>
     <string name="enter_password_hint">Введите пароль</string>
     <string name="log_in">Готово</string>
+    <string name="hello_blank_fragment">hello</string>
+    <string name="enter_login_editText" type="id">enter_login</string>
+    <string name="enter_password_editText" type="id">enter_password</string>
 </resources>

@@ -1,4 +1,7 @@
-package pro.sunriseforest.sunriseforestapp_client;
+package pro.sunriseforest.sunriseforestapp_client.ui;
+
+import pro.sunriseforest.sunriseforestapp_client.R;
+import pro.sunriseforest.sunriseforestapp_client.models.Ad;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -12,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.List;
+
 
 public class RecycleTaskAdapter extends RecyclerView.Adapter<RecycleTaskAdapter.TaskViewHolder> {
 
@@ -37,7 +41,7 @@ public class RecycleTaskAdapter extends RecyclerView.Adapter<RecycleTaskAdapter.
         Ad miniTask = mTaskList.get(position);
         holder.mId.setText(String.valueOf(miniTask.getId()));
         holder.mTextAd.setText(miniTask.getTextAd());
-        holder.mIsBooked.setText("yes");
+        holder.mIsBooked.setText(String.valueOf(miniTask.isBooked()));
 
         holder.setItemClickListener(new ItemClickListener() {
             @Override
@@ -69,7 +73,7 @@ public class RecycleTaskAdapter extends RecyclerView.Adapter<RecycleTaskAdapter.
             itemView.setOnClickListener(this);
         }
 
-        public void setItemClickListener(ItemClickListener itemClickListener){
+        void setItemClickListener(ItemClickListener itemClickListener){
             this.mItemClickListener = itemClickListener;
         }
 

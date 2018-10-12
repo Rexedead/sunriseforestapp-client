@@ -1,5 +1,6 @@
 package pro.sunriseforest.sunriseforestapp_client.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -18,6 +19,8 @@ public class RegistrationActivity extends AppCompatActivity {
         public void onClick(View view) {
             showToast("добро пожаловать в приложулю");
             // startActivity
+            Intent intent = new Intent(RegistrationActivity.this, BulletinBoardActivity.class);
+            startActivity(intent);
         }
     };
 

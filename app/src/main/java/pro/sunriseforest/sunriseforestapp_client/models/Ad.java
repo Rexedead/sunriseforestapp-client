@@ -38,7 +38,7 @@ public class Ad {
         mTextAd = textAd;
         mIsBooked = false;
     }
-    private Ad(int id, String textAd, boolean isBooked) {
+    public Ad(int id, String textAd, boolean isBooked) {
         mId = id;
         mTextAd = textAd;
         mIsBooked = isBooked;
