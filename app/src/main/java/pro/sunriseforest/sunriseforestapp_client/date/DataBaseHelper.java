@@ -6,7 +6,6 @@ import android.support.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
 import pro.sunriseforest.sunriseforestapp_client.models.Ad;
 
 public class DataBaseHelper {
