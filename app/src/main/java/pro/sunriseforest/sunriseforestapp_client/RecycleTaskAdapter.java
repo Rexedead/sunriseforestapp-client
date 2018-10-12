@@ -2,6 +2,8 @@ package pro.sunriseforest.sunriseforestapp_client;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -42,7 +44,9 @@ public class RecycleTaskAdapter extends RecyclerView.Adapter<RecycleTaskAdapter.
             public void onClick(View view, int position) {
                 Toast.makeText(context, "yes "+position, Toast.LENGTH_SHORT).show();
                 System.out.println(position);
-
+                AppCompatActivity activity = (AppCompatActivity) view.getContext();
+                Fragment fragment = new TaskFragment();
+                activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_container, fragment).addToBackStack(null).commit();
 
             }
         });

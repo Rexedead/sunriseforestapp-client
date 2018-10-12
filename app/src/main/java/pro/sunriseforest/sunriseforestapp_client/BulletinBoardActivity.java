@@ -5,9 +5,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -17,18 +14,17 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements TaskFragment.OnFragmentInteractionListener {
+public class BulletinBoardActivity extends AppCompatActivity implements TaskFragment.OnFragmentInteractionListener {
 
     private TextView mTextMessage;
     private List<Ad> mTaskList = new ArrayList<>();
     private RecycleTaskAdapter mRecycleTaskAdapter = new RecycleTaskAdapter(mTaskList, this);
     public Context context;
-    Fragment fragment;
+
 
     public Context getContext() {
         return context;
     }
-
 
 
     private final BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -42,11 +38,9 @@ public class MainActivity extends AppCompatActivity implements TaskFragment.OnFr
                     mTextMessage.setText(R.string.title_home);
                     prepareTaskData();
                     InitRecycleView();
-                     return true;
+                    return true;
                 case R.id.navigation_dashboard:
                     mTextMessage.setText(R.string.title_dashboard);
-                    fragment = new TaskFragment();
-                    loadFragment(fragment);
                     return true;
                 case R.id.navigation_notifications:
                     mTextMessage.setText(R.string.title_notifications);
@@ -64,21 +58,11 @@ public class MainActivity extends AppCompatActivity implements TaskFragment.OnFr
         mTextMessage = findViewById(R.id.message);
         BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-
-
-    }
-
-
-    private void loadFragment(Fragment fragment) {
-
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.task_frame_container, fragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
+        InitRecycleView();
 
     }
 
-    private void InitRecycleView(){
+    private void InitRecycleView() {
         RecyclerView mRecyclerView = findViewById(R.id.recycler_view);
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
