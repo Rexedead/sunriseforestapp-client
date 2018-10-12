@@ -46,12 +46,11 @@ public class RecycleTaskAdapter extends RecyclerView.Adapter<RecycleTaskAdapter.
         holder.setItemClickListener(new ItemClickListener() {
             @Override
             public void onClick(View view, int position) {
-                Toast.makeText(context, "yes "+position, Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "yes " + position, Toast.LENGTH_SHORT).show();
                 System.out.println(position);
                 AppCompatActivity activity = (AppCompatActivity) view.getContext();
                 Fragment fragment = new TaskFragment();
-                activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_container, fragment).addToBackStack(null).commit();
-
+                activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_bulletin, fragment).addToBackStack(null).commit();
             }
         });
     }
@@ -73,7 +72,7 @@ public class RecycleTaskAdapter extends RecyclerView.Adapter<RecycleTaskAdapter.
             itemView.setOnClickListener(this);
         }
 
-        void setItemClickListener(ItemClickListener itemClickListener){
+        void setItemClickListener(ItemClickListener itemClickListener) {
             this.mItemClickListener = itemClickListener;
         }
 

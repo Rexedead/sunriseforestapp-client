@@ -5,7 +5,7 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".BulletinBoardActivity">
+    tools:context=".ui.BulletinBoardActivity">
 
     <TextView
         android:id="@+id/message"
@@ -22,10 +22,11 @@
     <include layout="@layout/recycler_bulletin"/>
 
     <FrameLayout
-        android:id="@+id/frame_container"
+        android:id="@+id/frame_bulletin"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        />
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/navigation"
