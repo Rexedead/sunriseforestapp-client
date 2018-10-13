@@ -34,12 +34,12 @@ public class AppPresenter {
     public void initApp(BulletinBoardActivity activity) {
         mBulletinBoardActivityWeakReference = new WeakReference<>(activity);
 
-        List<Task> t = mServerHelper.getTasks();
-        if(t == null || t.isEmpty()){
+        List<Task> tasks = mServerHelper.getTasks();
+        if(tasks == null || tasks.isEmpty()){
             Log.e("AppPresenter","СерверХелпер отдал null или пустой лист тасков");
         }
-        mDataBaseHelper.cacheTask((Task) t);
-        mBulletinBoardActivityWeakReference.get().showListTask(t);
+        mDataBaseHelper.cacheTasks(tasks);
+        mBulletinBoardActivityWeakReference.get().showListTask(tasks);
     }
 
 
