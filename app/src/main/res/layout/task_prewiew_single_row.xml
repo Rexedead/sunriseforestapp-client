@@ -10,7 +10,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin">
 
     <TextView
-        android:id="@+id/task_id"
+        android:id="@+id/task_id_recycle_textView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -18,15 +18,15 @@
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/task_data"
+        android:id="@+id/task_data_recycle_textView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/task_id" />
+        android:layout_below="@id/task_id_recycle_textView" />
 
     <TextView
-        android:id="@+id/task_is_booked"
+        android:id="@+id/task_is_booked_recycle_textView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/task_data"/>
+        android:layout_below="@id/task_data_recycle_textView"/>
 
 </RelativeLayout>

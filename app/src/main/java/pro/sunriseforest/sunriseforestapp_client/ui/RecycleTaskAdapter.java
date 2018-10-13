@@ -3,16 +3,12 @@ package pro.sunriseforest.sunriseforestapp_client.ui;
 import pro.sunriseforest.sunriseforestapp_client.R;
 import pro.sunriseforest.sunriseforestapp_client.models.Ad;
 
-import android.content.Context;
 import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.List;
 
@@ -20,11 +16,9 @@ import java.util.List;
 public class RecycleTaskAdapter extends RecyclerView.Adapter<RecycleTaskAdapter.TaskViewHolder> {
 
     private List<Ad> mTaskList;
-    private Context context;
 
-    RecycleTaskAdapter(List<Ad> taskList, Context context) {
+    RecycleTaskAdapter(List<Ad> taskList) {
         this.mTaskList = taskList;
-        this.context = context;
     }
 
     @NonNull
@@ -46,11 +40,7 @@ public class RecycleTaskAdapter extends RecyclerView.Adapter<RecycleTaskAdapter.
         holder.setItemClickListener(new ItemClickListener() {
             @Override
             public void onClick(View view, int position) {
-                Toast.makeText(context, "yes " + position, Toast.LENGTH_SHORT).show();
-                System.out.println(position);
-                AppCompatActivity activity = (AppCompatActivity) view.getContext();
-                Fragment fragment = new TaskFragment();
-                activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_bulletin, fragment).addToBackStack(null).commit();
+                System.out.println("ys"+position);
             }
         });
     }
@@ -66,9 +56,9 @@ public class RecycleTaskAdapter extends RecyclerView.Adapter<RecycleTaskAdapter.
 
         TaskViewHolder(View view) {
             super(view);
-            mId = view.findViewById(R.id.task_id);
-            mTextAd = view.findViewById(R.id.task_data);
-            mIsBooked = view.findViewById(R.id.task_is_booked);
+            mId = view.findViewById(R.id.task_id_recycle_textView);
+            mTextAd = view.findViewById(R.id.task_data_recycle_textView);
+            mIsBooked = view.findViewById(R.id.task_is_booked_recycle_textView);
             itemView.setOnClickListener(this);
         }
 
