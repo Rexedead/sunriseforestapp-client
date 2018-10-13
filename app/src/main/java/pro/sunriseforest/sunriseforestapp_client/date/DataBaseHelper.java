@@ -13,7 +13,7 @@ public class DataBaseHelper {
 
     private static  DataBaseHelper sInstance;
 
-    private static DataBaseHelper getInstance(){
+    public static DataBaseHelper getInstance(){
         if(sInstance == null){
             sInstance = new DataBaseHelper();
         }

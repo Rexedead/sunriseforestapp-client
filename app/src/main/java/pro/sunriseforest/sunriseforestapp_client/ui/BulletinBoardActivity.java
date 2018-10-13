@@ -1,6 +1,8 @@
 package pro.sunriseforest.sunriseforestapp_client.ui;
 
 import pro.sunriseforest.sunriseforestapp_client.R;
+import pro.sunriseforest.sunriseforestapp_client.models.Ad;
+import pro.sunriseforest.sunriseforestapp_client.presenter.AppPresenter;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -10,9 +12,12 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
+import com.squareup.moshi.JsonAdapter;
+import com.squareup.moshi.Moshi;
+import com.squareup.moshi.Types;
 
-
-
+import java.lang.reflect.Type;
+import java.util.List;
 
 
 public class BulletinBoardActivity extends AppCompatActivity{
@@ -23,11 +28,9 @@ public class BulletinBoardActivity extends AppCompatActivity{
 
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            Fragment fragment;
             switch (item.getItemId()) {
                 case R.id.navigation_home:
-                    fragment = new BulletinBoardFragment();
-                    loadFragment(fragment);
+
                      return true;
                 case R.id.navigation_dashboard:
                     return true;
@@ -38,6 +41,8 @@ public class BulletinBoardActivity extends AppCompatActivity{
         }
     };
 
+    private AppPresenter mPresenter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,10 +51,21 @@ public class BulletinBoardActivity extends AppCompatActivity{
         BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
-        loadFragment(new BulletinBoardFragment());
+        mPresenter = AppPresenter.getInstance();
+        mPresenter.initApp(this);
 
     }
 
+
+
+    public void showListTask(List<Ad> ads){
+        Moshi moshi = new Moshi.Builder().build();
+        Type type = Types.newParameterizedType(List.class, Ad.class);
+        JsonAdapter<List> jsonAdapter = moshi.adapter(type);
+        String jsonListAd = jsonAdapter.toJson(ads);
+
+        loadFragment(BulletinBoardFragment.newInstance(jsonListAd));
+    }
 
 
 

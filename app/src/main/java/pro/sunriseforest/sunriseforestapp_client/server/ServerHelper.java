@@ -13,7 +13,7 @@ public class ServerHelper {
 
     private static ServerHelper sInstance;
 
-    private static ServerHelper getInstance(){
+    public static ServerHelper getInstance(){
         if(sInstance == null){
             sInstance = new ServerHelper();
         }
