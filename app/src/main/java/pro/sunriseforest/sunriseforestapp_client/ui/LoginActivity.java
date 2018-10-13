@@ -10,19 +10,18 @@ import android.widget.Toast;
 
 import pro.sunriseforest.sunriseforestapp_client.R;
 
-public class RegistrationActivity extends AppCompatActivity {
-
+public class LoginActivity extends AppCompatActivity {
     private Button mLogInButton;
 
     private View.OnClickListener mOnClickListenerLogInButton = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            showToast("добро пожаловать в приложулю");
-            // startActivity
-            Intent intent = new Intent(RegistrationActivity.this, TaskDeskActivity.class);
+
+            Intent intent = new Intent(LoginActivity.this, TaskDeskActivity.class);
             startActivity(intent);
         }
     };
+
 
 
     @Override
@@ -36,4 +35,6 @@ public class RegistrationActivity extends AppCompatActivity {
     private void showToast(String msg){
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
     }
+
+
 }

@@ -23,7 +23,7 @@ import pro.sunriseforest.sunriseforestapp_client.R;
 import pro.sunriseforest.sunriseforestapp_client.models.Task;
 
 
-public class BulletinBoardFragment extends Fragment implements ItemClickListener {
+public class TaskDeskFragment extends Fragment implements ItemClickListener {
     private List<Task> mTaskList = new ArrayList<>();
 
 
@@ -34,14 +34,14 @@ public class BulletinBoardFragment extends Fragment implements ItemClickListener
     private OnFragmentInteractionListener mListener;
 
 
-    public BulletinBoardFragment() {
+    public TaskDeskFragment() {
         // Required empty public constructor
     }
 
-    public static BulletinBoardFragment newInstance(String jsonListTask) {
+    public static TaskDeskFragment newInstance(String jsonListTask) {
         Bundle args = new Bundle();
         args.putString(ARG_JSON_TASKS, jsonListTask);
-        BulletinBoardFragment fragment = new BulletinBoardFragment();
+        TaskDeskFragment fragment = new TaskDeskFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -60,7 +60,7 @@ public class BulletinBoardFragment extends Fragment implements ItemClickListener
             try {
                 mTaskList = jsonAdapter.fromJson(jsonTasks);
             } catch (IOException e) {
-                Log.e("BulletinBoardFragment", "не удалось перевести json в лист тасков в onCreate()");
+                Log.e("TaskDeskFragment", "не удалось перевести json в лист тасков в onCreate()");
             }
         }
     }
@@ -69,9 +69,9 @@ public class BulletinBoardFragment extends Fragment implements ItemClickListener
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.bulletin_board_fragment, container, false);
+        View view = inflater.inflate(R.layout.taskdesk_fragment, container, false);
 
-        RecyclerView mRecyclerView = view.findViewById(R.id.recycler_view_bulletin_fragment);
+        RecyclerView mRecyclerView = view.findViewById(R.id.taskdesk_recyclerView);
         RecycleTaskAdapter mRecycleTaskAdapter = new RecycleTaskAdapter(mTaskList);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);

@@ -22,7 +22,7 @@ import java.util.List;
 
 
 
-public class BulletinBoardActivity extends AppCompatActivity{
+public class TaskDeskActivity extends AppCompatActivity{
 
 
     private final BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -50,13 +50,13 @@ public class BulletinBoardActivity extends AppCompatActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.bulletin_activity);
+        setContentView(R.layout.taskdesk_activity);
 
         BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
         mPresenter = AppPresenter.getInstance();
-        mPresenter.initApp(this);
+        mPresenter.initTaskDeskActivity(this);
 
     }
 
@@ -68,7 +68,7 @@ public class BulletinBoardActivity extends AppCompatActivity{
         JsonAdapter<List> jsonAdapter = moshi.adapter(type);
         String jsonListTask = jsonAdapter.toJson(tasks);
 
-        loadFragment(BulletinBoardFragment.newInstance(jsonListTask));
+        loadFragment(TaskDeskFragment.newInstance(jsonListTask));
     }
 
 

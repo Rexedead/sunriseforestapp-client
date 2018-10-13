@@ -10,9 +10,6 @@ import java.util.concurrent.TimeUnit;
 
 import pro.sunriseforest.sunriseforestapp_client.models.Task;
 
-import pro.sunriseforest.sunriseforestapp_client.models.Task;
-import pro.sunriseforest.sunriseforestapp_client.models.WaitTemp;
-
 public class ServerHelper {
 
     private static ServerHelper sInstance;
@@ -42,7 +39,7 @@ public class ServerHelper {
     }
 
     public List<Task> getTasks() {
-//        _wait(4);
+        _wait(3);
         List<Task> copyTasks = new ArrayList<>();
         for(Task task : mTasks){
             copyTasks.add(task.copy());

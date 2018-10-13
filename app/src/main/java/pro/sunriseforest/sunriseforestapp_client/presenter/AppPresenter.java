@@ -8,7 +8,7 @@ import java.util.List;
 import pro.sunriseforest.sunriseforestapp_client.date.DataBaseHelper;
 import pro.sunriseforest.sunriseforestapp_client.models.Task;
 import pro.sunriseforest.sunriseforestapp_client.server.ServerHelper;
-import pro.sunriseforest.sunriseforestapp_client.ui.BulletinBoardActivity;
+import pro.sunriseforest.sunriseforestapp_client.ui.TaskDeskActivity;
 
 public class AppPresenter {
 
@@ -16,7 +16,7 @@ public class AppPresenter {
     private DataBaseHelper mDataBaseHelper;
     private ServerHelper mServerHelper;
 
-    private WeakReference<BulletinBoardActivity> mBulletinBoardActivityWeakReference;
+    private WeakReference<TaskDeskActivity> mTaskDeskActivityWeakReference;
 
     public static AppPresenter getInstance(){
         if(sInstance == null){
@@ -31,15 +31,15 @@ public class AppPresenter {
 
     }
 
-    public void initApp(BulletinBoardActivity activity) {
-        mBulletinBoardActivityWeakReference = new WeakReference<>(activity);
+    public void initTaskDeskActivity(TaskDeskActivity activity) {
+        mTaskDeskActivityWeakReference = new WeakReference<>(activity);
 
         List<Task> tasks = mServerHelper.getTasks();
         if(tasks == null || tasks.isEmpty()){
             Log.e("AppPresenter","СерверХелпер отдал null или пустой лист тасков");
         }
         mDataBaseHelper.cacheTasks(tasks);
-        mBulletinBoardActivityWeakReference.get().showListTask(tasks);
+        mTaskDeskActivityWeakReference.get().showListTask(tasks);
     }
 
 
