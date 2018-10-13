@@ -19,7 +19,7 @@ public class RegistrationActivity extends AppCompatActivity {
         public void onClick(View view) {
             showToast("добро пожаловать в приложулю");
             // startActivity
-            Intent intent = new Intent(RegistrationActivity.this, BulletinBoardActivity.class);
+            Intent intent = new Intent(RegistrationActivity.this, TaskDeskActivity.class);
             startActivity(intent);
         }
     };

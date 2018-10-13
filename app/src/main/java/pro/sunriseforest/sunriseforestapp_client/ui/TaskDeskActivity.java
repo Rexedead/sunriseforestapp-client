@@ -56,7 +56,7 @@ public class TaskDeskActivity extends AppCompatActivity{
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
         mPresenter = AppPresenter.getInstance();
-        mPresenter.initTaskDeskActivity(this);
+        mPresenter.initApp(this);
 
     }
 

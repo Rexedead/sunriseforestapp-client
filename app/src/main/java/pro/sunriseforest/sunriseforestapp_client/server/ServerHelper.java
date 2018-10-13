@@ -10,9 +10,6 @@ import java.util.concurrent.TimeUnit;
 
 import pro.sunriseforest.sunriseforestapp_client.models.Task;
 
-import pro.sunriseforest.sunriseforestapp_client.models.Task;
-import pro.sunriseforest.sunriseforestapp_client.models.WaitTemp;
-
 public class ServerHelper {
 
     private static ServerHelper sInstance;
