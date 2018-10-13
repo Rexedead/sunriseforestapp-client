@@ -8,7 +8,7 @@ public class WaitTemp {
 
     public static void delay() {
         try {
-            int a = (int) (Math.random()*1)+1;
+            int a = (int) (Math.random()*1);
             TimeUnit.SECONDS.sleep(a);
         } catch (InterruptedException e) {
             e.printStackTrace();

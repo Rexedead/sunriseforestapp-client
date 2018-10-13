@@ -21,7 +21,6 @@ import java.util.List;
 
 import pro.sunriseforest.sunriseforestapp_client.R;
 import pro.sunriseforest.sunriseforestapp_client.models.Task;
-import pro.sunriseforest.sunriseforestapp_client.models.WaitTemp;
 import pro.sunriseforest.sunriseforestapp_client.server.ServerHelper;
 
 
@@ -55,7 +54,7 @@ public class BulletinBoardFragment extends Fragment implements ItemClickListener
         if (getArguments() != null) {
             String jsonTasks = getArguments().getString(ARG_JSON_TASKS);
             Moshi moshi = new Moshi.Builder().build();
-            Type type = Types.newParameterizedType(List.class, Ad.class);
+            Type type = Types.newParameterizedType(List.class, Task.class);
             JsonAdapter<List> jsonAdapter = moshi.adapter(type);
             try {
                 mTaskList = jsonAdapter.fromJson(jsonTasks);
