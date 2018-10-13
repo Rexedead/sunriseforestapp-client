@@ -58,9 +58,9 @@ public class DataBaseHelper {
        mTasks.add(ts);
     }
 
-    public void cacheTasks(List<Task> tsk){
-        for(Task ts: tsk){
-            cacheTask(ts);
+    public void cacheTasks(List<Task> tasks){
+        for(Task task : tasks){
+            cacheTask(task);
         }
     }
     

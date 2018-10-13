@@ -21,8 +21,6 @@ import java.util.List;
 
 import pro.sunriseforest.sunriseforestapp_client.R;
 import pro.sunriseforest.sunriseforestapp_client.models.Task;
-import pro.sunriseforest.sunriseforestapp_client.models.WaitTemp;
-import pro.sunriseforest.sunriseforestapp_client.server.ServerHelper;
 
 
 public class BulletinBoardFragment extends Fragment implements ItemClickListener {
@@ -32,10 +30,9 @@ public class BulletinBoardFragment extends Fragment implements ItemClickListener
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_JSON_TASKS = "arg_json_tasks";
 
-    private String mParam1;
-    private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+
 
     public BulletinBoardFragment() {
         // Required empty public constructor
@@ -49,13 +46,16 @@ public class BulletinBoardFragment extends Fragment implements ItemClickListener
         return fragment;
     }
 
+
+
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             String jsonTasks = getArguments().getString(ARG_JSON_TASKS);
             Moshi moshi = new Moshi.Builder().build();
-            Type type = Types.newParameterizedType(List.class, Ad.class);
+            Type type = Types.newParameterizedType(List.class, Task.class);
             JsonAdapter<List> jsonAdapter = moshi.adapter(type);
             try {
                 mTaskList = jsonAdapter.fromJson(jsonTasks);
@@ -76,27 +76,12 @@ public class BulletinBoardFragment extends Fragment implements ItemClickListener
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mRecycleTaskAdapter);
-        mRecycleTaskAdapter.notifyDataSetChanged();
-        prepareTaskData();
+
         return view;
     }
 
 
-    private void prepareTaskData() {
 
-        ServerHelper s = new ServerHelper();
-
-        Task miniTask = new Task(s.getTasks().get(0).getId(), s.getTasks().get(0).getTextTask());
-        mTaskList.add(miniTask);
-
-        miniTask = new Task(s.getTasks().get(1).getId(), s.getTasks().get(1).getTextTask());
-        mTaskList.add(miniTask);
-
-        miniTask = new Task(s.getTasks().get(2).getId(), s.getTasks().get(2).getTextTask());
-        mTaskList.add(miniTask);
-
-
-    }
 
 
     public void onButtonPressed(Uri uri) {
@@ -129,6 +114,7 @@ public class BulletinBoardFragment extends Fragment implements ItemClickListener
 
 
     public interface OnFragmentInteractionListener {
+        // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
 

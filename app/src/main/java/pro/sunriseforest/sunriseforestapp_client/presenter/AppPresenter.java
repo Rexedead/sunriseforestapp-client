@@ -6,7 +6,7 @@ import java.lang.ref.WeakReference;
 import java.util.List;
 
 import pro.sunriseforest.sunriseforestapp_client.date.DataBaseHelper;
-import pro.sunriseforest.sunriseforestapp_client.models.Ad;
+import pro.sunriseforest.sunriseforestapp_client.models.Task;
 import pro.sunriseforest.sunriseforestapp_client.server.ServerHelper;
 import pro.sunriseforest.sunriseforestapp_client.ui.BulletinBoardActivity;
 
@@ -34,11 +34,11 @@ public class AppPresenter {
     public void initApp(BulletinBoardActivity activity) {
         mBulletinBoardActivityWeakReference = new WeakReference<>(activity);
 
-        List<Ad> tasks = mServerHelper.getAds();
+        List<Task> tasks = mServerHelper.getTasks();
         if(tasks == null || tasks.isEmpty()){
             Log.e("AppPresenter","СерверХелпер отдал null или пустой лист тасков");
         }
-        mDataBaseHelper.cacheAds(tasks);
+        mDataBaseHelper.cacheTasks(tasks);
         mBulletinBoardActivityWeakReference.get().showListTask(tasks);
     }
 

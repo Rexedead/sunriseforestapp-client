@@ -6,7 +6,9 @@ import android.support.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
+import pro.sunriseforest.sunriseforestapp_client.models.Task;
 
 import pro.sunriseforest.sunriseforestapp_client.models.Task;
 import pro.sunriseforest.sunriseforestapp_client.models.WaitTemp;
@@ -25,7 +27,7 @@ public class ServerHelper {
 
     private List<Task> mTasks;
 
-    public ServerHelper(){
+    private ServerHelper(){
         mTasks = Arrays.asList(
                 new Task(1, "выруби лес плес)))0)"),
                 new Task(2, "го рубить лес"),
@@ -40,39 +42,49 @@ public class ServerHelper {
     }
 
     public List<Task> getTasks() {
+//        _wait(4);
         List<Task> copyTasks = new ArrayList<>();
-        for(Task ts : mTasks){
-            copyTasks.add(ts.copy());
+        for(Task task : mTasks){
+            copyTasks.add(task.copy());
         }
-        WaitTemp.delay();
         return copyTasks;
     }
 
     private @Nullable
     Task _getTaskById(int id){
 
-        for(Task _ts : mTasks){
-            if(_ts.getId() == id) return _ts;
+        for(Task _task : mTasks){
+            if(_task.getId() == id) return _task;
         }
 
         return null;
     }
 
-    public @Nullable Task getTaskById(int id){
-        Task ts = _getTaskById(id);
-        return ts == null ? null : ts.copy();
+    public @Nullable
+    Task getTaskById(int id){
+        Task task = _getTaskById(id);
+        return task == null ? null : task.copy();
     }
 
-    public boolean sendTask(Task ts){
+    public boolean sendTask(Task task){
 
 
         for(int i = 0; i < mTasks.size(); i++){
-            if(mTasks.get(i).getId() == ts.getId()){
-                mTasks.set(i, ts);
+            if(mTasks.get(i).getId() == task.getId()){
+                mTasks.set(i, task);
                 return true;
             }
         }
         return false;
+    }
+
+    private void _wait(int seconds){
+        try {
+            int a = (int) (Math.random()*seconds);
+            TimeUnit.SECONDS.sleep(a);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
 
