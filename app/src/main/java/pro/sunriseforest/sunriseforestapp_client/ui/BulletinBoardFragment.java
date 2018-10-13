@@ -13,11 +13,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import pro.sunriseforest.sunriseforestapp_client.R;
-import pro.sunriseforest.sunriseforestapp_client.models.Ad;
+import pro.sunriseforest.sunriseforestapp_client.models.Task;
+import pro.sunriseforest.sunriseforestapp_client.models.WaitTemp;
+import pro.sunriseforest.sunriseforestapp_client.server.ServerHelper;
 
 
-public class BulletinBoardFragment extends Fragment {
-    private List<Ad> mTaskList = new ArrayList<>();
+public class BulletinBoardFragment extends Fragment implements ItemClickListener {
+    private List<Task> mTaskList = new ArrayList<>();
 
 
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -67,27 +69,29 @@ public class BulletinBoardFragment extends Fragment {
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mRecycleTaskAdapter);
-
+        mRecycleTaskAdapter.notifyDataSetChanged();
         prepareTaskData();
-
         return view;
     }
 
 
     private void prepareTaskData() {
-        Ad miniTask = new Ad(1, "20.01", true);
+
+        ServerHelper s = new ServerHelper();
+
+        Task miniTask = new Task(s.getTasks().get(0).getId(), s.getTasks().get(0).getTextTask());
         mTaskList.add(miniTask);
 
-        miniTask = new Ad(2, "20.01", true);
+        miniTask = new Task(s.getTasks().get(1).getId(), s.getTasks().get(1).getTextTask());
         mTaskList.add(miniTask);
 
-        miniTask = new Ad(3, "20.01", true);
+        miniTask = new Task(s.getTasks().get(2).getId(), s.getTasks().get(2).getTextTask());
         mTaskList.add(miniTask);
+
 
 
 
     }
-
 
 
     public void onButtonPressed(Uri uri) {
@@ -113,9 +117,13 @@ public class BulletinBoardFragment extends Fragment {
         mListener = null;
     }
 
+    @Override
+    public void onClick(View view, int position) {
+
+    }
+
 
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
 

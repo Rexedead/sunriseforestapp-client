@@ -1,8 +1,8 @@
 package pro.sunriseforest.sunriseforestapp_client.models;
 
-public class Ad {
+public class Task {
     private int mId;
-    private String mTextAd;
+    private String mTextTask;
     private boolean mIsBooked;
 
     public int getId() {
@@ -13,12 +13,12 @@ public class Ad {
         mId = id;
     }
 
-    public String getTextAd() {
-        return mTextAd;
+    public String getTextTask() {
+        return mTextTask;
     }
 
-    public void setTextAd(String textAd) {
-        mTextAd = textAd;
+    public void setTextTask(String textTask) {
+        mTextTask = textTask;
     }
 
     public boolean isBooked() {
@@ -29,18 +29,18 @@ public class Ad {
         mIsBooked = booked;
     }
 
-    public Ad copy(){
-        return new Ad(this.mId, this.mTextAd, this.mIsBooked);
+    public Task copy(){
+        return new Task(this.mId, this.mTextTask, this.mIsBooked);
     }
 
-    public Ad(int id, String textAd) {
+    public Task(int id, String textTask) {
         mId = id;
-        mTextAd = textAd;
+        mTextTask = textTask;
         mIsBooked = false;
     }
-    public Ad(int id, String textAd, boolean isBooked) {
+    public Task(int id, String textTask, boolean isBooked) {
         mId = id;
-        mTextAd = textAd;
+        mTextTask = textTask;
         mIsBooked = isBooked;
     }
 

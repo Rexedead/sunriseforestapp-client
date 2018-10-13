@@ -4,9 +4,8 @@ package pro.sunriseforest.sunriseforestapp_client.date;
 import android.support.annotation.Nullable;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import pro.sunriseforest.sunriseforestapp_client.models.Ad;
+import pro.sunriseforest.sunriseforestapp_client.models.Task;
 
 public class DataBaseHelper {
 
@@ -20,47 +19,48 @@ public class DataBaseHelper {
         return sInstance;
     }
 
-    private List<Ad> mAds;
+    private List<Task> mTasks;
     private DataBaseHelper(){
-        mAds = new ArrayList<>();
+        mTasks = new ArrayList<>();
     }
 
-    public List<Ad> getAds(){
+    public List<Task> getTasks(){
 
-        List<Ad> copyAds = new ArrayList<>();
-        for(Ad ad : mAds){
-            copyAds.add(ad.copy());
+        List<Task> copyTasks = new ArrayList<>();
+        for(Task ts : mTasks){
+            copyTasks.add(ts.copy());
         }
-        return copyAds;
+
+        return copyTasks;
     }
 
-    private @Nullable Ad _getAdById(int id){
+    private @Nullable Task _getTaskById(int id){
 
-        for(Ad _ad : mAds){
-            if(_ad.getId() == id) return _ad;
+        for(Task _task : mTasks){
+            if(_task.getId() == id) return _task;
         }
 
         return null;
     }
 
-    public @Nullable Ad getAdById(int id){
-        Ad ad = _getAdById(id);
+    public @Nullable Task getTaskById(int id){
+        Task ad = _getTaskById(id);
         return ad == null ? null : ad.copy();
     }
 
-    public void cacheAd(Ad ad){
-       for(int i = 0; i < mAds.size(); i++){
-           if(mAds.get(i).getId() == ad.getId()){
-               mAds.set(i, ad);
+    public void cacheTask(Task ts){
+       for(int i = 0; i < mTasks.size(); i++){
+           if(mTasks.get(i).getId() == ts.getId()){
+               mTasks.set(i, ts);
                return;
            }
        }
-       mAds.add(ad);
+       mTasks.add(ts);
     }
 
-    public void cacheAds(List<Ad> ads){
-        for(Ad ad: ads){
-            cacheAd(ad);
+    public void cacheTasks(List<Task> tsk){
+        for(Task ts: tsk){
+            cacheTask(ts);
         }
     }
     

@@ -1,7 +1,7 @@
 package pro.sunriseforest.sunriseforestapp_client.ui;
 
 import pro.sunriseforest.sunriseforestapp_client.R;
-import pro.sunriseforest.sunriseforestapp_client.models.Ad;
+import pro.sunriseforest.sunriseforestapp_client.models.Task;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -15,9 +15,9 @@ import java.util.List;
 
 public class RecycleTaskAdapter extends RecyclerView.Adapter<RecycleTaskAdapter.TaskViewHolder> {
 
-    private List<Ad> mTaskList;
+    private List<Task> mTaskList;
 
-    RecycleTaskAdapter(List<Ad> taskList) {
+    RecycleTaskAdapter(List<Task> taskList) {
         this.mTaskList = taskList;
     }
 
@@ -32,15 +32,15 @@ public class RecycleTaskAdapter extends RecyclerView.Adapter<RecycleTaskAdapter.
     @Override
     public void onBindViewHolder(@NonNull TaskViewHolder holder, int position) {
 
-        Ad miniTask = mTaskList.get(position);
+        Task miniTask = mTaskList.get(position);
         holder.mId.setText(String.valueOf(miniTask.getId()));
-        holder.mTextAd.setText(miniTask.getTextAd());
+        holder.mTextAd.setText(miniTask.getTextTask());
         holder.mIsBooked.setText(String.valueOf(miniTask.isBooked()));
 
         holder.setItemClickListener(new ItemClickListener() {
             @Override
             public void onClick(View view, int position) {
-                System.out.println("ys"+position);
+
             }
         });
     }

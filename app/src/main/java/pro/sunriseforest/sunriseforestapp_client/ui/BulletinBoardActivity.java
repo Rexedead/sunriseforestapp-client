@@ -11,11 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
 
-
-
-
-
-public class BulletinBoardActivity extends AppCompatActivity{
+public class BulletinBoardActivity extends AppCompatActivity {
 
 
     private final BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -28,8 +24,10 @@ public class BulletinBoardActivity extends AppCompatActivity{
                 case R.id.navigation_home:
                     fragment = new BulletinBoardFragment();
                     loadFragment(fragment);
-                     return true;
+                    return true;
                 case R.id.navigation_dashboard:
+                    fragment = new TaskFragment();
+                    loadFragment(fragment);
                     return true;
                 case R.id.navigation_notifications:
                     return true;
@@ -47,10 +45,7 @@ public class BulletinBoardActivity extends AppCompatActivity{
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
         loadFragment(new BulletinBoardFragment());
-
     }
-
-
 
 
     private void loadFragment(Fragment fragment) {
@@ -59,7 +54,6 @@ public class BulletinBoardActivity extends AppCompatActivity{
         transaction.addToBackStack(null);
         transaction.commit();
     }
-
 
 
 }
