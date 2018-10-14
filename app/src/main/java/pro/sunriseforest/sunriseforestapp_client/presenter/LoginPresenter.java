@@ -1,4 +1,18 @@
 package pro.sunriseforest.sunriseforestapp_client.presenter;
 
-public class LoginPresenter {
+
+import pro.sunriseforest.sunriseforestapp_client.ui.LoginActivity;
+
+public class LoginPresenter extends AppPresenter<LoginActivity> {
+
+    public LoginPresenter(){
+
+    }
+    @Override
+    public void update() {
+
+    }
+
+
+
 }

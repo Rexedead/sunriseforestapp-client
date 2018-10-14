@@ -15,9 +15,6 @@ import java.util.List;
 
 public class RecycleTaskAdapter extends RecyclerView.Adapter<RecycleTaskAdapter.TaskViewHolder> {
 
-    public interface ItemClickListener{
-        void onClick(View view, int position);
-    }
     private List<Task> mTaskList;
 
     RecycleTaskAdapter(List<Task> taskList) {
@@ -40,12 +37,7 @@ public class RecycleTaskAdapter extends RecyclerView.Adapter<RecycleTaskAdapter.
         holder.mTextAd.setText(miniTask.getTextTask());
         holder.mIsBooked.setText(String.valueOf(miniTask.isBooked()));
 
-        holder.setItemClickListener(new ItemClickListener() {
-            @Override
-            public void onClick(View view, int position) {
 
-            }
-        });
     }
 
     @Override
@@ -53,9 +45,8 @@ public class RecycleTaskAdapter extends RecyclerView.Adapter<RecycleTaskAdapter.
         return mTaskList.size();
     }
 
-    class TaskViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    class TaskViewHolder extends RecyclerView.ViewHolder  {
         private TextView mId, mTextAd, mIsBooked;
-        private ItemClickListener mItemClickListener;
 
 
 
@@ -64,17 +55,9 @@ public class RecycleTaskAdapter extends RecyclerView.Adapter<RecycleTaskAdapter.
             mId = view.findViewById(R.id.task_id_recycle_textView);
             mTextAd = view.findViewById(R.id.task_data_recycle_textView);
             mIsBooked = view.findViewById(R.id.task_is_booked_recycle_textView);
-            itemView.setOnClickListener(this);
         }
 
-        public void setItemClickListener(ItemClickListener itemClickListener) {
-            this.mItemClickListener = itemClickListener;
-        }
-//
-        @Override
-        public void onClick(View view) {
-            mItemClickListener.onClick(view, getAdapterPosition());
-        }
+
     }
 
 }

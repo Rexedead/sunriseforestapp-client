@@ -2,6 +2,7 @@ package pro.sunriseforest.sunriseforestapp_client.ui;
 
 import pro.sunriseforest.sunriseforestapp_client.R;
 import pro.sunriseforest.sunriseforestapp_client.models.Task;
+import pro.sunriseforest.sunriseforestapp_client.presenter.PresenterManager;
 import pro.sunriseforest.sunriseforestapp_client.presenter.TaskDeskPresenter;
 
 import android.os.Bundle;
@@ -55,7 +56,8 @@ public class TaskDeskActivity extends AppCompatActivity{
         BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
-        mPresenter = TaskDeskPresenter.getInstance();
+        mPresenter = PresenterManager.getInstance().getPresenter();
+        mPresenter.bindActivity(this);
         mPresenter.initTaskDeskActivity(this);
 
     }

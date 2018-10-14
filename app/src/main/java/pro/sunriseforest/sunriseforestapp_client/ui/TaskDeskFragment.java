@@ -105,8 +105,6 @@ public class TaskDeskFragment extends Fragment{
         }
     }
 
-
-
     @Override
     public void onDetach() {
         super.onDetach();
