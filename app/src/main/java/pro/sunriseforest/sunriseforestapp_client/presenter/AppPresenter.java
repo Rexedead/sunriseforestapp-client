@@ -6,7 +6,6 @@ public abstract class AppPresenter<A extends AppCompatActivity> {
 
     protected A mActivity;
 
-
     protected A getActivity(){
         return mActivity;
     }
@@ -19,7 +18,11 @@ public abstract class AppPresenter<A extends AppCompatActivity> {
         mActivity = null;
     }
 
+    public boolean isActivityUnBunding(){
+        return mActivity == null;
+    }
     public abstract void update();
+    public abstract String getTAG();
 
 
 }

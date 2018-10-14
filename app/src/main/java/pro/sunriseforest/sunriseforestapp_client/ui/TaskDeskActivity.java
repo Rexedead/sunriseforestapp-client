@@ -5,6 +5,8 @@ import pro.sunriseforest.sunriseforestapp_client.models.Task;
 import pro.sunriseforest.sunriseforestapp_client.presenter.PresenterManager;
 import pro.sunriseforest.sunriseforestapp_client.presenter.TaskDeskPresenter;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -21,10 +23,12 @@ import java.lang.reflect.Type;
 import java.util.List;
 
 
-
-
 public class TaskDeskActivity extends AppCompatActivity{
 
+    public static void startActivity(Context context){
+        Intent intent = new Intent(context, TaskDeskActivity.class);
+        context.startActivity(intent);
+    }
 
     private final BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -56,13 +60,28 @@ public class TaskDeskActivity extends AppCompatActivity{
         BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
-        mPresenter = PresenterManager.getInstance().getPresenter();
+        mPresenter = (TaskDeskPresenter)PresenterManager.getInstance()
+                .getPresenter(TaskDeskPresenter.TAG);
+
         mPresenter.bindActivity(this);
         mPresenter.initTaskDeskActivity(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(mPresenter.isActivityUnBunding()){
+            mPresenter.bindActivity(this);
+        }
+        mPresenter.update();
 
     }
 
-
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mPresenter.unBindActivity();
+    }
 
     public void showListTask(List<Task> tasks){
         Moshi moshi = new Moshi.Builder().build();
@@ -72,8 +91,6 @@ public class TaskDeskActivity extends AppCompatActivity{
 
         loadFragment(TaskDeskFragment.newInstance(jsonListTask));
     }
-
-
 
     private void loadFragment(Fragment fragment) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();

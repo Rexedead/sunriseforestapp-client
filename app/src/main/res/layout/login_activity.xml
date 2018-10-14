@@ -38,9 +38,20 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/enter_password_editText"
         android:layout_marginLeft="60dp"
-        android:layout_marginTop="171dp"
+        android:layout_marginTop="150dp"
         android:layout_marginRight="60dp"
 
         android:text="@string/log_in"
-        android:textSize="22sp" />
+        android:textSize="18sp" />
+    <Button
+        android:id="@+id/registration_logAct_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/log_in_button"
+        android:layout_marginLeft="60dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="60dp"
+        android:text="@string/registration_logAct_button"
+        android:textSize="18sp"
+        />
 </RelativeLayout>

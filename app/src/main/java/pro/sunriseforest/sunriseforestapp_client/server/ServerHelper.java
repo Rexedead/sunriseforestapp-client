@@ -8,11 +8,15 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import pro.sunriseforest.sunriseforestapp_client.SunriseForestApp;
 import pro.sunriseforest.sunriseforestapp_client.models.Task;
+import pro.sunriseforest.sunriseforestapp_client.models.Token;
+import pro.sunriseforest.sunriseforestapp_client.options.SharedPreferenceHelper;
 
 public class ServerHelper {
 
     private static ServerHelper sInstance;
+    private static SharedPreferenceHelper _mSharedPreferenceHelper;
 
     public static ServerHelper getInstance(){
         if(sInstance == null){
@@ -23,6 +27,7 @@ public class ServerHelper {
     }
 
     private List<Task> mTasks;
+    private List<Token> mTokens;
 
     private ServerHelper(){
         mTasks = Arrays.asList(
@@ -35,6 +40,9 @@ public class ServerHelper {
                         "злоупотребляют,— ни рыцарской чести и отваги, есть с одной стороны дух терпения" +
                         " и подавленного ропота, с другой дух угнетения и лихоимства.")
         );
+
+        _mSharedPreferenceHelper = new SharedPreferenceHelper(SunriseForestApp.getAppContext());
+        mTokens = _mSharedPreferenceHelper._getTokensForServerHelper();
 
     }
 
@@ -65,7 +73,6 @@ public class ServerHelper {
 
     public boolean sendTask(Task task){
 
-
         for(int i = 0; i < mTasks.size(); i++){
             if(mTasks.get(i).getId() == task.getId()){
                 mTasks.set(i, task);
@@ -73,6 +80,41 @@ public class ServerHelper {
             }
         }
         return false;
+    }
+
+    public Token registration(String login, String password) throws IllegalArgumentException{
+        _wait(2);
+        if(_getToken(login, password) != null){
+            throw new IllegalArgumentException("логин уже занят");
+        }
+        int id = _generateRandomTokenId();
+
+        Token token = new Token(login, password, id);
+        mTokens.add(token);
+        _mSharedPreferenceHelper._saveTokenForServerHelper(token);
+        return token;
+    }
+    public Token getToken(String login, String password){
+        _wait(2);
+        Token token = _getToken(login, password);
+        if(token != null){
+            return token;
+        }
+        throw new IllegalArgumentException("неверная пара или вы еще не зарегистрированы");
+    }
+
+    private Token _getToken(int id){
+        for(Token token : mTokens){
+            if(token.getTokenId() == id) return token;
+        }
+        return null;
+    }
+    private Token _getToken(String login, String password){
+        for(Token token : mTokens){
+            if(token.getLogin().equals(login) || token.getPassword().equals(password))
+                return token;
+        }
+        return null;
     }
 
     private void _wait(int seconds){
@@ -84,5 +126,8 @@ public class ServerHelper {
         }
     }
 
+    private int _generateRandomTokenId(){
+        return (int)(Math.random()*Integer.MAX_VALUE);
+    }
 
 }

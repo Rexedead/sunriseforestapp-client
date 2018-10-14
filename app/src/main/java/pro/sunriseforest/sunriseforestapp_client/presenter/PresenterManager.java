@@ -21,17 +21,15 @@ public class PresenterManager {
         mPresenters = new ArrayList<>();
         mPresenters.add(new LoginPresenter());
         mPresenters.add(new RegistrationPresenter());
+        mPresenters.add(new TaskDeskPresenter());
     }
 
-    public <T extends AppPresenter> T getPresenter (){
-        T presenter;
-        for (AppPresenter _presenter : mPresenters){
-            try {
-                presenter = (T)_presenter;
-                return presenter;
-            } catch (Exception e){
+    public AppPresenter getPresenter (String tag){
 
-            }
+        for (AppPresenter presenter : mPresenters){
+          if(presenter.getTAG().equals(tag)){
+              return presenter;
+          }
         }
         return null;
     }

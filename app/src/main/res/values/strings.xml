@@ -9,4 +9,5 @@
     <string name="hello_blank_fragment">hello</string>
     <string name="enter_login_editText" type="id">enter_login</string>
     <string name="enter_password_editText" type="id">enter_password</string>
+    <string name="registration_logAct_button">Зарегистрироваться</string>
 </resources>
