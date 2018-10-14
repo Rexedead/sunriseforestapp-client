@@ -15,6 +15,9 @@ import java.util.List;
 
 public class RecycleTaskAdapter extends RecyclerView.Adapter<RecycleTaskAdapter.TaskViewHolder> {
 
+    public interface ItemClickListener{
+        void onClick(View view, int position);
+    }
     private List<Task> mTaskList;
 
     RecycleTaskAdapter(List<Task> taskList) {
@@ -54,6 +57,8 @@ public class RecycleTaskAdapter extends RecyclerView.Adapter<RecycleTaskAdapter.
         private TextView mId, mTextAd, mIsBooked;
         private ItemClickListener mItemClickListener;
 
+
+
         TaskViewHolder(View view) {
             super(view);
             mId = view.findViewById(R.id.task_id_recycle_textView);
@@ -62,10 +67,10 @@ public class RecycleTaskAdapter extends RecyclerView.Adapter<RecycleTaskAdapter.
             itemView.setOnClickListener(this);
         }
 
-        void setItemClickListener(ItemClickListener itemClickListener) {
+        public void setItemClickListener(ItemClickListener itemClickListener) {
             this.mItemClickListener = itemClickListener;
         }
-
+//
         @Override
         public void onClick(View view) {
             mItemClickListener.onClick(view, getAdapterPosition());
