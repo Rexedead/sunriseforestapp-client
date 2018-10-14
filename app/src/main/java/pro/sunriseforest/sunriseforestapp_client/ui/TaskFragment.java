@@ -55,7 +55,6 @@ public class TaskFragment extends Fragment {
         View view = inflater.inflate(R.layout.task_fragment, container, false);
         mTextData = view.findViewById(R.id.task_data_textView);
         mTaskAccepted = view.findViewById(R.id.task_accepted_checkBox);
-
         return view;
 
     }
@@ -66,17 +65,7 @@ public class TaskFragment extends Fragment {
             mListener.onFragmentInteraction(uri);
         }
     }
-//
-//    @Override
-//    public void onAttach(Context context) {
-//        super.onAttach(context);
-//        if (context instanceof OnFragmentInteractionListener) {
-//            mListener = (OnFragmentInteractionListener) context;
-//        } else {
-//            throw new RuntimeException(context.toString()
-//                    + " must implement OnFragmentInteractionListener");
-//        }
-//    }
+
 
     @Override
     public void onDetach() {

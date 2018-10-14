@@ -2,7 +2,9 @@ package pro.sunriseforest.sunriseforestapp_client.ui;
 
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -18,12 +20,12 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
-
+import java.util.Objects;
 import pro.sunriseforest.sunriseforestapp_client.R;
 import pro.sunriseforest.sunriseforestapp_client.models.Task;
 
 
-public class TaskDeskFragment extends Fragment implements ItemClickListener {
+public class TaskDeskFragment extends Fragment{
     private List<Task> mTaskList = new ArrayList<>();
 
 
@@ -66,7 +68,7 @@ public class TaskDeskFragment extends Fragment implements ItemClickListener {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.taskdesk_fragment, container, false);
@@ -77,6 +79,23 @@ public class TaskDeskFragment extends Fragment implements ItemClickListener {
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mRecycleTaskAdapter);
 
+        mRecyclerView.addOnItemTouchListener(
+                new RecyclerTouchListener(getContext(),
+                mRecyclerView, new RecyclerTouchListener.ClickListener() {
+            @Override
+            public void onClick(View view, final int position) {
+                FragmentTransaction transaction = Objects.requireNonNull(getActivity()).getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.frame_taskdesk_activity, TaskFragment.newInstance());
+                transaction.addToBackStack(null);
+                transaction.commit();
+            }
+
+            @Override
+            public void onLongClick(View view, int position) {
+
+            }
+        }));
+
         return view;
     }
 
@@ -86,26 +105,12 @@ public class TaskDeskFragment extends Fragment implements ItemClickListener {
         }
     }
 
-//    @Override
-//    public void onAttach(Context context) {
-//        super.onAttach(context);
-//        if (context instanceof OnFragmentInteractionListener) {
-//            mListener = (OnFragmentInteractionListener) context;
-//        } else {
-//            throw new RuntimeException(context.toString()
-//                    + " must implement OnFragmentInteractionListener");
-//        }
-//    }
+
 
     @Override
     public void onDetach() {
         super.onDetach();
         mListener = null;
-    }
-
-    @Override
-    public void onClick(View view, int position) {
-
     }
 
 

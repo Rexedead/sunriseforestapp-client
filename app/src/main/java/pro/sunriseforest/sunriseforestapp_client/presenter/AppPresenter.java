@@ -31,7 +31,7 @@ public class AppPresenter {
 
     }
 
-    public void initApp(TaskDeskActivity activity) {
+    public void initTaskDeskActivity(TaskDeskActivity activity) {
         mTaskDeskActivityWeakReference = new WeakReference<>(activity);
 
         List<Task> tasks = mServerHelper.getTasks();

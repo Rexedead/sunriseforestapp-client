@@ -39,7 +39,7 @@ public class ServerHelper {
     }
 
     public List<Task> getTasks() {
-//        _wait(4);
+        _wait(3);
         List<Task> copyTasks = new ArrayList<>();
         for(Task task : mTasks){
             copyTasks.add(task.copy());
