@@ -10,7 +10,16 @@
         android:id="@+id/task_data_textView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:text="singleTask"
+        />
+
+    <TextView
+        android:id="@+id/task_date_textView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="dateEmpty"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="180dp"/>
 
     <CheckBox
         android:id="@+id/task_accepted_checkBox"
@@ -18,8 +27,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="1dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="200dp"
         android:text="CheckBox" />
 
 

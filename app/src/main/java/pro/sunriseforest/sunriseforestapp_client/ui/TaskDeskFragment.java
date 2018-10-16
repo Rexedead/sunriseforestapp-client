@@ -1,8 +1,10 @@
 package pro.sunriseforest.sunriseforestapp_client.ui;
 
-import android.net.Uri;
+
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -18,20 +20,18 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import pro.sunriseforest.sunriseforestapp_client.R;
 import pro.sunriseforest.sunriseforestapp_client.models.Task;
 
 
-public class TaskDeskFragment extends Fragment implements ItemClickListener {
+public class TaskDeskFragment extends Fragment  {
     private List<Task> mTaskList = new ArrayList<>();
 
 
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_JSON_TASKS = "arg_json_tasks";
-
-
-    private OnFragmentInteractionListener mListener;
 
 
     public TaskDeskFragment() {
@@ -66,7 +66,7 @@ public class TaskDeskFragment extends Fragment implements ItemClickListener {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.taskdesk_fragment, container, false);
@@ -76,41 +76,27 @@ public class TaskDeskFragment extends Fragment implements ItemClickListener {
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mRecycleTaskAdapter);
+        mRecyclerView.addOnItemTouchListener(new RecyclerTouchListener(getContext(),
+                mRecyclerView, new ClickListener() {
+            @Override
+            public void onClick(View view, int position) {
+                FragmentTransaction transaction = Objects.requireNonNull(getActivity()).getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.taskdesk_activity, TaskFragment.newInstance(mTaskList.get(position)));
+                transaction.addToBackStack(null);
+                transaction.commit();
+            }
 
+            @Override
+            public void onLongClick(View view, int position) {
+
+            }
+        }));
         return view;
     }
-
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
-
-//    @Override
-//    public void onAttach(Context context) {
-//        super.onAttach(context);
-//        if (context instanceof OnFragmentInteractionListener) {
-//            mListener = (OnFragmentInteractionListener) context;
-//        } else {
-//            throw new RuntimeException(context.toString()
-//                    + " must implement OnFragmentInteractionListener");
-//        }
-//    }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener = null;
-    }
-
-    @Override
-    public void onClick(View view, int position) {
-
-    }
-
-
-    public interface OnFragmentInteractionListener {
-        void onFragmentInteraction(Uri uri);
     }
 
 }

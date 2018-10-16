@@ -4,6 +4,9 @@ public class Task {
     private int mId;
     private String mTextTask;
     private boolean mIsBooked;
+    private String mDate;
+
+
 
     public int getId() {
         return mId;
@@ -11,6 +14,10 @@ public class Task {
 
     public void setId(int id) {
         mId = id;
+    }
+
+    public String getDate() {
+        return mDate;
     }
 
     public String getTextTask() {
@@ -30,7 +37,7 @@ public class Task {
     }
 
     public Task copy(){
-        return new Task(this.mId, this.mTextTask, this.mIsBooked);
+        return new Task(this.mId, this.mTextTask, this.mDate, this.mIsBooked);
     }
 
     public Task(int id, String textTask) {
@@ -38,9 +45,10 @@ public class Task {
         mTextTask = textTask;
         mIsBooked = false;
     }
-    public Task(int id, String textTask, boolean isBooked) {
+    public Task(int id, String textTask, String date, boolean isBooked) {
         mId = id;
         mTextTask = textTask;
+        mDate = date;
         mIsBooked = isBooked;
     }
 
