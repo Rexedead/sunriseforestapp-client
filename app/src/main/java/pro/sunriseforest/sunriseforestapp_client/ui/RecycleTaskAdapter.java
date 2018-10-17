@@ -11,12 +11,14 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 
 public class RecycleTaskAdapter extends RecyclerView.Adapter<RecycleTaskAdapter.TaskViewHolder> {
     private List<Task> mTaskList;
-
+    private Date currentTime = Calendar.getInstance().getTime();
     @NonNull
     @Override
     public RecycleTaskAdapter.TaskViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
@@ -37,6 +39,7 @@ public class RecycleTaskAdapter extends RecyclerView.Adapter<RecycleTaskAdapter.
         Task task_list = mTaskList.get(position);
         task_holder.mId.setText(String.valueOf("Задание #"+task_list.getId()));
         task_holder.mTextAd.setText(task_list.getTextTask());
+        task_holder.mDate.setText(currentTime.toString());
 //        task_holder.mIsBooked.setText(String.valueOf(task_list.isBooked()));
     }
 

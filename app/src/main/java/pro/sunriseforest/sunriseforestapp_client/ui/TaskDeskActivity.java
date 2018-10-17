@@ -4,32 +4,28 @@ import pro.sunriseforest.sunriseforestapp_client.R;
 import pro.sunriseforest.sunriseforestapp_client.models.Task;
 import pro.sunriseforest.sunriseforestapp_client.presenter.AppPresenter;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.RecyclerView;
-import android.view.GestureDetector;
 import android.view.MenuItem;
-import android.view.MotionEvent;
-import android.view.View;
 
 import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Moshi;
 import com.squareup.moshi.Types;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
 
 
 
 
-public class TaskDeskActivity extends AppCompatActivity{
+public class TaskDeskActivity extends AppCompatActivity implements TaskDeskFragment.iOnFragmentInteractionListener{
 
-
+    private List<Task> mTaskList = new ArrayList<>();
     private final BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -73,70 +69,18 @@ public class TaskDeskActivity extends AppCompatActivity{
         JsonAdapter<List> jsonAdapter = moshi.adapter(type);
         String jsonListTask = jsonAdapter.toJson(tasks);
 
-        loadFragment(TaskDeskFragment.newInstance(jsonListTask));
+        onFragmentInteraction(0,TaskDeskFragment.newInstance(jsonListTask));
     }
 
 
 
-    private void loadFragment(Fragment fragment) {
+    @Override
+    public void onFragmentInteraction(int task_id, Fragment fragment) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.taskdesk_activity, fragment);
         transaction.addToBackStack(null);
         transaction.commit();
     }
-
-
-
-}
-
-interface ClickListener{
-    void onClick(View view,int position);
-    void onLongClick(View view,int position);
 }
 
 
-class RecyclerTouchListener implements RecyclerView.OnItemTouchListener{
-
-    private ClickListener clicklistener;
-    private GestureDetector gestureDetector;
-
-    public RecyclerTouchListener(Context context, final RecyclerView recycleView, final ClickListener clicklistener){
-
-        this.clicklistener=clicklistener;
-        gestureDetector=new GestureDetector(context,new GestureDetector.SimpleOnGestureListener(){
-            @Override
-            public boolean onSingleTapUp(MotionEvent e) {
-                return true;
-            }
-
-            @Override
-            public void onLongPress(MotionEvent e) {
-                View child=recycleView.findChildViewUnder(e.getX(),e.getY());
-                if(child!=null && clicklistener!=null){
-                    clicklistener.onLongClick(child,recycleView.getChildAdapterPosition(child));
-                }
-            }
-        });
-    }
-
-
-    @Override
-    public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
-        View child=rv.findChildViewUnder(e.getX(),e.getY());
-        if(child!=null && clicklistener!=null && gestureDetector.onTouchEvent(e)){
-            clicklistener.onClick(child,rv.getChildAdapterPosition(child));
-        }
-
-        return false;
-    }
-
-    @Override
-    public void onTouchEvent(RecyclerView rv, MotionEvent e) {
-
-    }
-
-    @Override
-    public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
-
-    }
-}
