@@ -20,10 +20,13 @@ import com.squareup.moshi.Moshi;
 import com.squareup.moshi.Types;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
 
 
-public class TaskDeskActivity extends AppCompatActivity{
+
+
+public class TaskDeskActivity extends AppCompatActivity implements TaskDeskFragment.iOnFragmentInteractionListener{
 
     public static void startActivity(Context context){
         Intent intent = new Intent(context, TaskDeskActivity.class);
@@ -89,16 +92,18 @@ public class TaskDeskActivity extends AppCompatActivity{
         JsonAdapter<List> jsonAdapter = moshi.adapter(type);
         String jsonListTask = jsonAdapter.toJson(tasks);
 
-        loadFragment(TaskDeskFragment.newInstance(jsonListTask));
+        onFragmentInteraction(0,TaskDeskFragment.newInstance(jsonListTask));
     }
 
-    private void loadFragment(Fragment fragment) {
+
+
+    @Override
+    public void onFragmentInteraction(int task_id, Fragment fragment) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frame_taskdesk_activity, fragment);
+        transaction.replace(R.id.taskdesk_activity, fragment);
         transaction.addToBackStack(null);
         transaction.commit();
     }
-
-
-
 }
+
+

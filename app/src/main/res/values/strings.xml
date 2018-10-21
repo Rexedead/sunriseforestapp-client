@@ -9,5 +9,8 @@
     <string name="hello_blank_fragment">hello</string>
     <string name="enter_login_editText" type="id">enter_login</string>
     <string name="enter_password_editText" type="id">enter_password</string>
-    <string name="registration_logAct_button">Зарегистрироваться</string>
+    <string name="taskdesk_image">taskdesk_image</string>
+    <string name="task_data">task_data</string>
+    <string name="task_id">task_id</string>
+    <string name="task_time">task_time</string>
 </resources>
