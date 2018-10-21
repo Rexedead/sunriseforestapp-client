@@ -24,5 +24,4 @@ public abstract class AppPresenter<A extends AppCompatActivity> {
     public abstract void update();
     public abstract String getTAG();
 
-
 }
