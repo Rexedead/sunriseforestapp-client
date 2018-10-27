@@ -1,5 +1,7 @@
 package pro.sunriseforest.sunriseforestapp_client.ui;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -40,6 +42,13 @@ public class LoginActivity extends AppCompatActivity {
 
     private LoginPresenter mPresenter;
 
+//Activity for RemoveToken
+    public static void startActivity(Context context) {
+        Intent intent = new Intent(context, LoginActivity.class);
+        context.startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+    }
+
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,7 +63,6 @@ public class LoginActivity extends AppCompatActivity {
 
         mRegistrationButton = findViewById(R.id.registration_logAct_button);
         mRegistrationButton.setOnClickListener(mOnClickListenerRegistrationButton);
-
 
         mPresenter =(LoginPresenter) PresenterManager.getInstance().getPresenter(LoginPresenter.TAG);
     }
@@ -75,11 +83,11 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void showRegistrationActivity(){
-        RegistrationActivity.startActivity(getApplicationContext());
+        RegistrationActivity.startActivity(this);
     }
 
     public void showTaskDeskActivity(){
-        TaskDeskActivity.startActivity(getApplicationContext());
+        TaskDeskActivity.startActivity(this);
     }
 
     public void showError(String msg){
