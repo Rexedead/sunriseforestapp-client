@@ -5,7 +5,7 @@
     <string name="title_notifications">Notifications</string>
     <string name="enter_login_hint">Введите логин</string>
     <string name="enter_password_hint">Введите пароль</string>
-    <string name="log_in">Готово</string>
+    <string name="log_in">Войти</string>
     <string name="hello_blank_fragment">hello</string>
     <string name="enter_login_editText" type="id">enter_login</string>
     <string name="enter_password_editText" type="id">enter_password</string>
@@ -13,4 +13,5 @@
     <string name="task_data">task_data</string>
     <string name="task_id">task_id</string>
     <string name="task_time">task_time</string>
+    <string name="title_activity_profile">ProfileActivity</string>
 </resources>

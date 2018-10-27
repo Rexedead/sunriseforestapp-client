@@ -1,4 +1,4 @@
-package pro.sunriseforest.sunriseforestapp_client.ui;
+package pro.sunriseforest.sunriseforestapp_client.fragments;
 
 import pro.sunriseforest.sunriseforestapp_client.R;
 import pro.sunriseforest.sunriseforestapp_client.models.Task;

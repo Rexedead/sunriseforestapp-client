@@ -83,7 +83,7 @@ public class ServerHelper {
     }
 
     public Token registration(String login, String password) throws IllegalArgumentException{
-        _wait(2);
+        _wait(0);
         if(_getToken(login, password) != null){
             throw new IllegalArgumentException("логин уже занят");
         }
@@ -95,7 +95,7 @@ public class ServerHelper {
         return token;
     }
     public Token getToken(String login, String password){
-        _wait(2);
+        _wait(0);
         Token token = _getToken(login, password);
         if(token != null){
             return token;
