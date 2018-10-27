@@ -42,7 +42,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private LoginPresenter mPresenter;
 
-
+//Activity for RemoveToken
     public static void startActivity(Context context) {
         Intent intent = new Intent(context, LoginActivity.class);
         context.startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
@@ -63,7 +63,6 @@ public class LoginActivity extends AppCompatActivity {
 
         mRegistrationButton = findViewById(R.id.registration_logAct_button);
         mRegistrationButton.setOnClickListener(mOnClickListenerRegistrationButton);
-
 
         mPresenter =(LoginPresenter) PresenterManager.getInstance().getPresenter(LoginPresenter.TAG);
     }
