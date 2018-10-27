@@ -1,4 +1,4 @@
-package pro.sunriseforest.sunriseforestapp_client.ui;
+package pro.sunriseforest.sunriseforestapp_client.fragments;
 
 
 import android.content.Context;
@@ -23,7 +23,6 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-
 import pro.sunriseforest.sunriseforestapp_client.R;
 import pro.sunriseforest.sunriseforestapp_client.models.Task;
 

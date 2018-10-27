@@ -1,47 +1,27 @@
 package pro.sunriseforest.sunriseforestapp_client.presenter;
 
-import android.util.Log;
+import android.support.v7.app.AppCompatActivity;
 
-import java.lang.ref.WeakReference;
-import java.util.List;
+public abstract class AppPresenter<A extends AppCompatActivity> {
 
-import pro.sunriseforest.sunriseforestapp_client.date.DataBaseHelper;
-import pro.sunriseforest.sunriseforestapp_client.models.Task;
-import pro.sunriseforest.sunriseforestapp_client.server.ServerHelper;
-import pro.sunriseforest.sunriseforestapp_client.ui.TaskDeskActivity;
+    protected A mActivity;
 
-public class AppPresenter {
-
-    private static AppPresenter sInstance;
-    private DataBaseHelper mDataBaseHelper;
-    private ServerHelper mServerHelper;
-
-    private WeakReference<TaskDeskActivity> mTaskDeskActivityWeakReference;
-
-    public static AppPresenter getInstance(){
-        if(sInstance == null){
-            sInstance = new AppPresenter();
-        }
-        return sInstance;
+    protected A getActivity(){
+        return mActivity;
     }
 
-    private AppPresenter(){
-        mDataBaseHelper = DataBaseHelper.getInstance();
-        mServerHelper = ServerHelper.getInstance();
-
+    public void bindActivity(A activity){
+        mActivity = activity;
     }
 
-    public void initApp(TaskDeskActivity activity) {
-        mTaskDeskActivityWeakReference = new WeakReference<>(activity);
-
-        List<Task> tasks = mServerHelper.getTasks();
-        if(tasks == null || tasks.isEmpty()){
-            Log.e("AppPresenter","СерверХелпер отдал null или пустой лист тасков");
-        }
-        mDataBaseHelper.cacheTasks(tasks);
-        mTaskDeskActivityWeakReference.get().showListTask(tasks);
+    public void unBindActivity(){
+        mActivity = null;
     }
 
-
+    public boolean isActivityUnBunding(){
+        return mActivity == null;
+    }
+    public abstract void update();
+    public abstract String getTAG();
 
 }
