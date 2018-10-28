@@ -50,5 +50,4 @@ public class TaskDeskPresenter extends AppPresenter<TaskDeskActivity>{
     public String getTAG() {
         return TAG;
     }
-
 }

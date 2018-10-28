@@ -1,5 +1,7 @@
 package pro.sunriseforest.sunriseforestapp_client.presenter;
 
+import java.util.Objects;
+
 import pro.sunriseforest.sunriseforestapp_client.SunriseForestApp;
 import pro.sunriseforest.sunriseforestapp_client.options.SharedPreferenceHelper;
 import pro.sunriseforest.sunriseforestapp_client.ui.ProfileActivity;
@@ -30,7 +32,7 @@ public class ProfilePresenter extends AppPresenter<ProfileActivity> {
     }
 
     public String getUserLogin() {
-        return mPreferenceHelper.getToken().getLogin();
+        return Objects.requireNonNull(mPreferenceHelper.getToken()).getLogin();
     }
 
 }

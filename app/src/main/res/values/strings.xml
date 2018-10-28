@@ -14,4 +14,5 @@
     <string name="task_id">task_id</string>
     <string name="task_time">task_time</string>
     <string name="title_activity_profile">ProfileActivity</string>
+    <string name="registration_logAct_button">Регистрация</string>
 </resources>

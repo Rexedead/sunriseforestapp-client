@@ -22,6 +22,7 @@ public class PresenterManager {
         mPresenters.add(new LoginPresenter());
         mPresenters.add(new RegistrationPresenter());
         mPresenters.add(new TaskDeskPresenter());
+        mPresenters.add(new ProfilePresenter());
     }
 
     public AppPresenter getPresenter (String tag){

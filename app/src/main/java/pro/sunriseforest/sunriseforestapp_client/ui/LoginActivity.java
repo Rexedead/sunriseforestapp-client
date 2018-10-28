@@ -42,11 +42,13 @@ public class LoginActivity extends AppCompatActivity {
 
     private LoginPresenter mPresenter;
 
-//Activity for RemoveToken
+
+    //Activity for RemoveToken
     public static void startActivity(Context context) {
         Intent intent = new Intent(context, LoginActivity.class);
         context.startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
     }
+
 
 
     @Override
