@@ -2,7 +2,7 @@ package pro.sunriseforest.sunriseforestapp_client.presenter;
 
 
 import pro.sunriseforest.sunriseforestapp_client.SunriseForestApp;
-import pro.sunriseforest.sunriseforestapp_client.models.Token;
+import pro.sunriseforest.sunriseforestapp_client.models.User;
 import pro.sunriseforest.sunriseforestapp_client.options.SharedPreferenceHelper;
 import pro.sunriseforest.sunriseforestapp_client.server.ServerHelper;
 import pro.sunriseforest.sunriseforestapp_client.ui.LoginActivity;
@@ -32,9 +32,9 @@ public class LoginPresenter extends AppPresenter<LoginActivity> {
 
     public void login(String login, String password){
         try{
-            Token token = mServerHelper.getToken(login, password);
+            User user = mServerHelper.getToken(login, password);
             mActivity.showTaskDeskActivity();
-            mPreferenceHelper.saveToken(token);
+            mPreferenceHelper.saveToken(user);
         }catch (IllegalArgumentException e){
             mActivity.showError(e.getMessage());
 

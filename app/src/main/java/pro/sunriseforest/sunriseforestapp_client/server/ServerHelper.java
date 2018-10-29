@@ -10,7 +10,7 @@ import java.util.concurrent.TimeUnit;
 
 import pro.sunriseforest.sunriseforestapp_client.SunriseForestApp;
 import pro.sunriseforest.sunriseforestapp_client.models.Task;
-import pro.sunriseforest.sunriseforestapp_client.models.Token;
+import pro.sunriseforest.sunriseforestapp_client.models.User;
 import pro.sunriseforest.sunriseforestapp_client.options.SharedPreferenceHelper;
 
 public class ServerHelper {
@@ -27,22 +27,23 @@ public class ServerHelper {
     }
 
     private List<Task> mTasks;
-    private List<Token> mTokens;
+    private List<User> mUsers;
 
     private ServerHelper(){
+
         mTasks = Arrays.asList(
-                new Task(1, "выруби лес плес)))0)","JAN 15", true),
-                new Task(2, "го рубить лес"),
+                new Task(1, "выруби лес плес)))0)","JAN 15", false),
+                new Task(2,"JAN 15", "го рубить лес", false),
                 new Task(3, "В России, столь могущественной своей матерьяльной силой" +
                         " и силой своего духа, нет войска; есть толпы угнетенных рабов, " +
                         "повинующихся ворам, угнетающим наемникам и грабителям, и в этой толпе нет " +
                         "ни преданности к царю, ни любви к отечеству — слова, которые так часто " +
                         "злоупотребляют,— ни рыцарской чести и отваги, есть с одной стороны дух терпения" +
-                        " и подавленного ропота, с другой дух угнетения и лихоимства." , "JAN 333", true)
+                        " и подавленного ропота, с другой дух угнетения и лихоимства." , "JAN 333", false)
         );
 
         _mSharedPreferenceHelper = new SharedPreferenceHelper(SunriseForestApp.getAppContext());
-        mTokens = _mSharedPreferenceHelper._getTokensForServerHelper();
+        mUsers = _mSharedPreferenceHelper._getTokensForServerHelper();
 
     }
 
@@ -82,37 +83,37 @@ public class ServerHelper {
         return false;
     }
 
-    public Token registration(String login, String password) throws IllegalArgumentException{
+    public User registration(String login, String password) throws IllegalArgumentException{
         _wait(0);
         if(_getToken(login, password) != null){
             throw new IllegalArgumentException("логин уже занят");
         }
         int id = _generateRandomTokenId();
 
-        Token token = new Token(login, password, id);
-        mTokens.add(token);
-        _mSharedPreferenceHelper._saveTokenForServerHelper(token);
-        return token;
+        User user = new User(login, password, id);
+        mUsers.add(user);
+        _mSharedPreferenceHelper._saveTokenForServerHelper(user);
+        return user;
     }
-    public Token getToken(String login, String password){
+    public User getToken(String login, String password){
         _wait(0);
-        Token token = _getToken(login, password);
-        if(token != null){
-            return token;
+        User user = _getToken(login, password);
+        if(user != null){
+            return user;
         }
         throw new IllegalArgumentException("неверная пара или вы еще не зарегистрированы");
     }
 
-    private Token _getToken(int id){
-        for(Token token : mTokens){
-            if(token.getTokenId() == id) return token;
+    private User _getToken(int id){
+        for(User user : mUsers){
+            if(user.getTokenId() == id) return user;
         }
         return null;
     }
-    private Token _getToken(String login, String password){
-        for(Token token : mTokens){
-            if(token.getLogin().equals(login) || token.getPassword().equals(password))
-                return token;
+    private User _getToken(String login, String password){
+        for(User user : mUsers){
+            if(user.getLogin().equals(login) || user.getPassword().equals(password))
+                return user;
         }
         return null;
     }

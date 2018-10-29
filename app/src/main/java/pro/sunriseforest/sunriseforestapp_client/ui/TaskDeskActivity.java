@@ -1,10 +1,11 @@
 package pro.sunriseforest.sunriseforestapp_client.ui;
 
 import pro.sunriseforest.sunriseforestapp_client.R;
-import pro.sunriseforest.sunriseforestapp_client.fragments.TaskDeskFragment;
+
 import pro.sunriseforest.sunriseforestapp_client.models.Task;
 import pro.sunriseforest.sunriseforestapp_client.presenter.PresenterManager;
 import pro.sunriseforest.sunriseforestapp_client.presenter.TaskDeskPresenter;
+import pro.sunriseforest.sunriseforestapp_client.ui.fragments.TaskDeskFragment;
 
 import android.content.Context;
 import android.content.Intent;

@@ -1,12 +1,12 @@
 package pro.sunriseforest.sunriseforestapp_client.models;
 
-public class Token {
+public class User {
 
     private int mTokenId;
     private String mPassword;
     private  String mLogin;
 
-    public Token(String login, String password, int tokenId ) {
+    public User(String login, String password, int tokenId ) {
         mTokenId = tokenId;
         mPassword = password;
         mLogin = login;
@@ -22,6 +22,10 @@ public class Token {
 
     public int getTokenId() {
         return mTokenId;
+    }
+
+    public User copy(){
+        return new User(mLogin,mPassword ,mTokenId );
     }
 
 }

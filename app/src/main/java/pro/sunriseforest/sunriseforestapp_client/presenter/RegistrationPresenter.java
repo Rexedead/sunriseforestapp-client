@@ -1,7 +1,7 @@
 package pro.sunriseforest.sunriseforestapp_client.presenter;
 
 import pro.sunriseforest.sunriseforestapp_client.SunriseForestApp;
-import pro.sunriseforest.sunriseforestapp_client.models.Token;
+import pro.sunriseforest.sunriseforestapp_client.models.User;
 import pro.sunriseforest.sunriseforestapp_client.options.SharedPreferenceHelper;
 import pro.sunriseforest.sunriseforestapp_client.server.ServerHelper;
 import pro.sunriseforest.sunriseforestapp_client.ui.RegistrationActivity;
@@ -30,10 +30,10 @@ public class RegistrationPresenter extends AppPresenter<RegistrationActivity> {
     }
 
     public void registration(String login, String password){
-        Token token;
+        User user;
         try{
-            token = mServerHelper.registration(login, password);
-            mPreferenceHelper.saveToken(token);
+            user = mServerHelper.registration(login, password);
+            mPreferenceHelper.saveToken(user);
             mActivity.showTaskDeskActivity();
         }catch (IllegalArgumentException e){
             mActivity.showError(e.getMessage());
