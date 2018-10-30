@@ -6,53 +6,58 @@
     android:background="?android:attr/selectableItemBackground"
     >
 
-    <ImageView
-        android:id="@+id/taskdesk_imageView"
-        android:layout_width="45dp"
+
+    <TextView
+        android:id="@+id/name_taskSingleRow_textView"
+        android:layout_width="wrap_content"
         android:layout_height="45dp"
         android:padding="0dp"
-        android:src="@mipmap/ic_launcher"
         android:layout_centerVertical="true"
         android:layout_alignParentStart="true"
         android:layout_marginStart="16dp"
-        android:contentDescription="@string/taskdesk_image" />
+        android:gravity="center"
+        android:text="@string/noname"
+        android:textSize="15sp"
 
-    <TextView
-        android:id="@+id/task_data_textView"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/task_id_recycle_textView"
-        android:layout_marginStart="72dp"
-        android:layout_marginEnd="16dp"
-        android:ellipsize="marquee"
-        android:singleLine="true"
-        android:text="@string/task_data"
-        android:textSize="12sp" />
+        />
 
-    <TextView
-        android:id="@+id/task_id_recycle_textView"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignWithParentIfMissing="true"
-        android:gravity="center_vertical"
-        android:text="@string/task_id"
-        android:textSize="14sp"
-        android:textStyle="bold"
-        android:layout_alignTop="@+id/taskdesk_imageView"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="72dp"
-        android:layout_marginEnd="16dp"
-        android:paddingBottom="5dp" />
-
-    <TextView
-        android:id="@+id/task_date_textView"
+    
+    <CheckBox
+        android:id="@+id/isbooked_taskSingleRow_checkBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/task_id_recycle_textView"
-        android:layout_alignEnd="@+id/task_data_textView"
-        android:layout_alignBottom="@+id/task_id_recycle_textView"
-        android:text="@string/task_time"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textSize="12sp" />
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="10dp"
+        android:clickable="false"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="5dp"
+        />
+
+    <TextView
+        android:id="@+id/reward_taskSingleRow_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@id/isbooked_taskSingleRow_checkBox"
+        android:gravity="center"
+        android:layout_marginRight="10dp"
+        android:text="$$$"
+        android:textSize="20sp"
+        android:textColor="@color/gold"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="8dp"
+
+        />
+    <TextView
+        android:id="@+id/date_taskSingleRow_checkBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="5dp"
+        android:layout_above="@id/isbooked_taskSingleRow_checkBox"
+        android:text="06.08.2018"
+
+        />
+
 
 </RelativeLayout>

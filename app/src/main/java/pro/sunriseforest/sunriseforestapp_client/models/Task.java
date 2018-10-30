@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Task {
+
     private int mId;
     private String mTextTask;
     private boolean mIsBooked;
@@ -12,6 +13,7 @@ public class Task {
     private List<Comment> mCommentList;
     private String mAddress;
     private String mDeadline;
+    private int mReward;
 
 
     public Task(int id,
@@ -21,7 +23,8 @@ public class Task {
                 String name,
                 List<Comment> commentList,
                 String address,
-                String deadLine) {
+                String deadLine,
+                int reward) {
         mId = id;
         mTextTask = textTask;
         mIsBooked = isBooked;
@@ -30,17 +33,9 @@ public class Task {
         mDeadline = deadLine;
         mCommentList = commentList;
         mAddress = address;
+        mReward = reward;
     }
 
-    // временный конструктор. Скоро под снос.
-    public Task(int id, String text, String date, boolean isBooked){
-        mId = id;
-        mTextTask = text;
-        mDate = date;
-        mIsBooked = isBooked;
-        mCommentList = new ArrayList<>();
-
-    }
 
     public String getDeadline() {
         return mDeadline;
@@ -50,7 +45,7 @@ public class Task {
         mDeadline = deadline;
     }
 
-    public Task(int id, String textTask, String date, String name, String deadLine, String address) {
+    public Task(int id, String textTask, String date, String name, String deadLine, String address, int reward) {
         mId = id;
         mTextTask = textTask;
         mDate = date;
@@ -60,8 +55,19 @@ public class Task {
 
         mCommentList = new ArrayList<>();
         mIsBooked = false;
+        mReward = reward;
+
 
     }
+
+    public int getReward() {
+        return mReward;
+    }
+
+    public void setReward(int reward) {
+        mReward = reward;
+    }
+
     public void addComment(Comment comment){
         mCommentList.add(comment);
     }
@@ -113,7 +119,7 @@ public class Task {
         }
 
         return new Task(mId, mTextTask, mIsBooked,
-                mDate, mName, copyComments,mAddress, mDeadline);
+                mDate, mName, copyComments,mAddress, mDeadline, mReward);
     }
 
 
