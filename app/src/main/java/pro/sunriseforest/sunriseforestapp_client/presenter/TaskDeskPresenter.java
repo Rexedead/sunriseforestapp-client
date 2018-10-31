@@ -24,15 +24,12 @@ public class TaskDeskPresenter extends AppPresenter<TaskDeskActivity>{
     }
 
     public void initTaskDeskActivity(TaskDeskActivity activity) {
-        //????????
-//        mTaskDeskActivityWeakReference = new WeakReference<>(activity);
 
         List<Task> tasks = mServerHelper.getTasks();
         if(tasks == null || tasks.isEmpty()){
             Log.e("TaskDeskPresenter","СерверХелпер отдал null или пустой лист тасков");
         }
         mDataBaseHelper.cacheTasks(tasks);
-//        mTaskDeskActivityWeakReference.get().showListTask(tasks);
     }
 
     @Override

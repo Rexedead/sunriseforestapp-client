@@ -41,12 +41,25 @@ public class TaskFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.task_fragment, container, false);
-        TextView mTaskData = view.findViewById(R.id.task_data_textView);
+
+        TextView taskName = view.findViewById(R.id.task_name_textView);
+        taskName.setText(mSingleTask.getName());
+
         TextView mTaskDate = view.findViewById(R.id.task_date_textView);
-        final CheckBox mTaskAccepted = view.findViewById(R.id.task_accepted_checkBox);
-        mTaskData.setText(mSingleTask.getTextTask());
         mTaskDate.setText(mSingleTask.getDate());
-        mTaskAccepted.setChecked(mSingleTask.isBooked());
+
+        CheckBox mTaskIsBooked = view.findViewById(R.id.task_is_booked_checkBox);
+        mTaskIsBooked.setChecked(mSingleTask.isBooked());
+
+        TextView text = view.findViewById(R.id.task_text_textView);
+        text.setText(mSingleTask.getTextTask());
+
+        TextView address = view.findViewById(R.id.address_text);
+        address.setText(mSingleTask.getAddress());
+
+        TextView reward = view.findViewById(R.id.reward_text);
+        reward.setText(mSingleTask.getReward()+"руб.");
+
         return view;
 
     }

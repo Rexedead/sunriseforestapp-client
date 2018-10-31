@@ -16,4 +16,6 @@
     <string name="task_time">task_time</string>
     <string name="title_activity_profile">ProfileActivity</string>
     <string name="noname">No name</string>
+    <string name="address">Адресс:</string>
+    <string name="reward">Вознаграждение:</string>
 </resources>

@@ -21,7 +21,7 @@
 
         />
 
-    
+
     <CheckBox
         android:id="@+id/isbooked_taskSingleRow_checkBox"
         android:layout_width="wrap_content"
