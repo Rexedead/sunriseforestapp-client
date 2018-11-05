@@ -20,7 +20,6 @@ public class LoginActivity extends AppCompatActivity {
     private EditText mLoginEditText;
     private  EditText mPasswordEditText;
 
-
     private View.OnClickListener mOnClickListenerLogInButton = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
@@ -39,7 +38,6 @@ public class LoginActivity extends AppCompatActivity {
         }
     };
 
-
     private LoginPresenter mPresenter;
 
 
@@ -48,8 +46,6 @@ public class LoginActivity extends AppCompatActivity {
         Intent intent = new Intent(context, LoginActivity.class);
         context.startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
     }
-
-
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

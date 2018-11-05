@@ -16,6 +16,11 @@
     <string name="task_time">task_time</string>
     <string name="title_activity_profile">ProfileActivity</string>
     <string name="noname">No name</string>
-    <string name="address">Адресс:</string>
+    <string name="deadline">Срок выполнения:</string>
     <string name="reward">Вознаграждение:</string>
+    <string name="enter_name_hint">Введите имя</string>
+    <string name="enter_phone_hint">Введите номер телефона</string>
+    <string name="client">Заказчик:</string>
+    <string name="contractor">Исполнитель:</string>
+    <string name="nocontractor">пока нет:</string>
 </resources>

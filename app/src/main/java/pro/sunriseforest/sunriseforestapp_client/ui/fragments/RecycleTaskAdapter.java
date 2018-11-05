@@ -9,11 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 
@@ -38,11 +35,13 @@ public class RecycleTaskAdapter extends RecyclerView.Adapter<RecycleTaskAdapter.
     @Override
     public void onBindViewHolder(@NonNull final TaskViewHolder task_holder, int position) {
         Task task = mTaskList.get(position);
-        task_holder.mName.setText(task.getName());
         task_holder.mReward.setText(String.valueOf(task.getReward()) + "руб.");
-        task_holder.mDate.setText(task.getDate());
+        task_holder.mDate.setText(task.getCreationDate());
         task_holder.mIsBooked.setChecked(task.isBooked());
-
+        String taskDescription = task.getTaskDescription();
+        if(taskDescription.length() > 20)
+            taskDescription = taskDescription.substring(0,20) + "...";
+        task_holder.mName.setText(taskDescription);
     }
 
     @Override
@@ -59,8 +58,7 @@ public class RecycleTaskAdapter extends RecyclerView.Adapter<RecycleTaskAdapter.
             super(view);
             mName = view.findViewById(R.id.name_taskSingleRow_textView);
             mReward = view.findViewById(R.id.reward_taskSingleRow_textView);
-            mDate = view.findViewById(R.id.date_taskSingleRow_checkBox);
-
+            mDate = view.findViewById(R.id.date_taskSingleRow_textView);
             mIsBooked = view.findViewById(R.id.isbooked_taskSingleRow_checkBox);
 
         }

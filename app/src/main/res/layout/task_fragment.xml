@@ -43,7 +43,7 @@
   <TextView
       android:id="@+id/task_text_textView"
       android:layout_width="300dp"
-      android:layout_height="380dp"
+      android:layout_height="350dp"
       android:layout_centerHorizontal="true"
       android:layout_below="@id/task_name_textView"
       android:layout_marginTop="40dp"
@@ -51,30 +51,30 @@
       android:padding="5dp"
       />
     <TextView
-        android:id="@+id/address"
+        android:id="@+id/deadline_textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/task_text_textView"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="15dp"
-        android:text="@string/address"
+        android:text="@string/deadline"
         />
     <TextView
-        android:id="@+id/address_text"
+        android:id="@+id/deadline_text_textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/address"
+        android:layout_toRightOf="@id/deadline_textView"
         android:layout_below="@id/task_text_textView"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="8dp"
-        tools:text="@string/address"
+        tools:text="@string/deadline"
         />
 
     <TextView
-        android:id="@+id/reward"
+        android:id="@+id/reward_textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/address"
+        android:layout_below="@id/deadline_textView"
         android:layout_marginTop="10dp"
         android:layout_marginRight="8dp"
         android:layout_marginLeft="15dp"
@@ -82,15 +82,58 @@
 
         />
     <TextView
-        android:id="@+id/reward_text"
+        android:id="@+id/reward_text_textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/address"
+        android:layout_below="@id/deadline_textView"
         android:layout_marginTop="10dp"
 
-        android:layout_toRightOf="@id/reward"
+        android:layout_toRightOf="@id/reward_textView"
         android:textColor="@color/gold"
         tools:text="@string/reward"/>
+
+    <TextView
+        android:id="@+id/client_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/reward_text_textView"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginLeft="15dp"
+        android:text="@string/client"
+
+        />
+    <TextView
+        android:id="@+id/client_text_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/reward_text_textView"
+        android:layout_marginTop="10dp"
+
+        android:layout_toRightOf="@id/client_textView"
+        tools:text="@string/client"/>
+
+    <TextView
+        android:id="@+id/contractor_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/client_text_textView"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginLeft="15dp"
+        android:text="@string/contractor"
+
+        />
+    <TextView
+        android:id="@+id/contractor_text_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/client_text_textView"
+        android:layout_marginTop="10dp"
+
+        android:layout_toRightOf="@id/contractor_textView"
+        tools:text="@string/nocontractor"
+        />
 
     
 

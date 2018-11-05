@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import pro.sunriseforest.sunriseforestapp_client.R;
+import pro.sunriseforest.sunriseforestapp_client.models.Contractor;
 import pro.sunriseforest.sunriseforestapp_client.presenter.PresenterManager;
 import pro.sunriseforest.sunriseforestapp_client.presenter.RegistrationPresenter;
 
@@ -19,6 +20,8 @@ public class RegistrationActivity extends AppCompatActivity {
     private Button mRegistrationButton;
     private EditText mLoginEditText;
     private EditText mPasswordEditText;
+    private EditText mPhoneNumberEditText;
+    private EditText mNameEditText;
 
     private RegistrationPresenter mRegistrationPresenter;
 
@@ -33,7 +36,9 @@ public class RegistrationActivity extends AppCompatActivity {
         public void onClick(View view) {
             String login = mLoginEditText.getText().toString();
             String password = mPasswordEditText.getText().toString();
-            mRegistrationPresenter.registration(login, password);
+            String name = mNameEditText.getText().toString();
+            long phone = Long.parseLong(mPhoneNumberEditText.getText().toString());
+            mRegistrationPresenter.registration(new Contractor(password, login, name, phone));
         }
     };
 
@@ -46,6 +51,8 @@ public class RegistrationActivity extends AppCompatActivity {
         mRegistrationButton.setOnClickListener(mOnClickListenerLogInButton);
         mLoginEditText = findViewById(R.id.enter_login_regAct_editText);
         mPasswordEditText = findViewById(R.id.enter_password_regAct_editText);
+        mPhoneNumberEditText = findViewById(R.id.enter_phone_regAct_editText);
+        mNameEditText = findViewById(R.id.enter_name_regAct_editText);
 
         mRegistrationPresenter = (RegistrationPresenter) PresenterManager.getInstance()
                 .getPresenter(RegistrationPresenter.TAG);

@@ -27,12 +27,12 @@ public class ProfilePresenter extends AppPresenter<ProfileActivity> {
     }
 
     public void exitFromApp() {
-        mPreferenceHelper.saveToken(null);
+        mPreferenceHelper.removeContactor();
         mActivity.showLoginActivity();
     }
 
     public String getUserLogin() {
-        return Objects.requireNonNull(mPreferenceHelper.getToken()).getLogin();
+        return Objects.requireNonNull(mPreferenceHelper.getMyConractor().getLogin());
     }
 
 }

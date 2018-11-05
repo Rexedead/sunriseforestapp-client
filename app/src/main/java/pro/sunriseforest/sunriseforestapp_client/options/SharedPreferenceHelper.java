@@ -14,13 +14,13 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-import pro.sunriseforest.sunriseforestapp_client.models.User;
+import pro.sunriseforest.sunriseforestapp_client.models.Contractor;
 
 public class SharedPreferenceHelper {
 
     private static final String SHARED_PREF_NAME = "sunriseforestapp-client";
     private static final String TOKEN_TAG = "TOKEN_TAG";
-    private static final String TOKENS_TAG = "TOKENS_TAG";
+    private static final String MY_CONTRACTOR_TAG = "MY_CONTRACTOR_TAG";
 
 
     private SharedPreferences mSharedPreferences;
@@ -30,80 +30,55 @@ public class SharedPreferenceHelper {
     }
 
     public @Nullable
-    User getToken(){
-        User user;
-        String jsonToken = mSharedPreferences.getString(TOKEN_TAG, "");
+    Contractor getMyConractor(){
+        Contractor contractor;
+        String jsonToken = mSharedPreferences.getString(MY_CONTRACTOR_TAG, "");
         if(jsonToken.length() == 0){
             return null;
         }
         Moshi moshi = new Moshi.Builder().build();
-        JsonAdapter<User> jsonAdapter = moshi.adapter(User.class);
+        JsonAdapter<Contractor> jsonAdapter = moshi.adapter(Contractor.class);
         try {
-            user = jsonAdapter.fromJson(jsonToken);
+            contractor = jsonAdapter.fromJson(jsonToken);
         } catch (IOException e) {
-            Log.e("SharedPreferenceHelper", "не удалось перевести json в User");
+            Log.e("SharedPreferenceHelper", "не удалось перевести json в Contractor");
             return null;
         }
-        return user;
+        return contractor;
 
     }
 
-    public void saveToken(User user){
-        Moshi moshi = new Moshi.Builder().build();
-        JsonAdapter<User> jsonAdapter = moshi.adapter(User.class);
-        String jsonToken = jsonAdapter.toJson(user);
+    public @Nullable String getToken(){
+        String token = mSharedPreferences.getString(TOKEN_TAG, "");
+        if(token.length() == 0){
+            return null;
+        }
+        return token;
+    }
+
+    public void saveToken(String token){
+
         mSharedPreferences.edit()
-                .putString(TOKEN_TAG, jsonToken)
+                .putString(TOKEN_TAG, token)
                 .apply();
     }
 
 
 
-
-    public void _saveTokenForServerHelper(User user){
-        List<User> list = new ArrayList<>();
-
+    public void saveContractor(Contractor contractor){
         Moshi moshi = new Moshi.Builder().build();
-        Type type = Types.newParameterizedType(List.class, User.class);
-        JsonAdapter<List> jsonAdapter = moshi.adapter(type);
-        String tokensJson = mSharedPreferences.getString(TOKENS_TAG, "");
-
-        if(tokensJson.length() == 0){
-            list.add(user);
-            String json = jsonAdapter.toJson(list);
-            mSharedPreferences.edit().putString(TOKENS_TAG, json).apply();
-            return;
-        }
-
-        try {
-            list = jsonAdapter.fromJson(tokensJson);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        list.add(user);
-        String json = jsonAdapter.toJson(list);
-        mSharedPreferences.edit().putString(TOKENS_TAG, json).apply();
-
+        JsonAdapter<Contractor> jsonAdapter = moshi.adapter(Contractor.class);
+        String jsonContractor = jsonAdapter.toJson(contractor);
+        mSharedPreferences.edit()
+                .putString(MY_CONTRACTOR_TAG, jsonContractor)
+                .apply();
     }
-    public List<User> _getTokensForServerHelper(){
-        String json;
-
-        json = mSharedPreferences.getString(TOKENS_TAG, "");
-        if(json.equals("")){
-            return new ArrayList<>();
-        }
 
 
-        Moshi moshi = new Moshi.Builder().build();
-        Type type = Types.newParameterizedType(List.class, User.class);
-        JsonAdapter<List> jsonAdapter = moshi.adapter(type);
-        List<User> users = null;
-        try {
-            users = jsonAdapter.fromJson(json);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return users;
+    public void removeContactor(){
+        mSharedPreferences.edit()
+                .putString(MY_CONTRACTOR_TAG, null)
+                .apply();
     }
+
 }

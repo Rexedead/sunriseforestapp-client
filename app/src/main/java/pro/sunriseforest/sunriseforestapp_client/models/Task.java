@@ -1,50 +1,53 @@
 package pro.sunriseforest.sunriseforestapp_client.models;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.google.gson.annotations.SerializedName;
 
 public class Task {
 
     private int mId;
-    private String mTextTask;
+
+    @SerializedName("contractor")
+    private Contractor mContractor;
+
+    @SerializedName("client")
+    private Client mClient;
+
+    @SerializedName("taskDescription")
+    private String mTaskDescription;
+
+    @SerializedName("creationDate")
+    private String mCreationDate;
+
+    @SerializedName("deadlineDate")
+    private String mDeadlineDate;
+
+    @SerializedName("isBooked")
     private boolean mIsBooked;
-    private String mDate;
-    private String mName;
-    private String mAddress;
+
+    @SerializedName("reward")
     private int mReward;
 
 
     public Task(int id,
-                String textTask,
+                String taskDescription,
                 boolean isBooked,
-                String date,
-                String name,
+                String creationDate,
 
-                String address,
                 int reward) {
         mId = id;
-        mTextTask = textTask;
+        mTaskDescription = taskDescription;
         mIsBooked = isBooked;
-        mDate = date;
-        mName = name;
-        mAddress = address;
+        mCreationDate = creationDate;
         mReward = reward;
     }
 
-
-
-
-    public Task(int id, String textTask, String date, String name, String address, int reward) {
+    public Task(int id, String taskDescription, String creationDate, String name, String address, int reward) {
         mId = id;
-        mTextTask = textTask;
-        mDate = date;
-        mName = name;
-        mAddress = address;
+        mTaskDescription = taskDescription;
+        mCreationDate = creationDate;
 
         mIsBooked = false;
         mReward = reward;
-
-
     }
 
     public int getReward() {
@@ -55,16 +58,6 @@ public class Task {
         mReward = reward;
     }
 
-
-    public String getName() {
-        return mName;
-    }
-
-
-    public String getAddress() {
-        return mAddress;
-    }
-
     public int getId() {
         return mId;
     }
@@ -73,16 +66,16 @@ public class Task {
         mId = id;
     }
 
-    public String getDate() {
-        return mDate;
+    public String getCreationDate() {
+        return mCreationDate;
     }
 
-    public String getTextTask() {
-        return mTextTask;
+    public String getTaskDescription() {
+        return mTaskDescription;
     }
 
-    public void setTextTask(String textTask) {
-        mTextTask = textTask;
+    public void setTaskDescription(String taskDescription) {
+        mTaskDescription = taskDescription;
     }
 
     public boolean isBooked() {
@@ -93,11 +86,22 @@ public class Task {
         mIsBooked = booked;
     }
 
+    public Contractor getContractor() {
+        return mContractor;
+    }
+
+    public Client getClient() {
+        return mClient;
+    }
+
+    public String getDeadlineDate() {
+        return mDeadlineDate;
+    }
+
     public Task copy(){
 
-
-        return new Task(mId, mTextTask, mIsBooked,
-                mDate, mName,mAddress, mReward);
+        return new Task(mId, mTaskDescription, mIsBooked,
+                mCreationDate, mReward);
     }
 
 

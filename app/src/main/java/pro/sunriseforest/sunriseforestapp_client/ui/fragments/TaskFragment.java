@@ -28,13 +28,6 @@ public class TaskFragment extends Fragment {
 
 
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-//        if (getArguments() != null) {
-//
-//        }
-    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -42,23 +35,35 @@ public class TaskFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.task_fragment, container, false);
 
-        TextView taskName = view.findViewById(R.id.task_name_textView);
-        taskName.setText(mSingleTask.getName());
+//        TextView taskName = view.findViewById(R.id.task_name_textView);
 
         TextView mTaskDate = view.findViewById(R.id.task_date_textView);
-        mTaskDate.setText(mSingleTask.getDate());
+        mTaskDate.setText(mSingleTask.getCreationDate());
 
         CheckBox mTaskIsBooked = view.findViewById(R.id.task_is_booked_checkBox);
         mTaskIsBooked.setChecked(mSingleTask.isBooked());
 
         TextView text = view.findViewById(R.id.task_text_textView);
-        text.setText(mSingleTask.getTextTask());
+        text.setText(mSingleTask.getTaskDescription());
 
-        TextView address = view.findViewById(R.id.address_text);
-        address.setText(mSingleTask.getAddress());
+        TextView deadline = view.findViewById(R.id.deadline_text_textView);
+        deadline.setText(mSingleTask.getDeadlineDate());
 
-        TextView reward = view.findViewById(R.id.reward_text);
+        TextView reward = view.findViewById(R.id.reward_text_textView);
         reward.setText(mSingleTask.getReward()+"руб.");
+
+        TextView clientName = view.findViewById(R.id.client_text_textView);
+
+        if(mSingleTask.getClient()!=null){
+            clientName.setText(mSingleTask.getClient().getName());
+
+        }
+
+        TextView contractor = view.findViewById(R.id.contractor_text_textView);
+
+        if(mSingleTask.getContractor() != null){
+            contractor.setText(mSingleTask.getContractor().getName());
+        }
 
         return view;
 

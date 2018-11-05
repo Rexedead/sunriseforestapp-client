@@ -90,6 +90,12 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mPresenter.unBindActivity();
+    }
+
     private void setBottomMenuItem(){
         mNavigation = findViewById(R.id.navigation);
         Menu mMenu = mNavigation.getMenu();
