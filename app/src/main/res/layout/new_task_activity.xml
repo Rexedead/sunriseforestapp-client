@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.NewTaskActivity">
+
+    <TextView
+        android:id="@+id/newTask_id_text_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="Задание #"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/newTask_id_textView"
+        android:layout_width="58dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="44dp"
+        android:text="ID"
+        android:textSize="16sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/newTask_id_text_textView"
+        app:layout_constraintStart_toEndOf="@+id/newTask_id_text_textView" />
+
+    <TextView
+        android:id="@+id/newTask_name_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="28dp"
+        android:text="Имя клиента"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/newTask_id_text_textView" />
+
+    <EditText
+        android:id="@+id/newTask_clientName_editText"
+        android:layout_width="176dp"
+        android:layout_height="49dp"
+        android:layout_marginStart="12dp"
+        android:textSize="12sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/newTask_name_textView"
+        app:layout_constraintStart_toEndOf="@+id/newTask_name_textView" />
+
+    <TextView
+        android:id="@+id/newTask_description_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="24dp"
+        android:text="Описание"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/newTask_name_textView" />
+
+    <EditText
+        android:id="@+id/newTask_text_editText"
+        android:layout_width="175dp"
+        android:layout_height="46dp"
+        android:layout_marginStart="32dp"
+        android:inputType="textMultiLine"
+        android:textSize="12sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/newTask_description_textView"
+        app:layout_constraintStart_toEndOf="@+id/newTask_description_textView" />
+
+    <TextView
+        android:id="@+id/newTask_address_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="36dp"
+        android:text="Адрес"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/newTask_description_textView" />
+
+    <EditText
+        android:id="@+id/newTask_address_editText"
+        android:layout_width="174dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="52dp"
+        android:inputType="textMultiLine"
+        android:textSize="12sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/newTask_address_textView"
+        app:layout_constraintStart_toEndOf="@+id/newTask_address_textView" />
+
+    <TextView
+        android:id="@+id/newTask_reward_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="40dp"
+        android:text="Награда"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/newTask_address_textView" />
+
+    <EditText
+        android:id="@+id/newTask_reward_editText"
+        android:layout_width="176dp"
+        android:layout_height="51dp"
+        android:layout_marginStart="32dp"
+        android:inputType="number"
+        android:textSize="12sp"
+        android:maxLength="9"
+        app:layout_constraintBaseline_toBaselineOf="@+id/newTask_reward_textView"
+        app:layout_constraintStart_toEndOf="@+id/newTask_reward_textView" />
+
+
+    <TextView
+        android:id="@+id/newTask_deadline_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="52dp"
+        android:text="Срок окончания"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/newTask_reward_textView" />
+
+    <Button
+        android:id="@+id/newTask_deadline_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Выбрать дату"
+        app:layout_constraintBaseline_toBaselineOf="@+id/newTask_deadline_textView"
+        app:layout_constraintStart_toEndOf="@+id/newTask_deadline_textView"/>
+
+
+    <Button
+        android:id="@+id/newTask_add_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="80dp"
+        android:text="Добавить"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/newTask_deadline_button" />
+
+
+</android.support.constraint.ConstraintLayout>

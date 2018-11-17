@@ -48,6 +48,13 @@ public class DataBaseHelper {
         return ad == null ? null : ad.copy();
     }
 
+    public void addNewTask(Task t) {
+        ArrayList<Task> taskArrayList = new ArrayList<>(getTasks());
+        taskArrayList.add(t);
+        mTasks = taskArrayList;
+    }
+
+
     public void cacheTask(Task ts){
        for(int i = 0; i < mTasks.size(); i++){
            if(mTasks.get(i).getId() == ts.getId()){

@@ -14,7 +14,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginLeft="35dp"
         android:layout_marginRight="35dp"
-        android:textSize="22sp"
+        android:textSize="14sp"
         android:hint="@string/enter_login_hint"
         android:inputType="text"/>
 
@@ -25,9 +25,7 @@
         android:layout_below="@id/enter_login_editText"
         android:layout_marginLeft="35dp"
         android:layout_marginRight="35dp"
-
-        android:textSize="22sp"
-
+        android:textSize="14sp"
         android:hint="@string/enter_password_hint"
         android:inputType="textPassword"/>
 
@@ -40,6 +38,9 @@
         android:layout_marginTop="10dp"
         android:layout_marginRight="60dp"
         android:text="@string/log_in"
+        android:background="@color/auth_button"
+        android:textColor="@color/auth_button_text"
+        android:textAllCaps="false"
         android:textSize="18sp" />
     <Button
         android:id="@+id/registration_logAct_button"
@@ -49,6 +50,9 @@
         android:layout_marginLeft="60dp"
         android:layout_marginTop="10dp"
         android:layout_marginRight="60dp"
+        android:background="@color/auth_button"
+        android:textColor="@color/auth_button_text"
+        android:textAllCaps="false"
         android:text="@string/registration_logAct_button"
         android:textSize="18sp"
         />

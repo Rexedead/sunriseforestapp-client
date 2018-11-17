@@ -36,14 +36,14 @@ public class Task {
     private byte mStatus;
 
     @SerializedName("reward")
-    private String mReward;
+    private int mReward;
 
 
     public Task(int id,
                 String taskDescription,
                 byte status,
                 String creationDate,
-                String reward) {
+                int reward) {
         mId = id;
         mTaskDescription = taskDescription;
         mStatus = status;
@@ -52,11 +52,11 @@ public class Task {
     }
 
 
-    public String getReward() {
+    public int getReward() {
         return mReward;
     }
 
-    public void setReward(String reward) {
+    public void setReward(int reward) {
         mReward = reward;
     }
 

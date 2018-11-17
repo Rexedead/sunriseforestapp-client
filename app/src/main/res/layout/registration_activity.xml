@@ -9,10 +9,9 @@
         android:textSize="22sp"
         android:hint="@string/enter_login_hint"
         android:inputType="text"
-
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="150dp"
+        android:layout_marginTop="100dp"
         android:layout_marginBottom="10dp"
         android:layout_centerHorizontal="true"
         android:layout_marginLeft="35dp"
@@ -25,7 +24,6 @@
         android:textSize="22sp"
         android:hint="@string/enter_password_hint"
         android:inputType="textPassword"
-
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/enter_login_regAct_editText"
@@ -37,16 +35,12 @@
 
     <EditText
         android:id="@+id/enter_name_regAct_editText"
-
-
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/enter_password_regAct_editText"
         android:layout_marginLeft="35dp"
         android:layout_marginRight="35dp"
         android:layout_marginBottom="10dp"
-
-
         android:textSize="22sp"
         android:hint="@string/enter_name_hint"
         />
@@ -59,10 +53,7 @@
         android:layout_marginLeft="35dp"
         android:layout_marginRight="35dp"
         android:layout_marginBottom="10dp"
-
-
         android:textSize="22sp"
-
         android:hint="@string/enter_phone_hint"
         android:inputType="phone"/>
 
@@ -74,7 +65,9 @@
         android:layout_marginLeft="60dp"
         android:layout_marginTop="171dp"
         android:layout_marginRight="60dp"
-
+        android:background="@color/auth_button"
+        android:textColor="@color/auth_button_text"
         android:text="@string/log_in"
+        android:textAllCaps="false"
         android:textSize="22sp" />
 </RelativeLayout>

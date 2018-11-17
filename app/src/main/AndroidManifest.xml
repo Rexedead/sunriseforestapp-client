@@ -30,6 +30,8 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="pro.sunriseforest.sunriseforestapp_client.ui.TaskDeskActivity" />
         </activity>
+        <activity android:name=".ui.NewTaskActivity"
+            android:launchMode="singleTop"/>
     </application>
 
 </manifest>
