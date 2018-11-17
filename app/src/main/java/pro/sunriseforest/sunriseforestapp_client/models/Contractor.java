@@ -16,9 +16,9 @@ public class Contractor {
     private String mName;
 
     @SerializedName("phoneNumber")
-    private long mPhoneNumber;
+    private String mPhoneNumber;
 
-    public Contractor(String password, String login, String name, long phoneNumber) {
+    public Contractor(String password, String login, String name, String phoneNumber) {
         mPassword = password;
         mLogin = login;
         mName = name;
@@ -35,7 +35,7 @@ public class Contractor {
         return mName;
     }
 
-    public long getPhoneNumber() {
+    public String getPhoneNumber() {
         return mPhoneNumber;
     }
 

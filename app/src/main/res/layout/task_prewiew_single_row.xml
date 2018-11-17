@@ -1,63 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="72dp"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:clickable="true"
     android:focusable="true"
-    android:background="?android:attr/selectableItemBackground"
-    >
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/padding_list_row"
+    android:paddingStart="?listPreferredItemPaddingLeft"
+    android:paddingEnd="?listPreferredItemPaddingRight"
+    android:paddingTop="@dimen/padding_list_row">
 
-
-    <TextView
-        android:id="@+id/name_taskSingleRow_textView"
+    <LinearLayout
+        android:id="@+id/message_container"
         android:layout_width="wrap_content"
-        android:layout_height="45dp"
-        android:padding="0dp"
-        android:layout_centerVertical="true"
+        android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="16dp"
-        android:gravity="center"
-        android:text="@string/noname"
-        android:textSize="15sp"
+        android:layout_marginEnd="10dp"
+        android:layout_toStartOf="@+id/date_taskSingleRow_textView"
+        android:clickable="true"
+        android:focusable="true"
+        android:orientation="vertical">
 
-        />
+        <TextView
+            android:id="@+id/taskDescription_singleRow_textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:lines="1"
+            android:text="taskDescription_singleRow_textView"
+            android:textColor="@color/deskDescription"
+            android:textSize="@dimen/taskdesk_description"
+            android:textStyle="bold" />
 
+        <TextView
+            android:id="@+id/reward_singleRow_textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:lines="1"
+            android:text="reward_taskSingleRow_textView"
+            android:textColor="@color/reward"
+            android:textSize="@dimen/taskdesk_reward"
+            android:textStyle="bold" />
 
-    <CheckBox
-        android:id="@+id/isbooked_taskSingleRow_checkBox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="10dp"
-        android:clickable="false"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="5dp"
-        />
+    </LinearLayout>
 
-    <TextView
-        android:id="@+id/reward_taskSingleRow_textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toLeftOf="@id/isbooked_taskSingleRow_checkBox"
-        android:gravity="center"
-        android:layout_marginRight="10dp"
-        android:text="$$$"
-        android:textSize="20sp"
-        android:textColor="@color/gold"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="8dp"
-
-        />
     <TextView
         android:id="@+id/date_taskSingleRow_textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="10dp"
-        android:layout_marginBottom="5dp"
-        android:layout_above="@id/isbooked_taskSingleRow_checkBox"
-        android:text="06.08.2018"
+        android:layout_alignParentEnd="true"
+        android:textColor="@color/creationTime"
+        android:textSize="@dimen/timestamp"
+        android:textStyle="bold" />
 
-        />
-
+    <ImageView
+        android:id="@+id/status_taskSingleRow_imageView"
+        android:layout_width="@dimen/icon_status"
+        android:layout_height="@dimen/icon_status"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+         />
 
 </RelativeLayout>

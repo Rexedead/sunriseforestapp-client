@@ -37,7 +37,7 @@ public class RegistrationActivity extends AppCompatActivity {
             String login = mLoginEditText.getText().toString();
             String password = mPasswordEditText.getText().toString();
             String name = mNameEditText.getText().toString();
-            long phone = Long.parseLong(mPhoneNumberEditText.getText().toString());
+            String phone = mPhoneNumberEditText.getText().toString();
             mRegistrationPresenter.registration(new Contractor(password, login, name, phone));
         }
     };

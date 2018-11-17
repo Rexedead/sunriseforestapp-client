@@ -8,7 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
@@ -27,20 +27,36 @@ public class RecycleTaskAdapter extends RecyclerView.Adapter<RecycleTaskAdapter.
     }
 
     RecycleTaskAdapter(List<Task> taskList) {
-        this.mTaskList=taskList;
+        this.mTaskList = taskList;
 
-        notifyItemRangeChanged(0,taskList.size());
+        notifyItemRangeChanged(0, taskList.size());
     }
 
     @Override
     public void onBindViewHolder(@NonNull final TaskViewHolder task_holder, int position) {
         Task task = mTaskList.get(position);
-        task_holder.mReward.setText(String.valueOf(task.getReward()) + "руб.");
+        task_holder.mReward.setText(task.getReward() + " \u20BD");
         task_holder.mDate.setText(task.getCreationDate());
-        task_holder.mIsBooked.setChecked(task.isBooked());
+
+        switch (task.getStatus()) {
+            case 101:
+                task_holder.mStatus.setImageResource(R.drawable.status_101);
+                break;
+            case 102:
+                task_holder.mStatus.setImageResource(R.drawable.status_102);
+                break;
+            case 103:
+                task_holder.mStatus.setImageResource(R.drawable.status_103);
+                break;
+            case 104:
+                task_holder.mStatus.setImageResource(R.drawable.status_104);
+                break;
+            case 105:
+                task_holder.mStatus.setImageResource(R.drawable.status_105);
+                break;
+        }
+
         String taskDescription = task.getTaskDescription();
-        if(taskDescription.length() > 20)
-            taskDescription = taskDescription.substring(0,20) + "...";
         task_holder.mName.setText(taskDescription);
     }
 
@@ -51,15 +67,15 @@ public class RecycleTaskAdapter extends RecyclerView.Adapter<RecycleTaskAdapter.
 
     class TaskViewHolder extends RecyclerView.ViewHolder {
         TextView mName, mReward, mDate;
-        CheckBox mIsBooked;
+        ImageView mStatus;
 
 
         TaskViewHolder(@NonNull View view) {
             super(view);
-            mName = view.findViewById(R.id.name_taskSingleRow_textView);
-            mReward = view.findViewById(R.id.reward_taskSingleRow_textView);
+            mName = view.findViewById(R.id.taskDescription_singleRow_textView);
+            mReward = view.findViewById(R.id.reward_singleRow_textView);
             mDate = view.findViewById(R.id.date_taskSingleRow_textView);
-            mIsBooked = view.findViewById(R.id.isbooked_taskSingleRow_checkBox);
+            mStatus = view.findViewById(R.id.status_taskSingleRow_imageView);
 
         }
 

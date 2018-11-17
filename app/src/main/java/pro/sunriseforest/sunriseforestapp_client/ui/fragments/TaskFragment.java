@@ -40,8 +40,8 @@ public class TaskFragment extends Fragment {
         TextView mTaskDate = view.findViewById(R.id.task_date_textView);
         mTaskDate.setText(mSingleTask.getCreationDate());
 
-        CheckBox mTaskIsBooked = view.findViewById(R.id.task_is_booked_checkBox);
-        mTaskIsBooked.setChecked(mSingleTask.isBooked());
+//        CheckBox mTaskIsBooked = view.findViewById(R.id.task_is_booked_checkBox);
+//        mTaskIsBooked.setChecked(mSingleTask.getStatus());
 
         TextView text = view.findViewById(R.id.task_text_textView);
         text.setText(mSingleTask.getTaskDescription());

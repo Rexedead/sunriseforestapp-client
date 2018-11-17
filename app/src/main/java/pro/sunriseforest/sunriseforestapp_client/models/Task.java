@@ -21,40 +21,42 @@ public class Task {
     @SerializedName("deadlineDate")
     private String mDeadlineDate;
 
-    @SerializedName("isBooked")
-    private boolean mIsBooked;
+    @SerializedName("startDate")
+    private String mStartDate;
+
+    /*
+    Размещено 101
+    Взято 102
+    Изменено 103
+    Отменено 104
+    Выполнено 105
+    */
+
+    @SerializedName("status")
+    private byte mStatus;
 
     @SerializedName("reward")
-    private int mReward;
+    private String mReward;
 
 
     public Task(int id,
                 String taskDescription,
-                boolean isBooked,
+                byte status,
                 String creationDate,
-
-                int reward) {
+                String reward) {
         mId = id;
         mTaskDescription = taskDescription;
-        mIsBooked = isBooked;
+        mStatus = status;
         mCreationDate = creationDate;
         mReward = reward;
     }
 
-    public Task(int id, String taskDescription, String creationDate, String name, String address, int reward) {
-        mId = id;
-        mTaskDescription = taskDescription;
-        mCreationDate = creationDate;
 
-        mIsBooked = false;
-        mReward = reward;
-    }
-
-    public int getReward() {
+    public String getReward() {
         return mReward;
     }
 
-    public void setReward(int reward) {
+    public void setReward(String reward) {
         mReward = reward;
     }
 
@@ -78,12 +80,8 @@ public class Task {
         mTaskDescription = taskDescription;
     }
 
-    public boolean isBooked() {
-        return mIsBooked;
-    }
-
-    public void setBooked(boolean booked) {
-        mIsBooked = booked;
+    public byte getStatus() {
+        return mStatus;
     }
 
     public Contractor getContractor() {
@@ -100,7 +98,7 @@ public class Task {
 
     public Task copy(){
 
-        return new Task(mId, mTaskDescription, mIsBooked,
+        return new Task(mId, mTaskDescription, mStatus,
                 mCreationDate, mReward);
     }
 

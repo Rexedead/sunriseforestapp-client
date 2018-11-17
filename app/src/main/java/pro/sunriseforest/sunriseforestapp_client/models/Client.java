@@ -11,9 +11,9 @@ public class Client {
     private String mName;
 
     @SerializedName("phone")
-    private long mPhoneNumber;
+    private String mPhoneNumber;
 
-    public Client(int id, String name, long phoneNumber) {
+    public Client(int id, String name, String phoneNumber) {
         mId = id;
         mName = name;
         mPhoneNumber = phoneNumber;
@@ -27,7 +27,7 @@ public class Client {
         return mName;
     }
 
-    public long getPhoneNumber() {
+    public String getPhoneNumber() {
         return mPhoneNumber;
     }
 }
