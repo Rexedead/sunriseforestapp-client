@@ -15,12 +15,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import pro.sunriseforest.sunriseforestapp_client.models.Contractor;
+import pro.sunriseforest.sunriseforestapp_client.models.User;
 
 public class SharedPreferenceHelper {
 
     private static final String SHARED_PREF_NAME = "sunriseforestapp-client";
     private static final String TOKEN_TAG = "TOKEN_TAG";
-    private static final String MY_CONTRACTOR_TAG = "MY_CONTRACTOR_TAG";
+    private static final String MY_USER_TAG = "MY_USER_TAG";
 
 
     private SharedPreferences mSharedPreferences;
@@ -30,21 +31,21 @@ public class SharedPreferenceHelper {
     }
 
     public @Nullable
-    Contractor getMyConractor(){
-        Contractor contractor;
-        String jsonToken = mSharedPreferences.getString(MY_CONTRACTOR_TAG, "");
+    User getMyUser(){
+        User user;
+        String jsonToken = mSharedPreferences.getString(MY_USER_TAG, "");
         if(jsonToken.length() == 0){
             return null;
         }
         Moshi moshi = new Moshi.Builder().build();
-        JsonAdapter<Contractor> jsonAdapter = moshi.adapter(Contractor.class);
+        JsonAdapter<User> jsonAdapter = moshi.adapter(User.class);
         try {
-            contractor = jsonAdapter.fromJson(jsonToken);
+            user = jsonAdapter.fromJson(jsonToken);
         } catch (IOException e) {
             Log.e("SharedPreferenceHelper", "не удалось перевести json в Contractor");
             return null;
         }
-        return contractor;
+        return user;
 
     }
 
@@ -64,20 +65,19 @@ public class SharedPreferenceHelper {
     }
 
 
-
-    public void saveContractor(Contractor contractor){
+    public void saveUser(User user){
         Moshi moshi = new Moshi.Builder().build();
-        JsonAdapter<Contractor> jsonAdapter = moshi.adapter(Contractor.class);
-        String jsonContractor = jsonAdapter.toJson(contractor);
+        JsonAdapter<User> jsonAdapter = moshi.adapter(User.class);
+        String jsonUser = jsonAdapter.toJson(user);
         mSharedPreferences.edit()
-                .putString(MY_CONTRACTOR_TAG, jsonContractor)
+                .putString(MY_USER_TAG, jsonUser)
                 .apply();
     }
 
 
-    public void removeContactor(){
+    public void removeUser(){
         mSharedPreferences.edit()
-                .putString(MY_CONTRACTOR_TAG, null)
+                .putString(MY_USER_TAG, null)
                 .apply();
     }
 

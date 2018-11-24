@@ -67,34 +67,14 @@
         app:layout_constraintStart_toEndOf="@+id/newTask_description_textView" />
 
     <TextView
-        android:id="@+id/newTask_address_textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="36dp"
-        android:text="Адрес"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/newTask_description_textView" />
-
-    <EditText
-        android:id="@+id/newTask_address_editText"
-        android:layout_width="174dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="52dp"
-        android:inputType="textMultiLine"
-        android:textSize="12sp"
-        app:layout_constraintBaseline_toBaselineOf="@+id/newTask_address_textView"
-        app:layout_constraintStart_toEndOf="@+id/newTask_address_textView" />
-
-    <TextView
         android:id="@+id/newTask_reward_textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="80dp"
         android:text="Награда"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/newTask_address_textView" />
+        app:layout_constraintTop_toBottomOf="@+id/newTask_description_textView" />
 
     <EditText
         android:id="@+id/newTask_reward_editText"
@@ -122,9 +102,10 @@
         android:id="@+id/newTask_deadline_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="44dp"
         android:text="Выбрать дату"
         app:layout_constraintBaseline_toBaselineOf="@+id/newTask_deadline_textView"
-        app:layout_constraintStart_toEndOf="@+id/newTask_deadline_textView"/>
+        app:layout_constraintStart_toEndOf="@+id/newTask_deadline_textView" />
 
 
     <Button

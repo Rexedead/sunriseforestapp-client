@@ -11,14 +11,13 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import pro.sunriseforest.sunriseforestapp_client.R;
-import pro.sunriseforest.sunriseforestapp_client.models.Contractor;
+import pro.sunriseforest.sunriseforestapp_client.models.User;
 import pro.sunriseforest.sunriseforestapp_client.presenter.PresenterManager;
 import pro.sunriseforest.sunriseforestapp_client.presenter.RegistrationPresenter;
 
 public class RegistrationActivity extends AppCompatActivity {
 
-    private Button mRegistrationButton;
-    private EditText mLoginEditText;
+    private EditText mMailEditText;
     private EditText mPasswordEditText;
     private EditText mPhoneNumberEditText;
     private EditText mNameEditText;
@@ -34,11 +33,13 @@ public class RegistrationActivity extends AppCompatActivity {
     private View.OnClickListener mOnClickListenerLogInButton = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            String login = mLoginEditText.getText().toString();
-            String password = mPasswordEditText.getText().toString();
-            String name = mNameEditText.getText().toString();
+            String mail = mMailEditText.getText().toString();
             String phone = mPhoneNumberEditText.getText().toString();
-            mRegistrationPresenter.registration(new Contractor(password, login, name, phone));
+            String name = mNameEditText.getText().toString();
+            String password = mPasswordEditText.getText().toString();
+
+
+            mRegistrationPresenter.registration(new User(password, phone, mail, name));
         }
     };
 
@@ -47,9 +48,9 @@ public class RegistrationActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.registration_activity);
-        mRegistrationButton = findViewById(R.id.registration_button);
+        Button mRegistrationButton = findViewById(R.id.registration_button);
         mRegistrationButton.setOnClickListener(mOnClickListenerLogInButton);
-        mLoginEditText = findViewById(R.id.enter_login_regAct_editText);
+        mMailEditText = findViewById(R.id.enter_mail_regAct_editText);
         mPasswordEditText = findViewById(R.id.enter_password_regAct_editText);
         mPhoneNumberEditText = findViewById(R.id.enter_phone_regAct_editText);
         mNameEditText = findViewById(R.id.enter_name_regAct_editText);

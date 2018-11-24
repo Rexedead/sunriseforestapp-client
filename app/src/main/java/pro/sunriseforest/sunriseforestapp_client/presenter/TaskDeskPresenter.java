@@ -1,5 +1,6 @@
 package pro.sunriseforest.sunriseforestapp_client.presenter;
 
+import android.support.annotation.NonNull;
 import android.util.Log;
 
 import java.util.List;
@@ -21,10 +22,9 @@ public class TaskDeskPresenter extends AppPresenter<TaskDeskActivity>{
 
     private DataBaseHelper mDataBaseHelper;
 
+
     public TaskDeskPresenter(){
-
         mDataBaseHelper = DataBaseHelper.getInstance();
-
     }
 
     public void initTaskDeskActivity(TaskDeskActivity activity) {
@@ -36,19 +36,54 @@ public class TaskDeskPresenter extends AppPresenter<TaskDeskActivity>{
                 int code = resp.code();
 
                 if(code == 200){
-                    mDataBaseHelper.cacheTasks(resp.body());
+//                    mDataBaseHelper.cacheTasks(resp.body());
+                    List<Task> tasks = resp.body();
+                    mActivity.showListTask(tasks);
                 }else {
-                    Log.e("RegistrationPresenter", resp.message());
+                    Log.e("TaskDeskPresenter", resp.message());
                 }
             }
 
             @Override
             public void onFailure(Call<List<Task>> call, Throwable t) {
-                Log.e("RegistrationPresenter", t.getMessage());
+                Log.e("TaskDeskPresenter", t.getMessage());
             }
         });
 
 
+    }
+
+
+
+    public void openSelectedTask(int task_id) {
+        Call<List<Task>> call = ApiFactory.getSunriseForestService().getTask(task_id);
+
+        call.enqueue(new Callback<List<Task>>() {
+            @Override
+            public void onResponse(@NonNull Call<List<Task>> call, @NonNull Response<List<Task>> resp) {
+                int code = resp.code();
+
+                if(code == 200){
+                        List<Task> task = resp.body();
+                        mActivity.showSingleTask(task);
+//                      mDataBaseHelper.cacheTasks(resp.body());
+                }else {
+                    Log.e("TaskDeskPresenter", resp.message());
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<List<Task>> call, @NonNull Throwable t) {
+                Log.e("TaskDeskPresenter", t.getMessage());
+            }
+        });
+
+
+    }
+
+
+    public void fabAction(){
+       mActivity.createNewTask();
     }
 
     @Override
@@ -59,29 +94,30 @@ public class TaskDeskPresenter extends AppPresenter<TaskDeskActivity>{
 
         call.enqueue(new Callback<List<Task>>() {
             @Override
-            public void onResponse(Call<List<Task>> call, Response<List<Task>> resp) {
+            public void onResponse(@NonNull Call<List<Task>> call, @NonNull Response<List<Task>> resp) {
                 int code = resp.code();
 
                 if(code == 200){
                     List<Task> tasks = resp.body();
 
-                    mDataBaseHelper.cacheTasks(tasks);
+//                    mDataBaseHelper.cacheTasks(tasks);
                     mActivity.showListTask(tasks);
                 }else {
-                    Log.e("RegistrationPresenter", resp.message());
+                    Log.e("TaskDeskPresenter", resp.message());
                 }
 
             }
 
             @Override
-            public void onFailure(Call<List<Task>> call, Throwable t) {
-                Log.e("RegistrationPresenter", t.getMessage());
+            public void onFailure(@NonNull Call<List<Task>> call, @NonNull Throwable t) {
+                Log.e("TaskDeskPresenter", t.getMessage());
             }
         });
 
 
 
     }
+
 
 
     @Override

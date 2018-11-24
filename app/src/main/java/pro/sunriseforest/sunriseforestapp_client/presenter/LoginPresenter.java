@@ -1,12 +1,11 @@
 package pro.sunriseforest.sunriseforestapp_client.presenter;
 
 
+import android.support.annotation.NonNull;
 import android.util.Log;
 
-import java.io.IOException;
-
 import pro.sunriseforest.sunriseforestapp_client.SunriseForestApp;
-import pro.sunriseforest.sunriseforestapp_client.models.Contractor;
+import pro.sunriseforest.sunriseforestapp_client.models.User;
 import pro.sunriseforest.sunriseforestapp_client.net.ApiFactory;
 import pro.sunriseforest.sunriseforestapp_client.options.SharedPreferenceHelper;
 import pro.sunriseforest.sunriseforestapp_client.ui.LoginActivity;
@@ -24,12 +23,12 @@ public class LoginPresenter extends AppPresenter<LoginActivity> {
     private SharedPreferenceHelper mPreferenceHelper;
 
 
-    public LoginPresenter(){
+    LoginPresenter(){
         mPreferenceHelper = new SharedPreferenceHelper(SunriseForestApp.getAppContext());
     }
     @Override
     public void update() {
-        if(mPreferenceHelper.getMyConractor() != null){
+        if(mPreferenceHelper.getMyUser() != null){
             mActivity.showTaskDeskActivity();
         }
     }
@@ -40,27 +39,27 @@ public class LoginPresenter extends AppPresenter<LoginActivity> {
 
     public void login(String login, String password){
 
-            Call<Contractor> call = ApiFactory.getSunriseForestService().login(login, password);
-            call.enqueue(new Callback<Contractor>() {
+        Call<User> call = ApiFactory.getSunriseForestService().userLogin(login, password);
+        call.enqueue(new Callback<User>() {
 
-                @Override
-                public void onResponse(Call<Contractor> call, Response<Contractor> response) {
+            @Override
+            public void onResponse(@NonNull Call<User> call, @NonNull Response<User> response) {
 
-                    int code = response.code();
-                    Contractor contractor = response.body();
-                    if(contractor != null){
-                        mPreferenceHelper.saveContractor(contractor);
-                        mActivity.showTaskDeskActivity();
-                    }
-                    showErrorByCode(code);
-
+                int code = response.code();
+                User user = response.body();
+                if(user != null){
+                    mPreferenceHelper.saveUser(user);
+                    mActivity.showTaskDeskActivity();
                 }
+                showErrorByCode(code);
 
-                @Override
-                public void onFailure(Call<Contractor> call, Throwable t) {
-                    Log.e("LoginPresenter", t.getMessage());
-                }
-            });
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<User> call, @NonNull Throwable t) {
+                Log.e("LoginPresenter", t.getMessage());
+            }
+        });
 
 
     }

@@ -12,7 +12,7 @@ public class ProfilePresenter extends AppPresenter<ProfileActivity> {
     public static String TAG = "PROFILE_PRESENTER";
     private SharedPreferenceHelper mPreferenceHelper;
 
-    public ProfilePresenter() {
+    ProfilePresenter() {
         mPreferenceHelper = new SharedPreferenceHelper(SunriseForestApp.getAppContext());
     }
 
@@ -27,12 +27,12 @@ public class ProfilePresenter extends AppPresenter<ProfileActivity> {
     }
 
     public void exitFromApp() {
-        mPreferenceHelper.removeContactor();
+        mPreferenceHelper.removeUser();
         mActivity.showLoginActivity();
     }
 
     public String getUserLogin() {
-        return Objects.requireNonNull(mPreferenceHelper.getMyConractor().getLogin());
+        return Objects.requireNonNull(Objects.requireNonNull(mPreferenceHelper.getMyUser()).getmMail());
     }
 
 }

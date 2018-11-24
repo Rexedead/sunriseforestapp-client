@@ -4,13 +4,13 @@ import com.google.gson.annotations.SerializedName;
 
 public class Client {
 
-    @SerializedName("id")
+    @SerializedName("sr_client_id")
     private int mId;
 
-    @SerializedName("name")
+    @SerializedName("sr_client_name")
     private String mName;
 
-    @SerializedName("phone")
+    @SerializedName("sr_client_phone")
     private String mPhoneNumber;
 
     public Client(int id, String name, String phoneNumber) {

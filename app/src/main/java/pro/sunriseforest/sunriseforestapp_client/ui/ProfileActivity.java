@@ -1,8 +1,5 @@
 package pro.sunriseforest.sunriseforestapp_client.ui;
 
-
-
-
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -20,9 +17,9 @@ import pro.sunriseforest.sunriseforestapp_client.presenter.ProfilePresenter;
 public class ProfileActivity extends AppCompatActivity {
 
     Button mRemoveTokenButton;
-    TextView mUserLogin;
+    TextView mUserLoginTextView;
 
-    private TextView mTextMessage;
+    private TextView mTextMessageTextView;
     private BottomNavigationView mNavigation;
     private ProfilePresenter mPresenter;
 
@@ -40,7 +37,7 @@ public class ProfileActivity extends AppCompatActivity {
 
                     return true;
                 case R.id.navigation_notifications:
-                    mTextMessage.setText(R.string.title_notifications);
+                    mTextMessageTextView.setText(R.string.title_notifications);
                     return true;
             }
             return false;
@@ -62,7 +59,7 @@ public class ProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.profile_activity);
 
-        mTextMessage = findViewById(R.id.message);
+        mTextMessageTextView = findViewById(R.id.message);
         setBottomMenuItem();
         mNavigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         mPresenter =(ProfilePresenter) PresenterManager.getInstance().getPresenter(ProfilePresenter.TAG);
@@ -70,9 +67,8 @@ public class ProfileActivity extends AppCompatActivity {
         mRemoveTokenButton = findViewById(R.id.removeToken_button);
         mRemoveTokenButton.setOnClickListener(mOnClickRemoveTokenData);
 
-        mUserLogin = findViewById(R.id.profileId_textView);
-        mUserLogin.setText(mPresenter.getUserLogin());
-
+        mUserLoginTextView = findViewById(R.id.profileId_textView);
+        mUserLoginTextView.setText(mPresenter.getUserLogin());
 
     }
 

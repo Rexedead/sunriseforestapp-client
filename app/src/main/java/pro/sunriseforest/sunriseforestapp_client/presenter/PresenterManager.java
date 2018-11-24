@@ -1,6 +1,5 @@
 package pro.sunriseforest.sunriseforestapp_client.presenter;
 
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,6 +22,7 @@ public class PresenterManager {
         mPresenters.add(new RegistrationPresenter());
         mPresenters.add(new TaskDeskPresenter());
         mPresenters.add(new ProfilePresenter());
+        mPresenters.add(new NewTaskPresenter());
     }
 
     public AppPresenter getPresenter (String tag){

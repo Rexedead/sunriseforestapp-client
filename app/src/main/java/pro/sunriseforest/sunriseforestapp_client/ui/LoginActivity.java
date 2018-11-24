@@ -15,8 +15,6 @@ import pro.sunriseforest.sunriseforestapp_client.presenter.LoginPresenter;
 import pro.sunriseforest.sunriseforestapp_client.presenter.PresenterManager;
 
 public class LoginActivity extends AppCompatActivity {
-    private Button mLogInButton;
-    private Button mRegistrationButton;
     private EditText mLoginEditText;
     private  EditText mPasswordEditText;
 
@@ -52,14 +50,14 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_activity);
 
-        mLogInButton = findViewById(R.id.log_in_button);
+        Button mLogInButton = findViewById(R.id.log_in_button);
         mLogInButton.setOnClickListener(mOnClickListenerLogInButton);
 
         mLoginEditText = findViewById(R.id.enter_login_editText);
 
         mPasswordEditText = findViewById(R.id.enter_password_editText);
 
-        mRegistrationButton = findViewById(R.id.registration_logAct_button);
+        Button mRegistrationButton = findViewById(R.id.registration_logAct_button);
         mRegistrationButton.setOnClickListener(mOnClickListenerRegistrationButton);
 
         mPresenter =(LoginPresenter) PresenterManager.getInstance().getPresenter(LoginPresenter.TAG);

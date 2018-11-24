@@ -1,11 +1,10 @@
 package pro.sunriseforest.sunriseforestapp_client.presenter;
 
+import android.support.annotation.NonNull;
 import android.util.Log;
 
-import java.io.IOException;
-
 import pro.sunriseforest.sunriseforestapp_client.SunriseForestApp;
-import pro.sunriseforest.sunriseforestapp_client.models.Contractor;
+import pro.sunriseforest.sunriseforestapp_client.models.User;
 import pro.sunriseforest.sunriseforestapp_client.net.ApiFactory;
 import pro.sunriseforest.sunriseforestapp_client.options.SharedPreferenceHelper;
 import pro.sunriseforest.sunriseforestapp_client.ui.RegistrationActivity;
@@ -38,15 +37,15 @@ public class RegistrationPresenter extends AppPresenter<RegistrationActivity> {
         return TAG;
     }
 
-    public void registration(final Contractor contractor){
-        Call<Contractor> call = ApiFactory.getSunriseForestService().registration(contractor);
-        call.enqueue(new Callback<Contractor>() {
+    public void registration(final User user){
+        Call<User> call = ApiFactory.getSunriseForestService().userRegistration(user);
+        call.enqueue(new Callback<User>() {
             @Override
-            public void onResponse(Call<Contractor> call, Response<Contractor> response) {
+            public void onResponse(@NonNull Call<User> call, @NonNull Response<User> response) {
 
                 int code = response.code();
                 if(code == 200){
-                    mPreferenceHelper.saveContractor(response.body());
+                    mPreferenceHelper.saveUser(response.body());
                     mActivity.showTaskDeskActivity();
                 }else if(code == 401){
                     mActivity.showError("этот логин уже занят");
@@ -59,7 +58,7 @@ public class RegistrationPresenter extends AppPresenter<RegistrationActivity> {
             }
 
             @Override
-            public void onFailure(Call<Contractor> call, Throwable t) {
+            public void onFailure(@NonNull Call<User> call, @NonNull Throwable t) {
                 Log.e("RegistrationPresenter", t.getMessage());
 
             }

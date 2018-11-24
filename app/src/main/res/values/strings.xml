@@ -3,7 +3,7 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
-    <string name="enter_login_hint">Введите логин</string>
+    <string name="enter_login_hint">Введите почту</string>
     <string name="enter_password_hint">Введите пароль</string>
     <string name="log_in">Войти</string>
     <string name="registration_logAct_button">Регистрация</string>

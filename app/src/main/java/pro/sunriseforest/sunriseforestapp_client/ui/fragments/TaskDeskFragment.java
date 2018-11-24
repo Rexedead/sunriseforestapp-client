@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Moshi;
@@ -26,6 +27,7 @@ import java.util.List;
 import java.util.Objects;
 import pro.sunriseforest.sunriseforestapp_client.R;
 import pro.sunriseforest.sunriseforestapp_client.models.Task;
+import pro.sunriseforest.sunriseforestapp_client.presenter.TaskDeskPresenter;
 
 
 public class TaskDeskFragment extends Fragment  {
@@ -89,12 +91,13 @@ public class TaskDeskFragment extends Fragment  {
                 mRecyclerView, new iClickListener() {
             @Override
             public void onClick(View view, int position) {
-                mListener.onFragmentInteraction(position, TaskFragment.newInstance(mTaskList.get(position)));
+
+                mListener.onFragmentInteraction(mTaskList.get(position).getmTaskID());
             }
 
             @Override
             public void onLongClick(View view, int position) {
-
+                Toast.makeText(getContext(),"What the fuck?", Toast.LENGTH_SHORT).show();
             }
         }));
         return view;
@@ -109,7 +112,7 @@ public class TaskDeskFragment extends Fragment  {
 
 
     public interface iOnFragmentInteractionListener {
-        void onFragmentInteraction(int i, Fragment f);
+        void onFragmentInteraction(int i);
     }
 }
 

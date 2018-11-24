@@ -2,29 +2,7 @@ package pro.sunriseforest.sunriseforestapp_client.models;
 
 import com.google.gson.annotations.SerializedName;
 
-public class Task {
-
-    private int mId;
-
-    @SerializedName("contractor")
-    private Contractor mContractor;
-
-    @SerializedName("client")
-    private Client mClient;
-
-    @SerializedName("taskDescription")
-    private String mTaskDescription;
-
-    @SerializedName("creationDate")
-    private String mCreationDate;
-
-    @SerializedName("deadlineDate")
-    private String mDeadlineDate;
-
-    @SerializedName("startDate")
-    private String mStartDate;
-
-    /*
+   /*
     Размещено 101
     Взято 102
     Изменено 103
@@ -32,24 +10,46 @@ public class Task {
     Выполнено 105
     */
 
-    @SerializedName("status")
+public class Task {
+
+    @SerializedName("sr_contractor_id")
+    private User mContractor;
+
+    @SerializedName("sr_client_id")
+    private Client mClient;
+
+    @SerializedName("sr_task_id")
+    private int mTaskID;
+
+    @SerializedName("sr_task_description")
+    private String mTaskDescription;
+
+    @SerializedName("sr_task_creation_date")
+    private String mCreationDate;
+
+    @SerializedName("sr_task_deadline")
+    private String mDeadlineDate;
+
+    @SerializedName("sr_task_start_date")
+    private String mStartDate;
+
+     @SerializedName("sr_task_status")
     private byte mStatus;
 
-    @SerializedName("reward")
+    @SerializedName("sr_task_reward")
     private int mReward;
 
 
-    public Task(int id,
-                String taskDescription,
-                byte status,
-                String creationDate,
-                int reward) {
-        mId = id;
-        mTaskDescription = taskDescription;
-        mStatus = status;
-        mCreationDate = creationDate;
-        mReward = reward;
+    public Task(String mTaskDescription, String mCreationDate, String mDeadlineDate, String mStartDate, byte mStatus, int mReward) {
+        this.mTaskDescription = mTaskDescription;
+        this.mCreationDate = mCreationDate;
+        this.mDeadlineDate = mDeadlineDate;
+        this.mStartDate = mStartDate;
+        this.mStatus = mStatus;
+        this.mReward = mReward;
     }
+
+
 
 
     public int getReward() {
@@ -58,14 +58,6 @@ public class Task {
 
     public void setReward(int reward) {
         mReward = reward;
-    }
-
-    public int getId() {
-        return mId;
-    }
-
-    public void setId(int id) {
-        mId = id;
     }
 
     public String getCreationDate() {
@@ -84,7 +76,7 @@ public class Task {
         return mStatus;
     }
 
-    public Contractor getContractor() {
+    public User getContractor() {
         return mContractor;
     }
 
@@ -96,11 +88,15 @@ public class Task {
         return mDeadlineDate;
     }
 
-    public Task copy(){
-
-        return new Task(mId, mTaskDescription, mStatus,
-                mCreationDate, mReward);
+    public String getmStartDate() {
+        return mStartDate;
     }
 
+    public int getmTaskID() {
+        return mTaskID;
+    }
+    public void setmTaskID(int mTaskID) {
+        this.mTaskID = mTaskID;
+    }
 
 }

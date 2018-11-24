@@ -6,6 +6,7 @@ import pro.sunriseforest.sunriseforestapp_client.models.Task;
 import pro.sunriseforest.sunriseforestapp_client.presenter.PresenterManager;
 import pro.sunriseforest.sunriseforestapp_client.presenter.TaskDeskPresenter;
 import pro.sunriseforest.sunriseforestapp_client.ui.fragments.TaskDeskFragment;
+import pro.sunriseforest.sunriseforestapp_client.ui.fragments.TaskFragment;
 
 import android.content.Context;
 import android.content.Intent;
@@ -30,10 +31,21 @@ import java.util.List;
 
 public class TaskDeskActivity extends AppCompatActivity implements TaskDeskFragment.iOnFragmentInteractionListener {
 
+    private TaskDeskPresenter mPresenter;
+    private String jsonListTask;
     public static void startActivity(Context context) {
         Intent intent = new Intent(context, TaskDeskActivity.class);
         context.startActivity(intent);
     }
+
+
+    View.OnClickListener mOnClickFabButton = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            mPresenter.fabAction();
+        }
+    };
+
 
     private final BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -54,21 +66,13 @@ public class TaskDeskActivity extends AppCompatActivity implements TaskDeskFragm
         }
     };
 
-    private TaskDeskPresenter mPresenter;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.taskdesk_activity);
 
         FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(TaskDeskActivity.this, NewTaskActivity.class);
-                startActivity(intent);
-            }
-        });
+        fab.setOnClickListener(mOnClickFabButton);
 
         BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
@@ -103,7 +107,7 @@ public class TaskDeskActivity extends AppCompatActivity implements TaskDeskFragm
         //Проверяем сколько фрагментов открыто в активити,
         // если > 0 - возвращяем предыдущий фрагмент
         // если < 0 - закрываем приложение
-        System.out.println(getSupportFragmentManager().getBackStackEntryCount());
+        System.out.println("getBackStackEntryCount(): " + getSupportFragmentManager().getBackStackEntryCount());
         if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
             getSupportFragmentManager().popBackStack();
         } else {
@@ -117,24 +121,42 @@ public class TaskDeskActivity extends AppCompatActivity implements TaskDeskFragm
     }
 
     public void showListTask(List<Task> tasks) {
+        jsonListTask = jParser(tasks);
+        initFragment(TaskDeskFragment.newInstance(jsonListTask), null);
+        System.out.println("getBackStackEntryCount(): " + getSupportFragmentManager().getBackStackEntryCount());
+    }
+
+    public void showSingleTask(List<Task> task) {
+        jsonListTask = jParser(task);
+        initFragment(TaskFragment.newInstance(jsonListTask), "SingleTask");
+        System.out.println("getBackStackEntryCount(): " + getSupportFragmentManager().getBackStackEntryCount());
+    }
+
+    public String jParser(List<Task> unparsedtask){
         Moshi moshi = new Moshi.Builder().build();
         Type type = Types.newParameterizedType(List.class, Task.class);
         JsonAdapter<List> jsonAdapter = moshi.adapter(type);
-        String jsonListTask = jsonAdapter.toJson(tasks);
+        return jsonAdapter.toJson(unparsedtask);
+    }
 
-        onFragmentInteraction(-1, TaskDeskFragment.newInstance(jsonListTask));
+    public void initFragment(Fragment f, String backstack){
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.taskdesk_activity, f);
+        transaction.addToBackStack(backstack);
+        transaction.commit();
     }
 
 
     @Override
-    public void onFragmentInteraction(int task_id, Fragment fragment) {
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.taskdesk_activity, fragment);
-        //не добавляем стартовый фрагмент в стек
-        if (task_id != -1) {
-            transaction.addToBackStack(null);
-        }
-        transaction.commit();
+    public void onFragmentInteraction(int task_id) {
+        mPresenter.openSelectedTask(task_id);
+//        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+//        transaction.replace(R.id.taskdesk_activity, TaskDeskFragment.newInstance(jsonListTask));
+//не добавляем стартовый фрагмент в стек
+//        if (task_id == -1) {
+//            transaction.addToBackStack(null);
+//        }
+//        transaction.commit();
     }
 
 
@@ -143,6 +165,10 @@ public class TaskDeskActivity extends AppCompatActivity implements TaskDeskFragm
         Menu menu = mNavigation.getMenu();
         MenuItem menuItem = menu.getItem(0);
         menuItem.setChecked(true);
+    }
+
+    public void createNewTask() {
+        NewTaskActivity.startActivity(this);
     }
 }
 

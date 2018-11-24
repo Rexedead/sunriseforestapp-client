@@ -3,19 +3,19 @@ package pro.sunriseforest.sunriseforestapp_client.models;
 import com.google.gson.annotations.SerializedName;
 
 public class Contractor {
-    @SerializedName("id")
+    @SerializedName("sr_contractor_id")
     private int mId;
 
-    @SerializedName("password")
+    @SerializedName("sr_contractor_password")
     private String mPassword;
 
-    @SerializedName("login")
+    @SerializedName("sr_contractor_login")
     private  String mLogin;
 
-    @SerializedName("name")
+    @SerializedName("sr_contractor_name")
     private String mName;
 
-    @SerializedName("phoneNumber")
+    @SerializedName("sr_contractor_phone")
     private String mPhoneNumber;
 
     public Contractor(String password, String login, String name, String phoneNumber) {

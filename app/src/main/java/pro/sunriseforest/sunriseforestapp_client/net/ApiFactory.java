@@ -3,6 +3,7 @@ package pro.sunriseforest.sunriseforestapp_client.net;
 import android.support.annotation.NonNull;
 
 import okhttp3.OkHttpClient;
+import pro.sunriseforest.sunriseforestapp_client.date.DataBaseHelper;
 import retrofit2.Converter;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
@@ -11,7 +12,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ApiFactory {
 
     private static OkHttpClient sClient;
-
     private static final String API_ENDPOINT = "http://192.168.1.40:3000/";
 
     private static volatile SunriseForestService sSunriseForestService;
@@ -20,13 +20,12 @@ public class ApiFactory {
     }
 
     @NonNull
-    public static SunriseForestService getSunriseForestService(){
+    public static SunriseForestService getSunriseForestService() {
         SunriseForestService service = sSunriseForestService;
-        if(service == null){
-            synchronized (ApiFactory.class){
+        if (service == null) {
+            synchronized (ApiFactory.class) {
                 service = sSunriseForestService = buildRetrofit(
                         GsonConverterFactory.create(),
-                        API_ENDPOINT,
                         getClient())
                         .create(SunriseForestService.class);
 
@@ -36,10 +35,9 @@ public class ApiFactory {
     }
 
     private static Retrofit buildRetrofit(Converter.Factory converterFactory,
-                                          String baseUrl,
                                           OkHttpClient client) {
         return new Retrofit.Builder()
-                .baseUrl(baseUrl)
+                .baseUrl(ApiFactory.API_ENDPOINT)
                 .client(client)
                 .addConverterFactory(converterFactory)
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
@@ -62,8 +60,12 @@ public class ApiFactory {
 
     @NonNull
     private static OkHttpClient buildClient() {
-
+        String TAG = "APIService";
         return new OkHttpClient.Builder()
+                .addInterceptor(new DataBaseHelper.OfflineCacheInterceptor())
+                .addInterceptor(DataBaseHelper.loggingInterceptor(TAG))
+                .addNetworkInterceptor(new DataBaseHelper.NetworkCacheInterceptor())
+                .cache(DataBaseHelper.cacheTasks())
                 .build();
     }
 
