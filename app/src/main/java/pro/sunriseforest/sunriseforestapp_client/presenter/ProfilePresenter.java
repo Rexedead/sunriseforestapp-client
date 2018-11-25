@@ -3,6 +3,7 @@ package pro.sunriseforest.sunriseforestapp_client.presenter;
 import java.util.Objects;
 
 import pro.sunriseforest.sunriseforestapp_client.SunriseForestApp;
+import pro.sunriseforest.sunriseforestapp_client.models.User;
 import pro.sunriseforest.sunriseforestapp_client.options.SharedPreferenceHelper;
 import pro.sunriseforest.sunriseforestapp_client.ui.ProfileActivity;
 
@@ -31,8 +32,5 @@ public class ProfilePresenter extends AppPresenter<ProfileActivity> {
         mActivity.showLoginActivity();
     }
 
-    public String getUserLogin() {
-        return Objects.requireNonNull(Objects.requireNonNull(mPreferenceHelper.getMyUser()).getmMail());
-    }
 
 }

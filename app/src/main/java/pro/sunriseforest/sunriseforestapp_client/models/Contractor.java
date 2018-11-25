@@ -3,32 +3,28 @@ package pro.sunriseforest.sunriseforestapp_client.models;
 import com.google.gson.annotations.SerializedName;
 
 public class Contractor {
-    @SerializedName("sr_contractor_id")
+    @SerializedName("sr_user_id")
     private int mId;
 
-    @SerializedName("sr_contractor_password")
-    private String mPassword;
+    @SerializedName("sr_user_email")
+    private  String mEmail;
 
-    @SerializedName("sr_contractor_login")
-    private  String mLogin;
-
-    @SerializedName("sr_contractor_name")
+    @SerializedName("sr_user_name")
     private String mName;
 
-    @SerializedName("sr_contractor_phone")
+    @SerializedName("sr_user_phone")
     private String mPhoneNumber;
 
-    public Contractor(String password, String login, String name, String phoneNumber) {
-        mPassword = password;
-        mLogin = login;
+    public Contractor(String email, String name, String phoneNumber) {
+
+        mEmail = email;
         mName = name;
         mPhoneNumber = phoneNumber;
     }
 
-    public Contractor(String login, String password, int id) {
+    public Contractor(String email, int id) {
         mId = id;
-        mPassword = password;
-        mLogin = login;
+        mEmail = email;
     }
 
     public String getName() {
@@ -39,12 +35,9 @@ public class Contractor {
         return mPhoneNumber;
     }
 
-    public String getPassword() {
-        return mPassword;
-    }
 
-    public String getLogin() {
-        return mLogin;
+    public String getEmail() {
+        return mEmail;
     }
 
     public int getId() {
@@ -52,7 +45,7 @@ public class Contractor {
     }
 
     public Contractor copy(){
-        return new Contractor(mLogin,mPassword , mId);
+        return new Contractor(mEmail, mId);
     }
 
 }

@@ -27,7 +27,6 @@ import java.util.List;
 import java.util.Objects;
 import pro.sunriseforest.sunriseforestapp_client.R;
 import pro.sunriseforest.sunriseforestapp_client.models.Task;
-import pro.sunriseforest.sunriseforestapp_client.presenter.TaskDeskPresenter;
 
 
 public class TaskDeskFragment extends Fragment  {
@@ -92,7 +91,7 @@ public class TaskDeskFragment extends Fragment  {
             @Override
             public void onClick(View view, int position) {
 
-                mListener.onFragmentInteraction(mTaskList.get(position).getmTaskID());
+                mListener.onFragmentInteraction(mTaskList.get(position).getTaskID());
             }
 
             @Override

@@ -12,7 +12,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ApiFactory {
 
     private static OkHttpClient sClient;
-    private static final String API_ENDPOINT = "http://192.168.1.40:3000/";
+    private static final String API_ENDPOINT = "http://192.168.1.7:3000/";
 
     private static volatile SunriseForestService sSunriseForestService;
 

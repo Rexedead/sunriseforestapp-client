@@ -39,13 +39,14 @@ public class LoginPresenter extends AppPresenter<LoginActivity> {
 
     public void login(String login, String password){
 
-        Call<User> call = ApiFactory.getSunriseForestService().userLogin(login, password);
+        Call<User> call = ApiFactory.getSunriseForestService().userLoginByEmail(login, password);
         call.enqueue(new Callback<User>() {
 
             @Override
             public void onResponse(@NonNull Call<User> call, @NonNull Response<User> response) {
 
                 int code = response.code();
+
                 User user = response.body();
                 if(user != null){
                     mPreferenceHelper.saveUser(user);

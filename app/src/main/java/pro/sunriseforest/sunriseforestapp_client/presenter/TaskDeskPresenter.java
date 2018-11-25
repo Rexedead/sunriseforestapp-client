@@ -5,9 +5,12 @@ import android.util.Log;
 
 import java.util.List;
 
+import pro.sunriseforest.sunriseforestapp_client.SunriseForestApp;
 import pro.sunriseforest.sunriseforestapp_client.date.DataBaseHelper;
 import pro.sunriseforest.sunriseforestapp_client.models.Task;
 import pro.sunriseforest.sunriseforestapp_client.net.ApiFactory;
+import pro.sunriseforest.sunriseforestapp_client.net.SunriseForestService;
+import pro.sunriseforest.sunriseforestapp_client.options.SharedPreferenceHelper;
 import pro.sunriseforest.sunriseforestapp_client.ui.TaskDeskActivity;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -20,15 +23,17 @@ public class TaskDeskPresenter extends AppPresenter<TaskDeskActivity>{
     private static final int CODE_SUCCESS = 1001;
     private static final int CODE_UNSUCCESS = 1002;
 
-    private DataBaseHelper mDataBaseHelper;
+    private SharedPreferenceHelper mPreferenceHelper;
 
 
     public TaskDeskPresenter(){
-        mDataBaseHelper = DataBaseHelper.getInstance();
+        mPreferenceHelper = new SharedPreferenceHelper(SunriseForestApp.getAppContext());
     }
 
     public void initTaskDeskActivity(TaskDeskActivity activity) {
-        Call<List<Task>> call = ApiFactory.getSunriseForestService().getTasks();
+
+        String token = mPreferenceHelper.getMyUser().getToken();
+        Call<List<Task>> call = ApiFactory.getSunriseForestService().getTasks(token);
 
         call.enqueue(new Callback<List<Task>>() {
             @Override
@@ -89,8 +94,8 @@ public class TaskDeskPresenter extends AppPresenter<TaskDeskActivity>{
     @Override
     public void update() {
 
-
-        Call<List<Task>> call = ApiFactory.getSunriseForestService().getTasks();
+        String token = mPreferenceHelper.getMyUser().getToken();
+        Call<List<Task>> call = ApiFactory.getSunriseForestService().getTasks(token);
 
         call.enqueue(new Callback<List<Task>>() {
             @Override

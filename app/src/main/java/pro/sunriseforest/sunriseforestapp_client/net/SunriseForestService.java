@@ -16,13 +16,13 @@ import retrofit2.http.Query;
 
 public interface SunriseForestService {
     @GET("data/tasks")
-    Call<List<Task>> getTasks();
+    Call<List<Task>> getTasks(@Query("token") String token);
 
     @GET("data/tasks/{id}")
     Call<List<Task>> getTask(@Path("id") int id);
 
     @GET("auth/login")
-    Call<User> userLogin(@Query("mail_or_phone")String mail, @Query("password") String password);
+    Call<User> userLoginByEmail(@Query("email")String mail, @Query("password") String password);
 
     @POST("auth/reg")
     Call<User> userRegistration(@Body User user);

@@ -35,11 +35,10 @@ public class RegistrationActivity extends AppCompatActivity {
         public void onClick(View view) {
             String mail = mMailEditText.getText().toString();
             String phone = mPhoneNumberEditText.getText().toString();
-            String name = mNameEditText.getText().toString();
             String password = mPasswordEditText.getText().toString();
 
 
-            mRegistrationPresenter.registration(new User(password, phone, mail, name));
+            mRegistrationPresenter.registration(new User(password, phone, mail));
         }
     };
 

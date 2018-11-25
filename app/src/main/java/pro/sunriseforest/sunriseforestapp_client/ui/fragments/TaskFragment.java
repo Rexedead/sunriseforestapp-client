@@ -83,7 +83,7 @@ public class TaskFragment extends Fragment {
         TextView contractor = view.findViewById(R.id.contractor_text_textView);
 
         if(mSingleTask.get(0).getContractor() != null){
-            contractor.setText(mSingleTask.get(0).getContractor().getmName());
+            contractor.setText(mSingleTask.get(0).getContractor().getName());
         }
 
         return view;

@@ -3,19 +3,17 @@ package pro.sunriseforest.sunriseforestapp_client.models;
 import com.google.gson.annotations.SerializedName;
 
    /*
-    Размещено 101
-    Взято 102
-    Изменено 103
-    Отменено 104
-    Выполнено 105
+    default 101
+    changed 102
+    done 103
     */
 
 public class Task {
 
-    @SerializedName("sr_contractor_id")
-    private User mContractor;
+    @SerializedName("sr_task_contractor")
+    private Contractor mContractor;
 
-    @SerializedName("sr_client_id")
+    @SerializedName("sr_task_client")
     private Client mClient;
 
     @SerializedName("sr_task_id")
@@ -76,7 +74,11 @@ public class Task {
         return mStatus;
     }
 
-    public User getContractor() {
+    public void setContractor(Contractor contractor) {
+        mContractor = contractor;
+    }
+
+    public Contractor getContractor() {
         return mContractor;
     }
 
@@ -92,10 +94,10 @@ public class Task {
         return mStartDate;
     }
 
-    public int getmTaskID() {
+    public int getTaskID() {
         return mTaskID;
     }
-    public void setmTaskID(int mTaskID) {
+    public void setTaskID(int mTaskID) {
         this.mTaskID = mTaskID;
     }
 

@@ -68,7 +68,7 @@ public class ProfileActivity extends AppCompatActivity {
         mRemoveTokenButton.setOnClickListener(mOnClickRemoveTokenData);
 
         mUserLoginTextView = findViewById(R.id.profileId_textView);
-        mUserLoginTextView.setText(mPresenter.getUserLogin());
+        mUserLoginTextView.setText("login");
 
     }
 
