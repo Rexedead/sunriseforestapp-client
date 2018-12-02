@@ -16,10 +16,6 @@ public class RegistrationPresenter extends AppPresenter<RegistrationActivity> {
 
     public static String TAG = "REGISTRATION_PRESENTER";
 
-    private static final int CODE_SUCCESS = 1001;
-    private static final int CODE_UNSUCCESS = 1002;
-    private static final int CODE_LOGIN_IS_BUSY = 1101;
-
 
     private SharedPreferenceHelper mPreferenceHelper;
 
@@ -47,15 +43,11 @@ public class RegistrationPresenter extends AppPresenter<RegistrationActivity> {
                 if(code == 200){
                     mPreferenceHelper.saveUser(response.body());
                     mActivity.showTaskDeskActivity();
-                }else if(code == 401){
-                    mActivity.showError("этот логин уже занят");
-                }else if(code == 400){
-                    mActivity.showError("проблемы на сервере. попробуйте еще раз");
-                }else{
-                    mActivity.showError("проблемы на сервере. Код ошибки " + code);
+                }else {
+                    showErrorByCode(code);
                 }
-
             }
+
 
             @Override
             public void onFailure(@NonNull Call<User> call, @NonNull Throwable t) {
@@ -65,7 +57,15 @@ public class RegistrationPresenter extends AppPresenter<RegistrationActivity> {
         });
 
 
-
+    }
+    private void showErrorByCode(int code){
+        if(code == 401){
+            mActivity.showError("этот логин уже занят");
+        }else if(code == 400){
+            mActivity.showError("проблемы на сервере. попробуйте еще раз");
+        }else{
+            mActivity.showError("проблемы на сервере. Код ошибки " + code);
+        }
     }
 
 }

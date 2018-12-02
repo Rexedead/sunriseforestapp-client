@@ -17,11 +17,7 @@ public class LoginPresenter extends AppPresenter<LoginActivity> {
 
     public static String TAG = "LOGIN_PRESENTER";
 
-    private static final int CODE_WRONG_PASSWORD = 1102;
-    private static final int CODE_WRONG_LOGIN = 1103;
-
     private SharedPreferenceHelper mPreferenceHelper;
-
 
     LoginPresenter(){
         mPreferenceHelper = new SharedPreferenceHelper(SunriseForestApp.getAppContext());
@@ -44,7 +40,6 @@ public class LoginPresenter extends AppPresenter<LoginActivity> {
 
             @Override
             public void onResponse(@NonNull Call<User> call, @NonNull Response<User> response) {
-
                 int code = response.code();
 
                 User user = response.body();
@@ -53,7 +48,6 @@ public class LoginPresenter extends AppPresenter<LoginActivity> {
                     mActivity.showTaskDeskActivity();
                 }
                 showErrorByCode(code);
-
             }
 
             @Override
@@ -61,9 +55,8 @@ public class LoginPresenter extends AppPresenter<LoginActivity> {
                 Log.e("LoginPresenter", t.getMessage());
             }
         });
-
-
     }
+
 
     private void showErrorByCode(int code){
         if(code == 401){

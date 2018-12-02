@@ -20,70 +20,47 @@ public class TaskDeskPresenter extends AppPresenter<TaskDeskActivity>{
 
     public static String TAG ="TASK_DESK_PRESENTER";
 
-    private static final int CODE_SUCCESS = 1001;
-    private static final int CODE_UNSUCCESS = 1002;
-
     private SharedPreferenceHelper mPreferenceHelper;
+
+    private List<Task> mTasks;
 
 
     public TaskDeskPresenter(){
         mPreferenceHelper = new SharedPreferenceHelper(SunriseForestApp.getAppContext());
     }
 
-    public void initTaskDeskActivity(TaskDeskActivity activity) {
+    public void initTaskDeskActivity() {
 
-        String token = mPreferenceHelper.getMyUser().getToken();
-        Call<List<Task>> call = ApiFactory.getSunriseForestService().getTasks(token);
-
-        call.enqueue(new Callback<List<Task>>() {
-            @Override
-            public void onResponse(Call<List<Task>> call, Response<List<Task>> resp) {
-                int code = resp.code();
-
-                if(code == 200){
-//                    mDataBaseHelper.cacheTasks(resp.body());
-                    List<Task> tasks = resp.body();
-                    mActivity.showListTask(tasks);
-                }else {
-                    Log.e("TaskDeskPresenter", resp.message());
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<Task>> call, Throwable t) {
-                Log.e("TaskDeskPresenter", t.getMessage());
-            }
-        });
+//        String token = mPreferenceHelper.getMyUser().getToken();
+//        Call<List<Task>> call = ApiFactory.getSunriseForestService().getTasks(token);
+//
+//        call.enqueue(new Callback<List<Task>>() {
+//            @Override
+//            public void onResponse(Call<List<Task>> call, Response<List<Task>> resp) {
+//                int code = resp.code();
+//
+//                if(code == 200){
+////                    mDataBaseHelper.cacheTasks(resp.body());
+//                    List<Task> tasks = resp.body();
+//                    mActivity.showListTask(tasks);
+//                }else {
+//                    Log.e("TaskDeskPresenter", resp.message());
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<List<Task>> call, Throwable t) {
+//                Log.e("TaskDeskPresenter", t.getMessage());
+//            }
+//        });
 
 
     }
 
 
 
-    public void openSelectedTask(int task_id) {
-        Call<List<Task>> call = ApiFactory.getSunriseForestService().getTask(task_id);
-
-        call.enqueue(new Callback<List<Task>>() {
-            @Override
-            public void onResponse(@NonNull Call<List<Task>> call, @NonNull Response<List<Task>> resp) {
-                int code = resp.code();
-
-                if(code == 200){
-                        List<Task> task = resp.body();
-                        mActivity.showSingleTask(task);
-//                      mDataBaseHelper.cacheTasks(resp.body());
-                }else {
-                    Log.e("TaskDeskPresenter", resp.message());
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<List<Task>> call, @NonNull Throwable t) {
-                Log.e("TaskDeskPresenter", t.getMessage());
-            }
-        });
-
-
+    public void clickedSelectedTask(int position) {
+       mActivity.showSingleTask(mTasks.get(position));
     }
 
 

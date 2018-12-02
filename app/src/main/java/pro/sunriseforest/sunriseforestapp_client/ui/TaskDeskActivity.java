@@ -17,6 +17,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -29,10 +30,10 @@ import java.lang.reflect.Type;
 import java.util.List;
 
 
-public class TaskDeskActivity extends AppCompatActivity implements TaskDeskFragment.iOnFragmentInteractionListener {
+public class TaskDeskActivity extends AppCompatActivity implements TaskDeskFragment.OnClickSingleRowListener {
 
     private TaskDeskPresenter mPresenter;
-    private String jsonListTask;
+
     public static void startActivity(Context context) {
         Intent intent = new Intent(context, TaskDeskActivity.class);
         context.startActivity(intent);
@@ -45,7 +46,6 @@ public class TaskDeskActivity extends AppCompatActivity implements TaskDeskFragm
             mPresenter.fabAction();
         }
     };
-
 
     private final BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -81,7 +81,7 @@ public class TaskDeskActivity extends AppCompatActivity implements TaskDeskFragm
                 .getPresenter(TaskDeskPresenter.TAG);
 
         mPresenter.bindActivity(this);
-        mPresenter.initTaskDeskActivity(this);
+//        mPresenter.initTaskDeskActivity();
     }
 
     @Override
@@ -107,7 +107,7 @@ public class TaskDeskActivity extends AppCompatActivity implements TaskDeskFragm
         //Проверяем сколько фрагментов открыто в активити,
         // если > 0 - возвращяем предыдущий фрагмент
         // если < 0 - закрываем приложение
-        System.out.println("getBackStackEntryCount(): " + getSupportFragmentManager().getBackStackEntryCount());
+        Log.i(this.getClass().getName(),"getBackStackEntryCount(): " + getSupportFragmentManager().getBackStackEntryCount());
         if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
             getSupportFragmentManager().popBackStack();
         } else {
@@ -121,21 +121,27 @@ public class TaskDeskActivity extends AppCompatActivity implements TaskDeskFragm
     }
 
     public void showListTask(List<Task> tasks) {
-        jsonListTask = jParser(tasks);
+        String jsonListTask = jParser(tasks);
         initFragment(TaskDeskFragment.newInstance(jsonListTask), null);
-        System.out.println("getBackStackEntryCount(): " + getSupportFragmentManager().getBackStackEntryCount());
+        Log.i(this.getClass().getName(),"getBackStackEntryCount(): " + getSupportFragmentManager().getBackStackEntryCount());
     }
 
-    public void showSingleTask(List<Task> task) {
-        jsonListTask = jParser(task);
-        initFragment(TaskFragment.newInstance(jsonListTask), "SingleTask");
-        System.out.println("getBackStackEntryCount(): " + getSupportFragmentManager().getBackStackEntryCount());
+    public void showSingleTask(Task task) {
+        String jsonTask = jParser(task);
+        initFragment(TaskFragment.newInstance(jsonTask), "SingleTask");
+        Log.i(this.getClass().getName(),"getBackStackEntryCount(): " + getSupportFragmentManager().getBackStackEntryCount());
     }
 
-    public String jParser(List<Task> unparsedtask){
+    private String jParser(List<Task> unparsedtask){
         Moshi moshi = new Moshi.Builder().build();
         Type type = Types.newParameterizedType(List.class, Task.class);
         JsonAdapter<List> jsonAdapter = moshi.adapter(type);
+        return jsonAdapter.toJson(unparsedtask);
+    }
+
+    private String jParser(Task unparsedtask){
+        Moshi moshi = new Moshi.Builder().build();
+        JsonAdapter<Task> jsonAdapter = moshi.adapter(Task.class);
         return jsonAdapter.toJson(unparsedtask);
     }
 
@@ -147,17 +153,7 @@ public class TaskDeskActivity extends AppCompatActivity implements TaskDeskFragm
     }
 
 
-    @Override
-    public void onFragmentInteraction(int task_id) {
-        mPresenter.openSelectedTask(task_id);
-//        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-//        transaction.replace(R.id.taskdesk_activity, TaskDeskFragment.newInstance(jsonListTask));
-//не добавляем стартовый фрагмент в стек
-//        if (task_id == -1) {
-//            transaction.addToBackStack(null);
-//        }
-//        transaction.commit();
-    }
+
 
 
     private void setBottomMenuItem() {
@@ -169,6 +165,12 @@ public class TaskDeskActivity extends AppCompatActivity implements TaskDeskFragm
 
     public void createNewTask() {
         NewTaskActivity.startActivity(this);
+    }
+
+
+    @Override
+    public void onClicked(View singleRowView, int position) {
+        mPresenter.clickedSelectedTask(position);
     }
 }
 

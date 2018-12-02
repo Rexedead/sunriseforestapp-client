@@ -2,6 +2,7 @@ package pro.sunriseforest.sunriseforestapp_client.options;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
@@ -26,6 +27,8 @@ public class SharedPreferenceHelper {
 
     private SharedPreferences mSharedPreferences;
 
+    private Moshi mMoshi = new Moshi.Builder().build();
+
     public SharedPreferenceHelper(Context context){
         mSharedPreferences = context.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
     }
@@ -37,12 +40,11 @@ public class SharedPreferenceHelper {
         if(jsonToken.length() == 0){
             return null;
         }
-        Moshi moshi = new Moshi.Builder().build();
-        JsonAdapter<User> jsonAdapter = moshi.adapter(User.class);
+        JsonAdapter<User> jsonAdapter = mMoshi.adapter(User.class);
         try {
             user = jsonAdapter.fromJson(jsonToken);
         } catch (IOException e) {
-            Log.e("SharedPreferenceHelper", "не удалось перевести json в Contractor");
+            Log.e("SharedPreferenceHelper", "не удалось перевести json в User");
             return null;
         }
         return user;
@@ -50,24 +52,31 @@ public class SharedPreferenceHelper {
     }
 
     public @Nullable String getToken(){
-        String token = mSharedPreferences.getString(TOKEN_TAG, "");
-        if(token.length() == 0){
-            return null;
-        }
-        return token;
+
+        return  mSharedPreferences.getString(TOKEN_TAG, "");
     }
 
-    public void saveToken(String token){
+    private void saveToken(String token){
 
         mSharedPreferences.edit()
                 .putString(TOKEN_TAG, token)
                 .apply();
     }
 
+    private void removeToken(){
+        mSharedPreferences.edit()
+                .putString(TOKEN_TAG, null)
+                .apply();
+    }
 
-    public void saveUser(User user){
+    public void saveUser(@NonNull User user){
+
+        String token = user.getToken();
+        saveToken(token);
+
         Moshi moshi = new Moshi.Builder().build();
         JsonAdapter<User> jsonAdapter = moshi.adapter(User.class);
+
         String jsonUser = jsonAdapter.toJson(user);
         mSharedPreferences.edit()
                 .putString(MY_USER_TAG, jsonUser)
@@ -79,6 +88,8 @@ public class SharedPreferenceHelper {
         mSharedPreferences.edit()
                 .putString(MY_USER_TAG, null)
                 .apply();
+
+        removeToken();
     }
 
 }

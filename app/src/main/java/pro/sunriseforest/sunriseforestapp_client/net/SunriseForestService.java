@@ -27,8 +27,8 @@ public interface SunriseForestService {
     @POST("auth/reg")
     Call<User> userRegistration(@Body User user);
 
-    @POST("data/newtask")
-    Call<Task> addtask(@Body Task task);
+    @POST("data/tasks")
+    Call<Task> addtask(@Body Task task, @Query("token") String token);
 
     @PATCH("task/{id}/book")
     Call book(@Path("id") int id);

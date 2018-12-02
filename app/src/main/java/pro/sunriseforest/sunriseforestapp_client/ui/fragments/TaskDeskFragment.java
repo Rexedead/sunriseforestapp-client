@@ -31,7 +31,7 @@ import pro.sunriseforest.sunriseforestapp_client.models.Task;
 
 public class TaskDeskFragment extends Fragment  {
     private List<Task> mTaskList = new ArrayList<>();
-    private iOnFragmentInteractionListener mListener;
+    private OnClickSingleRowListener mListener;
 
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_JSON_TASKS = "arg_json_tasks";
@@ -49,9 +49,6 @@ public class TaskDeskFragment extends Fragment  {
         return fragment;
     }
 
-
-
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,9 +65,9 @@ public class TaskDeskFragment extends Fragment  {
         }
 
         try {
-            mListener = (iOnFragmentInteractionListener)getActivity();
+            mListener = (OnClickSingleRowListener)getActivity();
         } catch (ClassCastException e) {
-            throw new ClassCastException(Objects.requireNonNull(getActivity()).toString() + " must implement iOnFragmentInteractionListener");
+            throw new ClassCastException(Objects.requireNonNull(getActivity()).toString() + " must implement iSingleRowClickedListener");
         }
     }
 
@@ -87,21 +84,9 @@ public class TaskDeskFragment extends Fragment  {
         mRecyclerView.setAdapter(mRecycleTaskAdapter);
         mRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(),DividerItemDecoration.VERTICAL));
         mRecyclerView.addOnItemTouchListener(new RecyclerTouchListener(getContext(),
-                mRecyclerView, new iClickListener() {
-            @Override
-            public void onClick(View view, int position) {
-
-                mListener.onFragmentInteraction(mTaskList.get(position).getTaskID());
-            }
-
-            @Override
-            public void onLongClick(View view, int position) {
-                Toast.makeText(getContext(),"What the fuck?", Toast.LENGTH_SHORT).show();
-            }
-        }));
+                mRecyclerView));
         return view;
     }
-
 
     @Override
     public void onDetach() {
@@ -109,65 +94,63 @@ public class TaskDeskFragment extends Fragment  {
         mListener = null;
     }
 
-
-    public interface iOnFragmentInteractionListener {
-        void onFragmentInteraction(int i);
+    public interface OnClickSingleRowListener {
+        void onClicked(View singleRowView, int position);
     }
-}
 
 
 
+    class RecyclerTouchListener implements RecyclerView.OnItemTouchListener{
 
-class RecyclerTouchListener implements RecyclerView.OnItemTouchListener{
+        private GestureDetector gestureDetector;
 
-    private iClickListener clicklistener;
-    private GestureDetector gestureDetector;
+        RecyclerTouchListener(Context context, final RecyclerView recycleView ){
 
-    RecyclerTouchListener(Context context, final RecyclerView recycleView, final iClickListener clicklistener){
-
-        this.clicklistener=clicklistener;
-        gestureDetector=new GestureDetector(context,new GestureDetector.SimpleOnGestureListener(){
-            @Override
-            public boolean onSingleTapUp(MotionEvent e) {
-                return true;
-            }
-
-            @Override
-            public void onLongPress(MotionEvent e) {
-                View child=recycleView.findChildViewUnder(e.getX(),e.getY());
-                if(child!=null && clicklistener!=null){
-                    clicklistener.onLongClick(child,recycleView.getChildAdapterPosition(child));
+            gestureDetector=new GestureDetector(context,new GestureDetector.SimpleOnGestureListener(){
+                @Override
+                public boolean onSingleTapUp(MotionEvent e) {
+                    return true;
                 }
-            }
-        });
-    }
 
-
-    @Override
-    public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
-        View child=rv.findChildViewUnder(e.getX(),e.getY());
-        if(child!=null && clicklistener!=null && gestureDetector.onTouchEvent(e)){
-            clicklistener.onClick(child,rv.getChildAdapterPosition(child));
+                @Override
+                public void onLongPress(MotionEvent e) {
+                    View child=recycleView.findChildViewUnder(e.getX(),e.getY());
+                    if(child!=null){
+                        int position = recycleView.getChildAdapterPosition(child);
+                        Log.i("TaskDeskFragment", "onLongPress(). Position = " + position);
+                    }
+                }
+            });
         }
 
-        return false;
+
+        @Override
+        public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
+            View child=rv.findChildViewUnder(e.getX(),e.getY());
+            if(child!=null && gestureDetector.onTouchEvent(e)){
+                int position = rv.getChildAdapterPosition(child);
+                mListener.onClicked(child,position);
+            }
+
+            return false;
+        }
+
+        @Override
+        public void onTouchEvent(RecyclerView rv, MotionEvent e) {
+
+        }
+
+        @Override
+        public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
+
+        }
     }
 
-    @Override
-    public void onTouchEvent(RecyclerView rv, MotionEvent e) {
-
-    }
-
-    @Override
-    public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
-
-    }
 }
 
 
 
-interface iClickListener {
-    void onClick(View view,int position);
-    void onLongClick(View view,int position);
-}
+
+
+
 

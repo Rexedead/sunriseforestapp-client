@@ -3,8 +3,10 @@ package pro.sunriseforest.sunriseforestapp_client.presenter;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import pro.sunriseforest.sunriseforestapp_client.SunriseForestApp;
 import pro.sunriseforest.sunriseforestapp_client.models.Task;
 import pro.sunriseforest.sunriseforestapp_client.net.ApiFactory;
+import pro.sunriseforest.sunriseforestapp_client.options.SharedPreferenceHelper;
 import pro.sunriseforest.sunriseforestapp_client.ui.NewTaskActivity;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -14,6 +16,11 @@ public class NewTaskPresenter extends AppPresenter<NewTaskActivity> {
 
     public static String TAG = "NEW_TASK_PRESENTER";
 
+    private SharedPreferenceHelper mPreferenceHelper;
+
+    public NewTaskPresenter(){
+        mPreferenceHelper = new SharedPreferenceHelper(SunriseForestApp.getAppContext());
+    }
 
     @Override
     public void update() {
@@ -26,7 +33,7 @@ public class NewTaskPresenter extends AppPresenter<NewTaskActivity> {
     }
 
     public void addNewTask(final Task task) {
-        Call<Task> call = ApiFactory.getSunriseForestService().addtask(task);
+        Call<Task> call = ApiFactory.getSunriseForestService().addtask(task, mPreferenceHelper.getToken());
         call.enqueue(new Callback<Task>() {
             @Override
             public void onResponse(@NonNull Call<Task> call, @NonNull Response<Task> response) {
