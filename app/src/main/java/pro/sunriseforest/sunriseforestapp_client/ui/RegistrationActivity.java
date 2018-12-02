@@ -38,7 +38,7 @@ public class RegistrationActivity extends AppCompatActivity {
             String password = mPasswordEditText.getText().toString();
 
 
-            mRegistrationPresenter.registration(new User(password, phone, mail));
+            mRegistrationPresenter.registration(new User(password, phone, mail, "contractor"));
         }
     };
 

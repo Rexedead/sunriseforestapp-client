@@ -82,7 +82,7 @@ public class NewTaskActivity extends AppCompatActivity {
                             (byte)101,
                             Integer.parseInt(mTaskRewardEditText.getText().toString())
                     ));
-                    finish();
+//                    finish();
                 }
             }
         });
@@ -122,10 +122,24 @@ public class NewTaskActivity extends AppCompatActivity {
 
 
     public void showTaskDeskActivity(){
-        TaskDeskActivity.startActivity(this.getApplicationContext());
+        TaskDeskActivity.startActivity(this);
         showToast("Задание добавлено");
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(mNewTaskPresenter.isActivityUnBunding()){
+            mNewTaskPresenter.bindActivity(this);
+        }
+        mNewTaskPresenter.update();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mNewTaskPresenter.unBindActivity();
+    }
 
     public void showError(String msg){
         showToast(msg);

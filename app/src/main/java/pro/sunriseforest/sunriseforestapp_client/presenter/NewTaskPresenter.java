@@ -51,11 +51,10 @@ public class NewTaskPresenter extends AppPresenter<NewTaskActivity> {
 
             @Override
             public void onFailure(@NonNull Call<Task> call, @NonNull Throwable t) {
-                Log.e("RegistrationPresenter", t.getMessage());
+                Log.e("NewTaskPresenter", t.getMessage());
 
             }
-        })
-        ;
+        });
     }
 }
 

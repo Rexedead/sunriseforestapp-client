@@ -33,9 +33,9 @@ public class LoginPresenter extends AppPresenter<LoginActivity> {
         mActivity.showRegistrationActivity();
     }
 
-    public void login(String login, String password){
+    public void login(String email, String password){
 
-        Call<User> call = ApiFactory.getSunriseForestService().userLoginByEmail(login, password);
+        Call<User> call = ApiFactory.getSunriseForestService().userLoginByEmail(email, password);
         call.enqueue(new Callback<User>() {
 
             @Override

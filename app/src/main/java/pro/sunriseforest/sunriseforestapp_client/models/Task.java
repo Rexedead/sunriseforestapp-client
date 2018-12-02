@@ -17,7 +17,7 @@ public class Task {
     private Client mClient;
 
     @SerializedName("sr_task_id")
-    private int mTaskID;
+    private String mTaskID;
 
     @SerializedName("sr_task_description")
     private String mTaskDescription;
@@ -94,10 +94,11 @@ public class Task {
         return mStartDate;
     }
 
-    public int getTaskID() {
+    public String getTaskID() {
         return mTaskID;
     }
-    public void setTaskID(int mTaskID) {
+
+    public void setTaskID(String mTaskID) {
         this.mTaskID = mTaskID;
     }
 
