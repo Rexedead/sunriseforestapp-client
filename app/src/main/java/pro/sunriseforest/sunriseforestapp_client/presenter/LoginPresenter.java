@@ -19,21 +19,22 @@ public class LoginPresenter extends AppPresenter<LoginActivity> {
 
     private SharedPreferenceHelper mPreferenceHelper;
 
-    LoginPresenter(){
+    LoginPresenter() {
         mPreferenceHelper = new SharedPreferenceHelper(SunriseForestApp.getAppContext());
     }
+
     @Override
     public void update() {
-        if(mPreferenceHelper.getMyUser() != null){
+        if (mPreferenceHelper.getMyUser() != null) {
             mActivity.showTaskDeskActivity();
         }
     }
 
-    public void registration(){
+    public void registration() {
         mActivity.showRegistrationActivity();
     }
 
-    public void login(String email, String password){
+    public void login(String email, String password) {
 
         Call<User> call = ApiFactory.getSunriseForestService().userLoginByEmail(email, password);
         call.enqueue(new Callback<User>() {
@@ -43,7 +44,7 @@ public class LoginPresenter extends AppPresenter<LoginActivity> {
                 int code = response.code();
 
                 User user = response.body();
-                if(user != null){
+                if (user != null) {
                     mPreferenceHelper.saveUser(user);
                     mActivity.showTaskDeskActivity();
                 }
@@ -58,10 +59,10 @@ public class LoginPresenter extends AppPresenter<LoginActivity> {
     }
 
 
-    private void showErrorByCode(int code){
-        if(code == 401){
+    private void showErrorByCode(int code) {
+        if (code == 401) {
             mActivity.showError("неверный логин или пароль");
-        }else if(code == 400){
+        } else if (code == 400) {
             mActivity.showError("запрос не ок. код ошибки 400");
         }
     }

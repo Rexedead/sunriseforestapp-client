@@ -8,7 +8,8 @@ import pro.sunriseforest.sunriseforestapp_client.net.interceptors.OfflineCacheIn
 import retrofit2.Converter;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
-import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.converter.moshi.MoshiConverterFactory;
+
 
 public class ApiFactory {
 
@@ -26,7 +27,7 @@ public class ApiFactory {
         if (service == null) {
             synchronized (ApiFactory.class) {
                 service = sSunriseForestService = buildRetrofit(
-                        GsonConverterFactory.create(),
+                        MoshiConverterFactory.create(),
                         getClient())
                         .create(SunriseForestService.class);
 

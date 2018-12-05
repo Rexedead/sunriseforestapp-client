@@ -16,6 +16,7 @@ import pro.sunriseforest.sunriseforestapp_client.SunriseForestApp;
 import pro.sunriseforest.sunriseforestapp_client.net.Utils;
 
 public class OfflineCacheInterceptor implements Interceptor {
+    @NonNull
     @Override
     public Response intercept(@NonNull Chain chain) throws IOException {
         Request request = chain.request();
@@ -27,8 +28,6 @@ public class OfflineCacheInterceptor implements Interceptor {
         Log.i("Network", "response came from cache");
         return chain.proceed(request);
     }
-
-
 
 
     public static Cache cacheTasks() {

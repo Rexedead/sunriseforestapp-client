@@ -1,28 +1,28 @@
 package pro.sunriseforest.sunriseforestapp_client.models;
 
-import com.google.gson.annotations.SerializedName;
+import com.squareup.moshi.Json;
 
 public class User {
-    @SerializedName("_id")
+    @Json(name = "_id")
     private String mId;
 
-    @SerializedName("sr_user_password")
+    @Json(name = "sr_user_password")
     private String mPassword;
 
-    @SerializedName("sr_user_phone_auth")
+    @Json(name = "sr_user_phone_auth")
     private String mPhoneNumber;
 
-    @SerializedName("sr_user_email_auth")
+    @Json(name = "sr_user_email_auth")
     private String mEmail;
 
-    @SerializedName("sr_user_role")
+    @Json(name = "sr_user_role")
     private String mRole;
 
-    @SerializedName("sr_user_token")
+    @Json(name = "sr_user_token")
     private String mToken;
 
 
-    @SerializedName("sr_user_info")
+    @Json(name = "sr_user_info")
     private Object mInfo;
 
     public User(String mPassword, String mPhoneNumber, String mEmail, String mRole) {

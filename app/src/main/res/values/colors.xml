@@ -11,10 +11,8 @@
     <color name="creationTime">#4285f4</color>
     <color name="reward">#28A745</color>
     <color name="status_101">#d50000</color>
-    <color name="status_102">#2962ff</color>
-    <color name="status_103">#ffab00</color>
-    <color name="status_104">#6200ea</color>
-    <color name="status_105">#616161</color>
+    <color name="status_102">#ffab00</color>
+    <color name="status_103">#0F9D58</color>
     <color name="auth_button">#0F9D58</color>
     <color name="auth_button_text">#fff</color>
 

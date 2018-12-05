@@ -17,6 +17,7 @@ public class NetworkCacheInterceptor implements Interceptor {
     private static final int MAX_AGE = 120;
     private static final long MAX_STALE = 86400;
 
+    @NonNull
     public Response intercept(@NonNull Chain chain) throws IOException {
         Request originalRequest = chain.request();
 
@@ -27,7 +28,8 @@ public class NetworkCacheInterceptor implements Interceptor {
         String cacheHeaderValue = Utils.isNetworkAvailable() ? "public, max-age=" +
                 MAX_AGE : "public, only-if-cached, max-stale=" + MAX_STALE;
         String cacheControl = request.cacheControl().toString();
-        String cacheMethod = TextUtils.isEmpty(request.cacheControl().toString()) ? cacheHeaderValue : cacheControl;
+        String cacheMethod = TextUtils.isEmpty(request.cacheControl().toString()) ?
+                cacheHeaderValue : cacheControl;
         return response.newBuilder()
                 .removeHeader("Pragma")
                 .removeHeader("Cache-Control")

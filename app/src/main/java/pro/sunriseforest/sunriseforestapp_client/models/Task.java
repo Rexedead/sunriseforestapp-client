@@ -1,6 +1,6 @@
 package pro.sunriseforest.sunriseforestapp_client.models;
 
-import com.google.gson.annotations.SerializedName;
+import com.squareup.moshi.Json;
 
    /*
     default 101
@@ -10,31 +10,31 @@ import com.google.gson.annotations.SerializedName;
 
 public class Task {
 
-    @SerializedName("sr_task_contractor")
+    @Json(name = "sr_task_contractor")
     private Contractor mContractor;
 
-    @SerializedName("sr_task_client")
+    @Json(name = "sr_task_client")
     private Client mClient;
 
-    @SerializedName("sr_task_id")
+    @Json(name = "sr_task_id")
     private String mTaskID;
 
-    @SerializedName("sr_task_description")
+    @Json(name = "sr_task_description")
     private String mTaskDescription;
 
-    @SerializedName("sr_task_creation_date")
+    @Json(name = "sr_task_creation_date")
     private String mCreationDate;
 
-    @SerializedName("sr_task_deadline")
+    @Json(name = "sr_task_deadline")
     private String mDeadlineDate;
 
-    @SerializedName("sr_task_start_date")
+    @Json(name = "sr_task_start_date")
     private String mStartDate;
 
-     @SerializedName("sr_task_status")
+    @Json(name = "sr_task_status")
     private byte mStatus;
 
-    @SerializedName("sr_task_reward")
+    @Json(name = "sr_task_reward")
     private int mReward;
 
 
@@ -46,8 +46,6 @@ public class Task {
         this.mStatus = mStatus;
         this.mReward = mReward;
     }
-
-
 
 
     public int getReward() {

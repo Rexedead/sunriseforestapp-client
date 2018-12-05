@@ -1,18 +1,18 @@
 package pro.sunriseforest.sunriseforestapp_client.models;
 
-import com.google.gson.annotations.SerializedName;
+import com.squareup.moshi.Json;
 
 public class Contractor {
-    @SerializedName("sr_user_id")
+    @Json(name = "sr_user_id")
     private int mId;
 
-    @SerializedName("sr_user_email")
-    private  String mEmail;
+    @Json(name = "sr_user_email")
+    private String mEmail;
 
-    @SerializedName("sr_user_name")
+    @Json(name = "sr_user_name")
     private String mName;
 
-    @SerializedName("sr_user_phone")
+    @Json(name = "sr_user_phone")
     private String mPhoneNumber;
 
     public Contractor(String email, String name, String phoneNumber) {
@@ -44,7 +44,7 @@ public class Contractor {
         return mId;
     }
 
-    public Contractor copy(){
+    public Contractor copy() {
         return new Contractor(mEmail, mId);
     }
 
