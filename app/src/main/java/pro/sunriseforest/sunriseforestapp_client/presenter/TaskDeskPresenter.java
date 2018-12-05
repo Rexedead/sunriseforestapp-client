@@ -6,10 +6,8 @@ import android.util.Log;
 import java.util.List;
 
 import pro.sunriseforest.sunriseforestapp_client.SunriseForestApp;
-import pro.sunriseforest.sunriseforestapp_client.date.DataBaseHelper;
 import pro.sunriseforest.sunriseforestapp_client.models.Task;
 import pro.sunriseforest.sunriseforestapp_client.net.ApiFactory;
-import pro.sunriseforest.sunriseforestapp_client.net.SunriseForestService;
 import pro.sunriseforest.sunriseforestapp_client.options.SharedPreferenceHelper;
 import pro.sunriseforest.sunriseforestapp_client.ui.TaskDeskActivity;
 import retrofit2.Call;
@@ -81,8 +79,6 @@ public class TaskDeskPresenter extends AppPresenter<TaskDeskActivity>{
 
                 if(code == 200){
                     List<Task> tasks = resp.body();
-
-//                    mDataBaseHelper.cacheTasks(tasks);
                     mActivity.showListTask(tasks);
                 }else {
                     Log.e("TaskDeskPresenter", resp.message());

@@ -9,6 +9,7 @@ import pro.sunriseforest.sunriseforestapp_client.models.User;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.Headers;
 import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
@@ -21,9 +22,11 @@ public interface SunriseForestService {
     @GET("data/tasks/{id}")
     Call<List<Task>> getTask(@Path("id") int id);
 
+    @Headers("Cache-Control: no-cache")
     @GET("auth/login")
     Call<User> userLoginByEmail(@Query("email_or_phone")String mail, @Query("password") String password);
 
+    @Headers("Cache-Control: no-cache")
     @POST("auth/reg")
     Call<User> userRegistration(@Body User user);
 
