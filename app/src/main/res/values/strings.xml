@@ -33,5 +33,19 @@
     <string name="newTask_phone">Телефон</string>
     <string name="newTask_text">Задача</string>
     <string name="newTask_add">Добавить задачу</string>
+    <string name="singleTask_description">Описание </string>
+    <string name="singleTask_startDate">Дата старта</string>
+    <string name="singleTask_endDate">Дата окончания</string>
+    <string name="singleTask_reward">Награда (₽)</string>
+    <string name="singleTask_client">Клиент</string>
+    <string name="singleTask_clientName">Имя клиента</string>
+    <string name="singleTask_contractor">Исполнитель</string>
+    <string name="singleTask_phone">Телефон</string>
+    <string name="singleTask_text">Задача</string>
+    <string name="singleTask_book">Забронировать</string>
+    <string name="singleTask_edit">Изменить</string>
     <string name="status">status</string>
+    <string name="string_name">what is this</string>
+    <string name="ruble">₽</string>
+
 </resources>

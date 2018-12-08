@@ -1,140 +1,240 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-     >
-
+    android:paddingStart="?listPreferredItemPaddingLeft"
+    android:paddingEnd="?listPreferredItemPaddingRight"
+    tools:context=".ui.NewTaskActivity">
 
     <TextView
-        android:id="@+id/task_name_textView"
+        android:id="@+id/singleTask_text_textView"
         android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:gravity="start|center"
+        android:text="@string/singleTask_text"
+        android:textSize="12sp"
+        tools:text="Задача" />
+
+    <TextView
+        android:id="@+id/singleTask_id_textView"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_toEndOf="@id/singleTask_text_textView"
+        android:gravity="start|center"
+        android:layout_marginStart="10dp"
+        android:text="@string/singleTask_text"
+        android:textSize="12sp"
+        tools:text="ID" />
+
+    <EditText
+        android:id="@+id/singleTask_description_editText"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/singleTask_text_textView"
+        android:layout_alignParentEnd="true"
         android:layout_centerHorizontal="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="10dp"
-        
-        android:textSize="20sp"
-        android:text="@string/noname"
-        />
-    
-    <CheckBox
-        android:id="@+id/task_is_booked_checkBox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/task_name_textView"
-        android:layout_alignParentEnd="true" 
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="10dp"
-        />
-    
-    <TextView
-        android:id="@+id/task_date_textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-        android:layout_below="@id/task_name_textView"
-        android:layout_alignParentLeft="true"
-        tools:text="20:00 19.08.2009"
-        android:layout_marginTop="15dp"
-        />
-    
-  <TextView
-      android:id="@+id/task_text_textView"
-      android:layout_width="300dp"
-      android:layout_height="350dp"
-      android:layout_centerHorizontal="true"
-      android:layout_below="@id/task_name_textView"
-      android:layout_marginTop="40dp"
-      android:background="@drawable/border_task_text"
-      android:padding="5dp"
-      />
-    <TextView
-        android:id="@+id/deadline_textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/task_text_textView"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="15dp"
-        android:text="@string/deadline"
-        />
-    <TextView
-        android:id="@+id/deadline_text_textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/deadline_textView"
-        android:layout_below="@id/task_text_textView"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="8dp"
-        tools:text="@string/deadline"
+        android:background="@color/field_background"
+        android:ems="10"
+        android:textColor="@drawable/edit_text_selector"
+        android:gravity="top|start"
+        android:hint="@string/singleTask_description"
+        android:inputType="textMultiLine"
+        android:minLines="4"
+        android:maxLines="12"
+        android:textSize="14sp"
         />
 
+    <View
+        android:id="@+id/centerShim"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_centerHorizontal="true"
+        android:visibility="invisible" />
+
+
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/singleTask_startDate_textInputLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/singleTask_description_editText"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_toStartOf="@+id/centerShim"
+        android:background="@color/field_background"
+        android:ems="10"
+        android:focusable="false"
+        android:textAlignment="center"
+        android:textSize="14sp">
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/singleTask_startDate_TextInputEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/singleTask_startDate"
+            android:textColor="@drawable/edit_text_selector"
+            android:inputType="date"
+            android:textSize="14sp" />
+    </android.support.design.widget.TextInputLayout>
+
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/singleTask_endDate_textInputLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/singleTask_description_editText"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_toEndOf="@+id/centerShim"
+        android:background="@color/field_background"
+        android:textAlignment="center"
+        android:textSize="14sp"
+        android:focusable="false"
+        >
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/singleTask_endDate_TextInputEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@drawable/edit_text_selector"
+            android:hint="@string/singleTask_endDate"
+            android:inputType="date"
+            android:textSize="14sp" />
+    </android.support.design.widget.TextInputLayout>
+
+
+    <EditText
+        android:id="@+id/singleTask_reward_editText"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_below="@+id/singleTask_startDate_textInputLayout"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_toStartOf="@+id/centerShim"
+        android:background="@color/field_background"
+        android:ems="10"
+        android:textColor="@drawable/edit_text_selector"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:hint="@string/singleTask_reward"
+        android:maxLength="10"
+        android:digits="1234567890"
+        android:inputType="number"
+        android:textSize="14sp" />
+
     <TextView
-        android:id="@+id/reward_textView"
+        android:id="@+id/singleTask_client_TextView"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_below="@+id/singleTask_reward_editText"
+        android:gravity="start|center"
+        android:text="@string/singleTask_client"
+        android:textSize="12sp"
+        tools:text="Клиент" />
+
+
+    <EditText
+        android:id="@+id/singleTask_clientName_editText"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_below="@+id/singleTask_client_TextView"
+        android:layout_alignParentStart="true"
+        android:layout_marginEnd="10dp"
+        android:layout_toStartOf="@+id/centerShim"
+        android:background="@color/field_background"
+        android:ems="10"
+        android:textColor="@drawable/edit_text_selector"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:hint="@string/singleTask_clientName"
+        android:inputType="text"
+        android:textAlignment="textStart"
+        android:textSize="14sp" />
+
+
+    <EditText
+        android:id="@+id/singleTask_clientPhone_editText"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_below="@+id/singleTask_client_TextView"
+        android:layout_marginStart="10dp"
+        android:layout_toEndOf="@+id/centerShim"
+        android:background="@color/field_background"
+        android:hint="@string/singleTask_phone"
+        android:textColor="@drawable/edit_text_selector"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:digits="1234567890+-() "
+        android:inputType="phone"
+        android:textSize="14sp" />
+
+
+    <TextView
+        android:id="@+id/singleTask_contractor_TextView"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_below="@+id/singleTask_clientName_editText"
+        android:gravity="start|center"
+        android:text="@string/singleTask_contractor"
+        android:textSize="12sp"
+        tools:text="Исполнитель" />
+
+
+    <TextView
+        android:id="@+id/singleTask_contractorName_Textview"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_below="@+id/singleTask_contractor_TextView"
+        android:layout_alignParentStart="true"
+        android:layout_marginEnd="10dp"
+        android:layout_toStartOf="@+id/centerShim"
+        android:background="@color/field_background"
+        android:ems="10"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:textAlignment="textStart"
+        android:textSize="14sp" />
+
+
+    <TextView
+        android:id="@+id/singleTask_contractorPhone_textView"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_below="@+id/singleTask_contractor_TextView"
+        android:layout_marginStart="10dp"
+        android:layout_toEndOf="@+id/centerShim"
+        android:background="@color/field_background"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:textSize="14sp" />
+
+
+
+    <Button
+        android:id="@+id/singleTask_book_button"
+        style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/deadline_textView"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginLeft="15dp"
-        android:text="@string/reward"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:text="@string/singleTask_book"
+        android:layout_marginBottom="50dp"
+        android:textSize="12sp" />
 
-        />
-    <TextView
-        android:id="@+id/reward_text_textView"
+    <Button
+        android:id="@+id/singleTask_editTask_button"
+        style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/deadline_textView"
-        android:layout_marginTop="10dp"
-
-        android:layout_toRightOf="@id/reward_textView"
-        android:textColor="@color/gold"
-        tools:text="@string/reward"/>
-
-    <TextView
-        android:id="@+id/client_textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/reward_text_textView"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginLeft="15dp"
-        android:text="@string/client"
-
-        />
-    <TextView
-        android:id="@+id/client_text_textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/reward_text_textView"
-        android:layout_marginTop="10dp"
-
-        android:layout_toRightOf="@id/client_textView"
-        tools:text="@string/client"/>
-
-    <TextView
-        android:id="@+id/contractor_textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/client_text_textView"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginLeft="15dp"
-        android:text="@string/contractor"
-
-        />
-    <TextView
-        android:id="@+id/contractor_text_textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/client_text_textView"
-        android:layout_marginTop="10dp"
-
-        android:layout_toRightOf="@id/contractor_textView"
-        tools:text="@string/nocontractor"
-        />
-
-    
-
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="50dp"
+        android:text="@string/singleTask_edit"
+        android:textSize="12sp" />
 </RelativeLayout>

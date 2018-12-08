@@ -51,7 +51,7 @@ public class RecycleTaskAdapter extends RecyclerView.Adapter<RecycleTaskAdapter.
         }
 
         String taskDescription = task.getTaskDescription();
-        task_holder.mName.setText(taskDescription);
+        task_holder.mDescription.setText(taskDescription);
     }
 
     @Override
@@ -60,13 +60,14 @@ public class RecycleTaskAdapter extends RecyclerView.Adapter<RecycleTaskAdapter.
     }
 
     class TaskViewHolder extends RecyclerView.ViewHolder {
-        TextView mName, mReward, mDate, mEndDate;
+        TextView mDescription, mReward, mDate, mEndDate;
         ImageView mStatus;
 
 
         TaskViewHolder(@NonNull View view) {
             super(view);
-            mName = view.findViewById(R.id.taskSingleRow_description_textView);
+            mDescription = view.findViewById(R.id.taskSingleRow_description_textView);
+            mDescription.setSingleLine(true);
             mReward = view.findViewById(R.id.taskSingleRow_reward_textView);
             mDate = view.findViewById(R.id.taskSingleRow_creationDate_textView);
             mEndDate = view.findViewById(R.id.taskSingleRow_endDate_textView);
