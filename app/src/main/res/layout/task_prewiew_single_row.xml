@@ -6,60 +6,68 @@
     android:clickable="true"
     android:focusable="true"
     android:orientation="vertical"
-    android:paddingBottom="@dimen/padding_list_row"
     android:paddingStart="?listPreferredItemPaddingLeft"
+    android:paddingTop="@dimen/padding_list_row"
     android:paddingEnd="?listPreferredItemPaddingRight"
-    android:paddingTop="@dimen/padding_list_row">
-
-    <LinearLayout
-        android:id="@+id/message_container"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_marginEnd="10dp"
-        android:layout_toStartOf="@+id/date_taskSingleRow_textView"
-        android:clickable="true"
-        android:focusable="true"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/taskDescription_singleRow_textView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:lines="1"
-            android:text="taskDescription_singleRow_textView"
-            android:textColor="@color/deskDescription"
-            android:textSize="@dimen/taskdesk_description"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/reward_singleRow_textView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:lines="1"
-            android:text="reward_taskSingleRow_textView"
-            android:textColor="@color/reward"
-            android:textSize="@dimen/taskdesk_reward"
-            android:textStyle="bold" />
-
-    </LinearLayout>
+    android:paddingBottom="@dimen/padding_list_row">
 
     <TextView
-        android:id="@+id/date_taskSingleRow_textView"
-        android:layout_width="wrap_content"
+        android:id="@+id/taskSingleRow_description_textView"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:textColor="@color/creationTime"
-        android:textSize="@dimen/timestamp"
+        android:layout_marginEnd="10dp"
+        android:ellipsize="end"
+        android:lines="1"
+        android:textColor="@color/deskDescription"
+        android:textSize="16sp"
         android:textStyle="bold" />
 
     <ImageView
-        android:id="@+id/status_taskSingleRow_imageView"
-        android:layout_width="@dimen/icon_status"
-        android:layout_height="@dimen/icon_status"
-        android:layout_alignParentBottom="true"
+        android:id="@+id/taskSingleRow_status_imageView"
+        android:layout_width="10dp"
+        android:layout_height="10dp"
         android:layout_alignParentEnd="true"
-         />
+        android:contentDescription="@string/status" />
+
+    <TextView
+        android:id="@+id/taskSingleRow_reward_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:lines="1"
+        android:text="reward"
+        android:textColor="@color/reward"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:layout_below="@id/taskSingleRow_description_textView"
+        android:layout_alignParentStart="true"/>
+
+    <TextView
+        android:id="@+id/taskSingleRow_creationDate_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/taskSingleRow_description_textView"
+        android:layout_toEndOf="@id/taskSingleRow_reward_textView"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:paddingTop="2dp"
+        android:text="creationdate"
+        android:textColor="@color/creationTime"
+        android:textSize="12sp"
+        android:textStyle="bold" />
+
+
+    <TextView
+        android:id="@+id/taskSingleRow_endDate_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/taskSingleRow_description_textView"
+        android:layout_toEndOf="@id/taskSingleRow_creationDate_textView"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:paddingTop="2dp"
+        android:text="Сдать: 20.01.2019"
+        android:textColor="@color/creationTime"
+        android:textSize="12sp"
+        android:textStyle="bold" />
 
 </RelativeLayout>

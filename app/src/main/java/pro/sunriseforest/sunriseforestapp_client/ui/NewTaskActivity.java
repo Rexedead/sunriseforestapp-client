@@ -4,15 +4,18 @@ import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputEditText;
-import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.redmadrobot.inputmask.MaskedTextChangedListener;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -56,6 +59,21 @@ public class NewTaskActivity extends AppCompatActivity {
 
 
         Button mAddNewTaskButton = findViewById(R.id.newTask_add_button);
+
+
+        final MaskedTextChangedListener listener = MaskedTextChangedListener.Companion.installOn(
+                mTaskClientPhoneEditText,
+                "+7 ([000]) [000]-[00]-[00]",
+                new MaskedTextChangedListener.ValueListener() {
+                    @Override
+                    public void onTextChanged(boolean maskFilled, @NonNull final String extractedValue) {
+                        Log.d("TAG", extractedValue);
+                        Log.d("TAG", String.valueOf(maskFilled));
+                    }
+                }
+        );
+        mTaskClientPhoneEditText.setHint(listener.placeholder());
+
 
 
         mNewTaskPresenter = (NewTaskPresenter) PresenterManager.getInstance()

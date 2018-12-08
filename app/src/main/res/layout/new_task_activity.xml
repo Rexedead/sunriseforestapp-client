@@ -30,7 +30,7 @@
         android:gravity="top|start"
         android:hint="@string/newTask_description"
         android:inputType="textMultiLine"
-        android:minLines="3"
+        android:minLines="4"
         android:textSize="14sp" />
 
     <View
@@ -102,9 +102,12 @@
         android:layout_toStartOf="@+id/centerShim"
         android:background="@color/field_background"
         android:ems="10"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
         android:hint="@string/newTask_reward"
+        android:maxLength="10"
+        android:digits="1234567890"
         android:inputType="number"
-        android:textAlignment="center"
         android:textSize="14sp" />
 
     <TextView
@@ -126,9 +129,10 @@
         android:layout_alignParentStart="true"
         android:layout_marginEnd="10dp"
         android:layout_toStartOf="@+id/centerShim"
-
         android:background="@color/field_background"
         android:ems="10"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
         android:hint="@string/newTask_clientName"
         android:inputType="text"
         android:textAlignment="textStart"
@@ -144,6 +148,9 @@
         android:layout_toEndOf="@+id/centerShim"
         android:background="@color/field_background"
         android:hint="@string/newTask_phone"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:digits="1234567890+-() "
         android:inputType="phone"
         android:textSize="14sp" />
 

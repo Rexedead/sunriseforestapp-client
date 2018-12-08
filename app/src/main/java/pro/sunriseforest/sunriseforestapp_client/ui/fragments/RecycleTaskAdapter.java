@@ -36,8 +36,8 @@ public class RecycleTaskAdapter extends RecyclerView.Adapter<RecycleTaskAdapter.
     public void onBindViewHolder(@NonNull final TaskViewHolder task_holder, int position) {
         Task task = mTaskList.get(position);
         task_holder.mReward.setText(task.getReward() + " \u20BD");
-        task_holder.mDate.setText(task.getCreationDate());
-
+        task_holder.mDate.setText("Создано: "+task.getCreationDate());
+        task_holder.mEndDate.setText("Срок: "+ task.getDeadlineDate());
         switch (task.getStatus()) {
             case 101:
                 task_holder.mStatus.setImageResource(R.drawable.status_101);
@@ -60,16 +60,17 @@ public class RecycleTaskAdapter extends RecyclerView.Adapter<RecycleTaskAdapter.
     }
 
     class TaskViewHolder extends RecyclerView.ViewHolder {
-        TextView mName, mReward, mDate;
+        TextView mName, mReward, mDate, mEndDate;
         ImageView mStatus;
 
 
         TaskViewHolder(@NonNull View view) {
             super(view);
-            mName = view.findViewById(R.id.taskDescription_singleRow_textView);
-            mReward = view.findViewById(R.id.reward_singleRow_textView);
-            mDate = view.findViewById(R.id.date_taskSingleRow_textView);
-            mStatus = view.findViewById(R.id.status_taskSingleRow_imageView);
+            mName = view.findViewById(R.id.taskSingleRow_description_textView);
+            mReward = view.findViewById(R.id.taskSingleRow_reward_textView);
+            mDate = view.findViewById(R.id.taskSingleRow_creationDate_textView);
+            mEndDate = view.findViewById(R.id.taskSingleRow_endDate_textView);
+            mStatus = view.findViewById(R.id.taskSingleRow_status_imageView);
 
         }
 

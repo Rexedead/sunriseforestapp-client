@@ -27,10 +27,11 @@
     <string name="newTask_description">Описание</string>
     <string name="newTask_startDate">Дата старта</string>
     <string name="newTask_endDate">Дата окончания</string>
-    <string name="newTask_reward">Награда</string>
+    <string name="newTask_reward">Награда (₽)</string>
     <string name="newTask_client">Клиент</string>
     <string name="newTask_clientName">Имя клиента</string>
     <string name="newTask_phone">Телефон</string>
     <string name="newTask_text">Задача</string>
     <string name="newTask_add">Добавить задачу</string>
+    <string name="status">status</string>
 </resources>
