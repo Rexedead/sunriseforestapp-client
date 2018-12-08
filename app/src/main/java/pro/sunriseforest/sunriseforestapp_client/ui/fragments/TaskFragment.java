@@ -23,7 +23,7 @@ import pro.sunriseforest.sunriseforestapp_client.models.Task;
 
 
 public class TaskFragment extends Fragment {
-    private List<Task> mSingleTask = new ArrayList<>();
+    private Task mSingleTask;
     private static final String ARG_JSON_TASK = "ARG_JSON_TASK";
 
 
@@ -49,9 +49,10 @@ public class TaskFragment extends Fragment {
         if (getArguments() != null) {
             String jsonTasks = getArguments().getString(ARG_JSON_TASK);
             Moshi moshi = new Moshi.Builder().build();
-            Type type = Types.newParameterizedType(List.class, Task.class);
-            JsonAdapter<List> jsonAdapter = moshi.adapter(type);
+            Type type = Types.newParameterizedType(Task.class);
+            JsonAdapter<Task> jsonAdapter = moshi.adapter(type);
             try {
+                assert jsonTasks != null;
                 mSingleTask = jsonAdapter.fromJson(jsonTasks);
             } catch (IOException e) {
                 Log.e("TaskDeskFragment", "не удалось перевести json в лист тасков в onCreate()");
@@ -62,28 +63,28 @@ public class TaskFragment extends Fragment {
         View view = inflater.inflate(R.layout.task_fragment, container, false);
 
         TextView mTaskDate = view.findViewById(R.id.task_date_textView);
-        mTaskDate.setText(mSingleTask.get(0).getCreationDate());
+        mTaskDate.setText(mSingleTask.getCreationDate());
 
         TextView text = view.findViewById(R.id.task_text_textView);
-        text.setText(mSingleTask.get(0).getTaskDescription());
+        text.setText(mSingleTask.getTaskDescription());
 
         TextView deadline = view.findViewById(R.id.deadline_text_textView);
-        deadline.setText(mSingleTask.get(0).getDeadlineDate());
+        deadline.setText(mSingleTask.getDeadlineDate());
 
         TextView reward = view.findViewById(R.id.reward_text_textView);
-        reward.setText(mSingleTask.get(0).getReward()+" \u20BD");
+        reward.setText(mSingleTask.getReward()+" \u20BD");
 
         TextView clientName = view.findViewById(R.id.client_text_textView);
 
-        if(mSingleTask.get(0).getClient()!=null){
-            clientName.setText(mSingleTask.get(0).getClient().getName());
+        if(mSingleTask.getClient()!=null){
+            clientName.setText(mSingleTask.getClient().getName());
 
         }
 
         TextView contractor = view.findViewById(R.id.contractor_text_textView);
 
-        if(mSingleTask.get(0).getContractor() != null){
-            contractor.setText(mSingleTask.get(0).getContractor().getName());
+        if(mSingleTask.getContractor() != null){
+            contractor.setText(mSingleTask.getContractor().getName());
         }
 
         return view;

@@ -79,6 +79,7 @@ public class TaskDeskPresenter extends AppPresenter<TaskDeskActivity>{
 
                 if(code == 200){
                     List<Task> tasks = resp.body();
+                    mTasks = tasks;
                     mActivity.showListTask(tasks);
                 }else {
                     Log.e("TaskDeskPresenter", resp.message());

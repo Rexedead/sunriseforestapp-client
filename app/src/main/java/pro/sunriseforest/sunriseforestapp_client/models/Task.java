@@ -16,7 +16,7 @@ public class Task {
     @Json(name = "sr_task_client")
     private Client mClient;
 
-    @Json(name = "sr_task_id")
+    @Json(name = "_id")
     private String mTaskID;
 
     @Json(name = "sr_task_description")
