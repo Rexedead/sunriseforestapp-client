@@ -8,16 +8,74 @@
     tools:context=".ui.ProfileActivity">
 
     <TextView
-        android:id="@+id/profileId_textView"
+        android:id="@+id/profile_id_textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="profileId_textView" />
+
+    <TextView
+        android:id="@+id/profile_id_get_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/profile_id_textView"
+        android:text="profileId_textView" />
+
+    <TextView
+        android:id="@+id/profile_phone_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/profile_id_textView"
+        android:layout_alignParentStart="true"
+        android:text="phone" />
+
+    <TextView
+        android:id="@+id/profile_phone_get_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/profile_id_textView"
+        android:layout_toEndOf="@+id/profile_phone_textView"
+        android:text="phone_get" />
+
+    <TextView
+        android:id="@+id/profile_mail_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/profile_phone_textView"
+        android:layout_alignParentStart="true"
+        android:text="mail" />
+
+    <TextView
+        android:id="@+id/profile_mail_get_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/profile_mail_textView"
+        android:layout_toEndOf="@+id/profile_phone_textView"
+        android:text="mail_get" />
+
+    <TextView
+        android:id="@+id/profile_role_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/profile_mail_textView"
+        android:layout_alignParentStart="true"
+        android:text="role" />
+
+    <TextView
+        android:id="@+id/profile_role_get_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/profile_role_textView"
+        android:layout_toEndOf="@+id/profile_phone_textView"
+        android:text="role_get" />
+
 
     <Button
         android:id="@+id/removeToken_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/profileId_textView"
+        android:layout_below="@id/profile_id_textView"
+        android:layout_marginTop="62dp"
         android:layout_marginEnd="8dp"
         android:text="Remove Token Data"
         app:layout_constraintEnd_toEndOf="parent" />
@@ -25,14 +83,15 @@
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/navigation"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="0dp"
-        android:layout_marginEnd="0dp"
+        android:layout_alignParentBottom="true"
         android:background="?android:attr/windowBackground"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:menu="@menu/navigation" />
+
+
 
 </RelativeLayout>

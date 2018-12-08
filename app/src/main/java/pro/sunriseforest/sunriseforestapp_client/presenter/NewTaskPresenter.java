@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 
 import pro.sunriseforest.sunriseforestapp_client.SunriseForestApp;
+import pro.sunriseforest.sunriseforestapp_client.models.Client;
 import pro.sunriseforest.sunriseforestapp_client.models.Task;
 import pro.sunriseforest.sunriseforestapp_client.net.ApiFactory;
 import pro.sunriseforest.sunriseforestapp_client.options.SharedPreferenceHelper;
@@ -51,6 +52,30 @@ public class NewTaskPresenter extends AppPresenter<NewTaskActivity> {
 
             @Override
             public void onFailure(@NonNull Call<Task> call, @NonNull Throwable t) {
+                Log.e("NewTaskPresenter", t.getMessage());
+
+            }
+        });
+    }
+    public void addNewClient(final Client client) {
+        Call<Client> call = ApiFactory.getSunriseForestService().addclient(client, mPreferenceHelper.getToken());
+        call.enqueue(new Callback<Client>() {
+            @Override
+            public void onResponse(@NonNull Call<Client> call, @NonNull Response<Client> response) {
+
+                int code = response.code();
+                if (code == 200) {
+                    mActivity.showTaskDeskActivity();
+                } else if (code == 400) {
+                    mActivity.showError("проблемы на сервере. попробуйте еще раз");
+                } else {
+                    mActivity.showError("проблемы на сервере. Код ошибки " + code);
+                }
+
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<Client> call, @NonNull Throwable t) {
                 Log.e("NewTaskPresenter", t.getMessage());
 
             }

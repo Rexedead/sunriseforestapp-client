@@ -48,12 +48,6 @@ public class RecycleTaskAdapter extends RecyclerView.Adapter<RecycleTaskAdapter.
             case 103:
                 task_holder.mStatus.setImageResource(R.drawable.status_103);
                 break;
-            case 104:
-                task_holder.mStatus.setImageResource(R.drawable.status_104);
-                break;
-            case 105:
-                task_holder.mStatus.setImageResource(R.drawable.status_105);
-                break;
         }
 
         String taskDescription = task.getTaskDescription();

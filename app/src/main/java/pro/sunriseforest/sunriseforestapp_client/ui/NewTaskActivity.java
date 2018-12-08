@@ -5,17 +5,22 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.support.design.widget.TextInputEditText;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Locale;
+import java.util.Objects;
 
 import pro.sunriseforest.sunriseforestapp_client.R;
+import pro.sunriseforest.sunriseforestapp_client.models.Client;
 import pro.sunriseforest.sunriseforestapp_client.models.Task;
 import pro.sunriseforest.sunriseforestapp_client.presenter.NewTaskPresenter;
 import pro.sunriseforest.sunriseforestapp_client.presenter.PresenterManager;
@@ -24,9 +29,7 @@ import pro.sunriseforest.sunriseforestapp_client.presenter.PresenterManager;
 public class NewTaskActivity extends AppCompatActivity {
 
     private NewTaskPresenter mNewTaskPresenter;
-    Calendar dateAndTime = Calendar.getInstance();
-    Button mTaskDeadlineButton;
-
+    Calendar mCalendar = Calendar.getInstance();
 
     public static void startActivity(Context context) {
         Intent intent = new Intent(context, NewTaskActivity.class);
@@ -39,23 +42,81 @@ public class NewTaskActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.new_task_activity);
 
-        TextView mTaskId = findViewById(R.id.newTask_id_textView);
+        final EditText mTaskDescriptionEditText = findViewById(R.id.newTask_description_editText);
 
-        final EditText mTaskDescriptionEditText = findViewById(R.id.newTask_text_editText);
         final EditText mTaskRewardEditText = findViewById(R.id.newTask_reward_editText);
-        mTaskDeadlineButton = findViewById(R.id.newTask_deadline_button);
+        findViewById(R.id.newTask_startDate_textInputLayout);
+        final TextInputEditText mTaskStartDateEditText = findViewById(R.id.newTask_startDate_TextInputEditText);
+
+        findViewById(R.id.newTask_endDate_textInputLayout);
+        final TextInputEditText mTaskEndDateTextInputEditText = findViewById(R.id.newTask_endDate_TextInputEditText);
+
+        final EditText mTaskClientNameEditText = findViewById(R.id.newTask_clientName_editText);
+        final EditText mTaskClientPhoneEditText = findViewById(R.id.newTask_clientPhone_editText);
+
+
         Button mAddNewTaskButton = findViewById(R.id.newTask_add_button);
 
-        mTaskId.setText("TODO");
 
         mNewTaskPresenter = (NewTaskPresenter) PresenterManager.getInstance()
                 .getPresenter(NewTaskPresenter.TAG);
 
 
-        mTaskDeadlineButton.setOnClickListener(new View.OnClickListener() {
+        mTaskStartDateEditText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setDate();
+
+                new DatePickerDialog(NewTaskActivity.this, dpd, mCalendar
+                        .get(Calendar.YEAR),
+                        mCalendar.get(Calendar.MONTH),
+                        mCalendar.get(Calendar.DAY_OF_MONTH))
+                        .show();
+            }
+
+            DatePickerDialog.OnDateSetListener dpd = new DatePickerDialog.OnDateSetListener() {
+                public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                    mCalendar.set(Calendar.YEAR, year);
+                    mCalendar.set(Calendar.MONTH, monthOfYear);
+                    mCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                    updateLabel();
+                }
+            };
+
+            void updateLabel() {
+                String myFormat = "dd/MM/yyyy";
+                SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+                mTaskStartDateEditText.setText(sdf.format(mCalendar.getTime()));
+                mTaskEndDateTextInputEditText.setText(sdf.format(mCalendar.getTime()));
+
+            }
+
+        });
+
+
+        mTaskEndDateTextInputEditText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new DatePickerDialog(NewTaskActivity.this, dpd, mCalendar
+                        .get(Calendar.YEAR),
+                        mCalendar.get(Calendar.MONTH),
+                        mCalendar.get(Calendar.DAY_OF_MONTH))
+                        .show();
+            }
+
+            DatePickerDialog.OnDateSetListener dpd = new DatePickerDialog.OnDateSetListener() {
+                public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                    mCalendar.set(Calendar.YEAR, year);
+                    mCalendar.set(Calendar.MONTH, monthOfYear);
+                    mCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                    updateLabel();
+                }
+            };
+
+            void updateLabel() {
+                String myFormat = "dd/MM/yyyy";
+                SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+
+                mTaskEndDateTextInputEditText.setText(sdf.format(mCalendar.getTime()));
             }
         });
 
@@ -67,6 +128,7 @@ public class NewTaskActivity extends AppCompatActivity {
                 boolean checkForEmptyField = validateNotEmpty(new EditText[]{
                         mTaskDescriptionEditText,
                         mTaskRewardEditText,
+                        mTaskEndDateTextInputEditText
                 });
 
 
@@ -74,14 +136,18 @@ public class NewTaskActivity extends AppCompatActivity {
                     Snackbar.make(v, "Неверно заполнены поля", Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
                 } else {
+                    mNewTaskPresenter.addNewClient(new Client(
+                            mTaskClientNameEditText.getText().toString(),
+                            mTaskClientPhoneEditText.getText().toString()));
+
                     mNewTaskPresenter.addNewTask(new Task(
                             mTaskDescriptionEditText.getText().toString(),
                             Calendar.getInstance().getTime().toString(),
-                            mTaskDeadlineButton.getText().toString(),
-                            Calendar.getInstance().getTime().toString(),
-                            (byte)101,
+                            Objects.requireNonNull(mTaskStartDateEditText.getText()).toString(),
+                            Objects.requireNonNull(mTaskEndDateTextInputEditText.getText()).toString(),
+                            (byte) 101,
                             Integer.parseInt(mTaskRewardEditText.getText().toString())
-                    ));
+                            ));
 //                    finish();
                 }
             }
@@ -89,6 +155,7 @@ public class NewTaskActivity extends AppCompatActivity {
 
 
     }
+
 
     private boolean validateNotEmpty(EditText[] fields) {
         for (EditText currentField : fields) {
@@ -100,28 +167,7 @@ public class NewTaskActivity extends AppCompatActivity {
     }
 
 
-    private void setDate() {
-        new DatePickerDialog(NewTaskActivity.this, d,
-                dateAndTime.get(Calendar.YEAR),
-                dateAndTime.get(Calendar.MONTH),
-                dateAndTime.get(Calendar.DAY_OF_MONTH))
-                .show();
-
-    }
-
-
-    DatePickerDialog.OnDateSetListener d = new DatePickerDialog.OnDateSetListener() {
-        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-            dateAndTime.set(Calendar.YEAR, year);
-            dateAndTime.set(Calendar.MONTH, monthOfYear);
-            dateAndTime.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-            mTaskDeadlineButton.setText(getString(R.string.date_pick, dayOfMonth, monthOfYear, year));
-
-        }
-    };
-
-
-    public void showTaskDeskActivity(){
+    public void showTaskDeskActivity() {
         TaskDeskActivity.startActivity(this);
         showToast("Задание добавлено");
     }
@@ -129,7 +175,7 @@ public class NewTaskActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if(mNewTaskPresenter.isActivityUnBunding()){
+        if (mNewTaskPresenter.isActivityUnBunding()) {
             mNewTaskPresenter.bindActivity(this);
         }
         mNewTaskPresenter.update();
@@ -141,10 +187,11 @@ public class NewTaskActivity extends AppCompatActivity {
         mNewTaskPresenter.unBindActivity();
     }
 
-    public void showError(String msg){
+    public void showError(String msg) {
         showToast(msg);
     }
-    private void showToast(String msg){
+
+    private void showToast(String msg) {
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
     }
 }

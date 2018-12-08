@@ -4,6 +4,7 @@ package pro.sunriseforest.sunriseforestapp_client.net;
 
 import java.util.List;
 
+import pro.sunriseforest.sunriseforestapp_client.models.Client;
 import pro.sunriseforest.sunriseforestapp_client.models.Task;
 import pro.sunriseforest.sunriseforestapp_client.models.User;
 import retrofit2.Call;
@@ -30,8 +31,11 @@ public interface SunriseForestService {
     @POST("auth/reg")
     Call<User> userRegistration(@Body User user);
 
-    @POST("data/tasks")
+     @POST("data/tasks")
     Call<Task> addtask(@Body Task task, @Query("sr_user_token") String token);
+
+    @POST("data/client")
+    Call<Client> addclient(@Body Client client, @Query("sr_user_token") String token);
 
     @PATCH("task/{id}/book")
     Call book(@Path("id") int id);

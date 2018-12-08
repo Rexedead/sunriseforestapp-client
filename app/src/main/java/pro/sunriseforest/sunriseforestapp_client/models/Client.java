@@ -18,8 +18,7 @@ public class Client {
     private String mEmail;
 
 
-    public Client(int id, String name, String phoneNumber) {
-        mId = id;
+    public Client(String name, String phoneNumber) {
         mName = name;
         mPhoneNumber = phoneNumber;
     }

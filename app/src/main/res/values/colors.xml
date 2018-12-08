@@ -15,6 +15,7 @@
     <color name="status_103">#0F9D58</color>
     <color name="auth_button">#0F9D58</color>
     <color name="auth_button_text">#fff</color>
+    <color name="field_background">#e5e5e5</color>
 
 
 </resources>

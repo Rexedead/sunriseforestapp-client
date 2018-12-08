@@ -38,7 +38,7 @@ public class Task {
     private int mReward;
 
 
-    public Task(String mTaskDescription, String mCreationDate, String mDeadlineDate, String mStartDate, byte mStatus, int mReward) {
+    public Task(String mTaskDescription, String mCreationDate, String mStartDate, String mDeadlineDate,  byte mStatus, int mReward) {
         this.mTaskDescription = mTaskDescription;
         this.mCreationDate = mCreationDate;
         this.mDeadlineDate = mDeadlineDate;
