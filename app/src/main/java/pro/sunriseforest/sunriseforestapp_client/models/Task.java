@@ -88,7 +88,7 @@ public class Task {
         return mDeadlineDate;
     }
 
-    public String getmStartDate() {
+    public String getStartDate() {
         return mStartDate;
     }
 

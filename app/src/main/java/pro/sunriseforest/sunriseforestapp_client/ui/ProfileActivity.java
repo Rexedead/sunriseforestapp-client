@@ -10,19 +10,22 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.util.Objects;
+
 import pro.sunriseforest.sunriseforestapp_client.R;
+import pro.sunriseforest.sunriseforestapp_client.SunriseForestApp;
+import pro.sunriseforest.sunriseforestapp_client.options.SharedPreferenceHelper;
 import pro.sunriseforest.sunriseforestapp_client.presenter.PresenterManager;
 import pro.sunriseforest.sunriseforestapp_client.presenter.ProfilePresenter;
 
 public class ProfileActivity extends AppCompatActivity {
 
-    Button mRemoveTokenButton;
-    TextView mUserLoginTextView;
+
 
     private TextView mTextMessageTextView;
     private BottomNavigationView mNavigation;
-    private ProfilePresenter mPresenter;
-
+    private ProfilePresenter mProfilePresenter;
+    private SharedPreferenceHelper mPreferenceHelper;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -49,26 +52,38 @@ public class ProfileActivity extends AppCompatActivity {
     private View.OnClickListener mOnClickRemoveTokenData = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            mPresenter.exitFromApp();
+            mProfilePresenter.exitFromApp();
         }
     };
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        mPreferenceHelper= new SharedPreferenceHelper(SunriseForestApp.getAppContext());
         super.onCreate(savedInstanceState);
         setContentView(R.layout.profile_activity);
 
         mTextMessageTextView = findViewById(R.id.message);
         setBottomMenuItem();
         mNavigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-        mPresenter =(ProfilePresenter) PresenterManager.getInstance().getPresenter(ProfilePresenter.TAG);
+        mProfilePresenter =(ProfilePresenter) PresenterManager.getInstance().getPresenter(ProfilePresenter.TAG);
 
-        mRemoveTokenButton = findViewById(R.id.removeToken_button);
+
+        TextView mUserIdTextView = findViewById(R.id.profile_id_get_textView);
+        mUserIdTextView.setText(Objects.requireNonNull(mPreferenceHelper.getMyUser()).getId());
+
+        TextView mUserMailTextView = findViewById(R.id.profile_mail_get_textView);
+        mUserMailTextView.setText(Objects.requireNonNull(mPreferenceHelper.getMyUser()).getEmail());
+
+        TextView mUserPhoneTextView = findViewById(R.id.profile_phone_get_textView);
+        mUserPhoneTextView.setText(Objects.requireNonNull(mPreferenceHelper.getMyUser()).getPhoneNumber());
+
+        TextView mUserRoleTextView = findViewById(R.id.profile_role_get_textView);
+        mUserRoleTextView.setText(Objects.requireNonNull(mPreferenceHelper.getMyUser()).getRole());
+
+        Button mRemoveTokenButton = findViewById(R.id.removeToken_button);
         mRemoveTokenButton.setOnClickListener(mOnClickRemoveTokenData);
 
-        mUserLoginTextView = findViewById(R.id.profile_id_textView);
-        mUserLoginTextView.setText("login");
 
     }
 
@@ -77,10 +92,10 @@ public class ProfileActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if(mPresenter.isActivityUnBunding()){
-            mPresenter.bindActivity(this);
+        if(mProfilePresenter.isActivityUnBunding()){
+            mProfilePresenter.bindActivity(this);
         }
-        mPresenter.update();
+        mProfilePresenter.update();
         setBottomMenuItem();
 
     }
@@ -89,7 +104,7 @@ public class ProfileActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        mPresenter.unBindActivity();
+        mProfilePresenter.unBindActivity();
     }
 
     private void setBottomMenuItem(){

@@ -104,10 +104,7 @@ public class TaskDeskActivity extends AppCompatActivity implements TaskDeskFragm
 
     @Override
     public void onBackPressed() {
-        //Проверяем сколько фрагментов открыто в активити,
-        // если > 0 - возвращяем предыдущий фрагмент
-        // если < 0 - закрываем приложение
-        Log.i(this.getClass().getName(),"getBackStackEntryCount(): " + getSupportFragmentManager().getBackStackEntryCount());
+        Log.i(this.getClass().getName(), "getBackStackEntryCount(): " + getSupportFragmentManager().getBackStackEntryCount());
         if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
             getSupportFragmentManager().popBackStack();
         } else {
@@ -123,37 +120,39 @@ public class TaskDeskActivity extends AppCompatActivity implements TaskDeskFragm
     public void showListTask(List<Task> tasks) {
         String jsonListTask = jParser(tasks);
         initFragment(TaskDeskFragment.newInstance(jsonListTask), null);
-        Log.i(this.getClass().getName(),"getBackStackEntryCount(): " + getSupportFragmentManager().getBackStackEntryCount());
+        Log.i(this.getClass().getName(), "getBackStackEntryCount(): " + getSupportFragmentManager().getBackStackEntryCount());
     }
 
     public void showSingleTask(Task task) {
         String jsonTask = jParser(task);
         initFragment(TaskFragment.newInstance(jsonTask), "SingleTask");
-        Log.i(this.getClass().getName(),"getBackStackEntryCount(): " + getSupportFragmentManager().getBackStackEntryCount());
+        Log.i(this.getClass().getName(), "getBackStackEntryCount(): " + getSupportFragmentManager().getBackStackEntryCount());
     }
 
-    private String jParser(List<Task> unparsedtask){
+    private String jParser(List<Task> unparsedtask) {
         Moshi moshi = new Moshi.Builder().build();
         Type type = Types.newParameterizedType(List.class, Task.class);
         JsonAdapter<List> jsonAdapter = moshi.adapter(type);
         return jsonAdapter.toJson(unparsedtask);
     }
 
-    private String jParser(Task unparsedtask){
+    private String jParser(Task unparsedtask) {
         Moshi moshi = new Moshi.Builder().build();
         JsonAdapter<Task> jsonAdapter = moshi.adapter(Task.class);
         return jsonAdapter.toJson(unparsedtask);
     }
 
-    public void initFragment(Fragment f, String backstack){
+    public void initFragment(Fragment f, String backstack) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.taskdesk_activity, f);
-        transaction.addToBackStack(backstack);
-        transaction.commit();
+        if (backstack == null) {
+            transaction.commit();
+        } else {
+            transaction.addToBackStack(backstack);
+            transaction.commit();
+        }
+
     }
-
-
-
 
 
     private void setBottomMenuItem() {

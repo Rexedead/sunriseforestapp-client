@@ -1,19 +1,14 @@
 package pro.sunriseforest.sunriseforestapp_client.ui.fragments;
 
-import android.app.DatePickerDialog;
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.Scroller;
 import android.widget.TextView;
 
 import com.squareup.moshi.JsonAdapter;
@@ -22,15 +17,9 @@ import com.squareup.moshi.Types;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Locale;
-import java.util.Objects;
 
 import pro.sunriseforest.sunriseforestapp_client.R;
 import pro.sunriseforest.sunriseforestapp_client.models.Task;
-import pro.sunriseforest.sunriseforestapp_client.ui.NewTaskActivity;
-import pro.sunriseforest.sunriseforestapp_client.ui.TaskDeskActivity;
 
 
 public class TaskFragment extends Fragment {
@@ -84,7 +73,8 @@ public class TaskFragment extends Fragment {
         mDeadlineEditText.setText(mSingleTask.getDeadlineDate());
 
         final EditText mRewardEditText = view.findViewById(R.id.singleTask_reward_editText);
-        mRewardEditText.setText(mSingleTask.getReward() + getString(R.string.ruble));
+        String reward = mSingleTask.getReward()+" \u20BD";
+        mRewardEditText.setText(reward);
 
 
         final EditText mClientPhoneEditText = view.findViewById(R.id.singleTask_clientPhone_editText);

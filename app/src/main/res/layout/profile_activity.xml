@@ -11,15 +11,15 @@
         android:id="@+id/profile_id_textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="profileId_textView" />
+        android:text="@string/profile_id" />
 
     <TextView
         android:id="@+id/profile_id_get_textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
+        android:layout_marginStart="10dp"
         android:layout_toEndOf="@+id/profile_id_textView"
-        android:text="profileId_textView" />
+         />
 
     <TextView
         android:id="@+id/profile_phone_textView"
@@ -27,7 +27,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/profile_id_textView"
         android:layout_alignParentStart="true"
-        android:text="phone" />
+        android:text="@string/profile_phone" />
 
     <TextView
         android:id="@+id/profile_phone_get_textView"
@@ -35,7 +35,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/profile_id_textView"
         android:layout_toEndOf="@+id/profile_phone_textView"
-        android:text="phone_get" />
+        android:layout_marginStart="10dp"
+        />
 
     <TextView
         android:id="@+id/profile_mail_textView"
@@ -43,7 +44,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/profile_phone_textView"
         android:layout_alignParentStart="true"
-        android:text="mail" />
+        android:text="@string/profile_mail" />
 
     <TextView
         android:id="@+id/profile_mail_get_textView"
@@ -51,7 +52,8 @@
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/profile_mail_textView"
         android:layout_toEndOf="@+id/profile_phone_textView"
-        android:text="mail_get" />
+        android:layout_marginStart="10dp"
+         />
 
     <TextView
         android:id="@+id/profile_role_textView"
@@ -59,25 +61,63 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/profile_mail_textView"
         android:layout_alignParentStart="true"
-        android:text="role" />
+        android:text="@string/profile_role" />
 
     <TextView
         android:id="@+id/profile_role_get_textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/profile_role_textView"
+        android:layout_marginStart="10dp"
         android:layout_toEndOf="@+id/profile_phone_textView"
-        android:text="role_get" />
+       />
+
+
+
+    <TextView
+        android:id="@+id/profile_tasksTaken_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/profile_role_textView"
+        android:layout_alignParentStart="true"
+        android:text="@string/profile_taken" />
+
+    <TextView
+        android:id="@+id/profile_tasksTaken_get_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_toEndOf="@+id/profile_tasksTaken_textView"
+        android:layout_alignBottom="@+id/profile_tasksTaken_textView"
+         />
+
+
+
+    <TextView
+        android:id="@+id/profile_reward_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/profile_tasksTaken_textView"
+        android:layout_alignParentStart="true"
+        android:text="@string/profile_reward" />
+
+    <TextView
+        android:id="@+id/profile_reward_get_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/profile_reward_textView"
+        android:layout_marginStart="10dp"
+        android:layout_toEndOf="@+id/profile_reward_textView"
+        />
 
 
     <Button
         android:id="@+id/removeToken_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/profile_id_textView"
-        android:layout_marginTop="62dp"
-        android:layout_marginEnd="8dp"
-        android:text="Remove Token Data"
+        android:layout_below="@id/profile_reward_textView"
+        android:layout_marginTop="10dp"
+        android:text="@string/profile_remove_token_data"
         app:layout_constraintEnd_toEndOf="parent" />
 
 

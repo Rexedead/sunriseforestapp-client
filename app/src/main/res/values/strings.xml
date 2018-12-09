@@ -10,20 +10,9 @@
     <string name="hello_blank_fragment">hello</string>
     <string name="enter_login_editText" type="id">enter_login</string>
     <string name="enter_password_editText" type="id">enter_password</string>
-    <string name="taskdesk_image">taskdesk_image</string>
-    <string name="task_data">task_data</string>
-    <string name="task_id">task_id</string>
-    <string name="task_time">task_time</string>
     <string name="title_activity_profile">ProfileActivity</string>
-    <string name="noname">No name</string>
-    <string name="deadline">Срок выполнения:</string>
-    <string name="reward">Вознаграждение:</string>
     <string name="enter_name_hint">Введите имя</string>
     <string name="enter_phone_hint">Введите номер телефона</string>
-    <string name="client">Заказчик:</string>
-    <string name="contractor">Исполнитель:</string>
-    <string name="nocontractor">пока нет:</string>
-    <string name="date_pick">%1$d / %2$d / %3$d</string>
     <string name="newTask_description">Описание</string>
     <string name="newTask_startDate">Дата старта</string>
     <string name="newTask_endDate">Дата окончания</string>
@@ -44,8 +33,18 @@
     <string name="singleTask_text">Задача</string>
     <string name="singleTask_book">Забронировать</string>
     <string name="singleTask_edit">Изменить</string>
-    <string name="status">status</string>
-    <string name="string_name">what is this</string>
+    <string name="profile_id">ID</string>
+    <string name="profile_phone">Телефон</string>
+    <string name="profile_mail">Почта</string>
+    <string name="profile_role">Роль</string>
+    <string name="profile_remove_token_data">Выход</string>
+    <string name="profile_taken">Взято заказов</string>
+    <string name="profile_reward">Заработано</string>
+    <string name="recycler_startdate">Старт</string>
+    <string name="recycler_enddate">Финиш</string>
+    <string name="recycler_creationdate">Создано</string>
     <string name="ruble">₽</string>
+
+
 
 </resources>

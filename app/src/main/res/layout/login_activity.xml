@@ -39,7 +39,7 @@
         android:layout_marginRight="60dp"
         android:text="@string/log_in"
         android:background="@color/auth_button"
-        android:textColor="@color/auth_button_text"
+        android:textColor="@color/button_text"
         android:textAllCaps="false"
         android:textSize="18sp" />
     <Button
@@ -51,7 +51,7 @@
         android:layout_marginTop="10dp"
         android:layout_marginRight="60dp"
         android:background="@color/auth_button"
-        android:textColor="@color/auth_button_text"
+        android:textColor="@color/button_text"
         android:textAllCaps="false"
         android:text="@string/registration_logAct_button"
         android:textSize="18sp"

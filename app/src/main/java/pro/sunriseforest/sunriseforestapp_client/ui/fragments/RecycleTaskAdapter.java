@@ -35,9 +35,11 @@ public class RecycleTaskAdapter extends RecyclerView.Adapter<RecycleTaskAdapter.
     @Override
     public void onBindViewHolder(@NonNull final TaskViewHolder task_holder, int position) {
         Task task = mTaskList.get(position);
-        task_holder.mReward.setText(task.getReward() + " \u20BD");
-        task_holder.mDate.setText("Создано: "+task.getCreationDate());
-        task_holder.mEndDate.setText("Срок: "+ task.getDeadlineDate());
+        String reward = task.getReward()+" \u20BD";
+        task_holder.mReward.setText(reward);
+        task_holder.mCreationDate.setText(task.getCreationDate());
+        task_holder.mStartDate.setText(task.getStartDate());
+        task_holder.mEndDate.setText(task.getDeadlineDate());
         switch (task.getStatus()) {
             case 101:
                 task_holder.mStatus.setImageResource(R.drawable.status_101);
@@ -60,7 +62,7 @@ public class RecycleTaskAdapter extends RecyclerView.Adapter<RecycleTaskAdapter.
     }
 
     class TaskViewHolder extends RecyclerView.ViewHolder {
-        TextView mDescription, mReward, mDate, mEndDate;
+        TextView mDescription, mReward, mStartDate, mEndDate, mCreationDate;
         ImageView mStatus;
 
 
@@ -69,8 +71,9 @@ public class RecycleTaskAdapter extends RecyclerView.Adapter<RecycleTaskAdapter.
             mDescription = view.findViewById(R.id.taskSingleRow_description_textView);
             mDescription.setSingleLine(true);
             mReward = view.findViewById(R.id.taskSingleRow_reward_textView);
-            mDate = view.findViewById(R.id.taskSingleRow_creationDate_textView);
-            mEndDate = view.findViewById(R.id.taskSingleRow_endDate_textView);
+            mCreationDate = view.findViewById(R.id.taskSingleRow_creationDate_get_textView);
+            mStartDate = view.findViewById(R.id.taskSingleRow_startDate_get_textView);
+            mEndDate = view.findViewById(R.id.taskSingleRow_endDate_get_textView);
             mStatus = view.findViewById(R.id.taskSingleRow_status_imageView);
 
         }

@@ -1,20 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#1C8A43</color>
-    <color name="colorPrimaryDark">#1C8A43</color>
-    <color name="colorAccent">#1C8A43</color>
-    <color name="green">#008000</color>
-    <color name="gold">#ffd700</color>
-    <color name="ivory">#fffddf</color>
-    <color name="darkGrey">#49423d</color>
-    <color name="deskDescription">#000000</color>
-    <color name="creationTime">#4285f4</color>
-    <color name="reward">#28A745</color>
-    <color name="status_101">#d50000</color>
-    <color name="status_102">#ffab00</color>
-    <color name="status_103">#0F9D58</color>
-    <color name="auth_button">#0F9D58</color>
-    <color name="auth_button_text">#fff</color>
+    <color name="colorPrimary">#4CAF50</color>
+    <color name="colorPrimaryDark">#388E3C</color>
+    <color name="colorAccent">#448AFF</color>
+    <color name="secondaryText">#757575</color>
+    <color name="primaryText">#212121</color>
+    <color name="recycler_date">#448AFF</color>
+    <color name="status_101">#F44336</color>
+    <color name="status_102">#FF9800</color>
+    <color name="status_103">#8BC34A</color>
+    <color name="auth_button">#689F38</color>
+    <color name="button_text">#fff</color>
     <color name="field_background">#e5e5e5</color>
 
 
