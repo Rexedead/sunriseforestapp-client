@@ -5,7 +5,7 @@
     android:id="@+id/profile_activity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.ProfileActivity">
+    >
 
     <TextView
         android:id="@+id/profile_id_textView"

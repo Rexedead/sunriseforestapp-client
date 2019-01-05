@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     android:paddingStart="?listPreferredItemPaddingLeft"
     android:paddingEnd="?listPreferredItemPaddingRight"
-    tools:context=".ui.NewTaskActivity"
     >
 
 

@@ -1,8 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/nav_graph"
-    app:startDestination="@id/loginActivity">
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/nav_graph"
+            app:startDestination="@id/splashFragment">
 
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="pro.sunriseforest.sunriseforestapp_client.ui.fragments.LoginFragment"
+        android:label="login_fragment"
+        tools:layout="@layout/login_fragment">
+        <action
+            android:id="@+id/action_loginFragment_to_registrationFragment"
+            app:destination="@id/registrationFragment"/>
+        <action
+            android:id="@+id/action_loginFragment_to_deskFragment"
+            app:destination="@id/deskFragment"/>
+    </fragment>
+    <fragment
+        android:id="@+id/splashFragment"
+        android:name="pro.sunriseforest.sunriseforestapp_client.ui.fragments.SplashFragment"
+        android:label="SplashFragmet">
+        <action
+            android:id="@+id/action_splashFragmet_to_loginFragment"
+            app:destination="@id/loginFragment"/>
+        <action
+            android:id="@+id/action_splashFragmet_to_deskFragment"
+            app:destination="@id/deskFragment"/>
+    </fragment>
+    <fragment
+        android:id="@+id/deskFragment"
+        android:name="pro.sunriseforest.sunriseforestapp_client.ui.fragments.DeskFragment"
+        android:label="desk_fragment"
+        tools:layout="@layout/desk_fragment"/>
+    <fragment
+        android:id="@+id/registrationFragment"
+        android:name="pro.sunriseforest.sunriseforestapp_client.ui.fragments.RegistrationFragment"
+        android:label="registration_fragment"
+        tools:layout="@layout/registration_fragment"/>
 </navigation>

@@ -11,7 +11,7 @@ import com.squareup.moshi.Moshi;
 import java.io.IOException;
 import pro.sunriseforest.sunriseforestapp_client.models.User;
 
-public class SharedPreferenceHelper {
+public class SharedPreferenceHelper implements ISharedPreferenceHelper{
 
     private static final String SHARED_PREF_NAME = "sunriseforestapp-client";
     private static final String TOKEN_TAG = "TOKEN_TAG";
@@ -27,7 +27,7 @@ public class SharedPreferenceHelper {
     }
 
     public @Nullable
-    User getMyUser(){
+    User getUser(){
         User user;
         String jsonToken = mSharedPreferences.getString(MY_USER_TAG, "");
         if(jsonToken.length() == 0){

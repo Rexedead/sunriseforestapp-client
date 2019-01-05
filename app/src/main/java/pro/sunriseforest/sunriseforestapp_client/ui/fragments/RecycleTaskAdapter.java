@@ -14,7 +14,8 @@ import android.widget.TextView;
 import java.util.List;
 
 
-public class RecycleTaskAdapter extends RecyclerView.Adapter<RecycleTaskAdapter.TaskViewHolder> {
+public class
+RecycleTaskAdapter extends RecyclerView.Adapter<RecycleTaskAdapter.TaskViewHolder> {
     private List<Task> mTaskList;
 
     @NonNull

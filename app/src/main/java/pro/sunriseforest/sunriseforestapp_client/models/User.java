@@ -1,9 +1,11 @@
 package pro.sunriseforest.sunriseforestapp_client.models;
 
+import android.support.annotation.NonNull;
+
 import com.squareup.moshi.Json;
 
 public class User {
-    @Json(name = "_id")
+    @Json(name = "sr_user_id")
     private String mId;
 
     @Json(name = "sr_user_password")
@@ -25,12 +27,20 @@ public class User {
     @Json(name = "sr_user_info")
     private Object mInfo;
 
+
+    public User(String email, String password) {
+        mPassword = password;
+        mEmail = email;
+    }
+
     public User(String mPassword, String mPhoneNumber, String mEmail, String mRole) {
         this.mPassword = mPassword;
         this.mPhoneNumber = mPhoneNumber;
         this.mEmail = mEmail;
         this.mRole = mRole;
     }
+
+
 
     public String getEmail() {
         return mEmail;
@@ -87,5 +97,19 @@ public class User {
 
     public void setInfo(String mInfo) {
         this.mInfo = mInfo;
+    }
+
+
+    @NonNull
+    @Override
+    public String toString() {
+        return "User{" +
+                "mId='" + mId + '\'' +
+                ", mPassword='" + mPassword + '\'' +
+                ", mPhoneNumber='" + mPhoneNumber + '\'' +
+                ", mEmail='" + mEmail + '\'' +
+                ", mRole='" + mRole + '\'' +
+                ", mToken='" + mToken + '\'' +
+                '}';
     }
 }

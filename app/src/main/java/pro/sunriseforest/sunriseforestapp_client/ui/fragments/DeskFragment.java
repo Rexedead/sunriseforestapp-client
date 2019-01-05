@@ -14,7 +14,6 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Moshi;
@@ -27,26 +26,25 @@ import java.util.List;
 import java.util.Objects;
 import pro.sunriseforest.sunriseforestapp_client.R;
 import pro.sunriseforest.sunriseforestapp_client.models.Task;
+import pro.sunriseforest.sunriseforestapp_client.presenter.AppPresenter;
+import rx.Observable;
 
 
-public class TaskDeskFragment extends Fragment  {
+public class DeskFragment extends LogFragment  {
     private List<Task> mTaskList = new ArrayList<>();
-    private OnClickSingleRowListener mListener;
 
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_JSON_TASKS = "arg_json_tasks";
 
 
-    public TaskDeskFragment() {
+    public DeskFragment() {
         // Required empty public constructor
     }
 
-    public static TaskDeskFragment newInstance(String jsonListTask) {
-        Bundle args = new Bundle();
-        args.putString(ARG_JSON_TASKS, jsonListTask);
-        TaskDeskFragment fragment = new TaskDeskFragment();
-        fragment.setArguments(args);
-        return fragment;
+
+    @Override
+    protected String createTag() {
+        return "DeskFragment";
     }
 
     @Override
@@ -60,24 +58,20 @@ public class TaskDeskFragment extends Fragment  {
             try {
                 mTaskList = jsonAdapter.fromJson(jsonTasks);
             } catch (IOException e) {
-                Log.e("TaskDeskFragment", "не удалось перевести json в лист тасков в onCreate()");
+                logError("onCreate() не удалось перевести json в лист тасков в onCreate()");
             }
         }
 
-        try {
-            mListener = (OnClickSingleRowListener)getActivity();
-        } catch (ClassCastException e) {
-            throw new ClassCastException(Objects.requireNonNull(getActivity()).toString() + " must implement iSingleRowClickedListener");
-        }
+
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.taskdesk_fragment, container, false);
+        View view = inflater.inflate(R.layout.desk_fragment, container, false);
 
-        RecyclerView mRecyclerView = view.findViewById(R.id.taskdesk_recyclerView);
+        RecyclerView mRecyclerView = view.findViewById(R.id.desk_recyclerView);
         RecycleTaskAdapter mRecycleTaskAdapter = new RecycleTaskAdapter(mTaskList);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
@@ -87,17 +81,6 @@ public class TaskDeskFragment extends Fragment  {
                 mRecyclerView));
         return view;
     }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
-
-    public interface OnClickSingleRowListener {
-        void onClicked(View singleRowView, int position);
-    }
-
 
 
     class RecyclerTouchListener implements RecyclerView.OnItemTouchListener{
@@ -117,7 +100,7 @@ public class TaskDeskFragment extends Fragment  {
                     View child=recycleView.findChildViewUnder(e.getX(),e.getY());
                     if(child!=null){
                         int position = recycleView.getChildAdapterPosition(child);
-                        Log.i("TaskDeskFragment", "onLongPress(). Position = " + position);
+                        Log.i("DeskFragment", "onLongPress(). Position = " + position);
                     }
                 }
             });
@@ -126,10 +109,11 @@ public class TaskDeskFragment extends Fragment  {
 
         @Override
         public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
+            log("RecyclerTouchListener onInterceptTouchEvent()");
             View child=rv.findChildViewUnder(e.getX(),e.getY());
             if(child!=null && gestureDetector.onTouchEvent(e)){
                 int position = rv.getChildAdapterPosition(child);
-                mListener.onClicked(child,position);
+                AppPresenter.getInstance().selectedTask(position);
             }
 
             return false;
@@ -137,11 +121,13 @@ public class TaskDeskFragment extends Fragment  {
 
         @Override
         public void onTouchEvent(RecyclerView rv, MotionEvent e) {
-
+            log("RecyclerTouchListener onTouchEvent()");
         }
 
         @Override
         public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
+            log(String.format("RecyclerTouchListener onRequestDisallowInterceptTouchEvent(disallowIntercept=%s)"
+                    ,disallowIntercept));
 
         }
     }

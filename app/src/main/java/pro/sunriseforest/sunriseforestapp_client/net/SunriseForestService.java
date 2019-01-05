@@ -16,6 +16,7 @@ import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
+
 public interface SunriseForestService {
     @GET("data/tasks")
     Call<List<Task>> getTasks(@Query("sr_user_token") String token);
@@ -31,13 +32,19 @@ public interface SunriseForestService {
     @POST("auth/reg")
     Call<User> userRegistration(@Body User user);
 
-     @POST("data/tasks")
+    @POST("data/tasks")
     Call<Task> addtask(@Body Task task, @Query("sr_user_token") String token);
 
     @POST("data/client")
     Call<Client> addclient(@Body Client client, @Query("sr_user_token") String token);
 
-    @PATCH("task/{id}/book")
-    Call book(@Path("id") int id);
+    @PATCH("data/task/{id}/upd_cont")
+    Call<Task> upd_cont(@Path("id") String id, @Body User user);
 
+    @PATCH("data/task/{id}/upd_desc")
+    Call<Task> upd_desc(@Path("id") String id,
+                        @Query("sr_task_description")String description,
+                        @Query("sr_task_start_date")String start,
+                        @Query("sr_task_end_date")String end_date,
+                        @Query("sr_task_reward")int reward);
 }

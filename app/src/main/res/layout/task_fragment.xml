@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:paddingStart="?listPreferredItemPaddingLeft"
     android:paddingEnd="?listPreferredItemPaddingRight"
-    tools:context=".ui.NewTaskActivity">
+    >
 
     <TextView
         android:id="@+id/singleTask_text_textView"

@@ -11,10 +11,11 @@ import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.moshi.MoshiConverterFactory;
 
 
+
 public class ApiFactory {
 
     private static OkHttpClient sClient;
-    private static final String API_ENDPOINT = "http://192.168.1.40:3000/";
+    private static final String API_ENDPOINT = "http://77.222.54.80:3000/";
 
     private static volatile SunriseForestService sSunriseForestService;
 

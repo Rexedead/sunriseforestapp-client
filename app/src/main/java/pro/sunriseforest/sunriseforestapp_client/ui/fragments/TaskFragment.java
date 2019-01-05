@@ -53,7 +53,7 @@ public class TaskFragment extends Fragment {
                 assert jsonTasks != null;
                 mSingleTask = jsonAdapter.fromJson(jsonTasks);
             } catch (IOException e) {
-                Log.e("TaskDeskFragment", "не удалось перевести json в лист тасков в onCreate()");
+                Log.e("DeskFragment", "не удалось перевести json в лист тасков в onCreate()");
             }
         }
 
