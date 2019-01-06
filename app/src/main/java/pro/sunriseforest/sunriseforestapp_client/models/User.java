@@ -8,14 +8,23 @@ public class User {
     @Json(name = "sr_user_id")
     private String mId;
 
+    @Json(name = "sr_user_name")
+    private String mName;
+
     @Json(name = "sr_user_password")
     private String mPassword;
 
-    @Json(name = "sr_user_phone_auth")
+    @Json(name = "sr_user_phone")
     private String mPhoneNumber;
 
-    @Json(name = "sr_user_email_auth")
+    @Json(name = "sr_user_email")
     private String mEmail;
+
+    @Json(name = "sr_user_phone_auth")
+    private String mPhoneAuthNumber;
+
+    @Json(name = "sr_user_email_auth")
+    private String mEmailAuth;
 
     @Json(name = "sr_user_role")
     private String mRole;
@@ -27,20 +36,26 @@ public class User {
     @Json(name = "sr_user_info")
     private Object mInfo;
 
+    @Json(name = "sr_reward_sum")
+    private int mRewardSum;
+
+    @Json(name = "sr_tasks_taken")
+    private int mTasksCount;
 
     public User(String email, String password) {
         mPassword = password;
         mEmail = email;
     }
 
-    public User(String mPassword, String mPhoneNumber, String mEmail, String mRole) {
+    public User(String mName, String mPassword, String mPhoneNumber, String mEmail, String mRole) {
+        this.mName = mName;
         this.mPassword = mPassword;
         this.mPhoneNumber = mPhoneNumber;
         this.mEmail = mEmail;
         this.mRole = mRole;
+        this.mEmailAuth = mEmail;
+        this.mPhoneAuthNumber = mPhoneNumber;
     }
-
-
 
     public String getEmail() {
         return mEmail;
@@ -48,6 +63,10 @@ public class User {
 
     public String getId() {
         return mId;
+    }
+
+    public String getName() {
+        return mName;
     }
 
     public String getPassword() {
@@ -78,6 +97,10 @@ public class User {
         this.mPassword = mPassword;
     }
 
+    public void setName(String mName) {
+        this.mName = mName;
+    }
+
     public void setPhoneNumber(String mPhoneNumber) {
         this.mPhoneNumber = mPhoneNumber;
     }
@@ -95,9 +118,28 @@ public class User {
     }
 
 
+
     public void setInfo(String mInfo) {
         this.mInfo = mInfo;
     }
+
+
+    public int getRewardSum() {
+        return mRewardSum;
+    }
+
+    public void setRewardSum(int mRewardSum) {
+        this.mRewardSum = mRewardSum;
+    }
+
+    public int getTasksCount() {
+        return mTasksCount;
+    }
+
+    public void setTasksCount(int mTasksCount) {
+        this.mTasksCount = mTasksCount;
+    }
+
 
 
     @NonNull

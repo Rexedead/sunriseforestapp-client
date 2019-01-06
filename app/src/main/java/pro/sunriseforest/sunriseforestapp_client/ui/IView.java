@@ -15,6 +15,6 @@ public interface IView {
     void showNewTask();
     void showError(String msg);
     void showLoading();
-
+    void showInfoMessage(String msg);
 
 }

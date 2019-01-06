@@ -1,4 +1,4 @@
-package pro.sunriseforest.sunriseforestapp_client.ui;
+package pro.sunriseforest.sunriseforestapp_client.ui.old;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;

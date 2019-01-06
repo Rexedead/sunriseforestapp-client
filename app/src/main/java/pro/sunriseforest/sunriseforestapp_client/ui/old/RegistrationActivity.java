@@ -1,4 +1,4 @@
-package pro.sunriseforest.sunriseforestapp_client.ui;
+package pro.sunriseforest.sunriseforestapp_client.ui.old;
 
 import android.content.Context;
 import android.content.Intent;

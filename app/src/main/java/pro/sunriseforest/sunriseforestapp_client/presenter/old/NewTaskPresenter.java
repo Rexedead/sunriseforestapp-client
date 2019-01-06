@@ -1,4 +1,4 @@
-package pro.sunriseforest.sunriseforestapp_client.presenter;
+package pro.sunriseforest.sunriseforestapp_client.presenter.old;
 
 import android.support.annotation.NonNull;
 import android.util.Log;
@@ -33,7 +33,7 @@ import retrofit2.Response;
 ////        return TAG;
 ////    }
 ////
-////    public void addNewTask(final Task task) {
+////    public void addTask(final Task task) {
 ////        Call<Task> call = ApiFactory.getSunriseForestService().addtask(task, mPreferenceHelper.getToken());
 ////        call.enqueue(new Callback<Task>() {
 ////            @Override

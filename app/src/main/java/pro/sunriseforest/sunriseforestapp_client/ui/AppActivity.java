@@ -55,8 +55,7 @@ public class AppActivity extends AppCompatActivity implements IView{
     @Override
     public void showLoginScreen() {
         log("showLoginScreen()");
-        mNavController.navigate(R.id.action_splashFragmet_to_loginFragment);
-
+        mNavController.navigate(R.id.action_splashFragment_to_loginFragment);
     }
 
     @Override
@@ -72,7 +71,7 @@ public class AppActivity extends AppCompatActivity implements IView{
 
         switch (mNavController.getCurrentDestination().getId()){
             case R.id.splashFragment:
-                mNavController.navigate(R.id.action_splashFragmet_to_deskFragment);
+                mNavController.navigate(R.id.action_splashFragment_to_deskFragment);
                 break;
             case R.id.loginFragment:
                 mNavController.navigate(R.id.action_loginFragment_to_deskFragment);
@@ -145,6 +144,11 @@ public class AppActivity extends AppCompatActivity implements IView{
     public void showLoading() {
         log("showLoading()");
 
+    }
+
+    @Override
+    public void showInfoMessage(String msg) {
+        Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
     }
 
     private void log(String msg){

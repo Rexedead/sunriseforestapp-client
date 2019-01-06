@@ -10,8 +10,14 @@ import com.squareup.moshi.Json;
 
 public class Task {
 
-    @Json(name = "sr_task_contractor")
-    private Contractor mContractor;
+//    @Json(name = "sr_contractor_id")
+//    private int mContractor;
+
+    @Json(name = "sr_contractor_name")
+    private String mContractorName;
+
+    @Json(name = "sr_contractor_phone")
+    private String mContractorPhone;
 
     @Json(name = "sr_task_client")
     private Client mClient;
@@ -25,7 +31,7 @@ public class Task {
     @Json(name = "sr_task_creation_date")
     private String mCreationDate;
 
-    @Json(name = "sr_task_deadline")
+    @Json(name = "sr_task_end_date")
     private String mDeadlineDate;
 
     @Json(name = "sr_task_start_date")
@@ -38,13 +44,16 @@ public class Task {
     private int mReward;
 
 
-    public Task(String mTaskDescription, String mCreationDate, String mStartDate, String mDeadlineDate,  byte mStatus, int mReward) {
+    public Task(String mTaskDescription, String mCreationDate, String mStartDate,
+                String mDeadlineDate, byte mStatus, int mReward, String mContractorName, String mContractorPhone) {
         this.mTaskDescription = mTaskDescription;
         this.mCreationDate = mCreationDate;
         this.mDeadlineDate = mDeadlineDate;
         this.mStartDate = mStartDate;
         this.mStatus = mStatus;
         this.mReward = mReward;
+        this.mContractorName = mContractorName;
+        this.mContractorPhone = mContractorPhone;
     }
 
 
@@ -72,12 +81,20 @@ public class Task {
         return mStatus;
     }
 
-    public void setContractor(Contractor contractor) {
-        mContractor = contractor;
+    public String getContractorName() {
+        return mContractorName;
     }
 
-    public Contractor getContractor() {
-        return mContractor;
+    public void setContractorName(String mContractorName) {
+        this.mContractorName = mContractorName;
+    }
+
+    public String getmContractorPhone() {
+        return mContractorPhone;
+    }
+
+    public void setmContractorPhone(String mContractorPhone) {
+        this.mContractorPhone = mContractorPhone;
     }
 
     public Client getClient() {

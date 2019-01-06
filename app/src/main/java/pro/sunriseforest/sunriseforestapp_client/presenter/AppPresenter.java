@@ -25,15 +25,15 @@ public class AppPresenter extends BasePresenter<IView> {
 
     private List<Task> mTasks;
 
-    public static AppPresenter getInstance(){
-        if(sAppPresenter == null){
+    public static AppPresenter getInstance() {
+        if (sAppPresenter == null) {
             sAppPresenter = new AppPresenter();
         }
         return sAppPresenter;
     }
 
 
-    private AppPresenter(){
+    private AppPresenter() {
         mPreferenceHelper = new SharedPreferenceHelper(SunriseForestApp.getAppContext());
     }
 
@@ -41,9 +41,9 @@ public class AppPresenter extends BasePresenter<IView> {
         log("startApp()");
         User user = mPreferenceHelper.getUser();
         final IView view = getView();
-        if(user == null){
+        if (user == null) {
             view.showLoginScreen();
-        }else{
+        } else {
             view.showDeskScreen();
 //            ApiFactory.getSunriseForestService().getTasks(mPreferenceHelper.getToken()).enqueue(new Callback<List<Task>>() {
 //                @Override
@@ -88,12 +88,12 @@ public class AppPresenter extends BasePresenter<IView> {
                 }
 
                 String msg = ErrorMassageManager.LOGIN(code);
-                if(!TextUtils.isEmpty(msg)) getView().showError(msg);
+                if (!TextUtils.isEmpty(msg)) getView().showError(msg);
             }
 
             @Override
             public void onFailure(@NonNull Call<User> call, @NonNull Throwable t) {
-                logError( "network selectedLogin: onFailure(), throwable=" + t.getMessage());
+                logError("network selectedLogin: onFailure(), throwable=" + t.getMessage());
             }
         });
     }
@@ -108,20 +108,20 @@ public class AppPresenter extends BasePresenter<IView> {
             public void onResponse(@NonNull Call<User> call, @NonNull Response<User> response) {
 
                 int code = response.code();
-                if(code == 200){
+                if (code == 200) {
                     mPreferenceHelper.saveUser(response.body());
                     mView.showDeskScreen();
-                }else {
+                } else {
 
                     String msg = ErrorMassageManager.LOGIN(code);
-                    if(!TextUtils.isEmpty(msg)) mView.showError(msg);
+                    if (!TextUtils.isEmpty(msg)) mView.showError(msg);
                 }
             }
 
 
             @Override
             public void onFailure(@NonNull Call<User> call, @NonNull Throwable t) {
-                logError( "network selectedRegistration: onFailure(), throwable=" + t.getMessage());
+                logError("network selectedRegistration: onFailure(), throwable=" + t.getMessage());
                 mView.showError("ошибка сети");
             }
         });
@@ -129,26 +129,161 @@ public class AppPresenter extends BasePresenter<IView> {
 
     }
 
-    public void selectedGotoRegistration(){
+    public void selectedGotoRegistration() {
         log("selectedGotoRegistration()");
         mView.showRegistrationScreen();
     }
 
-    public void selectedTask(int position){
-        log(String.format("selectedTask(position=%s)",position));
+    public void selectedTask(int position) {
+        log(String.format("selectedTask(position=%s)", position));
 
     }
-
 
 
     @Override
     public void exitProfile() {
         log("exitProfile()");
+        mPreferenceHelper.removeUser();
     }
 
     @Override
     public void clickedBack() {
         log("clickedBack()");
+    }
+
+    @Override
+    public void editProfile(final User user) {
+        log("editProfile()");
+        Call<User> call = ApiFactory.getSunriseForestService().updProfile(user.getId(), user);
+        call.enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(@NonNull Call<User> call, @NonNull Response<User> resp) {
+                int code = resp.code();
+
+                if (code == 200) {
+                    log("Edit Profile Response OK");
+                    mPreferenceHelper.saveUser(resp.body());
+                } else {
+                    log("Edit Profile Response error");
+                }
+
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<User> call, @NonNull Throwable t) {
+                mView.showError("Ошибка сети");
+            }
+        });
+    }
+
+
+    @Override
+    public void getProfileAdditionalInfo(String id) {
+        log("getProfileInfo()");
+        Call<User> call = ApiFactory.getSunriseForestService().getProfileInfo(id);
+        call.enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(@NonNull Call<User> call, @NonNull Response<User> resp) {
+                int code = resp.code();
+
+                if (code == 200) {
+                    log("Edit Profile Response OK");
+                    mPreferenceHelper.getUser().setTasksCount(resp.body().getTasksCount());
+                    mPreferenceHelper.getUser().setRewardSum(resp.body().getRewardSum());
+                } else {
+                    log("Edit Profile Response error");
+                }
+
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<User> call, @NonNull Throwable t) {
+                mView.showError("Ошибка сети");
+            }
+        });
+    }
+
+
+
+
+    @Override
+    public void addTask(Task task) {
+        log("addTask()");
+        Call<Task> call = ApiFactory.getSunriseForestService().addtask(task, mPreferenceHelper.getToken());
+        call.enqueue(new Callback<Task>() {
+            @Override
+            public void onResponse(@NonNull Call<Task> call, @NonNull Response<Task> response) {
+
+                int code = response.code();
+                if (code == 200) {
+                    log("New Task Response is 200 (ok)");
+                    mView.showInfoMessage("Задание добавлено");
+                } else if (code == 400) {
+                    log("New Task Response is 400 (error)");
+                    mView.showError("проблемы на сервере. попробуйте еще раз");
+                } else {
+                    mView.showError("проблемы на сервере. Код ошибки " + code);
+                }
+
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<Task> call, @NonNull Throwable t) {
+                mView.showError("Ошибка сети");
+
+            }
+        });
+
+    }
+
+    @Override
+    public void taskReservation() {
+        log("taskReservation()");
+//        User user = mPreferenceHelper.getUser();
+//        Call<Task> call = ApiFactory.getSunriseForestService().taskReservation(user);
+//        call.enqueue(new Callback<Task>() {
+//            @Override
+//            public void onResponse(@NonNull Call<Task> call, @NonNull Response<Task> resp) {
+//                int code = resp.code();
+//
+//                if (code == 200) {
+//
+//                } else {
+//                    Log.e("TaskDeskPresenter", resp.message());
+//                }
+//
+//            }
+//
+//            @Override
+//            public void onFailure(@NonNull Call<Task> call, @NonNull Throwable t) {
+//                Log.e("TaskDeskPresenter", t.getMessage());
+//            }
+//        });
+
+    }
+
+    @Override
+    public void editTask() {
+        log("editTask");
+//        Call<Task> call = ApiFactory.getSunriseForestService().updDescription(id, desc, startDate,endDate, reward);
+//        call.enqueue(new Callback<Task>() {
+//            @Override
+//            public void onResponse(@NonNull Call<Task> call, @NonNull Response<Task> resp) {
+//                int code = resp.code();
+//
+//                if (code == 200) {
+//
+//                } else {
+//                    Log.e("TaskDeskPresenter", resp.message());
+//                }
+//
+//            }
+//
+//            @Override
+//            public void onFailure(@NonNull Call<Task> call, @NonNull Throwable t) {
+//                Log.e("TaskDeskPresenter", t.getMessage());
+//            }
+//        });
     }
 
 }

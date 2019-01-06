@@ -1,5 +1,6 @@
 package pro.sunriseforest.sunriseforestapp_client.presenter;
 
+import pro.sunriseforest.sunriseforestapp_client.models.Task;
 import pro.sunriseforest.sunriseforestapp_client.models.User;
 
 public interface IPresenter {
@@ -9,6 +10,12 @@ public interface IPresenter {
     void selectedRegistration(User user);
 
     void exitProfile();
-    void clickedBack();
+    void editProfile(User user);
+    void getProfileAdditionalInfo(String id);
 
+    void addTask(Task task);
+    void taskReservation();
+    void editTask();
+
+    void clickedBack();
 }

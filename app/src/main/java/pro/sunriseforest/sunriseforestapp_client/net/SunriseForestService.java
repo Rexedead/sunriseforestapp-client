@@ -38,13 +38,22 @@ public interface SunriseForestService {
     @POST("data/client")
     Call<Client> addclient(@Body Client client, @Query("sr_user_token") String token);
 
-    @PATCH("data/task/{id}/upd_cont")
-    Call<Task> upd_cont(@Path("id") String id, @Body User user);
+    @PATCH("data/task/{id}/upd_task_contractor")
+    Call<Task> taskReservation(@Path("id") String id, @Body User user);
 
-    @PATCH("data/task/{id}/upd_desc")
-    Call<Task> upd_desc(@Path("id") String id,
+    @PATCH("data/task/{id}/upd_task_description")
+    Call<Task> updDescription(@Path("id") String id,
                         @Query("sr_task_description")String description,
                         @Query("sr_task_start_date")String start,
                         @Query("sr_task_end_date")String end_date,
                         @Query("sr_task_reward")int reward);
+
+
+    @PATCH("data/user/{id}/upd_user_profile")
+    Call<User> updProfile(@Path("id") String id,
+                          @Body User user);
+
+    @GET("data/user/{id}/get_user_tasks_info")
+    Call<User> getProfileInfo(@Path("id") String id);
+
 }

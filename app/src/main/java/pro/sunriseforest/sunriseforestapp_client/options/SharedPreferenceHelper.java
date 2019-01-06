@@ -16,6 +16,7 @@ public class SharedPreferenceHelper implements ISharedPreferenceHelper{
     private static final String SHARED_PREF_NAME = "sunriseforestapp-client";
     private static final String TOKEN_TAG = "TOKEN_TAG";
     private static final String MY_USER_TAG = "MY_USER_TAG";
+    private static final String MY_USER_TAG_VISIBLE = "MY_USER_TAG_VISIBLE";
 
 
     private SharedPreferences mSharedPreferences;
@@ -58,7 +59,7 @@ public class SharedPreferenceHelper implements ISharedPreferenceHelper{
 
     private void removeToken(){
         mSharedPreferences.edit()
-                .putString(TOKEN_TAG, null)
+                .remove(TOKEN_TAG)
                 .apply();
     }
 
@@ -79,9 +80,8 @@ public class SharedPreferenceHelper implements ISharedPreferenceHelper{
 
     public void removeUser(){
         mSharedPreferences.edit()
-                .putString(MY_USER_TAG, null)
-                .apply();
-
+        .remove(MY_USER_TAG)
+        .apply();
         removeToken();
     }
 

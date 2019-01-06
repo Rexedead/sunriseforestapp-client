@@ -32,8 +32,9 @@ public class RegistrationFragment extends LogFragment {
             String mail = mMailEditText.getText().toString();
             String phone = mPhoneNumberEditText.getText().toString();
             String password = mPasswordEditText.getText().toString();
+            String name = mNameEditText.getText().toString();
 
-            mPresenter.selectedRegistration(new User(password, phone, mail, "contractor"));
+            mPresenter.selectedRegistration(new User(name, password, phone, mail, "contractor"));
         }
     };
 

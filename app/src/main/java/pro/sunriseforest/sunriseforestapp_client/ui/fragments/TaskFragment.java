@@ -89,9 +89,8 @@ public class TaskFragment extends Fragment {
         TextView mContractorNameTextView = view.findViewById(R.id.singleTask_contractorName_Textview);
         TextView mContractorPhoneTextView = view.findViewById(R.id.singleTask_contractorPhone_textView);
 
-        if (mSingleTask.getContractor() != null) {
-            mContractorNameTextView.setText(mSingleTask.getContractor().getName());
-        }
+//        mContractorNameTextView.setText(mSingleTask.getContractorName());
+
         Button mBookButton = view.findViewById(R.id.singleTask_book_button);
         final Button mEnableTaskEditButton = view.findViewById(R.id.singleTask_editTask_button);
 
@@ -118,6 +117,12 @@ public class TaskFragment extends Fragment {
                     mClientNameEditText.setEnabled(false);
                     mClientPhoneEditText.setEnabled(false);
                     edit = false;
+//                    TaskDeskPresenter taskDeskPresenter = new TaskDeskPresenter();
+//                    taskDeskPresenter.updDescription(mSingleTask.getTaskID(),
+//                            mDescriptionEditText.getText().toString(),
+//                            mTaskDateEditText.getText().toString(),
+//                            mDeadlineEditText.getText().toString(),
+//                            Integer.parseInt(mRewardEditText.getText().toString()));
                 } else {
                     mEnableTaskEditButton.setText("Сохранить");
                     mDescriptionEditText.setEnabled(true);

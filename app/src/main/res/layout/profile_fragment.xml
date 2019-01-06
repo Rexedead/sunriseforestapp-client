@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/profile_fragment"
+    tools:context=".ui.fragments.ProfileFragment">
+
+    <RelativeLayout
+        android:id="@+id/profile_top"
+        android:layout_width="match_parent"
+        android:layout_height="220dp"
+        android:background="@drawable/profile_woodie2">
+
+        <!--<ImageView-->
+        <!--android:id="@+id/profile_avatar"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_centerInParent="true"-->
+        <!--tools:srcCompat="@drawable/profile_woodie" />-->
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/profile_main"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/profile_top"
+        android:paddingStart="?listPreferredItemPaddingLeft"
+        android:paddingEnd="?listPreferredItemPaddingRight">
+
+        <TextView
+            android:id="@+id/profile_id_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:gravity="start|center"
+            android:text="@string/profile_id"
+            android:textSize="16sp"
+            />
+
+        <TextView
+            android:id="@+id/profile_id_get_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_marginStart="10dp"
+            android:layout_toEndOf="@+id/profile_id_textView"
+            android:gravity="start|center" />
+
+
+        <TextView
+            android:id="@+id/profile_name_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_below="@+id/profile_id_textView"
+            android:layout_alignParentStart="true"
+            android:gravity="start|center"
+            android:text="Имя"
+            android:textSize="16sp"
+            />
+
+        <EditText
+            android:id="@+id/profile_name_get_editText"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_below="@+id/profile_id_textView"
+            android:layout_marginStart="10dp"
+            android:layout_toEndOf="@+id/profile_phone_textView"
+            android:gravity="start|center"
+            android:background="@color/field_background"
+            android:textSize="16sp" />
+
+
+        <TextView
+            android:id="@+id/profile_phone_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_below="@+id/profile_name_textView"
+            android:layout_alignParentStart="true"
+            android:gravity="start|center"
+            android:text="@string/profile_phone"
+            android:textSize="16sp"
+            />
+
+        <EditText
+            android:id="@+id/profile_phone_get_editText"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_below="@+id/profile_name_textView"
+            android:layout_marginStart="10dp"
+            android:layout_toEndOf="@+id/profile_phone_textView"
+            android:gravity="start|center"
+            android:background="@color/field_background"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/profile_mail_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_below="@+id/profile_phone_textView"
+            android:layout_alignParentStart="true"
+            android:gravity="start|center"
+            android:text="@string/profile_mail"
+            android:textSize="16sp"
+            />
+
+        <EditText
+            android:id="@+id/profile_mail_get_editText"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_alignBottom="@+id/profile_mail_textView"
+            android:layout_marginStart="10dp"
+            android:layout_toEndOf="@+id/profile_phone_textView"
+            android:gravity="start|center"
+            android:background="@color/field_background"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/profile_role_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_below="@+id/profile_mail_textView"
+            android:layout_alignParentStart="true"
+            android:gravity="start|center"
+            android:text="@string/profile_role"
+            android:textSize="16sp"
+            />
+
+        <TextView
+            android:id="@+id/profile_role_get_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_alignBottom="@+id/profile_role_textView"
+            android:layout_marginStart="10dp"
+            android:layout_toEndOf="@+id/profile_phone_textView"
+            android:gravity="start|center"
+            android:textSize="16sp" />
+
+
+        <TextView
+            android:id="@+id/profile_tasksTaken_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_below="@+id/profile_role_textView"
+            android:layout_alignParentStart="true"
+            android:gravity="start|center"
+            android:text="@string/profile_taken"
+            android:textSize="16sp"
+            />
+
+        <TextView
+            android:id="@+id/profile_tasksTaken_get_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_alignBottom="@+id/profile_tasksTaken_textView"
+            android:layout_marginStart="10dp"
+            android:layout_toEndOf="@+id/profile_tasksTaken_textView"
+            android:gravity="start|center"
+            android:textSize="16sp" />
+
+
+        <TextView
+            android:id="@+id/profile_reward_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_below="@+id/profile_tasksTaken_textView"
+            android:layout_alignParentStart="true"
+            android:gravity="start|center"
+            android:text="@string/profile_reward"
+            android:textSize="16sp"
+            />
+
+        <TextView
+            android:id="@+id/profile_reward_get_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_alignBottom="@+id/profile_reward_textView"
+            android:layout_marginStart="30dp"
+            android:layout_toEndOf="@+id/profile_reward_textView"
+            android:gravity="start|center"
+            android:textSize="16sp" />
+
+
+        <Button
+            android:id="@+id/changeInfo_button"
+            android:layout_width="120dp"
+            android:layout_height="30dp"
+            android:layout_below="@+id/profile_reward_textView"
+            android:layout_marginTop="10dp"
+            android:background="@color/auth_button"
+            android:textAllCaps="false"
+            android:textColor="@color/button_text"
+            android:textSize="14sp" />
+
+        <Button
+            android:id="@+id/removeToken_button"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_below="@+id/profile_reward_textView"
+            android:layout_toEndOf="@+id/changeInfo_button"
+            android:background="@color/auth_button"
+            android:text="@string/profile_remove_token_data"
+            android:textAllCaps="false"
+            android:textColor="@color/button_text"
+            android:textSize="14sp" />
+    </RelativeLayout>
+
+
+</RelativeLayout>

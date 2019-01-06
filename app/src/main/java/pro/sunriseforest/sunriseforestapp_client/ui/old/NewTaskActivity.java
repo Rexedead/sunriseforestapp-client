@@ -1,4 +1,4 @@
-package pro.sunriseforest.sunriseforestapp_client.ui;
+package pro.sunriseforest.sunriseforestapp_client.ui.old;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
@@ -43,7 +43,7 @@ import pro.sunriseforest.sunriseforestapp_client.models.Task;
 //    @Override
 //    protected void onCreate(Bundle savedInstanceState) {
 //        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.new_task_activity);
+//        setContentView(R.layout.new_task_fragment);
 //
 //        final EditText mTaskDescriptionEditText = findViewById(R.id.newTask_description_editText);
 //
@@ -158,7 +158,7 @@ import pro.sunriseforest.sunriseforestapp_client.models.Task;
 //                            mTaskClientNameEditText.getText().toString(),
 //                            mTaskClientPhoneEditText.getText().toString()));
 //
-//                    mNewTaskPresenter.addNewTask(new Task(
+//                    mNewTaskPresenter.addTask(new Task(
 //                            mTaskDescriptionEditText.getText().toString(),
 //                            Calendar.getInstance().getTime().toString(),
 //                            Objects.requireNonNull(mTaskStartDateEditText.getText()).toString(),

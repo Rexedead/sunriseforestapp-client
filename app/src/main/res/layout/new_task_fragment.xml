@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -29,6 +28,8 @@
         android:ems="10"
         android:gravity="top|start"
         android:hint="@string/newTask_description"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp"
         android:inputType="textMultiLine"
         android:minLines="4"
         android:textSize="14sp" />
@@ -62,6 +63,8 @@
             android:layout_height="wrap_content"
             android:focusable="false"
             android:hint="@string/newTask_startDate"
+            android:paddingStart="5dp"
+            android:paddingEnd="5dp"
             android:textSize="14sp" />
     </android.support.design.widget.TextInputLayout>
 
@@ -87,6 +90,8 @@
             android:layout_height="wrap_content"
             android:focusable="false"
             android:hint="@string/newTask_endDate"
+            android:paddingStart="5dp"
+            android:paddingEnd="5dp"
             android:textSize="14sp" />
     </android.support.design.widget.TextInputLayout>
 
@@ -102,8 +107,8 @@
         android:layout_toStartOf="@+id/centerShim"
         android:background="@color/field_background"
         android:ems="10"
-        android:paddingStart="10dp"
-        android:paddingEnd="10dp"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp"
         android:hint="@string/newTask_reward"
         android:maxLength="10"
         android:digits="1234567890"
@@ -131,8 +136,8 @@
         android:layout_toStartOf="@+id/centerShim"
         android:background="@color/field_background"
         android:ems="10"
-        android:paddingStart="10dp"
-        android:paddingEnd="10dp"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp"
         android:hint="@string/newTask_clientName"
         android:inputType="text"
         android:textAlignment="textStart"
@@ -148,8 +153,8 @@
         android:layout_toEndOf="@+id/centerShim"
         android:background="@color/field_background"
         android:hint="@string/newTask_phone"
-        android:paddingStart="10dp"
-        android:paddingEnd="10dp"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp"
         android:digits="1234567890+-() "
         android:inputType="phone"
         android:textSize="14sp" />

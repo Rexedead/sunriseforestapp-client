@@ -12,7 +12,7 @@ public class ErrorMassageManager {
         }
        return "";
     }
-    public static String REGESTRATION(int code){
+    public static String REGISTRATION(int code){
         switch (code){
             case 401:
                 return "запрос не ок. код ошибки 401";

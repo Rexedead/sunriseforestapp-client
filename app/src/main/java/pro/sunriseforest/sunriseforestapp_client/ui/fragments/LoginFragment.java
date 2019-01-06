@@ -15,7 +15,7 @@ import pro.sunriseforest.sunriseforestapp_client.presenter.AppPresenter;
 
 public class LoginFragment extends LogFragment {
     private EditText mLoginEditText;
-    private  EditText mPasswordEditText;
+    private EditText mPasswordEditText;
 
     private View.OnClickListener mOnClickListenerLogInButton = new View.OnClickListener() {
         @Override
