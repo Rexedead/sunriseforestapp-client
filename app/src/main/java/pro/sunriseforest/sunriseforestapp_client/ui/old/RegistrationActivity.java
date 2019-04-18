@@ -38,7 +38,7 @@ import pro.sunriseforest.sunriseforestapp_client.models.User;
 //            String password = mPasswordEditText.getText().toString();
 //
 //
-//            mRegistrationPresenter.selectedRegistration(new User(password, phone, mail, "contractor"));
+//            mRegistrationPresenter.selectedGoToRegistration(new User(password, phone, mail, "contractor"));
 //        }
 //    };
 //

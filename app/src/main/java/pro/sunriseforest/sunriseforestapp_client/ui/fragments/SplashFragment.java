@@ -3,9 +3,9 @@ package pro.sunriseforest.sunriseforestapp_client.ui.fragments;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
-import pro.sunriseforest.sunriseforestapp_client.presenter.AppPresenter;
+import pro.sunriseforest.sunriseforestapp_client.presenters.BasePresenter;
 
-public class SplashFragment extends LogFragment {
+public class SplashFragment extends BaseFragment {
 
 
     @Override
@@ -14,10 +14,22 @@ public class SplashFragment extends LogFragment {
     }
 
     @Override
+    protected BasePresenter getPresenter() {
+
+        return new BasePresenter() {
+            @Override
+            protected String getTAG() {
+                return "SplashPresenter";
+            }
+        };
+
+    }
+
+    @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         if(savedInstanceState == null){
-            AppPresenter.getInstance().startApp();
+
         }
 
     }

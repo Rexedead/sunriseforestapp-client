@@ -9,11 +9,16 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
-public abstract class LogFragment extends Fragment {
+import pro.sunriseforest.sunriseforestapp_client.SunriseForestApp;
+import pro.sunriseforest.sunriseforestapp_client.presenters.BasePresenter;
+
+public abstract class BaseFragment extends Fragment {
 
 
     protected abstract String createTag();
+    protected abstract BasePresenter getPresenter();
 
     private String mTAG = "%%%/fragments/" + createTag();
 
@@ -51,12 +56,15 @@ public abstract class LogFragment extends Fragment {
     public void onResume() {
         super.onResume();
         log("lc: onResume()");
+        getPresenter().bindView(this);
+
     }
 
     @Override
     public void onPause() {
         super.onPause();
         log("lc: onPause()");
+        getPresenter().unBindView();
     }
 
     @Override
@@ -83,6 +91,15 @@ public abstract class LogFragment extends Fragment {
         log("lc: onDetach()");
     }
 
+
+    public void showError(String msg){
+        showToast(msg);
+    }
+
+    public void showToast(String msg){
+        Toast.makeText(SunriseForestApp.getAppContext(), msg, Toast.LENGTH_LONG).show();
+
+    }
     protected void log(String msg){
         Log.i( mTAG, msg);
     }

@@ -12,29 +12,30 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import pro.sunriseforest.sunriseforestapp_client.R;
 import pro.sunriseforest.sunriseforestapp_client.models.Task;
-import pro.sunriseforest.sunriseforestapp_client.presenter.AppPresenter;
 
 public class AppActivity extends AppCompatActivity implements IView{
 
 
-    private AppPresenter mPresenter;
-
+    private NavigationManager mNavigationManager;
     private NavController mNavController;
+    private boolean mIsStartApp;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         log("lc: onCreate()");
 
-        if(savedInstanceState== null){
-            mPresenter = AppPresenter.getInstance();
-            mPresenter.bindView(this);
-        }
+        mIsStartApp = savedInstanceState== null;
 
         setContentView(R.layout.app_activity);
 
         mNavController = Navigation.findNavController(this, R.id.container);
+        mNavigationManager = NavigationManager.getInstance();
+        mNavigationManager.bindView(this);
 
+        if(mIsStartApp){
+            mNavigationManager.startApp();
+        }
 
     }
 
@@ -102,8 +103,8 @@ public class AppActivity extends AppCompatActivity implements IView{
         super.onResume();
         log("lc: onResume()");
 
-        if(mPresenter.isViewUnBunding()){
-            mPresenter.bindView(this);
+        if(!mNavigationManager.isBinding()){
+            mNavigationManager.bindView(this);
         }
     }
 
@@ -112,7 +113,7 @@ public class AppActivity extends AppCompatActivity implements IView{
         super.onPause();
         log("lc: onPause()");
 
-        mPresenter.unBindView();
+        mNavigationManager.unBindView();
     }
 
     @Override

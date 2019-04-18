@@ -1,17 +1,7 @@
-package pro.sunriseforest.sunriseforestapp_client.presenter.old;
+package pro.sunriseforest.sunriseforestapp_client.presenters.old;
 
-import android.support.annotation.NonNull;
-import android.util.Log;
-
-import pro.sunriseforest.sunriseforestapp_client.SunriseForestApp;
-import pro.sunriseforest.sunriseforestapp_client.models.Client;
-import pro.sunriseforest.sunriseforestapp_client.models.Task;
-import pro.sunriseforest.sunriseforestapp_client.net.ApiFactory;
-import pro.sunriseforest.sunriseforestapp_client.options.SharedPreferenceHelper;
 //import pro.sunriseforest.sunriseforestapp_client.ui.NewTaskActivity;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+
 
 //public class NewTaskPresenter extends AppPresenter<NewTaskActivity> {
 ////

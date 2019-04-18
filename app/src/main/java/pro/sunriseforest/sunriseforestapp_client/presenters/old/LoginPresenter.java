@@ -1,17 +1,8 @@
-package pro.sunriseforest.sunriseforestapp_client.presenter.old;
+package pro.sunriseforest.sunriseforestapp_client.presenters.old;
 
 
-import android.support.annotation.NonNull;
-import android.util.Log;
-
-import pro.sunriseforest.sunriseforestapp_client.SunriseForestApp;
-import pro.sunriseforest.sunriseforestapp_client.models.User;
-import pro.sunriseforest.sunriseforestapp_client.net.ApiFactory;
-import pro.sunriseforest.sunriseforestapp_client.options.SharedPreferenceHelper;
 //import pro.sunriseforest.sunriseforestapp_client.ui.fragments.LoginFragment;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+
 //
 //public class LoginPresenter extends AppPresenter<LoginFragment> {
 //
@@ -30,7 +21,7 @@ import retrofit2.Response;
 //        }
 //    }
 //
-//    public void selectedRegistration() {
+//    public void selectedGoToRegistration() {
 //        mView.showRegistrationActivity();
 //    }
 //

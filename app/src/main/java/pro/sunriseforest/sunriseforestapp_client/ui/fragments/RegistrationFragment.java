@@ -11,33 +11,35 @@ import android.widget.EditText;
 
 import pro.sunriseforest.sunriseforestapp_client.R;
 import pro.sunriseforest.sunriseforestapp_client.models.User;
-import pro.sunriseforest.sunriseforestapp_client.presenter.AppPresenter;
+import pro.sunriseforest.sunriseforestapp_client.presenters.BasePresenter;
+import pro.sunriseforest.sunriseforestapp_client.presenters.RegistrationPresenter;
+//import pro.sunriseforest.sunriseforestapp_client.presenters.old.AppPresenter;
 
-public class RegistrationFragment extends LogFragment {
-    @Override
-    protected String createTag() {
-        return "RegistrationFragment";
-    }
+public class RegistrationFragment extends BaseFragment {
+
+    private RegistrationPresenter mRegistrationPresenter = RegistrationPresenter.getInstance();
+
 
     private EditText mMailEditText;
     private EditText mPasswordEditText;
     private EditText mPhoneNumberEditText;
     private EditText mNameEditText;
-    private AppPresenter mPresenter;
+//    private AppPresenter mPresenter;
 
-    private View.OnClickListener mOnClickListenerRegistrationButton = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            log("cl: RegistrationButton onClick()");
-            String mail = mMailEditText.getText().toString();
-            String phone = mPhoneNumberEditText.getText().toString();
-            String password = mPasswordEditText.getText().toString();
-            String name = mNameEditText.getText().toString();
+    private View.OnClickListener mOnClickListenerRegistrationButton = view -> {
+        log("cl: RegistrationButton onClick()");
 
-            mPresenter.selectedRegistration(new User(name, password, phone, mail, "contractor"));
-        }
+        mRegistrationPresenter.selectedRegistration(getUser());
+
     };
 
+    private User getUser(){
+        String mail = mMailEditText.getText().toString();
+        String phone = mPhoneNumberEditText.getText().toString();
+        String password = mPasswordEditText.getText().toString();
+        String name = mNameEditText.getText().toString();
+        return new User(name, password, phone, mail, "contractor");
+    }
 
     @Nullable
     @Override
@@ -51,8 +53,18 @@ public class RegistrationFragment extends LogFragment {
         mPhoneNumberEditText = view.findViewById(R.id.enter_phone_regAct_editText);
         mNameEditText = view.findViewById(R.id.enter_name_regAct_editText);
 
-        mPresenter =  AppPresenter.getInstance();
-
         return view;
     }
+
+    @Override
+    protected String createTag() {
+        return "RegistrationFragment";
+    }
+
+    @Override
+    protected BasePresenter getPresenter() {
+        return mRegistrationPresenter;
+    }
+
+
 }

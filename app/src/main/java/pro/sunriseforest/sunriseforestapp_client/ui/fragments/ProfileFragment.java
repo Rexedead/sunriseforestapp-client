@@ -16,10 +16,10 @@ import pro.sunriseforest.sunriseforestapp_client.R;
 import pro.sunriseforest.sunriseforestapp_client.SunriseForestApp;
 import pro.sunriseforest.sunriseforestapp_client.models.User;
 import pro.sunriseforest.sunriseforestapp_client.options.SharedPreferenceHelper;
-import pro.sunriseforest.sunriseforestapp_client.presenter.AppPresenter;
+import pro.sunriseforest.sunriseforestapp_client.presenters.BasePresenter;
 
 
-public class ProfileFragment extends LogFragment {
+public class ProfileFragment extends BaseFragment {
 
     SharedPreferenceHelper mPreferenceHelper = new SharedPreferenceHelper(SunriseForestApp.getAppContext());
 
@@ -31,6 +31,16 @@ public class ProfileFragment extends LogFragment {
     @Override
     protected String createTag() {
         return "ProfileFragment";
+    }
+
+    @Override
+    protected BasePresenter getPresenter() {
+        return new BasePresenter() {
+            @Override
+            protected String getTAG() {
+                return "ХуйняПрезентер2";
+            }
+        };
     }
 
     @Override
@@ -67,7 +77,7 @@ public class ProfileFragment extends LogFragment {
 //        mUserRewardInfoTextView.setText(mPreferenceHelper.getUser().getRewardSum());
 
         Button mRemoveTokenButton = view.findViewById(R.id.removeToken_button);
-        mRemoveTokenButton.setOnClickListener(mOnClickRemoveTokenData);
+//        mRemoveTokenButton.setOnClickListener(mOnClickRemoveTokenData);
 
         final Button mEditProfileButton = view.findViewById(R.id.changeInfo_button);
         mEditProfileButton.setText("Редактировать");
@@ -92,7 +102,7 @@ public class ProfileFragment extends LogFragment {
                     user.setName(mUserNameEditText.getText().toString());
                     user.setEmail(mUserMailEditText.getText().toString());
                     user.setPhoneNumber(mUserPhoneEditText.getText().toString());
-                    AppPresenter.getInstance().editProfile(user);
+//                    AppPresenter.getInstance().editProfile(user);
                 } else {
                     mEditProfileButton.setText("Сохранить");
                     mUserNameEditText.setEnabled(true);
@@ -113,12 +123,7 @@ public class ProfileFragment extends LogFragment {
         return view;
     }
 
-    private View.OnClickListener mOnClickRemoveTokenData = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            AppPresenter.getInstance().exitProfile();
-        }
-    };
+//    private View.OnClickListener mOnClickRemoveTokenData = view -> AppPresenter.getInstance().exitProfile();
 
 }
 

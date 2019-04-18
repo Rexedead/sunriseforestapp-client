@@ -1,7 +1,5 @@
-package pro.sunriseforest.sunriseforestapp_client.presenter.old;
+package pro.sunriseforest.sunriseforestapp_client.presenters.old;
 
-import pro.sunriseforest.sunriseforestapp_client.SunriseForestApp;
-import pro.sunriseforest.sunriseforestapp_client.options.SharedPreferenceHelper;
 //import pro.sunriseforest.sunriseforestapp_client.ui.ProfileActivity;
 
 

@@ -22,9 +22,10 @@ import java.util.Objects;
 
 import pro.sunriseforest.sunriseforestapp_client.R;
 import pro.sunriseforest.sunriseforestapp_client.models.Task;
-import pro.sunriseforest.sunriseforestapp_client.presenter.AppPresenter;
+import pro.sunriseforest.sunriseforestapp_client.presenters.BasePresenter;
+//import pro.sunriseforest.sunriseforestapp_client.presenters.old.AppPresenter;
 
-public class NewTaskFragment extends LogFragment {
+public class NewTaskFragment extends BaseFragment {
 
     Calendar mCalendar = Calendar.getInstance();
 
@@ -37,6 +38,16 @@ public class NewTaskFragment extends LogFragment {
     @Override
     protected String createTag() {
         return "NewTaskFragment";
+    }
+
+    @Override
+    protected BasePresenter getPresenter() {
+        return new BasePresenter() {
+            @Override
+            protected String getTAG() {
+                return "ХуйняПрезентер";
+            }
+        };
     }
 
     @Override
@@ -68,12 +79,9 @@ public class NewTaskFragment extends LogFragment {
         final MaskedTextChangedListener listener = MaskedTextChangedListener.Companion.installOn(
                 mTaskClientPhoneEditText,
                 "+7 ([000]) [000]-[00]-[00]",
-                new MaskedTextChangedListener.ValueListener() {
-                    @Override
-                    public void onTextChanged(boolean maskFilled, @NonNull final String extractedValue) {
-                        log("onTextChanged " + extractedValue);
-                        log("onTextChanged " + String.valueOf(maskFilled));
-                    }
+                (maskFilled, extractedValue) -> {
+                    log("onTextChanged " + extractedValue);
+                    log("onTextChanged " + String.valueOf(maskFilled));
                 }
         );
         mTaskClientPhoneEditText.setHint(listener.placeholder());
@@ -153,7 +161,7 @@ public class NewTaskFragment extends LogFragment {
                         Snackbar.make(v, "Неверно заполнены поля", Snackbar.LENGTH_LONG)
                                 .setAction("Action", null).show();
                     } else {
-                        AppPresenter.getInstance().addTask(
+//                        AppPresenter.getInstance().addTask(
                         new Task(
                                 mTaskDescriptionEditText.getText().toString(),
                                 Calendar.getInstance().getTime().toString(),
@@ -163,7 +171,7 @@ public class NewTaskFragment extends LogFragment {
                                 Integer.parseInt(mTaskRewardEditText.getText().toString()),
                                 null,
                                 null
-                        ));
+                        );
                     }
                 }
             });

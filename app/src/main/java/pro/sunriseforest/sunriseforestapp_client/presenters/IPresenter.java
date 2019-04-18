@@ -1,4 +1,4 @@
-package pro.sunriseforest.sunriseforestapp_client.presenter;
+package pro.sunriseforest.sunriseforestapp_client.presenters;
 
 import pro.sunriseforest.sunriseforestapp_client.models.Task;
 import pro.sunriseforest.sunriseforestapp_client.models.User;

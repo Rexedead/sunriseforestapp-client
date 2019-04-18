@@ -15,34 +15,35 @@ import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
+import rx.Observable;
 
 
 public interface SunriseForestService {
     @GET("data/tasks")
-    Call<List<Task>> getTasks(@Query("sr_user_token") String token);
+    Observable<List<Task>> getTasks(@Query("sr_user_token") String token);
 
     @GET("data/tasks/{id}")
-    Call<List<Task>> getTask(@Path("id") int id);
+    Observable<List<Task>> getTask(@Path("id") int id);
 
     @Headers("Cache-Control: no-cache")
     @GET("auth/login")
-    Call<User> userLoginByEmail(@Query("email_or_phone")String mail, @Query("password") String password);
+    Observable<User> userLoginByEmail(@Query("email_or_phone")String mail, @Query("password") String password);
 
     @Headers("Cache-Control: no-cache")
     @POST("auth/reg")
-    Call<User> userRegistration(@Body User user);
+    Observable<User> userRegistration(@Body User user);
 
     @POST("data/tasks")
-    Call<Task> addtask(@Body Task task, @Query("sr_user_token") String token);
+    Observable<Task> addtask(@Body Task task, @Query("sr_user_token") String token);
 
     @POST("data/client")
-    Call<Client> addclient(@Body Client client, @Query("sr_user_token") String token);
+    Observable<Client> addclient(@Body Client client, @Query("sr_user_token") String token);
 
     @PATCH("data/task/{id}/upd_task_contractor")
-    Call<Task> taskReservation(@Path("id") String id, @Body User user);
+    Observable<Task> taskReservation(@Path("id") String id, @Body User user);
 
     @PATCH("data/task/{id}/upd_task_description")
-    Call<Task> updDescription(@Path("id") String id,
+    Observable<Task> updDescription(@Path("id") String id,
                         @Query("sr_task_description")String description,
                         @Query("sr_task_start_date")String start,
                         @Query("sr_task_end_date")String end_date,
@@ -50,10 +51,10 @@ public interface SunriseForestService {
 
 
     @PATCH("data/user/{id}/upd_user_profile")
-    Call<User> updProfile(@Path("id") String id,
+    Observable<User> updProfile(@Path("id") String id,
                           @Body User user);
 
     @GET("data/user/{id}/get_user_tasks_info")
-    Call<User> getProfileInfo(@Path("id") String id);
+    Observable<User> getProfileInfo(@Path("id") String id);
 
 }

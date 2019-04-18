@@ -20,9 +20,10 @@ import java.lang.reflect.Type;
 
 import pro.sunriseforest.sunriseforestapp_client.R;
 import pro.sunriseforest.sunriseforestapp_client.models.Task;
+import pro.sunriseforest.sunriseforestapp_client.presenters.BasePresenter;
 
 
-public class TaskFragment extends Fragment {
+public class TaskFragment extends BaseFragment {
     private Task mSingleTask;
     private static final String ARG_JSON_TASK = "ARG_JSON_TASK";
 
@@ -117,7 +118,7 @@ public class TaskFragment extends Fragment {
                     mClientNameEditText.setEnabled(false);
                     mClientPhoneEditText.setEnabled(false);
                     edit = false;
-//                    TaskDeskPresenter taskDeskPresenter = new TaskDeskPresenter();
+//                    DeskPresenter taskDeskPresenter = new DeskPresenter();
 //                    taskDeskPresenter.updDescription(mSingleTask.getTaskID(),
 //                            mDescriptionEditText.getText().toString(),
 //                            mTaskDateEditText.getText().toString(),
@@ -141,5 +142,20 @@ public class TaskFragment extends Fragment {
 
         return view;
 
+    }
+
+    @Override
+    protected String createTag() {
+        return "SplashFragment";
+    }
+
+    @Override
+    protected BasePresenter getPresenter() {
+        return new BasePresenter() {
+            @Override
+            protected String getTAG() {
+                return "ХуйняПрезентер4";
+            }
+        };
     }
 }

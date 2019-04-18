@@ -1,13 +1,13 @@
 package pro.sunriseforest.sunriseforestapp_client.ui.old;
 
 //import pro.sunriseforest.sunriseforestapp_client.presenter.PresenterManager;
-//import pro.sunriseforest.sunriseforestapp_client.presenter.TaskDeskPresenter;
+//import pro.sunriseforest.sunriseforestapp_client.presenter.DeskPresenter;
 
 
 //
 //public class TaskDeskActivity extends AppCompatActivity implements DeskFragment.OnClickSingleRowListener {
 //
-//    private TaskDeskPresenter mPresenter;
+//    private DeskPresenter mPresenter;
 //
 //    public static void startActivity(Context context) {
 //        Intent intent = new Intent(context, TaskDeskActivity.class);
@@ -52,8 +52,8 @@ package pro.sunriseforest.sunriseforestapp_client.ui.old;
 //        BottomNavigationView navigation = findViewById(R.id.navigation);
 //        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 //
-//        mPresenter = (TaskDeskPresenter) PresenterManager.getInstance()
-//                .getPresenter(TaskDeskPresenter.TAG);
+//        mPresenter = (DeskPresenter) PresenterManager.getInstance()
+//                .getPresenter(DeskPresenter.TAG);
 //
 //        mPresenter.bindView(this);
 ////        mPresenter.initTaskDeskActivity();
