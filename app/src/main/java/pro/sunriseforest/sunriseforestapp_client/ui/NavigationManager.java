@@ -60,12 +60,26 @@ public class NavigationManager {
         //...
 
     }
+
+
+    public void fromDeskToNewTask(){
+        log("fromDeskToNewTask()");
+
+        if(!activityIsNullAndLog("fromDeskToNewTask()")){
+            mAppActivity.showNewTask();
+        }
+    }
     public void fromRegistrationToDesk(){
         log("fromRegistrationToDesk()");
         if(!activityIsNullAndLog("fromRegistrationToDesk()")){
             mAppActivity.showDeskScreen();
         }
 
+    }
+
+    public void fromDeskToTask(){
+        log("fromDeskToTask()");
+        mAppActivity.showTask();
     }
 
     public void bindView(AppActivity view){

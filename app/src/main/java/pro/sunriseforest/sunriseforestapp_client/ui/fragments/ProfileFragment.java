@@ -38,7 +38,7 @@ public class ProfileFragment extends BaseFragment {
         return new BasePresenter() {
             @Override
             protected String getTAG() {
-                return "ХуйняПрезентер2";
+                return "хузентер";
             }
         };
     }
@@ -52,7 +52,7 @@ public class ProfileFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
+        //TODO ... переделать все по принципу TaskFragment
         View view = inflater.inflate(R.layout.profile_fragment, container, false);
         final TextView mUserIdTextView = view.findViewById(R.id.profile_id_get_textView);
         mUserIdTextView.setText(Objects.requireNonNull(mPreferenceHelper.getUser()).getId());
@@ -116,9 +116,7 @@ public class ProfileFragment extends BaseFragment {
         });
 
 
-
-
-
+        showBottomNavigation();
 
         return view;
     }

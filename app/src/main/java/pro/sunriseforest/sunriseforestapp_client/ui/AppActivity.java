@@ -1,9 +1,13 @@
 package pro.sunriseforest.sunriseforestapp_client.ui;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import java.util.List;
@@ -18,6 +22,23 @@ public class AppActivity extends AppCompatActivity implements IView{
 
     private NavigationManager mNavigationManager;
     private NavController mNavController;
+    private BottomNavigationView mBottomNavigationView;
+
+    private BottomNavigationView.OnNavigationItemSelectedListener mNavigationItemSelectedListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+            switch (menuItem.getItemId()){
+                case R.id.navigation_home:
+                    showDeskScreen();
+                    break;
+                case R.id.navigation_dashboard:
+                    showProfile();
+                    break;
+
+            }
+            return false;
+        }
+    };
     private boolean mIsStartApp;
 
     @Override
@@ -28,6 +49,8 @@ public class AppActivity extends AppCompatActivity implements IView{
         mIsStartApp = savedInstanceState== null;
 
         setContentView(R.layout.app_activity);
+        mBottomNavigationView = findViewById(R.id.navigation);
+        mBottomNavigationView.setOnNavigationItemSelectedListener(mNavigationItemSelectedListener);
 
         mNavController = Navigation.findNavController(this, R.id.container);
         mNavigationManager = NavigationManager.getInstance();
@@ -77,6 +100,8 @@ public class AppActivity extends AppCompatActivity implements IView{
             case R.id.loginFragment:
                 mNavController.navigate(R.id.action_loginFragment_to_deskFragment);
                 break;
+            case R.id.profileFragment:
+                onBackPressed();
         }
 
     }
@@ -87,14 +112,39 @@ public class AppActivity extends AppCompatActivity implements IView{
     }
 
     @Override
-    public void showTask(int position) {
-        log(String.format("showTask(position=%s)", position));
+    public void showTask() {
+        log(String.format("showTask()"));
+        switch (mNavController.getCurrentDestination().getId()){
+            case R.id.deskFragment:
+                mNavController.navigate(R.id.action_deskFragment_to_taskFragment);
+                break;
+
+        }
+
+    }
+
+    @Override
+    public void hideBottomNavigation() {
+        log("hideBottomNavigation()");
+        mBottomNavigationView.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void showBottomNavigation() {
+        log("showBottomNavigation()");
+        mBottomNavigationView.setVisibility(View.VISIBLE);
 
     }
 
     @Override
     public void showProfile() {
         log("showProfile()");
+        switch (mNavController.getCurrentDestination().getId()){
+            case R.id.deskFragment:
+                mNavController.navigate(R.id.action_deskFragment_to_profileFragment);
+                break;
+
+        }
 
     }
 
@@ -131,6 +181,13 @@ public class AppActivity extends AppCompatActivity implements IView{
     @Override
     public void showNewTask() {
         log("showNewTask()");
+        switch (mNavController.getCurrentDestination().getId()){
+            case R.id.deskFragment:
+                mNavController.navigate(R.id.action_deskFragment_to_newTaskFragment);
+                break;
+
+        }
+
 
     }
 

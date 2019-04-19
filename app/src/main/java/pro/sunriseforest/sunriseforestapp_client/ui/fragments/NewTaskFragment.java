@@ -45,7 +45,7 @@ public class NewTaskFragment extends BaseFragment {
         return new BasePresenter() {
             @Override
             protected String getTAG() {
-                return "ХуйняПрезентер";
+                return "хузентер2";
             }
         };
     }
@@ -58,6 +58,7 @@ public class NewTaskFragment extends BaseFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         View view = inflater.inflate(R.layout.new_task_fragment, container, false);
 
         final EditText mTaskDescriptionEditText = view.findViewById(R.id.newTask_description_editText);
@@ -176,6 +177,7 @@ public class NewTaskFragment extends BaseFragment {
                 }
             });
 
+        hideBottomNavigation();
 
         return view;
 

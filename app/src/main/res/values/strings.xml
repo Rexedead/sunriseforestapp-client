@@ -32,7 +32,7 @@
     <string name="singleTask_phone">Телефон</string>
     <string name="singleTask_text">Задача</string>
     <string name="singleTask_book">Забронировать</string>
-    <string name="singleTask_edit">Изменить</string>
+    <string name="save">Сохранить</string>
     <string name="profile_id">ID</string>
     <string name="profile_phone">Телефон</string>
     <string name="profile_mail">Почта</string>

@@ -3,6 +3,7 @@ package pro.sunriseforest.sunriseforestapp_client.ui.fragments;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -12,13 +13,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.google.android.gms.tasks.Tasks;
-import com.squareup.moshi.JsonAdapter;
-import com.squareup.moshi.Moshi;
-import com.squareup.moshi.Types;
 
-import java.io.IOException;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,13 +29,12 @@ public class DeskFragment extends BaseFragment {
     private List<Task> mTaskList = new ArrayList<>();
     private DeskPresenter mPresenter = DeskPresenter.getInstance();
     private RecycleTaskAdapter mRecycleTaskAdapter;
+    private RecyclerView mRecyclerView;
+    private FloatingActionButton mNewTaskFloatingActionButton;
 
-
-
-
-    public DeskFragment() {
-        // Required empty public constructor
-    }
+    private View.OnClickListener mOnClickListenerNewTaskFloatingActionButton = view ->{
+      mPresenter.clickedNewTask();
+    };
 
 
     @Override
@@ -48,26 +42,12 @@ public class DeskFragment extends BaseFragment {
         return "DeskFragment";
     }
 
+
     @Override
     protected BasePresenter getPresenter() {
         return mPresenter;
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-//        if (getArguments() != null) {
-//            String jsonTasks = getArguments().getString(ARG_JSON_TASKS);
-//
-//            try {
-//                mTaskList = convertTasksFromJson(jsonTasks);
-//            } catch (IOException e) {
-//                logError("onCreate(): не удалось перевести json в лист тасков");
-//            }
-//        }
-
-
-    }
 
     @Override
     public void onResume() {
@@ -81,29 +61,31 @@ public class DeskFragment extends BaseFragment {
         mRecycleTaskAdapter.notifyDataSetChanged();
     }
 
-//    private List convertTasksFromJson(String json)throws IOException{
-//        Moshi moshi = new Moshi.Builder().build();
-//        Type type = Types.newParameterizedType(List.class, Task.class);
-//        JsonAdapter<List> jsonAdapter = moshi.adapter(type);
-//        return jsonAdapter.fromJson(json);
-//    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+
         View view = inflater.inflate(R.layout.desk_fragment, container, false);
 
-        RecyclerView mRecyclerView = view.findViewById(R.id.desk_recyclerView);
+        mRecyclerView = view.findViewById(R.id.desk_recyclerView);
         mRecycleTaskAdapter = new RecycleTaskAdapter(mTaskList);
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
-        mRecyclerView.setLayoutManager(mLayoutManager);
+        mNewTaskFloatingActionButton = view.findViewById(R.id.fab);
+        mNewTaskFloatingActionButton.setOnClickListener(mOnClickListenerNewTaskFloatingActionButton);
+
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setAdapter(mRecycleTaskAdapter);
         mRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(),DividerItemDecoration.VERTICAL));
         mRecyclerView.addOnItemTouchListener(new RecyclerTouchListener(getContext(),
                 mRecyclerView));
+
+        showBottomNavigation();
+
         return view;
     }
+
 
 
     class RecyclerTouchListener implements RecyclerView.OnItemTouchListener{
@@ -113,6 +95,8 @@ public class DeskFragment extends BaseFragment {
         RecyclerTouchListener(Context context, final RecyclerView recycleView ){
 
             gestureDetector=new GestureDetector(context,new GestureDetector.SimpleOnGestureListener(){
+
+
                 @Override
                 public boolean onSingleTapUp(MotionEvent e) {
                     return true;
@@ -149,8 +133,8 @@ public class DeskFragment extends BaseFragment {
 
         @Override
         public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
-            log(String.format("RecyclerTouchListener onRequestDisallowInterceptTouchEvent(disallowIntercept=%s)"
-                    ,disallowIntercept));
+            log("RecyclerTouchListener onRequestDisallowInterceptTouchEvent" +
+                            "(disallowIntercept=%s)" ,disallowIntercept);
 
         }
     }

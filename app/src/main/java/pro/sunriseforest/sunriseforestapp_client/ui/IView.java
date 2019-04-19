@@ -10,7 +10,9 @@ public interface IView {
     void showRegistrationScreen();
     void showDeskScreen();
     void showTasks(List<Task> tasks);
-    void showTask(int position);
+    void showTask();
+    void hideBottomNavigation();
+    void showBottomNavigation();
     void showProfile();
     void showNewTask();
     void showError(String msg);

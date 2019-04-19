@@ -35,40 +35,10 @@ public class DeskPresenter extends BasePresenter<DeskFragment>{
     private List<Task> mTasks;
 
 
-//    public void initTaskDeskActivity() {
-//
-////        String token = mPreferenceHelper.getMyUser().getToken();
-////        Call<List<Task>> call = ApiFactory.getSunriseForestService().getTasks(token);
-////
-////        call.enqueue(new Callback<List<Task>>() {
-////            @Override
-////            public void onResponse(Call<List<Task>> call, Response<List<Task>> resp) {
-////                int code = resp.code();
-////
-////                if(code == 200){
-//////                    mDataBaseHelper.cacheTasks(resp.body());
-////                    List<Task> tasks = resp.body();
-////                    mView.showListTask(tasks);
-////                }else {
-////                    Log.e("DeskPresenter", resp.message());
-////                }
-////            }
-////
-////            @Override
-////            public void onFailure(Call<List<Task>> call, Throwable t) {
-////                Log.e("DeskPresenter", t.getMessage());
-////            }
-////        });
-//
-//
-//    }
-
-
     private void showTasks(List<Task> tasks){
         if(!viewIsNullAndLog("showTasks()")){
             mView.showTasks(tasks);
         }
-        //...
     }
 
     private void showTasks(){
@@ -82,40 +52,53 @@ public class DeskPresenter extends BasePresenter<DeskFragment>{
                 );
     }
 
+    private void showTask(int position){
+        log("showTask(position = %s)", position);
+        TaskPresenter.getInstance().setTask(mTasks.get(position));
+        mNavigationManager.fromDeskToTask();
+    }
+
+    public void clickedNewTask(){
+        log("clickedNewTask()");
+        showNewTask();
+    }
 
     public void clickedSelectedTask(int position) {
        log("clickedSelectedTask(position = %s)", position);
-       if(!viewIsNullAndLog("clickedSelectedTask()")){
-           mView.showToast("*клик на таск номер "+ position +"*");
-       }
+       showTask(position);
+
     }
 
-
-//    public void fabAction(){
-//       mView.createNewTask();
-//    }
-
     public void update() {
+        log("update()");
 
         String token = mSharedPreferenceHelper.getToken();
 
         loadTasks(token)
                 .subscribe(
-                        this::showTasks,
+                        tasks ->{
+                    mTasks = tasks;
+                    showTasks(tasks);
+                },
                         this::handleNetworkError
                          );
 
     }
 
 
-
-
     private Observable<List<Task>> loadTasks(String token){
+        log("loadTasks(token = %s)", token);
         return ApiFactory
                 .getSunriseForestService()
                 .getTasks(token)
                 .compose(new AsyncNetTransformer<>());
 
+    }
+
+    private void showNewTask(){
+        log("showNewTask()");
+
+        mNavigationManager.fromDeskToNewTask();
     }
 
     private void showError(String msg){

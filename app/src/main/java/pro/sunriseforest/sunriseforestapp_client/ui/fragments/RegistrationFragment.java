@@ -52,7 +52,7 @@ public class RegistrationFragment extends BaseFragment {
         mPasswordEditText = view.findViewById(R.id.enter_password_regAct_editText);
         mPhoneNumberEditText = view.findViewById(R.id.enter_phone_regAct_editText);
         mNameEditText = view.findViewById(R.id.enter_name_regAct_editText);
-
+        hideBottomNavigation();
         return view;
     }
 

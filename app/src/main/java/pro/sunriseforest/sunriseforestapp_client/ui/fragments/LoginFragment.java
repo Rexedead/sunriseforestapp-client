@@ -49,6 +49,8 @@ public class LoginFragment extends BaseFragment implements ILoadingScreen {
         Button registrationButton = view.findViewById(R.id.registration_logAct_button);
         registrationButton.setOnClickListener(mOnClickListenerRegistrationButton);
 
+        hideBottomNavigation();
+
         return view;
     }
 

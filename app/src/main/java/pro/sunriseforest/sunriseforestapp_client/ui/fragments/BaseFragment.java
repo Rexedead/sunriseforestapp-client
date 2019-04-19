@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import pro.sunriseforest.sunriseforestapp_client.SunriseForestApp;
 import pro.sunriseforest.sunriseforestapp_client.presenters.BasePresenter;
+import pro.sunriseforest.sunriseforestapp_client.ui.IView;
 
 public abstract class BaseFragment extends Fragment {
 
@@ -91,7 +92,17 @@ public abstract class BaseFragment extends Fragment {
         log("lc: onDetach()");
     }
 
+    protected void showBottomNavigation(){
+        log("showBottomNavigation()");
+        IView activity = (IView)getActivity();
+        activity.showBottomNavigation();
+    }
 
+    protected void hideBottomNavigation(){
+        log("hideBottomNavigation()");
+        IView activity = (IView)getActivity();
+        activity.hideBottomNavigation();
+    }
     public void showError(String msg){
         showToast(msg);
     }
@@ -103,7 +114,9 @@ public abstract class BaseFragment extends Fragment {
     protected void log(String msg){
         Log.i( mTAG, msg);
     }
-
+    protected void log(String msg, Object... args){
+        log(String.format(msg, args));
+    }
     protected void logError(String msg){
         Log.e(mTAG, msg);
     }

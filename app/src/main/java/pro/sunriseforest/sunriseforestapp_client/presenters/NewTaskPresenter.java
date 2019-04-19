@@ -1,4 +1,4 @@
-package pro.sunriseforest.sunriseforestapp_client.presenters.old;
+package pro.sunriseforest.sunriseforestapp_client.presenters;
 
 //import pro.sunriseforest.sunriseforestapp_client.ui.NewTaskActivity;
 
