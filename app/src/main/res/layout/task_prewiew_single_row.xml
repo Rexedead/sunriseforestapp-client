@@ -48,7 +48,7 @@
             android:paddingStart="10dp"
             android:paddingTop="2dp"
             android:paddingEnd="10dp"
-            android:text="@string/recycler_creationdate"
+            android:text="@string/recycler_creationDate"
             android:textColor="@color/recycler_date"
             android:textSize="12sp"
             android:textStyle="bold" />
@@ -63,7 +63,7 @@
             android:paddingStart="10dp"
             android:paddingTop="2dp"
             android:paddingEnd="10dp"
-            android:text="@string/recycler_startdate"
+            android:text="@string/recycler_startDate"
             android:textColor="@color/recycler_date"
             android:textSize="12sp"
             android:textStyle="bold" />
@@ -78,7 +78,7 @@
             android:paddingStart="10dp"
             android:paddingTop="2dp"
             android:paddingEnd="10dp"
-            android:text="@string/recycler_enddate"
+            android:text="@string/recycler_endDate"
             android:textColor="@color/recycler_date"
             android:textSize="12sp"
             android:textStyle="bold" />

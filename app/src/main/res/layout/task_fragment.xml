@@ -14,23 +14,23 @@
         android:layout_width="wrap_content"
         android:layout_height="30dp"
         android:gravity="start|center"
-        android:text="@string/singleTask_text"
+        android:text="@string/task"
         android:textSize="12sp"
         tools:text="Задача" />
 
     <TextView
-        android:id="@+id/singleTask_id_textView"
+        android:id="@+id/id_taskFrag_textView"
         android:layout_width="match_parent"
         android:layout_height="30dp"
         android:layout_toEndOf="@id/singleTask_text_textView"
         android:gravity="start|center"
         android:layout_marginStart="10dp"
-        android:text="@string/singleTask_text"
+        android:text="@string/task"
         android:textSize="12sp"
         tools:text="ID" />
 
     <EditText
-        android:id="@+id/singleTask_description_editText"
+        android:id="@+id/description_taskFrag_editText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/singleTask_text_textView"
@@ -42,7 +42,7 @@
         android:ems="10"
         android:textColor="@drawable/edit_text_selector"
         android:gravity="top|start"
-        android:hint="@string/singleTask_description"
+        android:hint="@string/description"
         android:inputType="textMultiLine"
         android:minLines="4"
         android:maxLines="12"
@@ -62,7 +62,7 @@
         android:id="@+id/singleTask_startDate_textInputLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/singleTask_description_editText"
+        android:layout_below="@+id/description_taskFrag_editText"
         android:layout_alignParentStart="true"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
@@ -74,10 +74,10 @@
         android:textSize="14sp">
 
         <android.support.design.widget.TextInputEditText
-            android:id="@+id/singleTask_startDate_TextInputEditText"
+            android:id="@+id/start_date_taskFrag_editText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/singleTask_startDate"
+            android:hint="@string/startDate"
             android:paddingStart="5dp"
             android:paddingEnd="5dp"
             android:textColor="@drawable/edit_text_selector"
@@ -90,7 +90,7 @@
         android:id="@+id/singleTask_endDate_textInputLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/singleTask_description_editText"
+        android:layout_below="@+id/description_taskFrag_editText"
         android:layout_alignParentEnd="true"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
@@ -102,18 +102,18 @@
         >
 
         <android.support.design.widget.TextInputEditText
-            android:id="@+id/singleTask_endDate_TextInputEditText"
+            android:id="@+id/end_date_taskFrag_editText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@drawable/edit_text_selector"
-            android:hint="@string/singleTask_endDate"
+            android:hint="@string/endDate"
             android:inputType="date"
             android:textSize="14sp" />
     </android.support.design.widget.TextInputLayout>
 
 
     <EditText
-        android:id="@+id/singleTask_reward_editText"
+        android:id="@+id/reward_taskFrag_editText"
         android:layout_width="match_parent"
         android:layout_height="30dp"
         android:layout_below="@+id/singleTask_startDate_textInputLayout"
@@ -126,7 +126,7 @@
         android:textColor="@drawable/edit_text_selector"
         android:paddingStart="5dp"
         android:paddingEnd="5dp"
-        android:hint="@string/singleTask_reward"
+        android:hint="@string/reward"
         android:maxLength="10"
         android:digits="1234567890"
         android:inputType="number"
@@ -136,15 +136,15 @@
         android:id="@+id/singleTask_client_TextView"
         android:layout_width="match_parent"
         android:layout_height="30dp"
-        android:layout_below="@+id/singleTask_reward_editText"
+        android:layout_below="@+id/reward_taskFrag_editText"
         android:gravity="start|center"
-        android:text="@string/singleTask_client"
+        android:text="@string/client"
         android:textSize="12sp"
         tools:text="Клиент" />
 
 
     <EditText
-        android:id="@+id/singleTask_clientName_editText"
+        android:id="@+id/client_name_taskFrag_editText"
         android:layout_width="match_parent"
         android:layout_height="30dp"
         android:layout_below="@+id/singleTask_client_TextView"
@@ -156,21 +156,21 @@
         android:textColor="@drawable/edit_text_selector"
         android:paddingStart="5dp"
         android:paddingEnd="5dp"
-        android:hint="@string/singleTask_clientName"
+        android:hint="@string/clientName"
         android:inputType="text"
         android:textAlignment="textStart"
         android:textSize="14sp" />
 
 
     <EditText
-        android:id="@+id/singleTask_clientPhone_editText"
+        android:id="@+id/client_phone_taskFrag_editText"
         android:layout_width="match_parent"
         android:layout_height="30dp"
         android:layout_below="@+id/singleTask_client_TextView"
         android:layout_marginStart="10dp"
         android:layout_toEndOf="@+id/centerShim"
         android:background="@color/field_background"
-        android:hint="@string/singleTask_phone"
+        android:hint="@string/phone"
         android:textColor="@drawable/edit_text_selector"
         android:paddingStart="5dp"
         android:paddingEnd="5dp"
@@ -183,9 +183,9 @@
         android:id="@+id/singleTask_contractor_TextView"
         android:layout_width="match_parent"
         android:layout_height="30dp"
-        android:layout_below="@+id/singleTask_clientName_editText"
+        android:layout_below="@+id/client_name_taskFrag_editText"
         android:gravity="start|center"
-        android:text="@string/singleTask_contractor"
+        android:text="@string/contractor"
         android:paddingStart="5dp"
         android:paddingEnd="5dp"
         android:textSize="12sp"
@@ -193,7 +193,7 @@
 
 
     <TextView
-        android:id="@+id/singleTask_contractorName_Textview"
+        android:id="@+id/contractor_name_taskFrag_textView"
         android:layout_width="wrap_content"
         android:layout_height="30dp"
         android:layout_below="@+id/singleTask_contractor_TextView"
@@ -209,7 +209,7 @@
 
 
     <TextView
-        android:id="@+id/singleTask_contractorPhone_textView"
+        android:id="@+id/contractor_phone_taskFrag_textView"
         android:layout_width="match_parent"
         android:layout_height="30dp"
         android:layout_below="@+id/singleTask_contractor_TextView"
@@ -223,13 +223,13 @@
 
 
     <Button
-        android:id="@+id/singleTask_book_button"
+        android:id="@+id/book_taskFrag_button"
         style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
-        android:text="@string/singleTask_book"
+        android:text="@string/reserve"
         android:layout_marginBottom="50dp"
         android:textSize="12sp" />
 

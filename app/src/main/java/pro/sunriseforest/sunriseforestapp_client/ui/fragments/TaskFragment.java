@@ -14,7 +14,6 @@ import pro.sunriseforest.sunriseforestapp_client.R;
 import pro.sunriseforest.sunriseforestapp_client.models.Task;
 import pro.sunriseforest.sunriseforestapp_client.presenters.BasePresenter;
 import pro.sunriseforest.sunriseforestapp_client.presenters.TaskPresenter;
-import pro.sunriseforest.sunriseforestapp_client.ui.AppActivity;
 
 
 public class TaskFragment extends BaseFragment {
@@ -25,8 +24,8 @@ public class TaskFragment extends BaseFragment {
 
     private TextView mIdTextView;
     private EditText mDescriptionEditText;
-    private EditText mTaskDateEditText;
-    private EditText mDeadlineEditText;
+    private EditText mTaskStartDateEditText;
+    private EditText mTaskEndDateEditText;
     private EditText mRewardEditText;
     private EditText mClientPhoneEditText;
     private EditText mClientNameEditText;
@@ -37,29 +36,24 @@ public class TaskFragment extends BaseFragment {
     private Button mBookButton;
 
 
-
-
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
 
-
         View view = inflater.inflate(R.layout.task_fragment, container, false);
-
-        mIdTextView = view.findViewById(R.id.singleTask_id_textView); // TODO названия id привести к виду : название_переменной_[имяФрагмена]_тип
-        mDescriptionEditText = view.findViewById(R.id.singleTask_description_editText);// в ресурсах со строками тоже названия привести в порядок, но там префиксы с именем фрагмента и типом использовать только когда это необходимо, чтобы избежать конфликт имен
-        mTaskDateEditText = view.findViewById(R.id.singleTask_startDate_TextInputEditText);// чет треш
-        mDeadlineEditText = view.findViewById(R.id.singleTask_endDate_TextInputEditText);
-        mRewardEditText = view.findViewById(R.id.singleTask_reward_editText);
-        mClientPhoneEditText = view.findViewById(R.id.singleTask_clientPhone_editText);
-        mClientNameEditText = view.findViewById(R.id.singleTask_clientName_editText);
+// TODO названия id привести к виду : название_переменной_[имяФрагмена]_тип
+        mIdTextView = view.findViewById(R.id.id_taskFrag_textView);
+        mDescriptionEditText = view.findViewById(R.id.description_taskFrag_editText);
+        mTaskStartDateEditText = view.findViewById(R.id.start_date_taskFrag_editText);
+        mTaskEndDateEditText = view.findViewById(R.id.end_date_taskFrag_editText);
+        mRewardEditText = view.findViewById(R.id.reward_taskFrag_editText);
+        mClientPhoneEditText = view.findViewById(R.id.client_phone_taskFrag_editText);
+        mClientNameEditText = view.findViewById(R.id.client_name_taskFrag_editText);
         mSaveButton = view.findViewById(R.id.save_taskFrag_button);
-
-
-        mContractorNameTextView = view.findViewById(R.id.singleTask_contractorName_Textview);
-        mContractorPhoneTextView = view.findViewById(R.id.singleTask_contractorPhone_textView);
-        mBookButton = view.findViewById(R.id.singleTask_book_button);
+        mContractorNameTextView = view.findViewById(R.id.contractor_name_taskFrag_textView);
+        mContractorPhoneTextView = view.findViewById(R.id.contractor_phone_taskFrag_textView);
+        mBookButton = view.findViewById(R.id.book_taskFrag_button);
 
 
         mSaveButton.setOnClickListener(v -> mPresenter.clickedSaveButton());
@@ -71,47 +65,44 @@ public class TaskFragment extends BaseFragment {
     }
 
 
-
-    public void setEnabledEditTexts(boolean isYes){
+    public void setEnabledEditTexts(boolean isYes) {
         log("setEnabled( isYes = %s)", isYes);
 
 
         mDescriptionEditText.setEnabled(isYes);
-        mDeadlineEditText.setEnabled(isYes);
-        mTaskDateEditText.setEnabled(isYes);
+        mTaskEndDateEditText.setEnabled(isYes);
+        mTaskStartDateEditText.setEnabled(isYes);
         mRewardEditText.setEnabled(isYes);
         mClientNameEditText.setEnabled(isYes);
         mClientPhoneEditText.setEnabled(isYes);
     }
 
-    public void hideSaveButton(){
+    public void hideSaveButton() {
         //...
     }
 
-    public void showSaveButton(){
+    public void showSaveButton() {
         //...
     }
 
 
-
-
-    public void showTask(Task task){
+    public void showTask(Task task) {
         log("showTask(task = %s)", task);
         setTask(task);
     }
 
-    private void setTask(Task task){
+    private void setTask(Task task) {
         mSingleTask = task;
 
         mIdTextView.setText(mSingleTask.getTaskID());
 
         mDescriptionEditText.setText(mSingleTask.getTaskDescription());
 
-        mTaskDateEditText.setText(mSingleTask.getCreationDate());
+        mTaskStartDateEditText.setText(mSingleTask.getCreationDate());
 
-        mDeadlineEditText.setText(mSingleTask.getDeadlineDate());
+        mTaskEndDateEditText.setText(mSingleTask.getDeadlineDate());
 
-        String reward = mSingleTask.getReward()+" \u20BD";
+        String reward = mSingleTask.getReward() + " \u20BD";
         mRewardEditText.setText(reward);
 
         if (mSingleTask.getClient() != null) {
@@ -123,7 +114,6 @@ public class TaskFragment extends BaseFragment {
     }
 
 
-
     @Override
     protected String createTag() {
         return "SplashFragment";
@@ -133,7 +123,6 @@ public class TaskFragment extends BaseFragment {
     protected BasePresenter getPresenter() {
         return mPresenter;
     }
-
 
 
 }

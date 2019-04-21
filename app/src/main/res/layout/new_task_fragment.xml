@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="30dp"
         android:gravity="start|center"
-        android:text="@string/newTask_text"
+        android:text="@string/task"
         android:textSize="12sp"
         tools:text="Задача" />
 
@@ -27,7 +27,7 @@
         android:background="@color/field_background"
         android:ems="10"
         android:gravity="top|start"
-        android:hint="@string/newTask_description"
+        android:hint="@string/description"
         android:paddingStart="5dp"
         android:paddingEnd="5dp"
         android:inputType="textMultiLine"
@@ -62,7 +62,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:focusable="false"
-            android:hint="@string/newTask_startDate"
+            android:hint="@string/startDate"
             android:paddingStart="5dp"
             android:paddingEnd="5dp"
             android:textSize="14sp" />
@@ -89,7 +89,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:focusable="false"
-            android:hint="@string/newTask_endDate"
+            android:hint="@string/endDate"
             android:paddingStart="5dp"
             android:paddingEnd="5dp"
             android:textSize="14sp" />
@@ -109,7 +109,7 @@
         android:ems="10"
         android:paddingStart="5dp"
         android:paddingEnd="5dp"
-        android:hint="@string/newTask_reward"
+        android:hint="@string/reward"
         android:maxLength="10"
         android:digits="1234567890"
         android:inputType="number"
@@ -121,7 +121,7 @@
         android:layout_height="30dp"
         android:layout_below="@+id/newTask_reward_editText"
         android:gravity="start|center"
-        android:text="@string/newTask_client"
+        android:text="@string/client"
         android:textSize="12sp"
         tools:text="Клиент" />
 
@@ -138,7 +138,7 @@
         android:ems="10"
         android:paddingStart="5dp"
         android:paddingEnd="5dp"
-        android:hint="@string/newTask_clientName"
+        android:hint="@string/clientName"
         android:inputType="text"
         android:textAlignment="textStart"
         android:textSize="14sp" />
@@ -152,7 +152,7 @@
         android:layout_marginStart="10dp"
         android:layout_toEndOf="@+id/centerShim"
         android:background="@color/field_background"
-        android:hint="@string/newTask_phone"
+        android:hint="@string/phone"
         android:paddingStart="5dp"
         android:paddingEnd="5dp"
         android:digits="1234567890+-() "
@@ -166,7 +166,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
-        android:text="@string/newTask_add"
+        android:text="@string/addTask"
         android:textSize="12sp" />
 
 

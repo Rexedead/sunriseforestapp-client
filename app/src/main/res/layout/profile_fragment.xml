@@ -33,12 +33,12 @@
             android:layout_width="wrap_content"
             android:layout_height="30dp"
             android:gravity="start|center"
-            android:text="@string/profile_id"
+            android:text="@string/id"
             android:textSize="16sp"
             />
 
         <TextView
-            android:id="@+id/profile_id_get_textView"
+            android:id="@+id/id_profileFrag_textView"
             android:layout_width="wrap_content"
             android:layout_height="30dp"
             android:layout_marginStart="10dp"
@@ -58,7 +58,7 @@
             />
 
         <EditText
-            android:id="@+id/profile_name_get_editText"
+            android:id="@+id/user_name_profileFrag_editText"
             android:layout_width="wrap_content"
             android:layout_height="30dp"
             android:layout_below="@+id/profile_id_textView"
@@ -66,6 +66,8 @@
             android:layout_toEndOf="@+id/profile_phone_textView"
             android:gravity="start|center"
             android:background="@color/field_background"
+            android:maxLines="1"
+            android:imeOptions="actionNext"
             android:textSize="16sp" />
 
 
@@ -76,12 +78,12 @@
             android:layout_below="@+id/profile_name_textView"
             android:layout_alignParentStart="true"
             android:gravity="start|center"
-            android:text="@string/profile_phone"
+            android:text="@string/phone"
             android:textSize="16sp"
             />
 
         <EditText
-            android:id="@+id/profile_phone_get_editText"
+            android:id="@+id/phone_profileFrag_editText"
             android:layout_width="wrap_content"
             android:layout_height="30dp"
             android:layout_below="@+id/profile_name_textView"
@@ -89,6 +91,8 @@
             android:layout_toEndOf="@+id/profile_phone_textView"
             android:gravity="start|center"
             android:background="@color/field_background"
+            android:maxLines="1"
+            android:imeOptions="actionNext"
             android:textSize="16sp" />
 
         <TextView
@@ -98,12 +102,12 @@
             android:layout_below="@+id/profile_phone_textView"
             android:layout_alignParentStart="true"
             android:gravity="start|center"
-            android:text="@string/profile_mail"
+            android:text="@string/mail"
             android:textSize="16sp"
             />
 
         <EditText
-            android:id="@+id/profile_mail_get_editText"
+            android:id="@+id/mail_profileFrag_editText"
             android:layout_width="wrap_content"
             android:layout_height="30dp"
             android:layout_alignBottom="@+id/profile_mail_textView"
@@ -111,6 +115,8 @@
             android:layout_toEndOf="@+id/profile_phone_textView"
             android:gravity="start|center"
             android:background="@color/field_background"
+            android:singleLine="true"
+            android:imeOptions="actionDone"
             android:textSize="16sp" />
 
         <TextView
@@ -120,12 +126,12 @@
             android:layout_below="@+id/profile_mail_textView"
             android:layout_alignParentStart="true"
             android:gravity="start|center"
-            android:text="@string/profile_role"
+            android:text="@string/role"
             android:textSize="16sp"
             />
 
         <TextView
-            android:id="@+id/profile_role_get_textView"
+            android:id="@+id/role_profileFrag_textView"
             android:layout_width="wrap_content"
             android:layout_height="30dp"
             android:layout_alignBottom="@+id/profile_role_textView"
@@ -147,7 +153,7 @@
             />
 
         <TextView
-            android:id="@+id/profile_tasksTaken_get_textView"
+            android:id="@+id/tasks_taken_stats_profileFrag_textView"
             android:layout_width="wrap_content"
             android:layout_height="30dp"
             android:layout_alignBottom="@+id/profile_tasksTaken_textView"
@@ -169,7 +175,7 @@
             />
 
         <TextView
-            android:id="@+id/profile_reward_get_textView"
+            android:id="@+id/reward_profileFrag_textView"
             android:layout_width="wrap_content"
             android:layout_height="30dp"
             android:layout_alignBottom="@+id/profile_reward_textView"
@@ -180,24 +186,24 @@
 
 
         <Button
-            android:id="@+id/changeInfo_button"
+            android:id="@+id/change_info_profileFrag_button"
             android:layout_width="120dp"
             android:layout_height="30dp"
             android:layout_below="@+id/profile_reward_textView"
+            android:layout_toEndOf="@+id/remove_token_profileFrag_button"
             android:layout_marginTop="10dp"
+            android:layout_marginStart="10dp"
             android:background="@color/auth_button"
             android:textAllCaps="false"
             android:textColor="@color/button_text"
             android:textSize="14sp" />
 
         <Button
-            android:id="@+id/removeToken_button"
+            android:id="@+id/remove_token_profileFrag_button"
             android:layout_width="wrap_content"
             android:layout_height="30dp"
-            android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
             android:layout_below="@+id/profile_reward_textView"
-            android:layout_toEndOf="@+id/changeInfo_button"
             android:background="@color/auth_button"
             android:text="@string/profile_remove_token_data"
             android:textAllCaps="false"
