@@ -23,15 +23,20 @@ public class AppActivity extends AppCompatActivity implements IView{
     private NavigationManager mNavigationManager;
     private NavController mNavController;
     private BottomNavigationView mBottomNavigationView;
+    private boolean mIsStartApp;
+
 
     private BottomNavigationView.OnNavigationItemSelectedListener mNavigationItemSelectedListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
             switch (menuItem.getItemId()){
                 case R.id.navigation_home:
+                    menuItem.setChecked(true);
                     showDeskScreen();
                     break;
                 case R.id.navigation_dashboard:
+                    menuItem.setChecked(true);
+
                     showProfile();
                     break;
 
@@ -39,7 +44,6 @@ public class AppActivity extends AppCompatActivity implements IView{
             return false;
         }
     };
-    private boolean mIsStartApp;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -235,10 +239,11 @@ public class AppActivity extends AppCompatActivity implements IView{
 
         if(id == R.id.deskFragment || id == R.id.loginFragment){
             //exit from app
-            mNavController.popBackStack(R.id.splashFragment, true);
+           finish();
+        }else{
+            super.onBackPressed();
         }
 
-        super.onBackPressed();
 
     }
 }
