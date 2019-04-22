@@ -228,4 +228,17 @@ public class AppActivity extends AppCompatActivity implements IView{
     private void log(String msg){
         Log.i("%%%/activity", msg);
     }
+
+    @Override
+    public void onBackPressed() {
+        int id = mNavController.getCurrentDestination().getId();
+
+        if(id == R.id.deskFragment || id == R.id.loginFragment){
+            //exit from app
+            mNavController.popBackStack(R.id.splashFragment, true);
+        }
+
+        super.onBackPressed();
+
+    }
 }
