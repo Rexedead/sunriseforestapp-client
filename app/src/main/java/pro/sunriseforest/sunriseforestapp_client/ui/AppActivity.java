@@ -79,7 +79,23 @@ public class AppActivity extends AppCompatActivity implements IView{
     @Override
     public void showLoginScreen() {
         log("showLoginScreen()");
-        mNavController.navigate(R.id.action_splashFragment_to_loginFragment);
+
+
+
+
+
+        switch (mNavController.getCurrentDestination().getId()){
+            case R.id.splashFragment:
+                mNavController.navigate(R.id.action_splashFragment_to_loginFragment);
+                break;
+            case R.id.profileFragment:
+                mNavController.popBackStack(R.id.splashFragment, false);
+
+                mNavController.navigate(R.id.action_splashFragment_to_loginFragment);
+                break;
+
+
+        }
     }
 
     @Override

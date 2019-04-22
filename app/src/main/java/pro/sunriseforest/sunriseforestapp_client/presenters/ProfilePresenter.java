@@ -43,6 +43,11 @@ public class ProfilePresenter extends BasePresenter<ProfileFragment> implements 
 
     }
 
+    public void clickedExitProfile(){
+        log("clickedExitProfile()");
+        exitProfile();
+    }
+
     public void clickedSaveButton(){
         log("clickedSaveButton()");
         //...
@@ -55,6 +60,13 @@ public class ProfilePresenter extends BasePresenter<ProfileFragment> implements 
 
     private void saveProfile() {
         log("saveProfile()");
+        //...
+    }
+
+    private void  exitProfile(){
+        log("exitProfile()");
+        mSharedPreferenceHelper.removeUser();
+        mNavigationManager.fromProfileToLogin();
     }
 
 

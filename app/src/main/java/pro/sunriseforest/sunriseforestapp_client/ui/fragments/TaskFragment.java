@@ -56,7 +56,7 @@ public class TaskFragment extends BaseFragment {
         mBookButton = view.findViewById(R.id.book_taskFrag_button);
 
 
-        mSaveButton.setOnClickListener(v -> mPresenter.clickedSaveButton());
+        mSaveButton.setOnClickListener(va -> mPresenter.clickedSaveButton());
 
         hideBottomNavigation();
 

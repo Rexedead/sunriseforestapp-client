@@ -50,6 +50,14 @@ public class NavigationManager {
         //...
     }
 
+    public void fromProfileToLogin(){
+        log("fromProfileToLogin() ");
+
+        if(!activityIsNullAndLog("fromProfileToLogin()")){
+            mAppActivity.showLoginScreen();
+        }
+    }
+
     public void fromLoginToRegistration(){
         log("fromLoginToRegistration");
 
@@ -57,7 +65,6 @@ public class NavigationManager {
             mAppActivity.showRegistrationScreen();
         }
 
-        //...
 
     }
 

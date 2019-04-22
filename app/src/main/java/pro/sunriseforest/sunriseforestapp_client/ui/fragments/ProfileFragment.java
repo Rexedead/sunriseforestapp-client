@@ -24,32 +24,19 @@ public class ProfileFragment extends BaseFragment {
     private TextView mUserRoleTextView;
     private TextView mUserTasksTakenStatsTextView;
     private TextView mUserRewardInfoTextView;
-    private Button mEditProfileButton;
-    private Button mRemoveTokenButton;
+    private Button mSaveProfileButton;
+    private Button mExitProfileButton;
 
     private ProfilePresenter mPresenter = ProfilePresenter.getInstance();
 
+
+    private View.OnClickListener mExitProfileListener = view -> mPresenter.clickedExitProfile();
 
     public ProfileFragment() {
         // Required empty public constructor
     }
 
 
-    @Override
-    protected String createTag() {
-        return "ProfileFragment";
-    }
-
-    @Override
-    protected BasePresenter getPresenter() {
-        return mPresenter;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -63,12 +50,13 @@ public class ProfileFragment extends BaseFragment {
         mUserRoleTextView = view.findViewById(R.id.role_profileFrag_textView);
         mUserTasksTakenStatsTextView = view.findViewById(R.id.tasks_taken_stats_profileFrag_textView);
         mUserRewardInfoTextView = view.findViewById(R.id.reward_profileFrag_textView);
-        mRemoveTokenButton = view.findViewById(R.id.remove_token_profileFrag_button);
-        mEditProfileButton = view.findViewById(R.id.change_info_profileFrag_button);
+        mExitProfileButton = view.findViewById(R.id.remove_token_profileFrag_button);
+        mSaveProfileButton = view.findViewById(R.id.change_info_profileFrag_button);
 
-        mEditProfileButton.setText("Сохранить");
+        mSaveProfileButton.setText("Сохранить");
 
-        mEditProfileButton.setOnClickListener(v -> mPresenter.clickedSaveButton());
+        mExitProfileButton.setOnClickListener(mExitProfileListener);
+        mSaveProfileButton.setOnClickListener(v -> mPresenter.clickedSaveButton()); // TODO вынеси лисенер в поле(пример строкой выше)
         mUserNameEditText.addTextChangedListener(mPresenter);
         mUserMailEditText.addTextChangedListener(mPresenter);
         mUserPhoneEditText.addTextChangedListener(mPresenter);
@@ -93,7 +81,7 @@ public class ProfileFragment extends BaseFragment {
         mUserRoleTextView.setText(mProfileData.getRole());
 //                mUserTasksTakenStatsTextView.setText(mPreferenceHelper.getUser().getTasksCount());
         //        mUserRewardInfoTextView.setText(mPreferenceHelper.getUser().getRewardSum());
-        //        mRemoveTokenButton.setOnClickListener(mOnClickRemoveTokenData);
+        //        mExitProfileButton.setOnClickListener(mOnClickRemoveTokenData);
     }
 
 
@@ -107,10 +95,29 @@ public class ProfileFragment extends BaseFragment {
 
 
     public void saveIsVisible(boolean showSaveButton){
-        mEditProfileButton.setVisibility(showSaveButton ? View.VISIBLE : View.GONE);
+        mSaveProfileButton.setVisibility(showSaveButton ? View.VISIBLE : View.GONE);
         }
 
+
+    @Override
+    protected String createTag() {
+        return "ProfileFragment";
     }
+
+    @Override
+    protected BasePresenter getPresenter() {
+        return mPresenter;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+    }
+
+    }
+
+
 
 //    private View.OnClickListener mOnClickRemoveTokenData = view -> AppPresenter.getInstance().exitProfile();
 
