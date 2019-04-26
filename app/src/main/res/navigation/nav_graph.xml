@@ -39,6 +39,9 @@
         <action
             android:id="@+id/action_deskFragment_to_taskFragment"
             app:destination="@id/taskFragment" />
+        <action
+            android:id="@+id/action_deskFragment_to_notificationsFragment"
+            app:destination="@id/notificationsFragment"/>
     </fragment>
     <fragment
         android:id="@+id/registrationFragment"
@@ -60,4 +63,9 @@
         android:name="pro.sunriseforest.sunriseforestapp_client.ui.fragments.TaskFragment"
         android:label="task_fragment"
         tools:layout="@layout/task_fragment" />
+    <fragment
+        android:id="@+id/notificationsFragment"
+        android:name="pro.sunriseforest.sunriseforestapp_client.ui.fragments.NotificationsFragment"
+        android:label="notifications__fragment"
+        tools:layout="@layout/notifications_fragment"/>
 </navigation>

@@ -9,12 +9,12 @@ public interface IView {
     void showLoginScreen();
     void showRegistrationScreen();
     void showDeskScreen();
-    void showTasks(List<Task> tasks);
     void showTask();
     void hideBottomNavigation();
     void showBottomNavigation();
-    void showProfile();
+    void showProfileScreen();
     void showNewTask();
+    void showNotificationsScreen();
     void showError(String msg);
     void showLoading();
     void showInfoMessage(String msg);

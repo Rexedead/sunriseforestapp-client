@@ -32,6 +32,7 @@
     <string name="recycler_endDate">Финиш</string>
     <string name="recycler_creationDate">Создано</string>
     <string name="ruble">₽</string>
+    <string name="no_notifications">Уведомлений нет</string>
 
 
 </resources>

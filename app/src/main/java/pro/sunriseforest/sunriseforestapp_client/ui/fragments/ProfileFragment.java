@@ -70,7 +70,7 @@ public class ProfileFragment extends NavigatedFragment{
     }
 
     public void showProfile(User user) {
-        log("showProfile(user = %s)", user);
+        log("showProfileScreen(user = %s)", user);
         setProfile(user);
     }
 
