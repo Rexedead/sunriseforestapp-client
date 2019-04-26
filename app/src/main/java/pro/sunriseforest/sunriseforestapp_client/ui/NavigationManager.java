@@ -88,6 +88,10 @@ public class NavigationManager {
         log("fromDeskToTask()");
         mAppActivity.showTask();
     }
+    public void back(){
+        log("back");
+        mAppActivity.onBackPressed();
+    }
 
     public void bindView(AppActivity view){
         log(String.format("bindView(view=%s)", view));

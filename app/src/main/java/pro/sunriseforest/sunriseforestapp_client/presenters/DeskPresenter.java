@@ -122,7 +122,10 @@ public class DeskPresenter extends BasePresenter<DeskFragment>{
 
     }
 
-
+    public void addTask(Task task){
+        log("addTask( task = %s)", task);
+        mTasks.add(task);
+    }
 
 
     @Override

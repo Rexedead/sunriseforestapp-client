@@ -34,7 +34,7 @@ public interface SunriseForestService {
     Observable<User> userRegistration(@Body User user);
 
     @POST("data/tasks")
-    Observable<Task> addtask(@Body Task task, @Query("sr_user_token") String token);
+    Observable<Task> addTask(@Body Task task, @Query("sr_user_token") String token);
 
     @POST("data/client")
     Observable<Client> addclient(@Body Client client, @Query("sr_user_token") String token);

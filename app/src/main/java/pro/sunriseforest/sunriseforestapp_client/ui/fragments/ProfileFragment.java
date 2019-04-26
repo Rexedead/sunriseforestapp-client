@@ -15,7 +15,10 @@ import pro.sunriseforest.sunriseforestapp_client.presenters.BasePresenter;
 import pro.sunriseforest.sunriseforestapp_client.presenters.ProfilePresenter;
 
 
-public class ProfileFragment extends BaseFragment {
+public class ProfileFragment extends NavigatedFragment{
+    private static final int ITEM_ON_NAV = 1;
+
+
     private User mProfileData;
     private TextView mUserIdTextView;
     private EditText mUserNameEditText;
@@ -110,12 +113,16 @@ public class ProfileFragment extends BaseFragment {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {//TODO что делает этот метод?
         super.onCreate(savedInstanceState);
 
     }
 
+    @Override
+    public int getItemOnNavigationMenu() {
+        return ITEM_ON_NAV;
     }
+}
 
 
 

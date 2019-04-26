@@ -9,6 +9,8 @@ import pro.sunriseforest.sunriseforestapp_client.ui.IView;
 public abstract class BasePresenter <F extends Fragment> {
     private String TAG = "%%%/presenter/" + getTAG();
 
+
+
     protected abstract String getTAG();
 //
     protected F mView;

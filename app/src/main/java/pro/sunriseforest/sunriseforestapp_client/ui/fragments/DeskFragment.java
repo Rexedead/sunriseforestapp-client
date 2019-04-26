@@ -23,8 +23,8 @@ import pro.sunriseforest.sunriseforestapp_client.presenters.BasePresenter;
 import pro.sunriseforest.sunriseforestapp_client.presenters.DeskPresenter;
 
 
-public class DeskFragment extends BaseFragment {
-    private static final String ARG_JSON_TASKS = "arg_json_tasks";
+public class DeskFragment extends NavigatedFragment{
+    private static final int ITEM_ON_NAV = 0;
 
     private List<Task> mTaskList = new ArrayList<>();
     private DeskPresenter mPresenter = DeskPresenter.getInstance();
@@ -86,6 +86,10 @@ public class DeskFragment extends BaseFragment {
         return view;
     }
 
+    @Override
+    public int getItemOnNavigationMenu() {
+        return ITEM_ON_NAV;
+    }
 
 
     class RecyclerTouchListener implements RecyclerView.OnItemTouchListener{

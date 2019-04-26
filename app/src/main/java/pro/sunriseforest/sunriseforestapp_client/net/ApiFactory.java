@@ -16,6 +16,7 @@ public class ApiFactory {
 
     private static OkHttpClient sClient;
     private static final String API_ENDPOINT = "http://77.222.54.80:3000/";
+    private static final String LOCAL_HOST = "http://192.168.0.3:3000";
 
     private static volatile SunriseForestService sSunriseForestService;
 
@@ -40,7 +41,8 @@ public class ApiFactory {
     private static Retrofit buildRetrofit(Converter.Factory converterFactory,
                                           OkHttpClient client) {
         return new Retrofit.Builder()
-                .baseUrl(ApiFactory.API_ENDPOINT)
+//                .baseUrl(ApiFactory.API_ENDPOINT)
+                .baseUrl(LOCAL_HOST)
                 .client(client)
                 .addConverterFactory(converterFactory)
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
@@ -63,7 +65,7 @@ public class ApiFactory {
 
     @NonNull
     private static OkHttpClient buildClient() {
-        String TAG = "APIService";
+        String TAG = "%%%/APIService";
         return new OkHttpClient.Builder()
                 .addInterceptor(new OfflineCacheInterceptor())
                 .addInterceptor(NetworkCacheInterceptor.loggingInterceptor(TAG))

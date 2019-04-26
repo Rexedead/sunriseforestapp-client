@@ -1,6 +1,7 @@
 package pro.sunriseforest.sunriseforestapp_client.ui;
 
 import android.os.Bundle;
+import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
@@ -13,6 +14,7 @@ import android.widget.Toast;
 import java.util.List;
 
 import androidx.navigation.NavController;
+import androidx.navigation.NavDestination;
 import androidx.navigation.Navigation;
 import pro.sunriseforest.sunriseforestapp_client.R;
 import pro.sunriseforest.sunriseforestapp_client.models.Task;
@@ -29,6 +31,7 @@ public class AppActivity extends AppCompatActivity implements IView{
     private BottomNavigationView.OnNavigationItemSelectedListener mNavigationItemSelectedListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+            log(String.format("onNavigationItemSelected(menuItem = %s)", menuItem));
             switch (menuItem.getItemId()){
                 case R.id.navigation_home:
                     menuItem.setChecked(true);
@@ -36,10 +39,8 @@ public class AppActivity extends AppCompatActivity implements IView{
                     break;
                 case R.id.navigation_dashboard:
                     menuItem.setChecked(true);
-
                     showProfile();
                     break;
-
             }
             return false;
         }
@@ -63,12 +64,12 @@ public class AppActivity extends AppCompatActivity implements IView{
         if(mIsStartApp){
             mNavigationManager.startApp();
         }
-
     }
 
     @Override
     protected void onStart() {
         super.onStart();
+
         log("lc: onStart()");
     }
 
@@ -78,14 +79,9 @@ public class AppActivity extends AppCompatActivity implements IView{
         log("lc: onRestart()");
     }
 
-
-
     @Override
     public void showLoginScreen() {
         log("showLoginScreen()");
-
-
-
 
 
         switch (mNavController.getCurrentDestination().getId()){
@@ -97,8 +93,6 @@ public class AppActivity extends AppCompatActivity implements IView{
 
                 mNavController.navigate(R.id.action_splashFragment_to_loginFragment);
                 break;
-
-
         }
     }
 
@@ -118,11 +112,17 @@ public class AppActivity extends AppCompatActivity implements IView{
                 mNavController.navigate(R.id.action_splashFragment_to_deskFragment);
                 break;
             case R.id.loginFragment:
-                mNavController.navigate(R.id.action_loginFragment_to_deskFragment);
+                mNavController.popBackStack();
+                mNavController.navigate(R.id.action_splashFragment_to_deskFragment);
+                break;
+            case R.id.registrationFragment:
+                mNavController.popBackStack(R.id.splashFragment, false);
+                mNavController.navigate(R.id.action_splashFragment_to_deskFragment);
                 break;
             case R.id.profileFragment:
                 onBackPressed();
         }
+        setCheckedItemMenu(0); // 0 - порядковый номер кнопки DeskBoard в BottomNavigation
 
     }
 
@@ -138,7 +138,6 @@ public class AppActivity extends AppCompatActivity implements IView{
             case R.id.deskFragment:
                 mNavController.navigate(R.id.action_deskFragment_to_taskFragment);
                 break;
-
         }
 
     }
@@ -163,9 +162,7 @@ public class AppActivity extends AppCompatActivity implements IView{
             case R.id.deskFragment:
                 mNavController.navigate(R.id.action_deskFragment_to_profileFragment);
                 break;
-
         }
-
     }
 
     @Override
@@ -205,11 +202,10 @@ public class AppActivity extends AppCompatActivity implements IView{
             case R.id.deskFragment:
                 mNavController.navigate(R.id.action_deskFragment_to_newTaskFragment);
                 break;
-
         }
 
-
     }
+
 
     @Override
     public void showError(String msg) {
@@ -243,7 +239,10 @@ public class AppActivity extends AppCompatActivity implements IView{
         }else{
             super.onBackPressed();
         }
+    }
 
+    public void setCheckedItemMenu(int idx){
 
+        mBottomNavigationView.getMenu().getItem(idx).setChecked(true);
     }
 }
