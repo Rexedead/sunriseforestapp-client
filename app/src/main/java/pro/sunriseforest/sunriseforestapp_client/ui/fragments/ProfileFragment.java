@@ -17,7 +17,10 @@ import pro.sunriseforest.sunriseforestapp_client.presenters.BasePresenter;
 import pro.sunriseforest.sunriseforestapp_client.presenters.ProfilePresenter;
 
 
-public class ProfileFragment extends BaseFragment implements TextWatcher {
+public class ProfileFragment extends NavigatedFragment  implements TextWatcher {
+    private static final int ITEM_ON_NAV = 1;
+
+
     private User mProfileData;
     private TextView mUserIdTextView;
     private EditText mUserNameEditText;
@@ -27,31 +30,18 @@ public class ProfileFragment extends BaseFragment implements TextWatcher {
     private TextView mUserTasksTakenStatsTextView;
     private TextView mUserRewardInfoTextView;
     private Button mSaveProfileButton;
-    private Button mRemoveTokenButton;
+    private Button mExitProfileButton;
 
     private ProfilePresenter mPresenter = ProfilePresenter.getInstance();
 
+
+    private View.OnClickListener mExitProfileListener = view -> mPresenter.clickedExitProfile();
 
     public ProfileFragment() {
         // Required empty public constructor
     }
 
 
-    @Override
-    protected String createTag() {
-        return "ProfileFragment";
-    }
-
-    @Override
-    protected BasePresenter getPresenter() {
-        return mPresenter;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -65,13 +55,8 @@ public class ProfileFragment extends BaseFragment implements TextWatcher {
         mUserRoleTextView = view.findViewById(R.id.role_profileFrag_textView);
         mUserTasksTakenStatsTextView = view.findViewById(R.id.tasks_taken_stats_profileFrag_textView);
         mUserRewardInfoTextView = view.findViewById(R.id.reward_profileFrag_textView);
-        mRemoveTokenButton = view.findViewById(R.id.remove_token_profileFrag_button);
+        mExitProfileButton = view.findViewById(R.id.remove_token_profileFrag_button);
         mSaveProfileButton = view.findViewById(R.id.change_info_profileFrag_button);
-
-        mSaveProfileButton.setOnClickListener(v -> mPresenter.clickedSaveButton());
-        mUserNameEditText.addTextChangedListener(this);
-        mUserMailEditText.addTextChangedListener(this);
-        mUserPhoneEditText.addTextChangedListener(this);
 
         showBottomNavigation();
 
@@ -79,7 +64,7 @@ public class ProfileFragment extends BaseFragment implements TextWatcher {
     }
 
     public void showProfile(User user) {
-        log("showProfile(user = %s)", user);
+        log("showProfileScreen(user = %s)", user);
         setProfile(user);
     }
 
@@ -93,7 +78,15 @@ public class ProfileFragment extends BaseFragment implements TextWatcher {
         mUserRoleTextView.setText(mProfileData.getRole());
 //                mUserTasksTakenStatsTextView.setText(mPreferenceHelper.getUser().getTasksCount());
         //        mUserRewardInfoTextView.setText(mPreferenceHelper.getUser().getRewardSum());
-        //        mRemoveTokenButton.setOnClickListener(mOnClickRemoveTokenData);
+        //        mExitProfileButton.setOnClickListener(mOnClickRemoveTokenData);
+    }
+
+    public void addListenersForEditText(){
+        mExitProfileButton.setOnClickListener(mExitProfileListener);
+        mSaveProfileButton.setOnClickListener(v -> mPresenter.clickedSaveButton());
+        mUserNameEditText.addTextChangedListener(this);
+        mUserMailEditText.addTextChangedListener(this);
+        mUserPhoneEditText.addTextChangedListener(this);
     }
 
 
@@ -106,9 +99,32 @@ public class ProfileFragment extends BaseFragment implements TextWatcher {
     }
 
 
-    public void saveButtonIsVisible(boolean isVisible){
-        mSaveProfileButton.setVisibility(isVisible ? View.VISIBLE : View.GONE);
+    public void saveIsVisible(boolean showSaveButton){
+        mSaveProfileButton.setVisibility(showSaveButton ? View.VISIBLE : View.GONE);
         }
+
+
+    @Override
+    protected String createTag() {
+        return "ProfileFragment";
+    }
+
+    @Override
+    protected BasePresenter getPresenter() {
+        return mPresenter;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {//TODO что делает этот метод?
+        super.onCreate(savedInstanceState);
+
+    }
+
+    @Override
+    public int getItemOnNavigationMenu() {
+        return ITEM_ON_NAV;
+    }
+
 
 
 
@@ -128,6 +144,6 @@ public class ProfileFragment extends BaseFragment implements TextWatcher {
     public void afterTextChanged(Editable editable) {
         String changedText = editable.toString();
         log("afterTextChanged: "+changedText);
-        this.saveButtonIsVisible(true);
+        this.saveIsVisible(true);
     }
 }

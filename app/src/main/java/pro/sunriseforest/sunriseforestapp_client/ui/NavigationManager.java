@@ -50,6 +50,14 @@ public class NavigationManager {
         //...
     }
 
+    public void fromProfileToLogin(){
+        log("fromProfileToLogin() ");
+
+        if(!activityIsNullAndLog("fromProfileToLogin()")){
+            mAppActivity.showLoginScreen();
+        }
+    }
+
     public void fromLoginToRegistration(){
         log("fromLoginToRegistration");
 
@@ -57,7 +65,6 @@ public class NavigationManager {
             mAppActivity.showRegistrationScreen();
         }
 
-        //...
 
     }
 
@@ -80,6 +87,10 @@ public class NavigationManager {
     public void fromDeskToTask(){
         log("fromDeskToTask()");
         mAppActivity.showTask();
+    }
+    public void back(){
+        log("back");
+        mAppActivity.onBackPressed();
     }
 
     public void bindView(AppActivity view){

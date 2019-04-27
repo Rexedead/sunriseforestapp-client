@@ -23,23 +23,28 @@ public class AppActivity extends AppCompatActivity implements IView{
     private NavigationManager mNavigationManager;
     private NavController mNavController;
     private BottomNavigationView mBottomNavigationView;
+    private boolean mIsStartApp;
+
 
     private BottomNavigationView.OnNavigationItemSelectedListener mNavigationItemSelectedListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+            log(String.format("onNavigationItemSelected(menuItem = %s)", menuItem));
             switch (menuItem.getItemId()){
-                case R.id.navigation_home:
+                case R.id.navigation_desk:
                     showDeskScreen();
                     break;
-                case R.id.navigation_dashboard:
-                    showProfile();
+                case R.id.navigation_profile:
+                    showProfileScreen();
                     break;
-
+                case R.id.navigation_notifications:
+                    showNotificationsScreen();
+                    break;
             }
+            menuItem.setChecked(true);
             return false;
         }
     };
-    private boolean mIsStartApp;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -59,19 +64,6 @@ public class AppActivity extends AppCompatActivity implements IView{
         if(mIsStartApp){
             mNavigationManager.startApp();
         }
-
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        log("lc: onStart()");
-    }
-
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-        log("lc: onRestart()");
     }
 
 
@@ -79,7 +71,18 @@ public class AppActivity extends AppCompatActivity implements IView{
     @Override
     public void showLoginScreen() {
         log("showLoginScreen()");
-        mNavController.navigate(R.id.action_splashFragment_to_loginFragment);
+
+
+        switch (mNavController.getCurrentDestination().getId()){
+            case R.id.splashFragment:
+                mNavController.navigate(R.id.action_splashFragment_to_loginFragment);
+                break;
+            case R.id.profileFragment:
+                mNavController.popBackStack(R.id.splashFragment, false);
+
+                mNavController.navigate(R.id.action_splashFragment_to_loginFragment);
+                break;
+        }
     }
 
     @Override
@@ -98,18 +101,23 @@ public class AppActivity extends AppCompatActivity implements IView{
                 mNavController.navigate(R.id.action_splashFragment_to_deskFragment);
                 break;
             case R.id.loginFragment:
-                mNavController.navigate(R.id.action_loginFragment_to_deskFragment);
+                mNavController.popBackStack();
+                mNavController.navigate(R.id.action_splashFragment_to_deskFragment);
+                break;
+            case R.id.registrationFragment:
+                mNavController.popBackStack(R.id.splashFragment, false);
+                mNavController.navigate(R.id.action_splashFragment_to_deskFragment);
                 break;
             case R.id.profileFragment:
-                onBackPressed();
+                mNavController.popBackStack();
+                break;
+            case R.id.notificationsFragment:
+                mNavController.popBackStack();
+                break;
         }
 
     }
 
-    @Override
-    public void showTasks(List<Task> tasks) {
-        log(String.format("showTasks(tasks) length of tasks = %s", tasks.size()));
-    }
 
     @Override
     public void showTask() {
@@ -118,7 +126,6 @@ public class AppActivity extends AppCompatActivity implements IView{
             case R.id.deskFragment:
                 mNavController.navigate(R.id.action_deskFragment_to_taskFragment);
                 break;
-
         }
 
     }
@@ -127,25 +134,100 @@ public class AppActivity extends AppCompatActivity implements IView{
     public void hideBottomNavigation() {
         log("hideBottomNavigation()");
         mBottomNavigationView.setVisibility(View.GONE);
+
     }
 
     @Override
     public void showBottomNavigation() {
         log("showBottomNavigation()");
         mBottomNavigationView.setVisibility(View.VISIBLE);
-
+        log("s");
     }
 
     @Override
-    public void showProfile() {
-        log("showProfile()");
+    public void showProfileScreen() {
+        log("showProfileScreen()");
         switch (mNavController.getCurrentDestination().getId()){
             case R.id.deskFragment:
                 mNavController.navigate(R.id.action_deskFragment_to_profileFragment);
                 break;
 
+            case R.id.notificationsFragment:
+                mNavController.popBackStack();
+                mNavController.navigate(R.id.action_deskFragment_to_profileFragment);
+                break;
+        }
+    }
+
+
+
+    @Override
+    public void showNewTask() {
+        log("showNewTask()");
+        switch (mNavController.getCurrentDestination().getId()){
+            case R.id.deskFragment:
+                mNavController.navigate(R.id.action_deskFragment_to_newTaskFragment);
+                break;
         }
 
+    }
+
+    @Override
+    public void showNotificationsScreen() {
+        log("showNotificationsScreen()");
+        switch (mNavController.getCurrentDestination().getId()){
+            case R.id.deskFragment:
+                mNavController.navigate(R.id.action_deskFragment_to_notificationsFragment);
+                break;
+            case R.id.profileFragment:
+                mNavController.popBackStack();
+                mNavController.navigate(R.id.action_deskFragment_to_notificationsFragment);
+                break;
+        }
+    }
+
+
+    @Override
+    public void showError(String msg) {
+        log("showError() msg="+msg);
+        Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
+
+    }
+
+    @Override
+    public void showLoading() {
+        log("showLoading()");
+
+    }
+
+    @Override
+    public void showInfoMessage(String msg) {
+        Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
+    }
+
+    private void log(String msg){
+        Log.i("%%%/activity", msg);
+    }
+
+
+
+    public void setCheckedItemMenu(int idx){
+
+        mBottomNavigationView.getMenu().getItem(idx).setChecked(true);
+    }
+
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        log("lc: onStart()");
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        log("lc: onRestart()");
     }
 
     @Override
@@ -179,37 +261,14 @@ public class AppActivity extends AppCompatActivity implements IView{
     }
 
     @Override
-    public void showNewTask() {
-        log("showNewTask()");
-        switch (mNavController.getCurrentDestination().getId()){
-            case R.id.deskFragment:
-                mNavController.navigate(R.id.action_deskFragment_to_newTaskFragment);
-                break;
+    public void onBackPressed() {
+        int id = mNavController.getCurrentDestination().getId();
 
+        if(id == R.id.deskFragment || id == R.id.loginFragment){
+            //exit from app
+            finish();
+        }else{
+            super.onBackPressed();
         }
-
-
-    }
-
-    @Override
-    public void showError(String msg) {
-        log("showError() msg="+msg);
-        Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
-
-    }
-
-    @Override
-    public void showLoading() {
-        log("showLoading()");
-
-    }
-
-    @Override
-    public void showInfoMessage(String msg) {
-        Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
-    }
-
-    private void log(String msg){
-        Log.i("%%%/activity", msg);
     }
 }

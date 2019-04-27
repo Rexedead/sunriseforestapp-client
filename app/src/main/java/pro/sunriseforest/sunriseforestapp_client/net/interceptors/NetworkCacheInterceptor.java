@@ -12,6 +12,8 @@ import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
 import pro.sunriseforest.sunriseforestapp_client.net.Utils;
 
+//TODO трешачок походу
+
 public class NetworkCacheInterceptor implements Interceptor {
 
     private static final int MAX_AGE = 120;

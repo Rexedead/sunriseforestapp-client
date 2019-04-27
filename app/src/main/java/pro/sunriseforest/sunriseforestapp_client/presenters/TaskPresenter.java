@@ -53,6 +53,7 @@ public class TaskPresenter extends BasePresenter<TaskFragment> {
     @Override
     public void bindView(TaskFragment view) {
         super.bindView(view);
+
         view.showTask(mTask);
 
         boolean yes = canChangeTask();

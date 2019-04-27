@@ -9,7 +9,7 @@
 
 
     <TextView
-        android:id="@+id/newTask_text_textView"
+        android:id="@+id/text_newTask_textView"
         android:layout_width="match_parent"
         android:layout_height="30dp"
         android:gravity="start|center"
@@ -18,10 +18,10 @@
         tools:text="Задача" />
 
     <EditText
-        android:id="@+id/newTask_description_editText"
+        android:id="@+id/description_newTask_editText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/newTask_text_textView"
+        android:layout_below="@+id/text_newTask_textView"
         android:layout_alignParentEnd="true"
         android:layout_centerHorizontal="true"
         android:background="@color/field_background"
@@ -43,10 +43,10 @@
 
 
     <android.support.design.widget.TextInputLayout
-        android:id="@+id/newTask_startDate_textInputLayout"
+        android:id="@+id/start_date_newTask_textInputLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/newTask_description_editText"
+        android:layout_below="@+id/description_newTask_editText"
         android:layout_alignParentStart="true"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
@@ -58,21 +58,22 @@
         android:textSize="14sp">
 
         <android.support.design.widget.TextInputEditText
-            android:id="@+id/newTask_startDate_TextInputEditText"
+            android:id="@+id/start_date_newTask_TextInputEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:focusable="false"
             android:hint="@string/startDate"
             android:paddingStart="5dp"
             android:paddingEnd="5dp"
-            android:textSize="14sp" />
+            android:textSize="14sp"/>
+
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
-        android:id="@+id/newTask_endDate_textInputLayout"
+        android:id="@+id/end_date_newTask_TextInputLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/newTask_description_editText"
+        android:layout_below="@+id/description_newTask_editText"
         android:layout_alignParentEnd="true"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
@@ -85,7 +86,7 @@
         >
 
         <android.support.design.widget.TextInputEditText
-            android:id="@+id/newTask_endDate_TextInputEditText"
+            android:id="@+id/end_date_newTask_TextInputEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:focusable="false"
@@ -97,10 +98,10 @@
 
 
     <EditText
-        android:id="@+id/newTask_reward_editText"
+        android:id="@+id/reward_newTask_editText"
         android:layout_width="match_parent"
         android:layout_height="30dp"
-        android:layout_below="@+id/newTask_startDate_textInputLayout"
+        android:layout_below="@+id/start_date_newTask_textInputLayout"
         android:layout_alignParentStart="true"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
@@ -115,11 +116,13 @@
         android:inputType="number"
         android:textSize="14sp" />
 
+
+
     <TextView
-        android:id="@+id/newTask_client_TextView"
+        android:id="@+id/client_newTask_TextView"
         android:layout_width="match_parent"
         android:layout_height="30dp"
-        android:layout_below="@+id/newTask_reward_editText"
+        android:layout_below="@+id/reward_newTask_editText"
         android:gravity="start|center"
         android:text="@string/client"
         android:textSize="12sp"
@@ -127,10 +130,10 @@
 
 
     <EditText
-        android:id="@+id/newTask_clientName_editText"
+        android:id="@+id/client_name_newTask_editText"
         android:layout_width="match_parent"
         android:layout_height="30dp"
-        android:layout_below="@+id/newTask_client_TextView"
+        android:layout_below="@+id/client_newTask_TextView"
         android:layout_alignParentStart="true"
         android:layout_marginEnd="10dp"
         android:layout_toStartOf="@+id/centerShim"
@@ -145,10 +148,10 @@
 
 
     <EditText
-        android:id="@+id/newTask_clientPhone_editText"
+        android:id="@+id/client_phone_newTask_editText"
         android:layout_width="match_parent"
         android:layout_height="30dp"
-        android:layout_below="@+id/newTask_client_TextView"
+        android:layout_below="@+id/client_newTask_TextView"
         android:layout_marginStart="10dp"
         android:layout_toEndOf="@+id/centerShim"
         android:background="@color/field_background"
@@ -160,7 +163,7 @@
         android:textSize="14sp" />
 
     <Button
-        android:id="@+id/newTask_add_button"
+        android:id="@+id/add_newTask_button"
         style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

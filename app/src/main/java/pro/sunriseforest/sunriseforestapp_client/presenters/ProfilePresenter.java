@@ -1,9 +1,6 @@
 package pro.sunriseforest.sunriseforestapp_client.presenters;
 
 
-import android.text.Editable;
-import android.text.TextWatcher;
-
 import pro.sunriseforest.sunriseforestapp_client.SunriseForestApp;
 import pro.sunriseforest.sunriseforestapp_client.models.User;
 import pro.sunriseforest.sunriseforestapp_client.options.SharedPreferenceHelper;
@@ -38,9 +35,15 @@ public class ProfilePresenter extends BasePresenter<ProfileFragment> {
 
         boolean yes = canChangeProfile();
         mView.setEnabledEditTexts(yes);
-        mView.saveButtonIsVisible(false);
+        mView.addListenersForEditText();
+        mView.saveIsVisible(false);
 
 
+    }
+
+    public void clickedExitProfile(){
+        log("clickedExitProfile()");
+        exitProfile();
     }
 
     public void clickedSaveButton(){
@@ -48,13 +51,20 @@ public class ProfilePresenter extends BasePresenter<ProfileFragment> {
         //...
         mView.showToast("*клик по сохранялке*");
         saveProfile();
-        mView.saveButtonIsVisible(false);
+        mView.saveIsVisible(false);
 
 
     }
 
     private void saveProfile() {
         log("saveProfile()");
+        //...
+    }
+
+    private void  exitProfile(){
+        log("exitProfile()");
+        mSharedPreferenceHelper.removeUser();
+        mNavigationManager.fromProfileToLogin();
     }
 
 
