@@ -2,6 +2,8 @@ package pro.sunriseforest.sunriseforestapp_client.ui.fragments;
 
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +17,7 @@ import pro.sunriseforest.sunriseforestapp_client.presenters.BasePresenter;
 import pro.sunriseforest.sunriseforestapp_client.presenters.ProfilePresenter;
 
 
-public class ProfileFragment extends BaseFragment {
+public class ProfileFragment extends BaseFragment implements TextWatcher {
     private User mProfileData;
     private TextView mUserIdTextView;
     private EditText mUserNameEditText;
@@ -24,7 +26,7 @@ public class ProfileFragment extends BaseFragment {
     private TextView mUserRoleTextView;
     private TextView mUserTasksTakenStatsTextView;
     private TextView mUserRewardInfoTextView;
-    private Button mEditProfileButton;
+    private Button mSaveProfileButton;
     private Button mRemoveTokenButton;
 
     private ProfilePresenter mPresenter = ProfilePresenter.getInstance();
@@ -64,14 +66,12 @@ public class ProfileFragment extends BaseFragment {
         mUserTasksTakenStatsTextView = view.findViewById(R.id.tasks_taken_stats_profileFrag_textView);
         mUserRewardInfoTextView = view.findViewById(R.id.reward_profileFrag_textView);
         mRemoveTokenButton = view.findViewById(R.id.remove_token_profileFrag_button);
-        mEditProfileButton = view.findViewById(R.id.change_info_profileFrag_button);
+        mSaveProfileButton = view.findViewById(R.id.change_info_profileFrag_button);
 
-        mEditProfileButton.setText("Сохранить");
-
-        mEditProfileButton.setOnClickListener(v -> mPresenter.clickedSaveButton());
-        mUserNameEditText.addTextChangedListener(mPresenter);
-        mUserMailEditText.addTextChangedListener(mPresenter);
-        mUserPhoneEditText.addTextChangedListener(mPresenter);
+        mSaveProfileButton.setOnClickListener(v -> mPresenter.clickedSaveButton());
+        mUserNameEditText.addTextChangedListener(this);
+        mUserMailEditText.addTextChangedListener(this);
+        mUserPhoneEditText.addTextChangedListener(this);
 
         showBottomNavigation();
 
@@ -106,12 +106,28 @@ public class ProfileFragment extends BaseFragment {
     }
 
 
-    public void saveIsVisible(boolean showSaveButton){
-        mEditProfileButton.setVisibility(showSaveButton ? View.VISIBLE : View.GONE);
+    public void saveButtonIsVisible(boolean isVisible){
+        mSaveProfileButton.setVisibility(isVisible ? View.VISIBLE : View.GONE);
         }
 
-    }
+
 
 //    private View.OnClickListener mOnClickRemoveTokenData = view -> AppPresenter.getInstance().exitProfile();
 
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
+    }
+
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+    }
+
+    @Override
+    public void afterTextChanged(Editable editable) {
+        String changedText = editable.toString();
+        log("afterTextChanged: "+changedText);
+        this.saveButtonIsVisible(true);
+    }
+}

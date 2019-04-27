@@ -33,6 +33,7 @@ public class TaskPresenter extends BasePresenter<TaskFragment> {
         //...
         mView.showToast("*клик по сохранялке*");
         saveTask();
+        mView.saveButtonIsVisible(false);
         taskChanged = false;
 
 
@@ -40,7 +41,7 @@ public class TaskPresenter extends BasePresenter<TaskFragment> {
     private boolean canChangeTask(){
         log("canChangeTask()");
         //...
-        return false;
+        return true;
     }
 
     private void saveTask(){
@@ -56,7 +57,8 @@ public class TaskPresenter extends BasePresenter<TaskFragment> {
 
         boolean yes = canChangeTask();
         mView.setEnabledEditTexts(yes);
-
+        mView.addListenersForEditText();
+        mView.saveButtonIsVisible(false);
 
     }
 

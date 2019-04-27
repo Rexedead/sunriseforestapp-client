@@ -195,6 +195,7 @@
             android:layout_marginStart="10dp"
             android:background="@color/auth_button"
             android:textAllCaps="false"
+            android:text="@string/save"
             android:textColor="@color/button_text"
             android:textSize="14sp" />
 

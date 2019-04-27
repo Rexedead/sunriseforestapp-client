@@ -2,6 +2,8 @@ package pro.sunriseforest.sunriseforestapp_client.ui.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +18,7 @@ import pro.sunriseforest.sunriseforestapp_client.presenters.BasePresenter;
 import pro.sunriseforest.sunriseforestapp_client.presenters.TaskPresenter;
 
 
-public class TaskFragment extends BaseFragment {
+public class TaskFragment extends BaseFragment implements TextWatcher {
     private Task mSingleTask;
     private static final String ARG_JSON_TASK = "ARG_JSON_TASK";
 
@@ -42,7 +44,6 @@ public class TaskFragment extends BaseFragment {
 
 
         View view = inflater.inflate(R.layout.task_fragment, container, false);
-// TODO названия id привести к виду : название_переменной_[имяФрагмена]_тип
         mIdTextView = view.findViewById(R.id.id_taskFrag_textView);
         mDescriptionEditText = view.findViewById(R.id.description_taskFrag_editText);
         mTaskStartDateEditText = view.findViewById(R.id.start_date_taskFrag_editText);
@@ -54,9 +55,6 @@ public class TaskFragment extends BaseFragment {
         mContractorNameTextView = view.findViewById(R.id.contractor_name_taskFrag_textView);
         mContractorPhoneTextView = view.findViewById(R.id.contractor_phone_taskFrag_textView);
         mBookButton = view.findViewById(R.id.book_taskFrag_button);
-
-
-        mSaveButton.setOnClickListener(v -> mPresenter.clickedSaveButton());
 
         hideBottomNavigation();
 
@@ -77,12 +75,14 @@ public class TaskFragment extends BaseFragment {
         mClientPhoneEditText.setEnabled(isYes);
     }
 
-    public void hideSaveButton() {
-        //...
-    }
-
-    public void showSaveButton() {
-        //...
+    public void addListenersForEditText(){
+        mSaveButton.setOnClickListener(v -> mPresenter.clickedSaveButton());
+        mDescriptionEditText.addTextChangedListener(this);
+        mTaskStartDateEditText.addTextChangedListener(this);
+        mTaskEndDateEditText.addTextChangedListener(this);
+        mRewardEditText.addTextChangedListener(this);
+        mClientPhoneEditText.addTextChangedListener(this);
+        mClientNameEditText.addTextChangedListener(this);
     }
 
 
@@ -93,15 +93,10 @@ public class TaskFragment extends BaseFragment {
 
     private void setTask(Task task) {
         mSingleTask = task;
-
         mIdTextView.setText(mSingleTask.getTaskID());
-
         mDescriptionEditText.setText(mSingleTask.getTaskDescription());
-
         mTaskStartDateEditText.setText(mSingleTask.getCreationDate());
-
         mTaskEndDateEditText.setText(mSingleTask.getDeadlineDate());
-
         String reward = mSingleTask.getReward() + " \u20BD";
         mRewardEditText.setText(reward);
 
@@ -112,7 +107,9 @@ public class TaskFragment extends BaseFragment {
 
 
     }
-
+    public void saveButtonIsVisible(boolean isVisible){
+        mSaveButton.setVisibility(isVisible ? View.VISIBLE : View.GONE);
+    }
 
     @Override
     protected String createTag() {
@@ -124,5 +121,23 @@ public class TaskFragment extends BaseFragment {
         return mPresenter;
     }
 
+
+
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+    }
+
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+    }
+
+    @Override
+    public void afterTextChanged(Editable editable) {
+        String changedText = editable.toString();
+        log("afterTextChanged: "+changedText);
+        this.saveButtonIsVisible(true);
+    }
 
 }

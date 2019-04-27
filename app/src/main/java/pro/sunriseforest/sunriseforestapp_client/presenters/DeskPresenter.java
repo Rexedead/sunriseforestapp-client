@@ -1,5 +1,7 @@
 package pro.sunriseforest.sunriseforestapp_client.presenters;
 
+import java.net.ConnectException;
+import java.net.SocketTimeoutException;
 import java.util.List;
 
 import pro.sunriseforest.sunriseforestapp_client.SunriseForestApp;
@@ -9,12 +11,13 @@ import pro.sunriseforest.sunriseforestapp_client.net.AsyncNetTransformer;
 import pro.sunriseforest.sunriseforestapp_client.options.SharedPreferenceHelper;
 import pro.sunriseforest.sunriseforestapp_client.ui.NavigationManager;
 import pro.sunriseforest.sunriseforestapp_client.ui.fragments.DeskFragment;
+import retrofit2.HttpException;
 import rx.Observable;
 
 
-public class DeskPresenter extends BasePresenter<DeskFragment>{
+public class DeskPresenter extends BasePresenter<DeskFragment> {
 
-    public static String TAG ="DeskPresenter";
+    public static String TAG = "DeskPresenter";
 
 
     private static final DeskPresenter ourInstance = new DeskPresenter();
@@ -35,13 +38,13 @@ public class DeskPresenter extends BasePresenter<DeskFragment>{
     private List<Task> mTasks;
 
 
-    private void showTasks(List<Task> tasks){
-        if(!viewIsNullAndLog("showTasks()")){
+    private void showTasks(List<Task> tasks) {
+        if (!viewIsNullAndLog("showTasks()")) {
             mView.showTasks(tasks);
         }
     }
 
-    private void showTasks(){
+    private void showTasks() {
 
         String token = mSharedPreferenceHelper.getToken();
 
@@ -52,20 +55,20 @@ public class DeskPresenter extends BasePresenter<DeskFragment>{
                 );
     }
 
-    private void showTask(int position){
+    private void showTask(int position) {
         log("showTask(position = %s)", position);
         TaskPresenter.getInstance().setTask(mTasks.get(position));
         mNavigationManager.fromDeskToTask();
     }
 
-    public void clickedNewTask(){
+    public void clickedNewTask() {
         log("clickedNewTask()");
         showNewTask();
     }
 
     public void clickedSelectedTask(int position) {
-       log("clickedSelectedTask(position = %s)", position);
-       showTask(position);
+        log("clickedSelectedTask(position = %s)", position);
+        showTask(position);
 
     }
 
@@ -76,17 +79,17 @@ public class DeskPresenter extends BasePresenter<DeskFragment>{
 
         loadTasks(token)
                 .subscribe(
-                        tasks ->{
-                    mTasks = tasks;
-                    showTasks(tasks);
-                },
+                        tasks -> {
+                            mTasks = tasks;
+                            showTasks(tasks);
+                        },
                         this::handleNetworkError
-                         );
+                );
 
     }
 
 
-    private Observable<List<Task>> loadTasks(String token){
+    private Observable<List<Task>> loadTasks(String token) {
         log("loadTasks(token = %s)", token);
         return ApiFactory
                 .getSunriseForestService()
@@ -95,32 +98,64 @@ public class DeskPresenter extends BasePresenter<DeskFragment>{
 
     }
 
-    private void showNewTask(){
+    private void showNewTask() {
         log("showNewTask()");
 
         mNavigationManager.fromDeskToNewTask();
     }
 
-    private void showError(String msg){
+    private void showError(String msg) {
         log(String.format("showError(String msg = %s)", msg));
 
-        if(!viewIsNullAndLog("showError()")){
+        if (!viewIsNullAndLog("showError()")) {
             getView().showError(msg);
         }
 
     }
 
-    private void handleNetworkError(Throwable e){
-        //TODO этот метод дергается в observer.onError(Throwable e) в случае если произошла
-        // какая-то ошибка и не получилось загрузить с сети User. ошибка может быть доступа к сети и
-        // мы не можем отправить запрос (в таком случае пользователя нужно оповестить, что
-        // нужно проверить подключение сети), а может ошибка сети и мы взависимости от кода ошибки
-        // сообщим пользователю в чем проблема.
-        // Задача: в зависимости от типа ошибки (исключения) оповести пользователя правильным сообщением об ошибки.
-        // ошибки логировать в logerror()
-        showError("хз чо случилось и чо делать, можешь удалить приложение если что-то не нравится");
+    private void handleNetworkError(Throwable e) {
+        if (e instanceof ConnectException) {
+            showError("Отсутствует подключение к интернету");
+            logError(DeskPresenter.getInstance().getTAG() + " : " + e.getMessage());
+            return;
+        } else if (e instanceof SocketTimeoutException) {
+            showError("На сервере проблема, попробуйте еще раз через пару минут");
+            logError(DeskPresenter.getInstance().getTAG() + " : " + e.getMessage());
+            return;
+        } else if (((HttpException) e).code() == 400) {
+            showError("Неверный запрос или запрещенные символы");
+            logError(DeskPresenter.getInstance().getTAG() + " : " + e.getMessage());
+        } else if (((HttpException) e).code() == 401) {
+            showError("Неавторизованный запрос, попробуйте перезайти");
+            logError(DeskPresenter.getInstance().getTAG() + " : " + e.getMessage());
+        } else if (((HttpException) e).code() == 403) {
+            showError("Пользователь заблокирован/Нет доступа");
+            logError(DeskPresenter.getInstance().getTAG() + " : " + e.getMessage());
+        } else if (((HttpException) e).code() == 404) {
+            showError("Запрос на задачи по неверной ссылке");
+            logError(DeskPresenter.getInstance().getTAG() + " : " + e.getMessage());
+        } else if (((HttpException) e).code() == 408) {
+            showError("Сервер перегружен, попробуйте войти через 5 минут");
+            logError(DeskPresenter.getInstance().getTAG() + " : " + e.getMessage());
+        } else if (((HttpException) e).code() == 429) {
+            showError("Слишком много запросов. Попробуйте еще раз через 5 минут");
+            logError(DeskPresenter.getInstance().getTAG() + " : " + e.getMessage());
+        } else if (((HttpException) e).code() == 500) {
+            showError("Ошибка сервера 500. Попробуйте еще раз через 5 минут");
+            logError(DeskPresenter.getInstance().getTAG() + " : " + e.getMessage());
+        } else if (((HttpException) e).code() == 502) {
+            showError("Ошибочный ответ от базы. Попробуйте еще раз через 5 минут");
+            logError(DeskPresenter.getInstance().getTAG() + " : " + e.getMessage());
+        } else if (((HttpException) e).code() == 504) {
+            showError("База перегружена. Попробуйте еще раз через 5 минут");
+            logError(DeskPresenter.getInstance().getTAG() + " : " + e.getMessage());
+        } else
+            showError("Передать админам: " + e.getMessage());
+        logError(DeskPresenter.getInstance().getTAG() + " : " + e.getMessage());
 
-    }
+
+
+}
 
 
 

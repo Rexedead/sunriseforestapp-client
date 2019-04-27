@@ -10,7 +10,7 @@ import pro.sunriseforest.sunriseforestapp_client.options.SharedPreferenceHelper;
 import pro.sunriseforest.sunriseforestapp_client.ui.NavigationManager;
 import pro.sunriseforest.sunriseforestapp_client.ui.fragments.ProfileFragment;
 
-public class ProfilePresenter extends BasePresenter<ProfileFragment> implements TextWatcher {
+public class ProfilePresenter extends BasePresenter<ProfileFragment> {
 
     private static final String TAG = "ProfilePresenter";
     private User mUser;
@@ -38,7 +38,7 @@ public class ProfilePresenter extends BasePresenter<ProfileFragment> implements 
 
         boolean yes = canChangeProfile();
         mView.setEnabledEditTexts(yes);
-        mView.saveIsVisible(false);
+        mView.saveButtonIsVisible(false);
 
 
     }
@@ -48,7 +48,7 @@ public class ProfilePresenter extends BasePresenter<ProfileFragment> implements 
         //...
         mView.showToast("*клик по сохранялке*");
         saveProfile();
-        mView.saveIsVisible(false);
+        mView.saveButtonIsVisible(false);
 
 
     }
@@ -70,24 +70,6 @@ public class ProfilePresenter extends BasePresenter<ProfileFragment> implements 
     @Override
     public String getTAG() {
         return TAG;
-    }
-
-
-    @Override
-    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-    }
-
-    @Override
-    public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-    }
-
-    @Override
-    public void afterTextChanged(Editable editable) {
-        String changedText = editable.toString();
-            log("afterTextChanged: "+changedText);
-            mView.saveIsVisible(true);
     }
 }
 
