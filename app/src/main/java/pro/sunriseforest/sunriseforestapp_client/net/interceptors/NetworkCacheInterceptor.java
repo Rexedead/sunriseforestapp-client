@@ -9,10 +9,7 @@ import java.io.IOException;
 import okhttp3.Interceptor;
 import okhttp3.Request;
 import okhttp3.Response;
-import okhttp3.logging.HttpLoggingInterceptor;
 import pro.sunriseforest.sunriseforestapp_client.net.Utils;
-
-//TODO трешачок походу
 
 public class NetworkCacheInterceptor implements Interceptor {
 
@@ -37,14 +34,5 @@ public class NetworkCacheInterceptor implements Interceptor {
                 .removeHeader("Cache-Control")
                 .header("Cache-Control", cacheMethod)
                 .build();
-    }
-
-    public static HttpLoggingInterceptor loggingInterceptor(final String tag) {
-        return new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
-            @Override
-            public void log(@NonNull String message) {
-                Log.d(tag, message);
-            }
-        }).setLevel(HttpLoggingInterceptor.Level.HEADERS);
     }
 }

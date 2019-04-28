@@ -61,20 +61,12 @@ public class Task {
         return mReward;
     }
 
-    public void setReward(int reward) {
-        mReward = reward;
-    }
-
     public String getCreationDate() {
         return mCreationDate;
     }
 
     public String getTaskDescription() {
         return mTaskDescription;
-    }
-
-    public void setTaskDescription(String taskDescription) {
-        mTaskDescription = taskDescription;
     }
 
     public byte getStatus() {
@@ -85,16 +77,8 @@ public class Task {
         return mContractorName;
     }
 
-    public void setContractorName(String mContractorName) {
-        this.mContractorName = mContractorName;
-    }
-
-    public String getmContractorPhone() {
+    public String getContractorPhone() {
         return mContractorPhone;
-    }
-
-    public void setmContractorPhone(String mContractorPhone) {
-        this.mContractorPhone = mContractorPhone;
     }
 
     public Client getClient() {
@@ -113,8 +97,28 @@ public class Task {
         return mTaskID;
     }
 
-    public void setTaskID(String mTaskID) {
-        this.mTaskID = mTaskID;
+    public void setTaskDescription(String taskDescription) {
+        mTaskDescription = taskDescription;
     }
 
+    public void setDeadlineDate(String mDeadlineDate) {
+        this.mDeadlineDate = mDeadlineDate;
+    }
+
+    public void setReward(int reward) {
+        mReward = reward;
+    }
+
+    public void setStartDate(String mStartDate) {
+        this.mStartDate = mStartDate;
+    }
+
+    public void setContractorPhone(String mContractorPhone) {
+        this.mContractorPhone = mContractorPhone;
+    }
+
+
+    public void setContractorName(String mContractorName) {
+        this.mContractorName = mContractorName;
+    }
 }

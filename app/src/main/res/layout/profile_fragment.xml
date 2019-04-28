@@ -59,7 +59,7 @@
 
         <EditText
             android:id="@+id/user_name_profileFrag_editText"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="30dp"
             android:layout_below="@+id/profile_id_textView"
             android:layout_marginStart="10dp"
@@ -67,6 +67,7 @@
             android:gravity="start|center"
             android:background="@color/field_background"
             android:maxLines="1"
+            android:inputType="text"
             android:imeOptions="actionNext"
             android:textSize="16sp" />
 
@@ -77,6 +78,7 @@
             android:layout_height="30dp"
             android:layout_below="@+id/profile_name_textView"
             android:layout_alignParentStart="true"
+            android:layout_marginTop="5dp"
             android:gravity="start|center"
             android:text="@string/phone"
             android:textSize="16sp"
@@ -84,14 +86,16 @@
 
         <EditText
             android:id="@+id/phone_profileFrag_editText"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="30dp"
             android:layout_below="@+id/profile_name_textView"
             android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
             android:layout_toEndOf="@+id/profile_phone_textView"
             android:gravity="start|center"
             android:background="@color/field_background"
             android:maxLines="1"
+            android:inputType="phone"
             android:imeOptions="actionNext"
             android:textSize="16sp" />
 
@@ -101,14 +105,14 @@
             android:layout_height="30dp"
             android:layout_below="@+id/profile_phone_textView"
             android:layout_alignParentStart="true"
+            android:layout_marginTop="5dp"
             android:gravity="start|center"
             android:text="@string/mail"
-            android:textSize="16sp"
-            />
+            android:textSize="16sp" />
 
         <EditText
             android:id="@+id/mail_profileFrag_editText"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="30dp"
             android:layout_alignBottom="@+id/profile_mail_textView"
             android:layout_marginStart="10dp"
@@ -117,6 +121,7 @@
             android:background="@color/field_background"
             android:singleLine="true"
             android:imeOptions="actionDone"
+            android:layout_marginTop="5dp"
             android:textSize="16sp" />
 
         <TextView

@@ -8,6 +8,7 @@ import pro.sunriseforest.sunriseforestapp_client.SunriseForestApp;
 import pro.sunriseforest.sunriseforestapp_client.models.Task;
 import pro.sunriseforest.sunriseforestapp_client.net.ApiFactory;
 import pro.sunriseforest.sunriseforestapp_client.net.AsyncNetTransformer;
+import pro.sunriseforest.sunriseforestapp_client.net.ErrorMassageManager;
 import pro.sunriseforest.sunriseforestapp_client.options.SharedPreferenceHelper;
 import pro.sunriseforest.sunriseforestapp_client.ui.NavigationManager;
 import pro.sunriseforest.sunriseforestapp_client.ui.fragments.DeskFragment;
@@ -116,46 +117,14 @@ public class DeskPresenter extends BasePresenter<DeskFragment> {
     private void handleNetworkError(Throwable e) {
         if (e instanceof ConnectException) {
             showError("Отсутствует подключение к интернету");
-            logError(DeskPresenter.getInstance().getTAG() + " : " + e.getMessage());
-            return;
         } else if (e instanceof SocketTimeoutException) {
             showError("На сервере проблема, попробуйте еще раз через пару минут");
-            logError(DeskPresenter.getInstance().getTAG() + " : " + e.getMessage());
-            return;
-        } else if (((HttpException) e).code() == 400) {
-            showError("Неверный запрос или запрещенные символы");
-            logError(DeskPresenter.getInstance().getTAG() + " : " + e.getMessage());
-        } else if (((HttpException) e).code() == 401) {
-            showError("Неавторизованный запрос, попробуйте перезайти");
-            logError(DeskPresenter.getInstance().getTAG() + " : " + e.getMessage());
-        } else if (((HttpException) e).code() == 403) {
-            showError("Пользователь заблокирован/Нет доступа");
-            logError(DeskPresenter.getInstance().getTAG() + " : " + e.getMessage());
-        } else if (((HttpException) e).code() == 404) {
-            showError("Запрос на задачи по неверной ссылке");
-            logError(DeskPresenter.getInstance().getTAG() + " : " + e.getMessage());
-        } else if (((HttpException) e).code() == 408) {
-            showError("Сервер перегружен, попробуйте войти через 5 минут");
-            logError(DeskPresenter.getInstance().getTAG() + " : " + e.getMessage());
-        } else if (((HttpException) e).code() == 429) {
-            showError("Слишком много запросов. Попробуйте еще раз через 5 минут");
-            logError(DeskPresenter.getInstance().getTAG() + " : " + e.getMessage());
-        } else if (((HttpException) e).code() == 500) {
-            showError("Ошибка сервера 500. Попробуйте еще раз через 5 минут");
-            logError(DeskPresenter.getInstance().getTAG() + " : " + e.getMessage());
-        } else if (((HttpException) e).code() == 502) {
-            showError("Ошибочный ответ от базы. Попробуйте еще раз через 5 минут");
-            logError(DeskPresenter.getInstance().getTAG() + " : " + e.getMessage());
-        } else if (((HttpException) e).code() == 504) {
-            showError("База перегружена. Попробуйте еще раз через 5 минут");
-            logError(DeskPresenter.getInstance().getTAG() + " : " + e.getMessage());
-        } else
-            showError("Передать админам: " + e.getMessage());
-        logError(DeskPresenter.getInstance().getTAG() + " : " + e.getMessage());
+        } else if (e instanceof HttpException) {
+            showError(ErrorMassageManager.WhatIsMyError(((HttpException) e).code(),TAG));
+        }
+        logError(e.getMessage());
+    }
 
-
-
-}
 
     public void addTask(Task task){
         log("addTask( task = %s)", task);

@@ -36,6 +36,7 @@ public class ProfileFragment extends NavigatedFragment  implements TextWatcher {
 
 
     private View.OnClickListener mExitProfileListener = view -> mPresenter.clickedExitProfile();
+    private View.OnClickListener mSaveProfileListener = view -> mPresenter.clickedSaveButton();
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -76,14 +77,16 @@ public class ProfileFragment extends NavigatedFragment  implements TextWatcher {
         mUserMailEditText.setText(mProfileData.getEmail());
         mUserPhoneEditText.setText(mProfileData.getPhoneNumber());
         mUserRoleTextView.setText(mProfileData.getRole());
-//                mUserTasksTakenStatsTextView.setText(mPreferenceHelper.getUser().getTasksCount());
-        //        mUserRewardInfoTextView.setText(mPreferenceHelper.getUser().getRewardSum());
-        //        mExitProfileButton.setOnClickListener(mOnClickRemoveTokenData);
+    }
+
+    public void setStats(User user){
+        mUserTasksTakenStatsTextView.setText(String.valueOf(mProfileData.getTasksCount()));
+        mUserRewardInfoTextView.setText(String.valueOf(mProfileData.getRewardSum()));
     }
 
     public void addListenersForEditText(){
         mExitProfileButton.setOnClickListener(mExitProfileListener);
-        mSaveProfileButton.setOnClickListener(v -> mPresenter.clickedSaveButton());
+        mSaveProfileButton.setOnClickListener(mSaveProfileListener);
         mUserNameEditText.addTextChangedListener(this);
         mUserMailEditText.addTextChangedListener(this);
         mUserPhoneEditText.addTextChangedListener(this);
@@ -115,20 +118,21 @@ public class ProfileFragment extends NavigatedFragment  implements TextWatcher {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {//TODO что делает этот метод?
-        super.onCreate(savedInstanceState);
-
-    }
-
-    @Override
     public int getItemOnNavigationMenu() {
         return ITEM_ON_NAV;
     }
 
+    public String getUserNameEditText() {
+        return mUserNameEditText.getText().toString();
+    }
 
+    public String getUserMailEditText() {
+        return mUserMailEditText.getText().toString();
+    }
 
-
-//    private View.OnClickListener mOnClickRemoveTokenData = view -> AppPresenter.getInstance().exitProfile();
+    public String getUserPhoneEditText() {
+        return mUserPhoneEditText.getText().toString();
+    }
 
     @Override
     public void beforeTextChanged(CharSequence s, int start, int count, int after) {

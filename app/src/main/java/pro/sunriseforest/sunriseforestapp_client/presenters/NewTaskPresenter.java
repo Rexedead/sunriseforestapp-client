@@ -2,6 +2,8 @@ package pro.sunriseforest.sunriseforestapp_client.presenters;
 
 
 
+import java.net.ConnectException;
+import java.net.SocketTimeoutException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
@@ -10,10 +12,12 @@ import pro.sunriseforest.sunriseforestapp_client.SunriseForestApp;
 import pro.sunriseforest.sunriseforestapp_client.models.Task;
 import pro.sunriseforest.sunriseforestapp_client.net.ApiFactory;
 import pro.sunriseforest.sunriseforestapp_client.net.AsyncNetTransformer;
+import pro.sunriseforest.sunriseforestapp_client.net.ErrorMassageManager;
 import pro.sunriseforest.sunriseforestapp_client.options.SharedPreferenceHelper;
 import pro.sunriseforest.sunriseforestapp_client.ui.AppActivity;
 import pro.sunriseforest.sunriseforestapp_client.ui.NavigationManager;
 import pro.sunriseforest.sunriseforestapp_client.ui.fragments.NewTaskFragment;
+import retrofit2.HttpException;
 
 
 public class NewTaskPresenter extends BasePresenter<NewTaskFragment> {
@@ -99,7 +103,7 @@ public class NewTaskPresenter extends BasePresenter<NewTaskFragment> {
     }
 
     private String getDate(long mils){
-        String myFormat = "dd/MM/yyyy";
+        String myFormat = "dd.MM.yyyy";
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
         return sdf.format(mils);
     }
@@ -123,7 +127,6 @@ public class NewTaskPresenter extends BasePresenter<NewTaskFragment> {
     }
 
     private int checkTask(Task task){
-        int code = TASK_IS_OK;
 
         if(nullOrEmpty(task.getTaskDescription()))
             return DESCRIPTION_TASK_IS_EMPTY;
@@ -132,7 +135,7 @@ public class NewTaskPresenter extends BasePresenter<NewTaskFragment> {
         else if(nullOrEmpty(task.getDeadlineDate()))
             return END_DATE_TASK_IS_NOT_SELECTED;
 
-        return code;
+        return TASK_IS_OK;
     }
     private void showInputError(int code){
         //...
@@ -142,7 +145,7 @@ public class NewTaskPresenter extends BasePresenter<NewTaskFragment> {
     private void taskIsAdded(){
         log("taskIsAdded");
 
-        // TODO чет неоч
+        // TODO чет неоч - just use getView().showError
         ((AppActivity)getView().getActivity()).showInfoMessage("Новый таск добавлен");
 
         mNavigationManager.back();
@@ -162,14 +165,13 @@ public class NewTaskPresenter extends BasePresenter<NewTaskFragment> {
     }
 
     private void handleNetworkError(Throwable e){
-        //TODO этот метод дергается в observer.onError(Throwable e) в случае если произошла
-        // какая-то ошибка и не получилось загрузить с сети User. ошибка может быть доступа к сети и
-        // мы не можем отправить запрос (в таком случае пользователя нужно оповестить, что
-        // нужно проверить подключение сети), а может ошибка сети и мы взависимости от кода ошибки
-        // сообщим пользователю в чем проблема.
-        // Задача: в зависимости от типа ошибки (исключения) оповести пользователя правильным сообщением об ошибки.
-        // ошибки логировать в logerror()
-        showError("хз чо случилось и чо делать, можешь удалить приложение если что-то не нравится");
+        if (e instanceof ConnectException) {
+            mView.showToast("Отсутствует подключение к интернету");
+        } else if (e instanceof SocketTimeoutException) {
+            mView.showToast("На сервере проблема, попробуйте еще раз через пару минут");
+        } else if (e instanceof HttpException) {
+            mView.showToast(ErrorMassageManager.WhatIsMyError(((HttpException) e).code(),TAG));
+        }
 
     }
 

@@ -1,13 +1,14 @@
 <resources>
     <string name="app_name">sunriseforestapp-client</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_home">Задачи</string>
+    <string name="title_profile">Профиль</string>
+    <string name="title_notifications">Уведомления</string>
     <string name="enter_login_hint">Введите почту</string>
     <string name="enter_password_hint">Введите пароль</string>
     <string name="log_in">Войти</string>
     <string name="registration_logAct_button">Регистрация</string>
     <string name="title_activity_profile">ProfileActivity</string>
+    <string name="name">Имя</string>
     <string name="enter_name_hint">Введите имя</string>
     <string name="enter_phone_hint">Введите номер телефона</string>
     <string name="addTask">Добавить задачу</string>

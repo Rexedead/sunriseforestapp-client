@@ -154,8 +154,8 @@ public class NewTaskFragment extends BaseFragment {
 
                 (byte) 101,
 
-                mTaskRewardEditText.getText() == null ?
-                        null : Integer.parseInt(mTaskRewardEditText.getText().toString()),
+                mTaskRewardEditText.getText().toString().equals("") ?
+                        0 : Integer.parseInt(mTaskRewardEditText.getText().toString()),
 
                 null,
                 null

@@ -3,6 +3,7 @@ package pro.sunriseforest.sunriseforestapp_client.net;
 
 
 import java.util.List;
+import java.util.function.DoubleUnaryOperator;
 
 import pro.sunriseforest.sunriseforestapp_client.models.Client;
 import pro.sunriseforest.sunriseforestapp_client.models.Task;

@@ -6,7 +6,7 @@ import pro.sunriseforest.sunriseforestapp_client.ui.NavigationManager;
 import pro.sunriseforest.sunriseforestapp_client.ui.fragments.NotificationsFragment;
 
 public class NotificationsPresenter extends BasePresenter<NotificationsFragment> {
-    private static final String TAG = "BasePresenter";
+    private static final String TAG = "NotificationPresenter";
 
 
     private static final NotificationsPresenter ourInstance = new NotificationsPresenter();

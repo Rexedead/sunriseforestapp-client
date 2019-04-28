@@ -37,6 +37,8 @@ public class TaskFragment extends BaseFragment implements TextWatcher {
     private TextView mContractorPhoneTextView;
     private Button mBookButton;
 
+    private View.OnClickListener mSaveTaskListener = view -> mPresenter.clickedSaveButton();
+    private View.OnClickListener mBookListener = view -> mPresenter.clickedBookButton();
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -61,7 +63,22 @@ public class TaskFragment extends BaseFragment implements TextWatcher {
         return view;
 
     }
+    //лучше возвращать поля, чем целый таск, тк необходимо таск зассетить
+    public String getDescriptionEditText() {
+        return mDescriptionEditText.getText().toString();
+    }
 
+    public String getTaskStartDateEditText() {
+        return mTaskStartDateEditText.getText().toString();
+    }
+
+    public String getTaskEndDateEditText() {
+        return mTaskEndDateEditText.getText().toString();
+    }
+
+    public String getRewardEditText() {
+        return mRewardEditText.getText().toString();
+    }
 
     public void setEnabledEditTexts(boolean isYes) {
         log("setEnabled( isYes = %s)", isYes);
@@ -76,7 +93,8 @@ public class TaskFragment extends BaseFragment implements TextWatcher {
     }
 
     public void addListenersForEditText(){
-        mSaveButton.setOnClickListener(v -> mPresenter.clickedSaveButton());
+        mSaveButton.setOnClickListener(mSaveTaskListener);
+        mBookButton.setOnClickListener(mBookListener);
         mDescriptionEditText.addTextChangedListener(this);
         mTaskStartDateEditText.addTextChangedListener(this);
         mTaskEndDateEditText.addTextChangedListener(this);
@@ -97,14 +115,14 @@ public class TaskFragment extends BaseFragment implements TextWatcher {
         mDescriptionEditText.setText(mSingleTask.getTaskDescription());
         mTaskStartDateEditText.setText(mSingleTask.getCreationDate());
         mTaskEndDateEditText.setText(mSingleTask.getDeadlineDate());
-        String reward = mSingleTask.getReward() + " \u20BD";
-        mRewardEditText.setText(reward);
+        mRewardEditText.setText(String.valueOf(mSingleTask.getReward()));
+        mContractorNameTextView.setText(mSingleTask.getContractorName());
+        mContractorPhoneTextView.setText(mSingleTask.getContractorPhone());
 
         if (mSingleTask.getClient() != null) {
             mClientNameEditText.setText(mSingleTask.getClient().getName());
 
         }
-
 
     }
     public void saveButtonIsVisible(boolean isVisible){
