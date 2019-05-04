@@ -1,17 +1,12 @@
 package pro.sunriseforest.sunriseforestapp_client.presenters;
 
-import java.net.ConnectException;
-import java.net.SocketTimeoutException;
-
 import pro.sunriseforest.sunriseforestapp_client.SunriseForestApp;
 import pro.sunriseforest.sunriseforestapp_client.models.Task;
 import pro.sunriseforest.sunriseforestapp_client.net.ApiFactory;
 import pro.sunriseforest.sunriseforestapp_client.net.AsyncNetTransformer;
-import pro.sunriseforest.sunriseforestapp_client.net.ErrorMassageManager;
 import pro.sunriseforest.sunriseforestapp_client.options.SharedPreferenceHelper;
 import pro.sunriseforest.sunriseforestapp_client.ui.NavigationManager;
 import pro.sunriseforest.sunriseforestapp_client.ui.fragments.TaskFragment;
-import retrofit2.HttpException;
 
 public class TaskPresenter extends BasePresenter<TaskFragment> {
 
@@ -38,14 +33,16 @@ public class TaskPresenter extends BasePresenter<TaskFragment> {
         mTask = task;
     }
 
-    public void clickedSaveButton(){
+    public void clickedSaveButton(Task task){
         log("clickedSaveButton()");
         //...
         mView.showToast("*клик по сохранялке*");
-        mTask.setTaskDescription(mView.getDescriptionEditText());
-        mTask.setStartDate(mView.getTaskStartDateEditText());
-        mTask.setDeadlineDate(mView.getTaskEndDateEditText());
-        mTask.setReward(Integer.parseInt(mView.getRewardEditText()));
+        //если не передавать таску из фрагмента, получаем таск.ид = нулл, после второго сохранения
+        mTask = task;
+        mTask.setTaskDescription(mView.getDescription());
+        mTask.setStartDate(mView.getTaskStartDate());
+        mTask.setDeadlineDate(mView.getTaskEndDate());
+        mTask.setReward(Integer.parseInt(mView.getReward()));
         saveTask(mTask);
         mView.saveButtonIsVisible(false);
         taskChanged = false;
@@ -71,11 +68,8 @@ public class TaskPresenter extends BasePresenter<TaskFragment> {
             ApiFactory
                     .getSunriseForestService()
                     .updDescription(
-                            task.getTaskID(),
-                            task.getTaskDescription(),
-                            task.getStartDate(),
-                            task.getDeadlineDate(),
-                            task.getReward()
+                           task.getTaskID(),
+                            task
                             )
                     .compose(new AsyncNetTransformer<>())
                     .subscribe(this::setTask,this::handleNetworkError);
@@ -104,7 +98,6 @@ public class TaskPresenter extends BasePresenter<TaskFragment> {
 
         boolean yes = canChangeTask();
         mView.setEnabledEditTexts(yes);
-        mView.addListenersForEditText();
         mView.saveButtonIsVisible(false);
 
     }
@@ -112,17 +105,6 @@ public class TaskPresenter extends BasePresenter<TaskFragment> {
     @Override
     protected String getTAG() {
         return TAG;
-    }
-
-    private void handleNetworkError(Throwable e) {
-        if (e instanceof ConnectException) {
-            mView.showToast("Отсутствует подключение к интернету");
-        } else if (e instanceof SocketTimeoutException) {
-            mView.showToast("На сервере проблема, попробуйте еще раз через пару минут");
-        } else if (e instanceof HttpException) {
-            mView.showToast(ErrorMassageManager.WhatIsMyError(((HttpException) e).code(),TAG));
-        }
-        logError(e.getMessage());
     }
 
 

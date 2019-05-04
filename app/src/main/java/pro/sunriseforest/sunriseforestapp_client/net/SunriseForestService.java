@@ -3,12 +3,10 @@ package pro.sunriseforest.sunriseforestapp_client.net;
 
 
 import java.util.List;
-import java.util.function.DoubleUnaryOperator;
 
 import pro.sunriseforest.sunriseforestapp_client.models.Client;
 import pro.sunriseforest.sunriseforestapp_client.models.Task;
 import pro.sunriseforest.sunriseforestapp_client.models.User;
-import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
@@ -44,18 +42,11 @@ public interface SunriseForestService {
     Observable<Task> taskReservation(@Path("id") String id, @Body User user);
 
     @PATCH("data/task/{id}/upd_task_description")
-    Observable<Task> updDescription(@Path("id") String id,
-                        @Query("sr_task_description")String description,
-                        @Query("sr_task_start_date")String start,
-                        @Query("sr_task_end_date")String end_date,
-                        @Query("sr_task_reward")int reward);
+    Observable<Task> updDescription(@Path("id") String id,  @Body Task task);
 
 
     @PATCH("data/user/{id}/upd_user_profile")
     Observable<User> updProfile(@Path("id") String id,
                           @Body User user);
-
-    @GET("data/user/{id}/get_user_tasks_info")
-    Observable<User> getProfileInfo(@Path("id") String id);
 
 }

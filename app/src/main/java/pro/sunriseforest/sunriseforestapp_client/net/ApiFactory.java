@@ -1,6 +1,7 @@
 package pro.sunriseforest.sunriseforestapp_client.net;
 
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -69,7 +70,8 @@ public class ApiFactory {
         String TAG = "%%%/APIService";
         return new OkHttpClient.Builder()
                 .addInterceptor(new OfflineCacheInterceptor())
-                .addInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.HEADERS))
+                .addInterceptor(new HttpLoggingInterceptor(message -> Log.d(TAG, message))
+                        .setLevel(HttpLoggingInterceptor.Level.HEADERS))
                 .addNetworkInterceptor(new NetworkCacheInterceptor())
                 .cache(OfflineCacheInterceptor.cacheTasks())
                 .build();

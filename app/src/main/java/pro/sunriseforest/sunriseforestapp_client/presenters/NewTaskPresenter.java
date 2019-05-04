@@ -2,8 +2,6 @@ package pro.sunriseforest.sunriseforestapp_client.presenters;
 
 
 
-import java.net.ConnectException;
-import java.net.SocketTimeoutException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
@@ -12,12 +10,9 @@ import pro.sunriseforest.sunriseforestapp_client.SunriseForestApp;
 import pro.sunriseforest.sunriseforestapp_client.models.Task;
 import pro.sunriseforest.sunriseforestapp_client.net.ApiFactory;
 import pro.sunriseforest.sunriseforestapp_client.net.AsyncNetTransformer;
-import pro.sunriseforest.sunriseforestapp_client.net.ErrorMassageManager;
 import pro.sunriseforest.sunriseforestapp_client.options.SharedPreferenceHelper;
-import pro.sunriseforest.sunriseforestapp_client.ui.AppActivity;
 import pro.sunriseforest.sunriseforestapp_client.ui.NavigationManager;
 import pro.sunriseforest.sunriseforestapp_client.ui.fragments.NewTaskFragment;
-import retrofit2.HttpException;
 
 
 public class NewTaskPresenter extends BasePresenter<NewTaskFragment> {
@@ -145,8 +140,7 @@ public class NewTaskPresenter extends BasePresenter<NewTaskFragment> {
     private void taskIsAdded(){
         log("taskIsAdded");
 
-        // TODO чет неоч - just use getView().showError
-        ((AppActivity)getView().getActivity()).showInfoMessage("Новый таск добавлен");
+        getView().showToast("Новый таск добавлен");
 
         mNavigationManager.back();
     }
@@ -164,16 +158,6 @@ public class NewTaskPresenter extends BasePresenter<NewTaskFragment> {
 
     }
 
-    private void handleNetworkError(Throwable e){
-        if (e instanceof ConnectException) {
-            mView.showToast("Отсутствует подключение к интернету");
-        } else if (e instanceof SocketTimeoutException) {
-            mView.showToast("На сервере проблема, попробуйте еще раз через пару минут");
-        } else if (e instanceof HttpException) {
-            mView.showToast(ErrorMassageManager.WhatIsMyError(((HttpException) e).code(),TAG));
-        }
-
-    }
 
     private boolean nullOrEmpty(String str){
         return str == null || str.length() == 0;

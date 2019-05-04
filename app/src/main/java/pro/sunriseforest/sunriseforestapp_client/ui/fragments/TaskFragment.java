@@ -37,7 +37,7 @@ public class TaskFragment extends BaseFragment implements TextWatcher {
     private TextView mContractorPhoneTextView;
     private Button mBookButton;
 
-    private View.OnClickListener mSaveTaskListener = view -> mPresenter.clickedSaveButton();
+    private View.OnClickListener mSaveTaskListener = view -> mPresenter.clickedSaveButton(mSingleTask);
     private View.OnClickListener mBookListener = view -> mPresenter.clickedBookButton();
 
     @Override
@@ -58,25 +58,26 @@ public class TaskFragment extends BaseFragment implements TextWatcher {
         mContractorPhoneTextView = view.findViewById(R.id.contractor_phone_taskFrag_textView);
         mBookButton = view.findViewById(R.id.book_taskFrag_button);
 
+        addListenersForEditText();
         hideBottomNavigation();
 
         return view;
 
     }
-    //лучше возвращать поля, чем целый таск, тк необходимо таск зассетить
-    public String getDescriptionEditText() {
+
+    public String getDescription() {
         return mDescriptionEditText.getText().toString();
     }
 
-    public String getTaskStartDateEditText() {
+    public String getTaskStartDate() {
         return mTaskStartDateEditText.getText().toString();
     }
 
-    public String getTaskEndDateEditText() {
+    public String getTaskEndDate() {
         return mTaskEndDateEditText.getText().toString();
     }
 
-    public String getRewardEditText() {
+    public String getReward() {
         return mRewardEditText.getText().toString();
     }
 
@@ -92,7 +93,7 @@ public class TaskFragment extends BaseFragment implements TextWatcher {
         mClientPhoneEditText.setEnabled(isYes);
     }
 
-    public void addListenersForEditText(){
+    private void addListenersForEditText(){
         mSaveButton.setOnClickListener(mSaveTaskListener);
         mBookButton.setOnClickListener(mBookListener);
         mDescriptionEditText.addTextChangedListener(this);

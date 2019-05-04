@@ -59,6 +59,7 @@ public class ProfileFragment extends NavigatedFragment  implements TextWatcher {
         mExitProfileButton = view.findViewById(R.id.remove_token_profileFrag_button);
         mSaveProfileButton = view.findViewById(R.id.change_info_profileFrag_button);
 
+        addListenersForEditText();
         showBottomNavigation();
 
         return view;
@@ -77,14 +78,12 @@ public class ProfileFragment extends NavigatedFragment  implements TextWatcher {
         mUserMailEditText.setText(mProfileData.getEmail());
         mUserPhoneEditText.setText(mProfileData.getPhoneNumber());
         mUserRoleTextView.setText(mProfileData.getRole());
-    }
-
-    public void setStats(User user){
         mUserTasksTakenStatsTextView.setText(String.valueOf(mProfileData.getTasksCount()));
         mUserRewardInfoTextView.setText(String.valueOf(mProfileData.getRewardSum()));
     }
 
-    public void addListenersForEditText(){
+
+    private void addListenersForEditText(){
         mExitProfileButton.setOnClickListener(mExitProfileListener);
         mSaveProfileButton.setOnClickListener(mSaveProfileListener);
         mUserNameEditText.addTextChangedListener(this);
@@ -122,15 +121,15 @@ public class ProfileFragment extends NavigatedFragment  implements TextWatcher {
         return ITEM_ON_NAV;
     }
 
-    public String getUserNameEditText() {
+    public String getUserName() {
         return mUserNameEditText.getText().toString();
     }
 
-    public String getUserMailEditText() {
+    public String getUserMail() {
         return mUserMailEditText.getText().toString();
     }
 
-    public String getUserPhoneEditText() {
+    public String getUserPhone() {
         return mUserPhoneEditText.getText().toString();
     }
 

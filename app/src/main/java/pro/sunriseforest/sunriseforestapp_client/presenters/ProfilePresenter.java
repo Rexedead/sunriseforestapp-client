@@ -1,18 +1,13 @@
 package pro.sunriseforest.sunriseforestapp_client.presenters;
 
 
-import java.net.ConnectException;
-import java.net.SocketTimeoutException;
-
 import pro.sunriseforest.sunriseforestapp_client.SunriseForestApp;
 import pro.sunriseforest.sunriseforestapp_client.models.User;
 import pro.sunriseforest.sunriseforestapp_client.net.ApiFactory;
 import pro.sunriseforest.sunriseforestapp_client.net.AsyncNetTransformer;
-import pro.sunriseforest.sunriseforestapp_client.net.ErrorMassageManager;
 import pro.sunriseforest.sunriseforestapp_client.options.SharedPreferenceHelper;
 import pro.sunriseforest.sunriseforestapp_client.ui.NavigationManager;
 import pro.sunriseforest.sunriseforestapp_client.ui.fragments.ProfileFragment;
-import retrofit2.HttpException;
 
 public class ProfilePresenter extends BasePresenter<ProfileFragment> {
 
@@ -43,27 +38,8 @@ public class ProfilePresenter extends BasePresenter<ProfileFragment> {
 
         boolean yes = canChangeProfile();
         mView.setEnabledEditTexts(yes);
-        mView.addListenersForEditText();
         mView.saveIsVisible(false);
-        getUserStatistics();
 
-    }
-
-    private void getUserStatistics() {
-        log("getUserStatistics()");
-
-        ApiFactory
-                .getSunriseForestService()
-                .getProfileInfo(mUser.getId())
-                .compose(new AsyncNetTransformer<>())
-                .subscribe(this::setProfileStatistic,this::handleNetworkError);
-    }
-
-    private void setProfileStatistic(User user) {
-        log("setProfileStatistic()");
-        mUser.setTasksCount(user.getTasksCount());
-        mUser.setRewardSum(user.getRewardSum());
-        mView.setStats(mUser);
     }
 
 
@@ -76,9 +52,9 @@ public class ProfilePresenter extends BasePresenter<ProfileFragment> {
         log("clickedSaveButton()");
         //...
         mView.showToast("*клик по сохранялке*");
-        mUser.setName(mView.getUserNameEditText());
-        mUser.setEmail(mView.getUserMailEditText());
-        mUser.setPhoneNumber(mView.getUserPhoneEditText());
+        mUser.setName(mView.getUserName());
+        mUser.setEmail(mView.getUserMail());
+        mUser.setPhoneNumber(mView.getUserPhone());
         saveProfileToServer(mUser);
         mView.saveIsVisible(false);
 
@@ -121,15 +97,5 @@ public class ProfilePresenter extends BasePresenter<ProfileFragment> {
     }
 
 
-    private void handleNetworkError(Throwable e) {
-        if (e instanceof ConnectException) {
-            mView.showToast("Отсутствует подключение к интернету");
-        } else if (e instanceof SocketTimeoutException) {
-            mView.showToast("На сервере проблема, попробуйте еще раз через пару минут");
-        } else if (e instanceof HttpException) {
-            mView.showToast(ErrorMassageManager.WhatIsMyError(((HttpException) e).code(),TAG));
-        }
-        logError(e.getMessage());
-    }
 }
 

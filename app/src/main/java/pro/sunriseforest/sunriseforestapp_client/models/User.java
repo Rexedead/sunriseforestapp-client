@@ -36,10 +36,10 @@ public class User {
     @Json(name = "sr_user_info")
     private Object mInfo;
 
-    @Json(name = "sr_reward_sum")
+    @Json(name = "sr_user_reward")
     private int mRewardSum;
 
-    @Json(name = "sr_tasks_taken")
+    @Json(name = "sr_user_tasks_taken")
     private int mTasksCount;
 
     public User(String email, String password) {

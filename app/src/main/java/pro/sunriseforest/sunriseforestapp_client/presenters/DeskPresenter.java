@@ -1,18 +1,14 @@
 package pro.sunriseforest.sunriseforestapp_client.presenters;
 
-import java.net.ConnectException;
-import java.net.SocketTimeoutException;
 import java.util.List;
 
 import pro.sunriseforest.sunriseforestapp_client.SunriseForestApp;
 import pro.sunriseforest.sunriseforestapp_client.models.Task;
 import pro.sunriseforest.sunriseforestapp_client.net.ApiFactory;
 import pro.sunriseforest.sunriseforestapp_client.net.AsyncNetTransformer;
-import pro.sunriseforest.sunriseforestapp_client.net.ErrorMassageManager;
 import pro.sunriseforest.sunriseforestapp_client.options.SharedPreferenceHelper;
 import pro.sunriseforest.sunriseforestapp_client.ui.NavigationManager;
 import pro.sunriseforest.sunriseforestapp_client.ui.fragments.DeskFragment;
-import retrofit2.HttpException;
 import rx.Observable;
 
 
@@ -112,17 +108,6 @@ public class DeskPresenter extends BasePresenter<DeskFragment> {
             getView().showError(msg);
         }
 
-    }
-
-    private void handleNetworkError(Throwable e) {
-        if (e instanceof ConnectException) {
-            showError("Отсутствует подключение к интернету");
-        } else if (e instanceof SocketTimeoutException) {
-            showError("На сервере проблема, попробуйте еще раз через пару минут");
-        } else if (e instanceof HttpException) {
-            showError(ErrorMassageManager.WhatIsMyError(((HttpException) e).code(),TAG));
-        }
-        logError(e.getMessage());
     }
 
 
