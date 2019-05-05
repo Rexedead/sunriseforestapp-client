@@ -36,9 +36,13 @@ public class TaskFragment extends BaseFragment implements TextWatcher {
     private TextView mContractorNameTextView;
     private TextView mContractorPhoneTextView;
     private Button mBookButton;
+    private Button mCompleteTask;
+    private Button mCancelTask;
 
     private View.OnClickListener mSaveTaskListener = view -> mPresenter.clickedSaveButton(mSingleTask);
     private View.OnClickListener mBookListener = view -> mPresenter.clickedBookButton();
+    private View.OnClickListener mCompleteListener = view -> mPresenter.clickedCompleteButton();
+    private View.OnClickListener mCancelListener = view -> mPresenter.clickedCancelButton();
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -57,6 +61,8 @@ public class TaskFragment extends BaseFragment implements TextWatcher {
         mContractorNameTextView = view.findViewById(R.id.contractor_name_taskFrag_textView);
         mContractorPhoneTextView = view.findViewById(R.id.contractor_phone_taskFrag_textView);
         mBookButton = view.findViewById(R.id.book_taskFrag_button);
+        mCompleteTask = view.findViewById(R.id.complete_taskFrag_button);
+        mCancelTask = view.findViewById(R.id.cancel_taskFrag_button);
 
         addListenersForEditText();
         hideBottomNavigation();
@@ -93,9 +99,12 @@ public class TaskFragment extends BaseFragment implements TextWatcher {
         mClientPhoneEditText.setEnabled(isYes);
     }
 
-    private void addListenersForEditText(){
+    private void addListenersForEditText() {
         mSaveButton.setOnClickListener(mSaveTaskListener);
         mBookButton.setOnClickListener(mBookListener);
+        //добавляем листенеры для отмены и комплита.. наверно этот метод можно переименовать в addListeners()
+        mCompleteTask.setOnClickListener(mCompleteListener);
+        mCancelTask.setOnClickListener(mCancelListener);
         mDescriptionEditText.addTextChangedListener(this);
         mTaskStartDateEditText.addTextChangedListener(this);
         mTaskEndDateEditText.addTextChangedListener(this);
@@ -126,20 +135,31 @@ public class TaskFragment extends BaseFragment implements TextWatcher {
         }
 
     }
-    public void saveButtonIsVisible(boolean isVisible){
+    public void saveButtonIsVisible(boolean isVisible) {
         mSaveButton.setVisibility(isVisible ? View.VISIBLE : View.GONE);
+    }
+
+    //скрываем забронировать
+    //не вижу смысла делать замену кнопки с брони на "завершить", это только запутает
+    public void bookButtonIsVisible(boolean isVisible) {
+        mBookButton.setVisibility(isVisible ? View.VISIBLE : View.GONE);
+    }
+
+    //отображаем действия
+    public void taskActionsIsVisible(boolean isVisible) {
+        mCompleteTask.setVisibility(isVisible ? View.VISIBLE : View.GONE);
+        mCancelTask.setVisibility(isVisible ? View.VISIBLE : View.GONE);
     }
 
     @Override
     protected String createTag() {
-        return "SplashFragment";
+        return "TaskFragment";
     }
 
     @Override
     protected BasePresenter getPresenter() {
         return mPresenter;
     }
-
 
 
     @Override

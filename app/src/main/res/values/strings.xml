@@ -34,6 +34,8 @@
     <string name="recycler_creationDate">Создано</string>
     <string name="ruble">₽</string>
     <string name="no_notifications">Уведомлений нет</string>
+    <string name="complete">Завершить задачу</string>
+    <string name="cancel">Отказаться от задачи</string>
 
 
 </resources>

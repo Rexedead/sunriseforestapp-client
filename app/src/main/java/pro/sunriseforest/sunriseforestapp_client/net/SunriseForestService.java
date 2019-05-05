@@ -44,9 +44,13 @@ public interface SunriseForestService {
     @PATCH("data/task/{id}/upd_task_description")
     Observable<Task> updDescription(@Path("id") String id,  @Body Task task);
 
-
     @PATCH("data/user/{id}/upd_user_profile")
-    Observable<User> updProfile(@Path("id") String id,
-                          @Body User user);
+    Observable<User> updProfile(@Path("id") String id, @Body User user);
+
+    @PATCH("data/task/{id}/upd_task_complete")
+    Observable<Task> updComplete(@Path("id") String id,  @Body Task task);
+
+    @PATCH("data/task/{id}/upd_task_cancel")
+    Observable<Task> updCancel(@Path("id") String id,  @Body Task task);
 
 }

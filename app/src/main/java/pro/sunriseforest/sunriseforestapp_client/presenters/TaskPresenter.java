@@ -11,11 +11,11 @@ import pro.sunriseforest.sunriseforestapp_client.ui.fragments.TaskFragment;
 public class TaskPresenter extends BasePresenter<TaskFragment> {
 
 
-
     private static final TaskPresenter ourInstance = new TaskPresenter();
     private static final String TAG = "TaskPresenter";
 
     private SharedPreferenceHelper mSharedPreferenceHelper;
+
     public static TaskPresenter getInstance() {
         return ourInstance;
     }
@@ -29,11 +29,11 @@ public class TaskPresenter extends BasePresenter<TaskFragment> {
         mSharedPreferenceHelper = new SharedPreferenceHelper(SunriseForestApp.getAppContext());
     }
 
-    public void setTask(Task task){
+    public void setTask(Task task) {
         mTask = task;
     }
 
-    public void clickedSaveButton(Task task){
+    public void clickedSaveButton(Task task) {
         log("clickedSaveButton()");
         //...
         mView.showToast("*клик по сохранялке*");
@@ -48,7 +48,6 @@ public class TaskPresenter extends BasePresenter<TaskFragment> {
         taskChanged = false;
     }
 
-
     public void clickedBookButton() {
         log("clickedBookButton()");
         bookTask(mTask.getTaskID());
@@ -56,38 +55,101 @@ public class TaskPresenter extends BasePresenter<TaskFragment> {
     }
 
 
-    private boolean canChangeTask(){
+    private boolean canChangeTask() {
         log("canChangeTask()");
-        //...
-        return true;
+        return getUserRole().equals("manager");
     }
 
-    private void saveTask(Task task){
+    private void saveTask(Task task) {
         log("saveTask()");
         //todo...реализуй пока без обновы на сервере. обнови только на клиенте. коммент по итогу не стирай
-            ApiFactory
-                    .getSunriseForestService()
-                    .updDescription(
-                           task.getTaskID(),
-                            task
-                            )
-                    .compose(new AsyncNetTransformer<>())
-                    .subscribe(this::setTask,this::handleNetworkError);
-        }
+        ApiFactory
+                .getSunriseForestService()
+                .updDescription(
+                        task.getTaskID(),
+                        task
+                )
+                .compose(new AsyncNetTransformer<>())
+                .subscribe(this::setTask, this::handleNetworkError);
+    }
 
 
-
-        private void bookTask(String t_id){
+    private void bookTask(String t_id) {
         log("bookTask()");
-            ApiFactory
-                    .getSunriseForestService()
-                    .taskReservation(
-                            t_id,
-                            mSharedPreferenceHelper.getUser()
-                            )
-                    .compose(new AsyncNetTransformer<>())
-                    .subscribe(this::setTask,this::handleNetworkError);
+        ApiFactory
+                .getSunriseForestService()
+                .taskReservation(
+                        t_id,
+                        mSharedPreferenceHelper.getUser()
+                )
+                .compose(new AsyncNetTransformer<>())
+                .subscribe(this::setTask, this::handleNetworkError);
+    }
+
+    //отображение при нажатии на резерв
+    //после нажатия на бронь, через subscribe on next - отображаем кнопки действия таска
+    //не понял, нужно ли нам .subscribe(this::setTask) в методе bookTask
+    private void showTaskActions() {
+        log("showTaskActions()");
+        mView.bookButtonIsVisible(false);
+        mView.taskActionsIsVisible(true);
+    }
+
+    //отображение при создании фрагмента
+    public void displayTaskActionsForUser() {
+        log("displayTaskActionsForUser()");
+        if (mTask.getStatus() == 102 &&
+                (mTask.getContractorId().equals(mSharedPreferenceHelper.getUser().getId())
+                        || getUserRole().equals("manager"))) {
+            mView.bookButtonIsVisible(false);
+            mView.taskActionsIsVisible(true);
+        } else if (mTask.getStatus() == 101) {
+            mView.bookButtonIsVisible(true);
+            mView.taskActionsIsVisible(false);
+        } else {
+            mView.bookButtonIsVisible(false);
+            mView.taskActionsIsVisible(false);
         }
+    }
+
+    public void clickedCompleteButton() {
+        log("clickedCompleteButton()");
+        ApiFactory
+                .getSunriseForestService()
+                .updComplete(
+                        mTask.getTaskID(),
+                        mTask
+                )
+                .compose(new AsyncNetTransformer<>())
+                .subscribe(this::setTask, this::handleNetworkError);
+
+        //todo скрывать, если от сервака норм ответ
+        mView.taskActionsIsVisible(false);
+        getView().showToast("Задача отмечена завершенной");
+    }
+
+
+    public void clickedCancelButton() {
+        log("clickedCancelButton()");
+
+        ApiFactory
+                .getSunriseForestService()
+                .updCancel(
+                        mTask.getTaskID(),
+                        mTask
+                )
+                .compose(new AsyncNetTransformer<>())
+                .subscribe(this::setTask, this::handleNetworkError);
+
+        //todo скрывать, если от сервака норм ответ
+        mView.taskActionsIsVisible(false);
+        getView().showToast("Задача отменена");
+
+    }
+
+    public String getUserRole(){
+        return mSharedPreferenceHelper.getUser().getRole();
+    }
 
 
     @Override
@@ -100,6 +162,9 @@ public class TaskPresenter extends BasePresenter<TaskFragment> {
         mView.setEnabledEditTexts(yes);
         mView.saveButtonIsVisible(false);
 
+        //логика отображения отмены и завершения
+        //почему если пихнуть в oncreate - null pointer?
+        displayTaskActionsForUser();
     }
 
     @Override

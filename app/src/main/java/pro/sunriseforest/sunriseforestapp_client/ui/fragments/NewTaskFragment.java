@@ -158,6 +158,7 @@ public class NewTaskFragment extends BaseFragment {
                         0 : Integer.parseInt(mTaskRewardEditText.getText().toString()),
 
                 null,
+                null,
                 null
         );
     }

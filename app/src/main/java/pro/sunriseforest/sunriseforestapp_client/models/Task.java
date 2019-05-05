@@ -10,8 +10,8 @@ import com.squareup.moshi.Json;
 
 public class Task {
 
-//    @Json(name = "sr_contractor_id")
-//    private int mContractor;
+    @Json(name = "sr_contractor_id")
+    private String mContractorId;
 
     @Json(name = "sr_contractor_name")
     private String mContractorName;
@@ -45,13 +45,14 @@ public class Task {
 
 
     public Task(String mTaskDescription, String mCreationDate, String mStartDate,
-                String mDeadlineDate, byte mStatus, int mReward, String mContractorName, String mContractorPhone) {
+                String mDeadlineDate, byte mStatus, int mReward, String mContractorId, String mContractorName, String mContractorPhone) {
         this.mTaskDescription = mTaskDescription;
         this.mCreationDate = mCreationDate;
         this.mDeadlineDate = mDeadlineDate;
         this.mStartDate = mStartDate;
         this.mStatus = mStatus;
         this.mReward = mReward;
+        this.mContractorId = mContractorId;
         this.mContractorName = mContractorName;
         this.mContractorPhone = mContractorPhone;
     }
@@ -120,5 +121,9 @@ public class Task {
 
     public void setContractorName(String mContractorName) {
         this.mContractorName = mContractorName;
+    }
+
+    public String getContractorId() {
+        return mContractorId;
     }
 }

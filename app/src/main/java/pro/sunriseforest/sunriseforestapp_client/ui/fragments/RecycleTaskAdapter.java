@@ -1,9 +1,12 @@
 package pro.sunriseforest.sunriseforestapp_client.ui.fragments;
 
 import pro.sunriseforest.sunriseforestapp_client.R;
+import pro.sunriseforest.sunriseforestapp_client.SunriseForestApp;
 import pro.sunriseforest.sunriseforestapp_client.models.Task;
 
+import android.graphics.Typeface;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -50,6 +53,31 @@ RecycleTaskAdapter extends RecyclerView.Adapter<RecycleTaskAdapter.TaskViewHolde
                 break;
             case 103:
                 task_holder.mStatus.setImageResource(R.drawable.status_103);
+                task_holder.mDescription.setTypeface(null, Typeface.NORMAL);
+                task_holder.mReward.setTypeface(null, Typeface.NORMAL);
+                task_holder.mCreationDate.setTypeface(null, Typeface.NORMAL);
+                task_holder.mStartDate.setTypeface(null, Typeface.NORMAL);
+                task_holder.mEndDate.setTypeface(null, Typeface.NORMAL);
+                task_holder.mCreationDateText.setTypeface(null, Typeface.NORMAL);
+                task_holder.mStartDateText.setTypeface(null, Typeface.NORMAL);
+                task_holder.mEndDateText.setTypeface(null, Typeface.NORMAL);
+
+                task_holder.mDescription.setTextColor(ContextCompat.getColor(SunriseForestApp.getAppContext(),
+                        R.color.secondaryText));
+                task_holder.mReward.setTextColor(ContextCompat.getColor(SunriseForestApp.getAppContext(),
+                        R.color.secondaryText));
+                task_holder.mCreationDate.setTextColor(ContextCompat.getColor(SunriseForestApp.getAppContext(),
+                        R.color.secondaryText));
+                task_holder.mEndDate.setTextColor(ContextCompat.getColor(SunriseForestApp.getAppContext(),
+                        R.color.secondaryText));
+                task_holder.mStartDate.setTextColor(ContextCompat.getColor(SunriseForestApp.getAppContext(),
+                        R.color.secondaryText));
+                task_holder.mCreationDateText.setTextColor(ContextCompat.getColor(SunriseForestApp.getAppContext(),
+                        R.color.secondaryText));
+                task_holder.mStartDateText.setTextColor(ContextCompat.getColor(SunriseForestApp.getAppContext(),
+                        R.color.secondaryText));
+                task_holder.mEndDateText.setTextColor(ContextCompat.getColor(SunriseForestApp.getAppContext(),
+                        R.color.secondaryText));
                 break;
         }
 
@@ -63,7 +91,8 @@ RecycleTaskAdapter extends RecyclerView.Adapter<RecycleTaskAdapter.TaskViewHolde
     }
 
     class TaskViewHolder extends RecyclerView.ViewHolder {
-        TextView mDescription, mReward, mStartDate, mEndDate, mCreationDate;
+        TextView mDescription, mReward, mStartDate, mEndDate, mCreationDate, mCreationDateText,
+                mStartDateText, mEndDateText;
         ImageView mStatus;
 
 
@@ -76,6 +105,9 @@ RecycleTaskAdapter extends RecyclerView.Adapter<RecycleTaskAdapter.TaskViewHolde
             mStartDate = view.findViewById(R.id.taskSingleRow_startDate_get_textView);
             mEndDate = view.findViewById(R.id.taskSingleRow_endDate_get_textView);
             mStatus = view.findViewById(R.id.taskSingleRow_status_imageView);
+            mCreationDateText = view.findViewById(R.id.taskSingleRow_creationDate_textView);
+            mStartDateText = view.findViewById(R.id.taskSingleRow_startDate_textView);
+            mEndDateText = view.findViewById(R.id.taskSingleRow_endDate_textView);
 
         }
 
