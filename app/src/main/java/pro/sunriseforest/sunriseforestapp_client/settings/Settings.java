@@ -4,18 +4,22 @@ import com.squareup.moshi.Json;
 
 public class Settings {
 
-    @Json(name = "notifications_are_enabled")
-    private boolean mNotificationsAreEnabled;
+    @Json(name = "notifications_are_works")
+    private boolean mNotificationsAreWorks;
 
-    public Settings(boolean notificationsAreEnabled) {
-        mNotificationsAreEnabled = notificationsAreEnabled;
+    public Settings(boolean notificationsAreWorks) {
+        mNotificationsAreWorks = notificationsAreWorks;
     }
 
-    public boolean isNotificationsAreEnabled() {
-        return mNotificationsAreEnabled;
+    public boolean isNotificationsAreWorks() {
+        return mNotificationsAreWorks;
     }
 
-    public void setNotificationsAreEnabled(boolean notificationsAreEnabled) {
-        mNotificationsAreEnabled = notificationsAreEnabled;
+    public void setNotificationsAreWorks(boolean notificationsAreWorks) {
+        mNotificationsAreWorks = notificationsAreWorks;
+    }
+
+    public boolean turnNotifications() {
+        return mNotificationsAreWorks = !mNotificationsAreWorks;
     }
 }

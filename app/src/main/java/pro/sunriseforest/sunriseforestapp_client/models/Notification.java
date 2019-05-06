@@ -31,6 +31,10 @@ public class Notification {
         mType = type;
     }
 
+    public Notification(String headline) {
+        mHeadline = headline;
+    }
+
     public String getMessage() {
         return mMessage;
     }

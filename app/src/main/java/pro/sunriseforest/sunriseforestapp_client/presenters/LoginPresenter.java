@@ -21,6 +21,7 @@ public class LoginPresenter extends BasePresenter<LoginFragment>{
     private LoginPresenter() {
         mNavigationManager = NavigationManager.getInstance();
         mSharedPreferenceHelper = new SharedPreferenceHelper(SunriseForestApp.getAppContext());
+        
     }
 
     public void selectedLogin(User user){

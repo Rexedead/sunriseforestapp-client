@@ -8,7 +8,7 @@ public interface ISharedPreferenceHelper {
     String getToken();
     void saveUser(User user);
     void removeUser();
-    void saveSettings(Settings settings);
     Settings getSettings();
+    void updateSettings(SharedPreferenceHelper.OnUpdatedSettings update);
 
 }

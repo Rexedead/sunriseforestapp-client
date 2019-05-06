@@ -9,6 +9,9 @@ import android.util.Log;
 import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Moshi;
 import java.io.IOException;
+import java.util.function.Function;
+
+import io.reactivex.functions.Action;
 import pro.sunriseforest.sunriseforestapp_client.models.User;
 
 public class SharedPreferenceHelper implements ISharedPreferenceHelper{
@@ -27,7 +30,7 @@ public static final String TAG = "%%%/SharedPrefHelper";
 
         if(getSettings() == null)
             setDefaultSettings();
-        
+
     }
 
     public @Nullable
@@ -86,8 +89,7 @@ public static final String TAG = "%%%/SharedPrefHelper";
         removeToken();
     }
 
-    @Override
-    public void saveSettings(@NonNull Settings settings) {
+    private void saveSettings(@NonNull Settings settings) {
         JsonAdapter<Settings> jsonAdapter = mMoshi.adapter(Settings.class);
 
         String jsonSettings = jsonAdapter.toJson(settings);
@@ -113,10 +115,20 @@ public static final String TAG = "%%%/SharedPrefHelper";
         return settings;
     }
 
+    public void updateSettings(OnUpdatedSettings update){
+        Settings settings = getSettings();
+        update.update(settings);
+        saveSettings(settings);
+    }
+
     public void setDefaultSettings(){
         Settings defaultSettings = new Settings(true);
 
         saveSettings(defaultSettings);
+    }
+
+     public interface OnUpdatedSettings{
+        void update(Settings settings);
     }
 
 }

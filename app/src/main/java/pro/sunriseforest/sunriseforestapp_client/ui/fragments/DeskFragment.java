@@ -52,6 +52,7 @@ public class DeskFragment extends NavigatedFragment{
     @Override
     public void onResume() {
         super.onResume();
+        //todo hs
         mPresenter.update();
     }
 
@@ -69,16 +70,16 @@ public class DeskFragment extends NavigatedFragment{
 
         View view = inflater.inflate(R.layout.desk_fragment, container, false);
 
-        mRecyclerView = view.findViewById(R.id.desk_recyclerView);
-        mRecycleTaskAdapter = new RecycleTaskAdapter(mTaskList);
         mNewTaskFloatingActionButton = view.findViewById(R.id.fab);
         mNewTaskFloatingActionButton.setOnClickListener(mOnClickListenerNewTaskFloatingActionButton);
+        mRecyclerView = view.findViewById(R.id.desk_recyclerView);
+        mRecycleTaskAdapter = new RecycleTaskAdapter(mTaskList);
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setAdapter(mRecycleTaskAdapter);
         mRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(),DividerItemDecoration.VERTICAL));
-        mRecyclerView.addOnItemTouchListener(new RecyclerTouchListener(getContext(),
+        mRecyclerView.addOnItemTouchListener(new RecyclerTaskTouchListener(getContext(),
                 mRecyclerView));
 
         showBottomNavigation();
@@ -92,11 +93,11 @@ public class DeskFragment extends NavigatedFragment{
     }
 
 
-    class RecyclerTouchListener implements RecyclerView.OnItemTouchListener{
+    class RecyclerTaskTouchListener implements RecyclerView.OnItemTouchListener{
 
         private GestureDetector gestureDetector;
 
-        RecyclerTouchListener(Context context, final RecyclerView recycleView ){
+        RecyclerTaskTouchListener(Context context, final RecyclerView recycleView ){
 
             gestureDetector=new GestureDetector(context,new GestureDetector.SimpleOnGestureListener(){
 
@@ -120,7 +121,7 @@ public class DeskFragment extends NavigatedFragment{
 
         @Override
         public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
-            log("RecyclerTouchListener onInterceptTouchEvent()");
+            log("RecyclerNotificationsTouchListener onInterceptTouchEvent()");
             View child=rv.findChildViewUnder(e.getX(),e.getY());
             if(child!=null && gestureDetector.onTouchEvent(e)){
                 int position = rv.getChildAdapterPosition(child);
@@ -132,12 +133,12 @@ public class DeskFragment extends NavigatedFragment{
 
         @Override
         public void onTouchEvent(RecyclerView rv, MotionEvent e) {
-            log("RecyclerTouchListener onTouchEvent()");
+            log("RecyclerNotificationsTouchListener onTouchEvent()");
         }
 
         @Override
         public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
-            log("RecyclerTouchListener onRequestDisallowInterceptTouchEvent" +
+            log("RecyclerNotificationsTouchListener onRequestDisallowInterceptTouchEvent" +
                             "(disallowIntercept=%s)" ,disallowIntercept);
 
         }
