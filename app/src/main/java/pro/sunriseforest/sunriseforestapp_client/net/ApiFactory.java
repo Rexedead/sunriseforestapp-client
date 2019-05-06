@@ -43,8 +43,8 @@ public class ApiFactory {
     private static Retrofit buildRetrofit(Converter.Factory converterFactory,
                                           OkHttpClient client) {
         return new Retrofit.Builder()
-//                .baseUrl(ApiFactory.API_ENDPOINT)
-                .baseUrl(LOCAL_HOST)
+                .baseUrl(ApiFactory.API_ENDPOINT)
+//                .baseUrl(LOCAL_HOST)
                 .client(client)
                 .addConverterFactory(converterFactory)
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())

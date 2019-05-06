@@ -24,6 +24,10 @@ public static final String TAG = "%%%/SharedPrefHelper";
 
     public SharedPreferenceHelper(Context context){
         mSharedPreferences = context.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+
+        if(getSettings() == null)
+            setDefaultSettings();
+        
     }
 
     public @Nullable
@@ -107,6 +111,12 @@ public static final String TAG = "%%%/SharedPrefHelper";
             return null;
         }
         return settings;
+    }
+
+    public void setDefaultSettings(){
+        Settings defaultSettings = new Settings(true);
+
+        saveSettings(defaultSettings);
     }
 
 }
