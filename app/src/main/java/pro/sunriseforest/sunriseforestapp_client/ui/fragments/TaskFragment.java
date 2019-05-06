@@ -19,8 +19,8 @@ import pro.sunriseforest.sunriseforestapp_client.presenters.TaskPresenter;
 
 
 public class TaskFragment extends BaseFragment implements TextWatcher {
+
     private Task mSingleTask;
-    private static final String ARG_JSON_TASK = "ARG_JSON_TASK";
 
     private TaskPresenter mPresenter = TaskPresenter.getInstance();
 

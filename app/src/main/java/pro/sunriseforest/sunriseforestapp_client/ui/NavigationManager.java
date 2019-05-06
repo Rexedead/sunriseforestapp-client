@@ -4,7 +4,7 @@ import android.util.Log;
 
 import pro.sunriseforest.sunriseforestapp_client.SunriseForestApp;
 import pro.sunriseforest.sunriseforestapp_client.models.User;
-import pro.sunriseforest.sunriseforestapp_client.options.SharedPreferenceHelper;
+import pro.sunriseforest.sunriseforestapp_client.settings.SharedPreferenceHelper;
 
 public class NavigationManager {
     private static final NavigationManager ourInstance = new NavigationManager();

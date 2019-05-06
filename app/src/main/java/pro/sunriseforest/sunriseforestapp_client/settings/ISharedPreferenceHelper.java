@@ -1,4 +1,4 @@
-package pro.sunriseforest.sunriseforestapp_client.options;
+package pro.sunriseforest.sunriseforestapp_client.settings;
 
 import pro.sunriseforest.sunriseforestapp_client.models.User;
 
@@ -8,5 +8,7 @@ public interface ISharedPreferenceHelper {
     String getToken();
     void saveUser(User user);
     void removeUser();
+    void saveSettings(Settings settings);
+    Settings getSettings();
 
 }

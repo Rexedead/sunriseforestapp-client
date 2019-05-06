@@ -13,7 +13,7 @@ import pro.sunriseforest.sunriseforestapp_client.R;
 import pro.sunriseforest.sunriseforestapp_client.models.User;
 import pro.sunriseforest.sunriseforestapp_client.presenters.BasePresenter;
 import pro.sunriseforest.sunriseforestapp_client.presenters.RegistrationPresenter;
-//import pro.sunriseforest.sunriseforestapp_client.presenters.old.AppPresenter;
+
 
 public class RegistrationFragment extends BaseFragment {
 

@@ -118,7 +118,6 @@ public class AppActivity extends AppCompatActivity implements IView{
 
     }
 
-
     @Override
     public void showTask() {
         log(String.format("showTask()"));

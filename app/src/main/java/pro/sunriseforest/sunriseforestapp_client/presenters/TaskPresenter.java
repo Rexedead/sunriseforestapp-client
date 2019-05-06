@@ -4,7 +4,7 @@ import pro.sunriseforest.sunriseforestapp_client.SunriseForestApp;
 import pro.sunriseforest.sunriseforestapp_client.models.Task;
 import pro.sunriseforest.sunriseforestapp_client.net.ApiFactory;
 import pro.sunriseforest.sunriseforestapp_client.net.AsyncNetTransformer;
-import pro.sunriseforest.sunriseforestapp_client.options.SharedPreferenceHelper;
+import pro.sunriseforest.sunriseforestapp_client.settings.SharedPreferenceHelper;
 import pro.sunriseforest.sunriseforestapp_client.ui.NavigationManager;
 import pro.sunriseforest.sunriseforestapp_client.ui.fragments.TaskFragment;
 

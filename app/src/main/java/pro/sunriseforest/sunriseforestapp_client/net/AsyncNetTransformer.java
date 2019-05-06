@@ -12,4 +12,5 @@ public class AsyncNetTransformer <T> implements Observable.Transformer<T, T> {
                 .subscribeOn(Schedulers.io())
                 .observeOn( AndroidSchedulers.mainThread());
     }
+
 }

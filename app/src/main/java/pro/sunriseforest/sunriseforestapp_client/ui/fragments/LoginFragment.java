@@ -8,14 +8,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import pro.sunriseforest.sunriseforestapp_client.R;
 import pro.sunriseforest.sunriseforestapp_client.models.User;
 import pro.sunriseforest.sunriseforestapp_client.presenters.BasePresenter;
 import pro.sunriseforest.sunriseforestapp_client.presenters.LoginPresenter;
 
-public class LoginFragment extends BaseFragment implements ILoadingScreen {
+public class LoginFragment extends BaseFragment  {
     private EditText mLoginEditText;
     private EditText mPasswordEditText;
     private LoginPresenter mLoginPresenter = LoginPresenter.getInstance();
@@ -54,19 +53,7 @@ public class LoginFragment extends BaseFragment implements ILoadingScreen {
         return view;
     }
 
-    @Override
-    public void showLoading() {
-        log("showLoading()");
-        Toast.makeText(getContext(), "start loading...", Toast.LENGTH_LONG).show();
-        //TODO
-    }
 
-    @Override
-    public void hideLoading() {
-        log("hideLoading()");
-        Toast.makeText(getContext(), "stop loading", Toast.LENGTH_LONG).show();
-        //TODO
-    }
 
     private User getUser(){
         String login = mLoginEditText.getText().toString();

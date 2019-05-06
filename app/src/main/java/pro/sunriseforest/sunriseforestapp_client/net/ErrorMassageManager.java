@@ -1,9 +1,15 @@
 package pro.sunriseforest.sunriseforestapp_client.net;
 
+import pro.sunriseforest.sunriseforestapp_client.presenters.LoginPresenter;
+
+
+//TODO сообщения "френдли юзер"
+
+
 public class ErrorMassageManager {
 
+/*TODO лучше избавиться от явных строк равных конкретным тегам*/
     public static String WhatIsMyError(int code, String tag) {
-
         switch (code) {
             case 400:
                 return "Неверный запрос или запрещенные символы";
