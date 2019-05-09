@@ -19,10 +19,13 @@ public class Task {
     @Json(name = "sr_contractor_phone")
     private String mContractorPhone;
 
-    @Json(name = "sr_task_client")
-    private Client mClient;
+    @Json(name = "sr_client_phone")
+    private String mClientPhone;
 
-    @Json(name = "_id")
+    @Json(name = "sr_client_name")
+    private String mClientName;
+
+    @Json(name = "sr_task_id")
     private String mTaskID;
 
     @Json(name = "sr_task_description")
@@ -44,8 +47,14 @@ public class Task {
     private int mReward;
 
 
-    public Task(String mTaskDescription, String mCreationDate, String mStartDate,
-                String mDeadlineDate, byte mStatus, int mReward, String mContractorId, String mContractorName, String mContractorPhone) {
+    public Task(String mTaskID, String mTaskDescription,
+                String mCreationDate, String mStartDate,
+                String mDeadlineDate, byte mStatus,
+                int mReward, String mContractorId,
+                String mContractorName, String mContractorPhone,
+                String mClientName, String mClientPhone) {
+
+        this.mTaskID = mTaskID;
         this.mTaskDescription = mTaskDescription;
         this.mCreationDate = mCreationDate;
         this.mDeadlineDate = mDeadlineDate;
@@ -55,9 +64,34 @@ public class Task {
         this.mContractorId = mContractorId;
         this.mContractorName = mContractorName;
         this.mContractorPhone = mContractorPhone;
+        this.mClientName = mClientName;
+        this.mClientPhone = mClientPhone;
     }
 
 
+    public Task(String mTaskDescription,
+                String mCreationDate, String mStartDate,
+                String mDeadlineDate, byte mStatus,
+                int mReward, String mContractorId,
+                String mContractorName, String mContractorPhone,
+                String mClientName, String mClientPhone) {
+
+        this.mTaskDescription = mTaskDescription;
+        this.mCreationDate = mCreationDate;
+        this.mDeadlineDate = mDeadlineDate;
+        this.mStartDate = mStartDate;
+        this.mStatus = mStatus;
+        this.mReward = mReward;
+        this.mContractorId = mContractorId;
+        this.mContractorName = mContractorName;
+        this.mContractorPhone = mContractorPhone;
+        this.mClientName = mClientName;
+        this.mClientPhone = mClientPhone;
+    }
+
+    public String getTaskID() {
+        return mTaskID;
+    }
     public int getReward() {
         return mReward;
     }
@@ -82,10 +116,6 @@ public class Task {
         return mContractorPhone;
     }
 
-    public Client getClient() {
-        return mClient;
-    }
-
     public String getDeadlineDate() {
         return mDeadlineDate;
     }
@@ -94,9 +124,17 @@ public class Task {
         return mStartDate;
     }
 
-    public String getTaskID() {
-        return mTaskID;
+    public String getClientPhone() {
+        return mClientPhone;
     }
+
+    public String getClientName() {
+        return mClientName;
+    }
+    public String getContractorId() {
+        return mContractorId;
+    }
+
 
     public void setTaskDescription(String taskDescription) {
         mTaskDescription = taskDescription;
@@ -118,12 +156,19 @@ public class Task {
         this.mContractorPhone = mContractorPhone;
     }
 
-
     public void setContractorName(String mContractorName) {
         this.mContractorName = mContractorName;
     }
 
-    public String getContractorId() {
-        return mContractorId;
+    public void setClientPhone(String mClientPhone) {
+        this.mClientPhone = mClientPhone;
+    }
+
+    public void setClientName(String mClientName) {
+        this.mClientName = mClientName;
+    }
+
+    public void setTaskID(String mTaskID) {
+        this.mTaskID = mTaskID;
     }
 }

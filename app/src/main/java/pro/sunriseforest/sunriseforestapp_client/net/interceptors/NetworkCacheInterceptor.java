@@ -13,7 +13,7 @@ import pro.sunriseforest.sunriseforestapp_client.net.Utils;
 
 public class NetworkCacheInterceptor implements Interceptor {
 
-    private static final int MAX_AGE = 120;
+    private static final int MAX_AGE = 5;
     private static final long MAX_STALE = 86400;
 
     @NonNull

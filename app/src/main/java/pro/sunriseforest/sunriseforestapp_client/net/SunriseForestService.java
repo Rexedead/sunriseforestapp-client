@@ -4,7 +4,6 @@ package pro.sunriseforest.sunriseforestapp_client.net;
 
 import java.util.List;
 
-import pro.sunriseforest.sunriseforestapp_client.models.Client;
 import pro.sunriseforest.sunriseforestapp_client.models.Task;
 import pro.sunriseforest.sunriseforestapp_client.models.User;
 import retrofit2.http.Body;
@@ -33,10 +32,9 @@ public interface SunriseForestService {
     Observable<User> userRegistration(@Body User user);
 
     @POST("data/tasks")
-    Observable<Task> addTask(@Body Task task, @Query("sr_user_token") String token);
-
-    @POST("data/client")
-    Observable<Client> addclient(@Body Client client, @Query("sr_user_token") String token);
+    Observable<Task> addTask(@Body Task task,
+                             @Query("sr_user_token") String token,
+                             @Query("sr_manager_id") String mId);
 
     @PATCH("data/task/{id}/upd_task_contractor")
     Observable<Task> taskReservation(@Path("id") String id, @Body User user);
@@ -48,9 +46,9 @@ public interface SunriseForestService {
     Observable<User> updProfile(@Path("id") String id, @Body User user);
 
     @PATCH("data/task/{id}/upd_task_complete")
-    Observable<Task> updComplete(@Path("id") String id,  @Body Task task);
+    Observable<Task> updComplete(@Path("id") String id);
 
     @PATCH("data/task/{id}/upd_task_cancel")
-    Observable<Task> updCancel(@Path("id") String id,  @Body Task task);
+    Observable<Task> updCancel(@Path("id") String id);
 
 }

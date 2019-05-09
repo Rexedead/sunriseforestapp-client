@@ -13,14 +13,13 @@ import android.widget.TextView;
 
 
 import pro.sunriseforest.sunriseforestapp_client.R;
-import pro.sunriseforest.sunriseforestapp_client.models.Task;
 import pro.sunriseforest.sunriseforestapp_client.presenters.BasePresenter;
 import pro.sunriseforest.sunriseforestapp_client.presenters.TaskPresenter;
 
 
 public class TaskFragment extends BaseFragment implements TextWatcher {
 
-    private Task mSingleTask;
+
 
     private TaskPresenter mPresenter = TaskPresenter.getInstance();
 
@@ -39,7 +38,7 @@ public class TaskFragment extends BaseFragment implements TextWatcher {
     private Button mCompleteTask;
     private Button mCancelTask;
 
-    private View.OnClickListener mSaveTaskListener = view -> mPresenter.clickedSaveButton(mSingleTask);
+    private View.OnClickListener mSaveTaskListener = view -> mPresenter.clickedSaveButton();
     private View.OnClickListener mBookListener = view -> mPresenter.clickedBookButton();
     private View.OnClickListener mCompleteListener = view -> mPresenter.clickedCompleteButton();
     private View.OnClickListener mCancelListener = view -> mPresenter.clickedCancelButton();
@@ -87,6 +86,26 @@ public class TaskFragment extends BaseFragment implements TextWatcher {
         return mRewardEditText.getText().toString();
     }
 
+    public String getContractorName() {
+        return mContractorNameTextView.getText().toString();
+    }
+
+    public String getContractorPhone() {
+        return mContractorPhoneTextView.getText().toString();
+    }
+
+    public String getTaskId() {
+        return mIdTextView.getText().toString();
+    }
+
+    public String getClientName() {
+        return mClientNameEditText.getText().toString();
+    }
+
+    public String getClientPhone() {
+        return mClientPhoneEditText.getText().toString();
+    }
+
     public void setEnabledEditTexts(boolean isYes) {
         log("setEnabled( isYes = %s)", isYes);
 
@@ -114,27 +133,26 @@ public class TaskFragment extends BaseFragment implements TextWatcher {
     }
 
 
-    public void showTask(Task task) {
-        log("showTask(task = %s)", task);
-        setTask(task);
+
+    public void setTask(String tId, String tDesc, String tStartDate, String tEndDate,
+                        int tReward, String tContractorName, String tContractorPhone,
+                        String mClientName, String mClientPhone) {
+        mIdTextView.setText(tId);
+        mDescriptionEditText.setText(tDesc);
+        mTaskStartDateEditText.setText(tStartDate);
+        mTaskEndDateEditText.setText(tEndDate);
+        mRewardEditText.setText(String.valueOf(tReward));
+        mContractorNameTextView.setText(tContractorName);
+        mContractorPhoneTextView.setText(tContractorPhone);
+        mClientNameEditText.setText(mClientName);
+        mClientPhoneEditText.setText(mClientPhone);
     }
 
-    private void setTask(Task task) {
-        mSingleTask = task;
-        mIdTextView.setText(mSingleTask.getTaskID());
-        mDescriptionEditText.setText(mSingleTask.getTaskDescription());
-        mTaskStartDateEditText.setText(mSingleTask.getCreationDate());
-        mTaskEndDateEditText.setText(mSingleTask.getDeadlineDate());
-        mRewardEditText.setText(String.valueOf(mSingleTask.getReward()));
-        mContractorNameTextView.setText(mSingleTask.getContractorName());
-        mContractorPhoneTextView.setText(mSingleTask.getContractorPhone());
-
-        if (mSingleTask.getClient() != null) {
-            mClientNameEditText.setText(mSingleTask.getClient().getName());
-
-        }
-
+    public void setTaskContractor(String tContractorName, String tContractorPhone) {
+        mContractorNameTextView.setText(tContractorName);
+        mContractorPhoneTextView.setText(tContractorPhone);
     }
+
     public void saveButtonIsVisible(boolean isVisible) {
         mSaveButton.setVisibility(isVisible ? View.VISIBLE : View.GONE);
     }

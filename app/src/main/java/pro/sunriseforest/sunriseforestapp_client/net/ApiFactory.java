@@ -71,7 +71,7 @@ public class ApiFactory {
         return new OkHttpClient.Builder()
                 .addInterceptor(new OfflineCacheInterceptor())
                 .addInterceptor(new HttpLoggingInterceptor(message -> Log.d(TAG, message))
-                        .setLevel(HttpLoggingInterceptor.Level.HEADERS))
+                        .setLevel(HttpLoggingInterceptor.Level.BODY))
                 .addNetworkInterceptor(new NetworkCacheInterceptor())
                 .cache(OfflineCacheInterceptor.cacheTasks())
                 .build();

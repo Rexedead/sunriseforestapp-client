@@ -12,7 +12,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import pro.sunriseforest.sunriseforestapp_client.R;
-import pro.sunriseforest.sunriseforestapp_client.models.User;
 import pro.sunriseforest.sunriseforestapp_client.presenters.BasePresenter;
 import pro.sunriseforest.sunriseforestapp_client.presenters.ProfilePresenter;
 
@@ -21,7 +20,6 @@ public class ProfileFragment extends NavigatedFragment  implements TextWatcher {
     private static final int ITEM_ON_NAV = 1;
 
 
-    private User mProfileData;
     private TextView mUserIdTextView;
     private EditText mUserNameEditText;
     private EditText mUserMailEditText;
@@ -65,21 +63,19 @@ public class ProfileFragment extends NavigatedFragment  implements TextWatcher {
         return view;
     }
 
-    public void showProfile(User user) {
-        log("showProfileScreen(user = %s)", user);
-        setProfile(user);
-    }
+    public void setProfile(String uId,String uName,
+                            String uMail,String uPhone,
+                            String uRole,int uTasksTaken,
+                            int uReward) {
+        log("setProfile(user = %s)");
 
-    private void setProfile(User user) {
-        log("setProfile(user = %s)", user);
-        mProfileData = user;
-        mUserIdTextView.setText(mProfileData.getId());
-        mUserNameEditText.setText(mProfileData.getName());
-        mUserMailEditText.setText(mProfileData.getEmail());
-        mUserPhoneEditText.setText(mProfileData.getPhoneNumber());
-        mUserRoleTextView.setText(mProfileData.getRole());
-        mUserTasksTakenStatsTextView.setText(String.valueOf(mProfileData.getTasksCount()));
-        mUserRewardInfoTextView.setText(String.valueOf(mProfileData.getRewardSum()));
+        mUserIdTextView.setText(uId);
+        mUserNameEditText.setText(uName);
+        mUserMailEditText.setText(uMail);
+        mUserPhoneEditText.setText(uPhone);
+        mUserRoleTextView.setText(uRole);
+        mUserTasksTakenStatsTextView.setText(String.valueOf(uTasksTaken));
+        mUserRewardInfoTextView.setText(String.valueOf(uReward));
     }
 
 

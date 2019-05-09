@@ -87,9 +87,10 @@ public class NewTaskPresenter extends BasePresenter<NewTaskFragment> {
 
     private void addTask(Task task){
         String token = mSharedPreferenceHelper.getToken();
+        String managerId = mSharedPreferenceHelper.getUser().getId();
 
         ApiFactory.getSunriseForestService()
-                .addTask(task, token)
+                .addTask(task, token, managerId)
                 .compose(new AsyncNetTransformer<>())
                 .subscribe(this::saveTask,
                 this::handleNetworkError,

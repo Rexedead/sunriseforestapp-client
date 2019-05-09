@@ -33,31 +33,31 @@ public class TaskPresenter extends BasePresenter<TaskFragment> {
         mTask = task;
     }
 
-    public void clickedSaveButton(Task task) {
+    //забираем данные из фрагмента, и заносим их в mTask
+    public void clickedSaveButton() {
         log("clickedSaveButton()");
-        //...
-        mView.showToast("*клик по сохранялке*");
-        //если не передавать таску из фрагмента, получаем таск.ид = нулл, после второго сохранения
-        mTask = task;
+        mTask.setTaskID(mView.getTaskId());
         mTask.setTaskDescription(mView.getDescription());
         mTask.setStartDate(mView.getTaskStartDate());
         mTask.setDeadlineDate(mView.getTaskEndDate());
         mTask.setReward(Integer.parseInt(mView.getReward()));
+        mTask.setContractorName(mView.getContractorName());
+        mTask.setContractorPhone(mView.getContractorPhone());
+        mTask.setClientName(mView.getClientName());
+        mTask.setClientPhone(mView.getClientPhone());
         saveTask(mTask);
-        mView.saveButtonIsVisible(false);
-        taskChanged = false;
+
     }
 
     public void clickedBookButton() {
         log("clickedBookButton()");
-        bookTask(mTask.getTaskID());
-        mView.showToast("*Задача забронирована*");
+        bookTask(mView.getTaskId());
     }
 
 
     private boolean canChangeTask() {
         log("canChangeTask()");
-        return getUserRole().equals("manager");
+        return getUserRole().equals("manager") && !(mTask.getStatus() == 103);
     }
 
     private void saveTask(Task task) {
@@ -70,7 +70,7 @@ public class TaskPresenter extends BasePresenter<TaskFragment> {
                         task
                 )
                 .compose(new AsyncNetTransformer<>())
-                .subscribe(this::setTask, this::handleNetworkError);
+                .subscribe(this::setTask, this::handleNetworkError, this::hideButtonAfterSave);
     }
 
 
@@ -83,20 +83,22 @@ public class TaskPresenter extends BasePresenter<TaskFragment> {
                         mSharedPreferenceHelper.getUser()
                 )
                 .compose(new AsyncNetTransformer<>())
-                .subscribe(this::setTask, this::handleNetworkError);
+                .subscribe(this::setTask, this::handleNetworkError, this::showTaskActions);
     }
 
     //отображение при нажатии на резерв
-    //после нажатия на бронь, через subscribe on next - отображаем кнопки действия таска
-    //не понял, нужно ли нам .subscribe(this::setTask) в методе bookTask
+    //после нажатия на бронь, через subscribe on complete - отображаем кнопки действия таска
     private void showTaskActions() {
         log("showTaskActions()");
         mView.bookButtonIsVisible(false);
         mView.taskActionsIsVisible(true);
+        mView.setTaskContractor(mSharedPreferenceHelper.getUser().getName(),
+                mSharedPreferenceHelper.getUser().getPhoneNumber());
+        mView.showToast("*Задача забронирована*");
     }
 
     //отображение при создании фрагмента
-    public void displayTaskActionsForUser() {
+    private void displayTaskActionsForUser() {
         log("displayTaskActionsForUser()");
         if (mTask.getStatus() == 102 &&
                 (mTask.getContractorId().equals(mSharedPreferenceHelper.getUser().getId())
@@ -117,15 +119,11 @@ public class TaskPresenter extends BasePresenter<TaskFragment> {
         ApiFactory
                 .getSunriseForestService()
                 .updComplete(
-                        mTask.getTaskID(),
-                        mTask
+                        mView.getTaskId()
                 )
                 .compose(new AsyncNetTransformer<>())
-                .subscribe(this::setTask, this::handleNetworkError);
+                .subscribe(this::setTask, this::handleNetworkError, this::hideButtonsAfterComplete);
 
-        //todo скрывать, если от сервака норм ответ
-        mView.taskActionsIsVisible(false);
-        getView().showToast("Задача отмечена завершенной");
     }
 
 
@@ -135,35 +133,37 @@ public class TaskPresenter extends BasePresenter<TaskFragment> {
         ApiFactory
                 .getSunriseForestService()
                 .updCancel(
-                        mTask.getTaskID(),
-                        mTask
+                        mView.getTaskId()
                 )
                 .compose(new AsyncNetTransformer<>())
-                .subscribe(this::setTask, this::handleNetworkError);
-
-        //todo скрывать, если от сервака норм ответ
-        mView.taskActionsIsVisible(false);
-        getView().showToast("Задача отменена");
+                .subscribe(this::setTask, this::handleNetworkError, this::hideButtonsAfterCancel);
 
     }
 
-    public String getUserRole(){
+    private String getUserRole() {
         return mSharedPreferenceHelper.getUser().getRole();
     }
-
 
     @Override
     public void bindView(TaskFragment view) {
         super.bindView(view);
 
-        view.showTask(mTask);
+        mView.setTask(
+                mTask.getTaskID(),
+                mTask.getTaskDescription(),
+                mTask.getStartDate(),
+                mTask.getDeadlineDate(),
+                mTask.getReward(),
+                mTask.getContractorName(),
+                mTask.getContractorPhone(),
+                mTask.getClientName(),
+                mTask.getClientPhone());
 
         boolean yes = canChangeTask();
         mView.setEnabledEditTexts(yes);
         mView.saveButtonIsVisible(false);
 
         //логика отображения отмены и завершения
-        //почему если пихнуть в oncreate - null pointer?
         displayTaskActionsForUser();
     }
 
@@ -173,4 +173,23 @@ public class TaskPresenter extends BasePresenter<TaskFragment> {
     }
 
 
+    //stackTrace выдает call/onCompleted
+    private void hideButtonAfterSave() {
+        log("hideButtonAfterSave");
+        mView.saveButtonIsVisible(false);
+        taskChanged = false;
+        mView.showToast("Сохранено");
+    }
+
+    private void hideButtonsAfterComplete() {
+        log("hideButtonsAfterComplete");
+        mView.taskActionsIsVisible(false);
+        mView.showToast("Задача отмечена завершенной");
+    }
+
+    private void hideButtonsAfterCancel() {
+        log("hideButtonsAfterCancel");
+        mView.taskActionsIsVisible(false);
+        mView.showToast("Бронирование задачи отменено");
+    }
 }
