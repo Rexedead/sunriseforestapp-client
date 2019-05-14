@@ -34,7 +34,13 @@ public class ProfilePresenter extends BasePresenter<ProfileFragment> {
     @Override
     public void bindView(ProfileFragment view) {
         super.bindView(view);
-        view.showProfile(mUser);
+        mView.setProfile(mUser.getId(),
+                mUser.getName(),
+                mUser.getEmail(),
+                mUser.getPhoneNumber(),
+                mUser.getRole(),
+                mUser.getTasksCount(),
+                mUser.getRewardSum());
 
         boolean yes = canChangeProfile();
         mView.setEnabledEditTexts(yes);
@@ -50,15 +56,10 @@ public class ProfilePresenter extends BasePresenter<ProfileFragment> {
 
     public void clickedSaveButton() {
         log("clickedSaveButton()");
-        //...
-        mView.showToast("*клик по сохранялке*");
         mUser.setName(mView.getUserName());
         mUser.setEmail(mView.getUserMail());
         mUser.setPhoneNumber(mView.getUserPhone());
         saveProfileToServer(mUser);
-        mView.saveIsVisible(false);
-
-
     }
 
     private void saveProfileToServer(User user) {
@@ -68,7 +69,13 @@ public class ProfilePresenter extends BasePresenter<ProfileFragment> {
                 .getSunriseForestService()
                 .updProfile(user.getId(), user)
                 .compose(new AsyncNetTransformer<>())
-                 .subscribe(this::saveProfileIntoPreference,this::handleNetworkError);
+                 .subscribe(this::saveProfileIntoPreference,this::handleNetworkError,this::saveComplete);
+    }
+
+    private void saveComplete() {
+        mView.showToast("Сохранено");
+        mView.saveIsVisible(false);
+
     }
 
     private void saveProfileIntoPreference(User user){
