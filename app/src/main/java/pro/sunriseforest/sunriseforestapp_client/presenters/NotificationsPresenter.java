@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import pro.sunriseforest.sunriseforestapp_client.SunriseForestApp;
-import pro.sunriseforest.sunriseforestapp_client.models.Notification;
+import pro.sunriseforest.sunriseforestapp_client.models.SunriseNotification;
 import pro.sunriseforest.sunriseforestapp_client.settings.SharedPreferenceHelper;
 import pro.sunriseforest.sunriseforestapp_client.ui.NavigationManager;
 import pro.sunriseforest.sunriseforestapp_client.ui.fragments.NotificationsFragment;
@@ -24,17 +24,18 @@ public class NotificationsPresenter extends BasePresenter<NotificationsFragment>
 
     private boolean mNotificationsIsUpdated = false;
 
-    private List<Notification> mNotifications;
+    // ссылка по итогу будет так же храниться в адаптере.
+    private List<SunriseNotification> mSunriseNotifications;
 
 
     private NotificationsPresenter() {
         mNavigationManager = NavigationManager.getInstance();
         mSharedPreferenceHelper = new SharedPreferenceHelper(SunriseForestApp.getAppContext());
 
-        mNotifications = new ArrayList<>();
-        mNotifications.add(new Notification("Заголовок 1"));
-        mNotifications.add(new Notification("Заголовок 2"));
-        mNotifications.add(new Notification("Заголовок 3"));
+        mSunriseNotifications = new ArrayList<>();
+        mSunriseNotifications.add(new SunriseNotification("Заголовок 1"));
+        mSunriseNotifications.add(new SunriseNotification("Заголовок 2"));
+        mSunriseNotifications.add(new SunriseNotification("Заголовок 3"));
     }
 
 
@@ -57,7 +58,7 @@ public class NotificationsPresenter extends BasePresenter<NotificationsFragment>
         log(" clickedSelectedNotification(position = %s)" , position);
 
         getView().showToast(String.format("*Клик по уведомлению с заголовком \"%s\" *",
-                mNotifications.get(position).getHeadline()));
+                mSunriseNotifications.get(position).getHeadline()));
 
     }
 
@@ -71,7 +72,7 @@ public class NotificationsPresenter extends BasePresenter<NotificationsFragment>
 
     private void updateNotifications(){
         log("updateNotifications()");
-        mView.updateNotifications(mNotifications);
+        mView.updateNotifications(mSunriseNotifications);
         mNotificationsIsUpdated = true;
     }
 

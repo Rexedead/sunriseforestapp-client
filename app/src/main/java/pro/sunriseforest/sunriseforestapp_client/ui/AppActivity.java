@@ -1,5 +1,8 @@
 package pro.sunriseforest.sunriseforestapp_client.ui;
 
+import android.app.job.JobInfo;
+import android.app.job.JobScheduler;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -16,6 +19,8 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import pro.sunriseforest.sunriseforestapp_client.R;
 import pro.sunriseforest.sunriseforestapp_client.models.Task;
+import pro.sunriseforest.sunriseforestapp_client.notifications.JobBuilder;
+import pro.sunriseforest.sunriseforestapp_client.settings.SharedPreferenceHelper;
 
 public class AppActivity extends AppCompatActivity implements IView{
 
@@ -257,6 +262,16 @@ public class AppActivity extends AppCompatActivity implements IView{
     protected void onDestroy() {
         super.onDestroy();
         log("lc: onDestroy()");
+
+        // в зависимости от настроек включаем или нет уведомления
+        boolean notificationsWorks = SharedPreferenceHelper.getInstance(this).getSettings().isNotificationsAreWorks();
+        int type = notificationsWorks? JobBuilder.ACTION_START_JOB: JobBuilder.ACTION_CANCEL_JOB ;
+        log("onDestroy: type = " + type);
+        JobScheduler scheduler =  (JobScheduler) getSystemService(Context.JOB_SCHEDULER_SERVICE);
+        JobInfo.Builder builder = new JobBuilder(this).getNotificationsJobBuilder(type);
+
+        scheduler.schedule(builder.build());
+
     }
 
     @Override

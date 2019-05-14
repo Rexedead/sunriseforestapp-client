@@ -25,6 +25,11 @@ public static final String TAG = "%%%/SharedPrefHelper";
 
     private Moshi mMoshi = new Moshi.Builder().build();
 
+    public static SharedPreferenceHelper getInstance(Context context){
+        return new SharedPreferenceHelper(context);
+    }
+
+
     public SharedPreferenceHelper(Context context){
         mSharedPreferences = context.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
 

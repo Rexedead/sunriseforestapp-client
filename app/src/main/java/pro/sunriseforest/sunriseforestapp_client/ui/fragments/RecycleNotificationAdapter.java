@@ -5,29 +5,28 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import pro.sunriseforest.sunriseforestapp_client.R;
-import pro.sunriseforest.sunriseforestapp_client.models.Notification;
+import pro.sunriseforest.sunriseforestapp_client.models.SunriseNotification;
 
 public class RecycleNotificationAdapter extends RecyclerView.Adapter<RecycleNotificationAdapter.NotificationsViewHolder>{
 
 
-    private List<Notification> mNotifications;
+    private List<SunriseNotification> mSunriseNotifications;
 
     public RecycleNotificationAdapter() {
-        mNotifications = new ArrayList<>();
+        mSunriseNotifications = new ArrayList<>();
 
         //todo hs
-//        notifyItemRangeChanged(0, mNotifications.size());
+//        notifyItemRangeChanged(0, mSunriseNotifications.size());
     }
 
-    public void setNotifications(List<Notification> notifications) {
-        mNotifications = notifications;
+    public void setSunriseNotifications(List<SunriseNotification> sunriseNotifications) {
+        mSunriseNotifications = sunriseNotifications;
     }
 
     @NonNull
@@ -41,13 +40,13 @@ public class RecycleNotificationAdapter extends RecyclerView.Adapter<RecycleNoti
 
     @Override
     public void onBindViewHolder(@NonNull NotificationsViewHolder notificationsViewHolder, int i) {
-        Notification notification = mNotifications.get(i);
-        notificationsViewHolder.mHeadline.setText(notification.getHeadline());
+        SunriseNotification sunriseNotification = mSunriseNotifications.get(i);
+        notificationsViewHolder.mHeadline.setText(sunriseNotification.getHeadline());
     }
 
     @Override
     public int getItemCount() {
-        return mNotifications.size();
+        return mSunriseNotifications.size();
     }
 
     class NotificationsViewHolder extends RecyclerView.ViewHolder {

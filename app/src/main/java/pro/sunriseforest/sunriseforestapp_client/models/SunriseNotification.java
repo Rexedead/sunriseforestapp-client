@@ -4,7 +4,7 @@ import com.squareup.moshi.Json;
 
 import io.reactivex.annotations.Nullable;
 
-public class Notification {
+public class SunriseNotification {
 
     @Json(name = "sr_message")
     private String mMessage;
@@ -18,20 +18,20 @@ public class Notification {
     @Json(name = "sr_data")
     private Object data;
 
-    public Notification(String message, String headline, int type, Object data) {
+    public SunriseNotification(String message, String headline, int type, Object data) {
         mMessage = message;
         mHeadline = headline;
         mType = type;
         this.data = data;
     }
 
-    public Notification(String message, String headline, int type) {
+    public SunriseNotification(String message, String headline, int type) {
         mMessage = message;
         mHeadline = headline;
         mType = type;
     }
 
-    public Notification(String headline) {
+    public SunriseNotification(String headline) {
         mHeadline = headline;
     }
 

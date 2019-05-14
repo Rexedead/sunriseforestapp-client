@@ -15,7 +15,7 @@ import android.widget.Button;
 import java.util.List;
 
 import pro.sunriseforest.sunriseforestapp_client.R;
-import pro.sunriseforest.sunriseforestapp_client.models.Notification;
+import pro.sunriseforest.sunriseforestapp_client.models.SunriseNotification;
 import pro.sunriseforest.sunriseforestapp_client.presenters.BasePresenter;
 import pro.sunriseforest.sunriseforestapp_client.presenters.NotificationsPresenter;
 
@@ -62,8 +62,8 @@ public class NotificationsFragment extends NavigatedFragment {
         return view;
     }
 
-    public void updateNotifications(List<Notification> notifications){
-        mAdapter.setNotifications(notifications);
+    public void updateNotifications(List<SunriseNotification> sunriseNotifications){
+        mAdapter.setSunriseNotifications(sunriseNotifications);
         mAdapter.notifyDataSetChanged();
     }
 
@@ -87,9 +87,9 @@ public class NotificationsFragment extends NavigatedFragment {
     // todo временный метод
     public void showNotificationsAreWorks(boolean areWorks) {
         if(areWorks){
-            mTurnNotificationButton.setText("Включить уведомления");
-        }else{
             mTurnNotificationButton.setText("Выключить уведомления");
+        }else{
+            mTurnNotificationButton.setText("Включить уведомления");
         }
     }
 
