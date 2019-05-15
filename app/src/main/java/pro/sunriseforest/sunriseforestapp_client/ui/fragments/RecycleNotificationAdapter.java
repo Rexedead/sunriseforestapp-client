@@ -41,7 +41,11 @@ public class RecycleNotificationAdapter extends RecyclerView.Adapter<RecycleNoti
     @Override
     public void onBindViewHolder(@NonNull NotificationsViewHolder notificationsViewHolder, int i) {
         SunriseNotification sunriseNotification = mSunriseNotifications.get(i);
-        notificationsViewHolder.mHeadline.setText(sunriseNotification.getHeadline());
+
+        //todo костыль: исправить, когда сообщения будут готовиться на сервере
+        String text = "появились новые таски, целых " + sunriseNotification.getData() + " штук))))";
+
+        notificationsViewHolder.mHeadline.setText(text);
     }
 
     @Override

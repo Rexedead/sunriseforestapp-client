@@ -7,9 +7,13 @@ import android.app.job.JobService;
 import android.content.Context;
 import android.util.Log;
 
+import java.util.List;
+
+import pro.sunriseforest.sunriseforestapp_client.SunriseForestApp;
 import pro.sunriseforest.sunriseforestapp_client.models.SunriseNotification;
 import pro.sunriseforest.sunriseforestapp_client.net.ApiFactory;
 import pro.sunriseforest.sunriseforestapp_client.settings.SharedPreferenceHelper;
+import rx.Observable;
 import rx.schedulers.Schedulers;
 
 
@@ -17,13 +21,9 @@ public class NotificationsJobService extends JobService {
 
 
 
-
-
-
     private final static String TAG = "%%%/" + NotificationsJobService.class.getSimpleName();
     private String mToken;
 
-    private boolean mWillRefresh;
 
     @Override
     public void onCreate() {
@@ -36,50 +36,57 @@ public class NotificationsJobService extends JobService {
         int action = params.getExtras().getInt(JobBuilder.ACTION_KEY);
 
         if(action == JobBuilder.ACTION_START_JOB){
-            mWillRefresh = true;
+
             ApiFactory.getSunriseForestService()
-                    .getTasks(mToken)
+                    .getNotifications(mToken)
 //                .compose(new AsyncNetTransformer<>())
                     .subscribeOn(Schedulers.io())
                     .observeOn( Schedulers.io())
+                    .map(notifications -> {
+                        cache(notifications);
+                        return notifications;
+                    })
                     .subscribe(
-                            tasks -> {
-                                showNotification(tasks.size());
+                            notifications -> {
+                                Log.i(TAG, "onStartJob: onNext");
+                                showNotifications(notifications);
+                                refreshIfWorks();
                                 jobFinished(params,false);
                             },
-                            throwable -> jobFinished(params, false));
-
-            if(mWillRefresh) refreshScheduler();
-
-        }else if(action == JobBuilder.ACTION_CANCEL_JOB){
-            mWillRefresh = false;
-            jobFinished(params, false);
+                            throwable ->{
+                                Log.i(TAG, "onStartJob: onError  " + throwable.getMessage());
+                                jobFinished(params, false);
+                            });
         }
-
 
         return true;
     }
 
+    private void cache(List<SunriseNotification> notifications ){
+        Log.i(TAG, "cache: ");
+        SunriseNotificationsProvider.getInstance(this).append(notifications);
+    }
     // должен принмимать SunriseNotification
-    private void showNotification(int size) {
-        Log.i(TAG, "showNotification: ");
-        SunriseNotification notification = new SunriseNotification("Количество тасков",
-                "Тасков на сервере: ",
-                NotificationHelper.AMOUNT_OF_TASKS,
-                size);
+    private void showNotifications(List<SunriseNotification> notifications) {
+        Log.i(TAG, "showNotifications: ");
 
-        NotificationHelper.getInstance(this).showNotification(notification);
-
-
-
+        //todo костыль: нужно лист передавать
+        NotificationHelper.getInstance(this).showNotification(notifications.get(0));
     }
 
     @Override
     public boolean onStopJob(JobParameters params) {
         Log.i(TAG, "onStopJob: ");
+        refreshIfWorks();
         return false;
     }
 
+
+    private void refreshIfWorks(){
+        if(SharedPreferenceHelper.getInstance(this).getSettings().isNotificationsAreWorks()){
+            refreshScheduler();
+        }
+    }
 
     private void refreshScheduler(){
         Log.i(TAG, "refreshScheduler: ");
@@ -97,4 +104,8 @@ public class NotificationsJobService extends JobService {
         Log.i(TAG, "onDestroy: ");
 
     }
+
+
+
+
 }

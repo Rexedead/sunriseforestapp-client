@@ -35,7 +35,8 @@ public class NotificationsFragment extends NavigatedFragment {
     private RecycleNotificationAdapter mAdapter;
 
 
-
+    public NotificationsFragment() {
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

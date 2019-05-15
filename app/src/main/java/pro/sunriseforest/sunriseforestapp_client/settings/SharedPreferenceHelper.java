@@ -8,10 +8,14 @@ import android.util.Log;
 
 import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Moshi;
-import java.io.IOException;
-import java.util.function.Function;
+import com.squareup.moshi.Types;
 
-import io.reactivex.functions.Action;
+import java.io.IOException;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
+
+import pro.sunriseforest.sunriseforestapp_client.models.SunriseNotification;
 import pro.sunriseforest.sunriseforestapp_client.models.User;
 
 public class SharedPreferenceHelper implements ISharedPreferenceHelper{
@@ -20,6 +24,10 @@ public static final String TAG = "%%%/SharedPrefHelper";
     private static final String TOKEN_TAG = "pro.sunriseforest.sunriseforestapp_client_token_tag";
     private static final String MY_USER = "pro.sunriseforest.sunriseforestapp_client_my_user";
     private static final String SETTINGS_TAG = "pro.sunriseforest.sunriseforestapp_client_settings_tag";
+
+    private static final String NOTIFICATIONS_TAG = "pro.sunriseforest.sunriseforestapp_client_notifications_tag";
+
+
 
     private SharedPreferences mSharedPreferences;
 
@@ -134,6 +142,38 @@ public static final String TAG = "%%%/SharedPrefHelper";
 
      public interface OnUpdatedSettings{
         void update(Settings settings);
+    }
+
+    //notifications
+
+    public List<SunriseNotification> getNotifications(){
+        List<SunriseNotification> notifications;
+        String jsonNotifications = mSharedPreferences.getString(NOTIFICATIONS_TAG, "");
+        if(jsonNotifications.length() == 0){
+            return null;
+        }
+        Type type = Types.newParameterizedType(List.class, SunriseNotification.class);
+        JsonAdapter<List> jsonAdapter = mMoshi.adapter(type);
+        try {
+            notifications = jsonAdapter.fromJson(jsonNotifications);
+        } catch (IOException e) {
+            Log.e(TAG, "не удалось перевести json в Settings");
+            return null;
+        }
+
+
+        return notifications;
+    }
+
+    public void saveNotifications(List<SunriseNotification> notifications){
+
+        Type type = Types.newParameterizedType(List.class, SunriseNotification.class);
+        JsonAdapter<List> jsonAdapter = mMoshi.adapter(type);
+
+        String jsonNotifications = jsonAdapter.toJson(notifications);
+        mSharedPreferences.edit()
+                .putString(NOTIFICATIONS_TAG, jsonNotifications)
+                .apply();
     }
 
 }

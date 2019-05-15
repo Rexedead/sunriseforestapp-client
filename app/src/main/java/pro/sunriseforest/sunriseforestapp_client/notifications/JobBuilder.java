@@ -10,7 +10,6 @@ public class JobBuilder {
     public static final String ACTION_KEY = "pro.sunriseforest.sunriseforestapp_client.notifications_action_key";
 
     public static final int ACTION_START_JOB = 1001;
-    public static final int ACTION_CANCEL_JOB = 1002;
 
 
     public static final int NOTIFICATION_JOB_ID = 101;

@@ -6,16 +6,16 @@ import io.reactivex.annotations.Nullable;
 
 public class SunriseNotification {
 
-    @Json(name = "sr_message")
+    @Json(name = "sr_notification_msg")
     private String mMessage;
 
-    @Json(name = "sr_headline")
+    @Json(name = "sr_notification_headline")
     private String mHeadline;
 
-    @Json(name = "sr_type")
+    @Json(name = "sr_notification_type")
     private int mType;
     
-    @Json(name = "sr_data")
+    @Json(name = "sr_notification_count") //TODO  здесь могут быть любые данные, необязательно количество поэтому sr_notification_data
     private Object data;
 
     public SunriseNotification(String message, String headline, int type, Object data) {

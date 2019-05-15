@@ -8,7 +8,6 @@ import android.os.Build;
 import android.support.v4.app.NotificationCompat;
 
 import pro.sunriseforest.sunriseforestapp_client.R;
-import pro.sunriseforest.sunriseforestapp_client.SunriseForestApp;
 import pro.sunriseforest.sunriseforestapp_client.models.SunriseNotification;
 
 public class NotificationHelper {
@@ -16,7 +15,7 @@ public class NotificationHelper {
     private Context mContext;
     private NotificationManager mNotificationManager;
 
-    public static final int AMOUNT_OF_TASKS = 101;
+    public static final int AMOUNT_OF_TASKS_TYPE = 1;
 
     public static NotificationHelper getInstance(Context context){
         return new NotificationHelper(context);
@@ -51,9 +50,10 @@ public class NotificationHelper {
         builder.setContentTitle(notification.getHeadline())
                 .setSmallIcon(R.drawable.ic_launcher_foreground);
 
+        //todo hz chot: походу на сервере нужно формировать готовый текст уведомления, сохранять в SunriseNotification.msg
         switch (notification.getType()){
-            case AMOUNT_OF_TASKS:
-                String text = notification.getMessage() + notification.getData();
+            case AMOUNT_OF_TASKS_TYPE:
+                String text = "появились новые таски, целых " + notification.getData() + " штук))))";
                 builder.setContentText(text);
         }
 
@@ -61,6 +61,12 @@ public class NotificationHelper {
     }
 
     public void showNotification(SunriseNotification notification){
+
+        //не кидаем уведомление если нет новых тасков
+        /* todo а вообще в таких ситуациях нужно с сервера присылать пустую notification с type = 0,
+           todo это будет говорить что новых уведомлений для пользователя нет*/
+//        if(notification.getType() == AMOUNT_OF_TASKS_TYPE && (int)notification.getData() == 0) return;
+
         mNotificationManager.notify(123, getNotification(notification));
     }
 }

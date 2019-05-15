@@ -73,7 +73,7 @@ public class ApiFactory {
                 .addInterceptor(new HttpLoggingInterceptor(message -> Log.d(TAG, message))
                         .setLevel(HttpLoggingInterceptor.Level.BODY))
                 .addNetworkInterceptor(new NetworkCacheInterceptor())
-                .cache(OfflineCacheInterceptor.cacheTasks())
+                .cache(OfflineCacheInterceptor.cacheTasks())  //todo hz
                 .build();
     }
 

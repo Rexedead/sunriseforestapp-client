@@ -4,6 +4,7 @@ package pro.sunriseforest.sunriseforestapp_client.net;
 
 import java.util.List;
 
+import pro.sunriseforest.sunriseforestapp_client.models.SunriseNotification;
 import pro.sunriseforest.sunriseforestapp_client.models.Task;
 import pro.sunriseforest.sunriseforestapp_client.models.User;
 import retrofit2.http.Body;
@@ -20,8 +21,12 @@ public interface SunriseForestService {
     @GET("data/tasks")
     Observable<List<Task>> getTasks(@Query("sr_user_token") String token);
 
+
+    @GET("data/notifications")
+    Observable<List<SunriseNotification>> getNotifications(@Query("sr_user_token") String token);
+
     @GET("data/tasks/{id}")
-    Observable<List<Task>> getTask(@Path("id") int id);
+    Observable<Task> getTask(@Path("id") int id);
 
     @Headers("Cache-Control: no-cache")
     @GET("auth/login")

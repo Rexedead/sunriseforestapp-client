@@ -5,12 +5,16 @@ import java.util.List;
 
 import pro.sunriseforest.sunriseforestapp_client.SunriseForestApp;
 import pro.sunriseforest.sunriseforestapp_client.models.SunriseNotification;
+import pro.sunriseforest.sunriseforestapp_client.notifications.JobSchedulerHelper;
+import pro.sunriseforest.sunriseforestapp_client.notifications.SunriseNotificationsProvider;
 import pro.sunriseforest.sunriseforestapp_client.settings.SharedPreferenceHelper;
 import pro.sunriseforest.sunriseforestapp_client.ui.NavigationManager;
 import pro.sunriseforest.sunriseforestapp_client.ui.fragments.NotificationsFragment;
 
 public class NotificationsPresenter extends BasePresenter<NotificationsFragment> {
     private static final String TAG = "NotificationPresenter";
+
+
 
 
     private static final NotificationsPresenter ourInstance = new NotificationsPresenter();
@@ -32,10 +36,11 @@ public class NotificationsPresenter extends BasePresenter<NotificationsFragment>
         mNavigationManager = NavigationManager.getInstance();
         mSharedPreferenceHelper = new SharedPreferenceHelper(SunriseForestApp.getAppContext());
 
-        mSunriseNotifications = new ArrayList<>();
-        mSunriseNotifications.add(new SunriseNotification("Заголовок 1"));
-        mSunriseNotifications.add(new SunriseNotification("Заголовок 2"));
-        mSunriseNotifications.add(new SunriseNotification("Заголовок 3"));
+        mSunriseNotifications = SunriseNotificationsProvider
+                .getInstance(SunriseForestApp.getAppContext())
+                .getNotifications();
+
+
     }
 
 
@@ -64,17 +69,34 @@ public class NotificationsPresenter extends BasePresenter<NotificationsFragment>
 
     //todo временный метод
     public void clickedTurnNotification() {
+        mSharedPreferenceHelper.updateSettings(settings ->{
+                    boolean areWorks =  settings.turnNotifications();
+                    turnNotification(areWorks);
+                });
+
         log(" clickedTurnNotification()");
-        mSharedPreferenceHelper.updateSettings(settings ->
-                getView().showNotificationsAreWorks( settings.turnNotifications()));
 
     }
 
+    private void turnNotification(boolean works){
+        getView().showNotificationsAreWorks(works);
+        JobSchedulerHelper jobSchedulerHelper =
+                new JobSchedulerHelper(SunriseForestApp.getAppContext());
+
+        if(works) jobSchedulerHelper.startNotificationJob();
+        else jobSchedulerHelper.cancelNotificationJob();
+    }
     private void updateNotifications(){
         log("updateNotifications()");
+
+        mSunriseNotifications = SunriseNotificationsProvider
+                .getInstance(SunriseForestApp.getAppContext())
+                .getNotifications();
+
         mView.updateNotifications(mSunriseNotifications);
         mNotificationsIsUpdated = true;
     }
+
 
 
     public boolean notificationsAreWorks() {
