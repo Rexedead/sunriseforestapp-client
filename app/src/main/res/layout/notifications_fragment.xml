@@ -14,8 +14,16 @@
         android:layout_height="543dp"
         android:layout_above="@+id/turn_notifications"
         android:layout_alignParentEnd="true"
-        android:layout_marginBottom="100dp"
+        android:layout_marginBottom="80dp"
         android:scrollbars="vertical"/>
+    <Button
+        android:id="@+id/delete_notifications"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="удалить уведомления"
+        android:layout_marginBottom="150dp"
+        android:layout_alignParentBottom="true"
+        />
 
     <Button
         android:id="@+id/turn_notifications"

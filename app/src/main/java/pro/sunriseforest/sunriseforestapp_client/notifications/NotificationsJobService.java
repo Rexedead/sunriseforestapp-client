@@ -5,6 +5,7 @@ import android.app.job.JobParameters;
 import android.app.job.JobScheduler;
 import android.app.job.JobService;
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 
 import java.util.List;
@@ -18,8 +19,6 @@ import rx.schedulers.Schedulers;
 
 
 public class NotificationsJobService extends JobService {
-
-
 
     private final static String TAG = "%%%/" + NotificationsJobService.class.getSimpleName();
     private String mToken;
@@ -50,6 +49,7 @@ public class NotificationsJobService extends JobService {
                             notifications -> {
                                 Log.i(TAG, "onStartJob: onNext");
                                 showNotifications(notifications);
+                                notifyApp();
                                 refreshIfWorks();
                                 jobFinished(params,false);
                             },
@@ -62,6 +62,11 @@ public class NotificationsJobService extends JobService {
         return true;
     }
 
+    private void notifyApp(){
+        Intent intent = new Intent(NotificationReceiver.NOTIFICATION_ACTION);
+        sendBroadcast(intent);
+
+    }
     private void cache(List<SunriseNotification> notifications ){
         Log.i(TAG, "cache: ");
         SunriseNotificationsProvider.getInstance(this).append(notifications);
@@ -104,8 +109,6 @@ public class NotificationsJobService extends JobService {
         Log.i(TAG, "onDestroy: ");
 
     }
-
-
 
 
 }

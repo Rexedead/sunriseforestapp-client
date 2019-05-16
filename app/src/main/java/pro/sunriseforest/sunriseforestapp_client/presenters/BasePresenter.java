@@ -1,6 +1,7 @@
 package pro.sunriseforest.sunriseforestapp_client.presenters;
 
 
+import android.app.Application;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 
@@ -26,6 +27,14 @@ public abstract class BasePresenter <F extends Fragment> {
     public void bindView(F view){
         log(String.format("bindView(view=%s)", view));
         mView = view;
+        AppActivity activity =  (AppActivity)mView.getActivity();
+
+        if(activity != null){
+            boolean newNotificationsCameLater =  activity
+                    .setNewNotificationsCameListener(this::cameNewNotifications);
+
+            if(newNotificationsCameLater) cameNewNotifications();
+        }
     }
 
     public void unBindView(){
@@ -47,6 +56,10 @@ public abstract class BasePresenter <F extends Fragment> {
 
     }
 
+    protected void cameNewNotifications(){
+        log("cameNewNotifications");
+    }
+
     protected void logError(String msg){
         Log.e(TAG,msg);
     }
@@ -58,15 +71,21 @@ public abstract class BasePresenter <F extends Fragment> {
         log(String.format(msg, args));
     }
 
+
+
     //todo чет неоч
     void handleNetworkError(Throwable e) {
         if (e instanceof ConnectException) {
-            ((AppActivity)getView().getActivity()).showInfoMessage("Отсутствует подключение к интернету");
+            showNetworkError("Отсутствует подключение к интернету");
         } else if (e instanceof SocketTimeoutException) {
-            ((AppActivity)getView().getActivity()).showInfoMessage("На сервере проблема, попробуйте еще раз через пару минут");
+            showNetworkError("На сервере проблема, попробуйте еще раз через пару минут");
         } else if (e instanceof HttpException) {
-            ((AppActivity)getView().getActivity()).showInfoMessage(ErrorMassageManager.WhatIsMyError(((HttpException) e).code(),TAG));
+            showNetworkError(ErrorMassageManager.WhatIsMyError(((HttpException) e).code(),TAG));
         }
         logError(e.getMessage());
+    }
+
+    protected void showNetworkError(String s) {
+        ((AppActivity) getView().getActivity()).showInfoMessage(s);
     }
 }

@@ -28,7 +28,9 @@ public class NotificationsFragment extends NavigatedFragment {
 
     //todo временная кнопка
     private Button mTurnNotificationButton;
-    private View.OnClickListener mTurnNotificationListener = view -> mPresenter.clickedTurnNotification();
+    //todo временная кнопка
+    private Button mDeleteNotificationsButton;
+
 
     private RecyclerView mNotificationsRecyclerView;
 
@@ -44,7 +46,10 @@ public class NotificationsFragment extends NavigatedFragment {
 
         View view = inflater.inflate(R.layout.notifications_fragment, container, false);
         mTurnNotificationButton = view.findViewById(R.id.turn_notifications);
-        mTurnNotificationButton.setOnClickListener(mTurnNotificationListener);
+        mTurnNotificationButton.setOnClickListener( v -> mPresenter.clickedTurnNotification());
+
+        mDeleteNotificationsButton = view.findViewById(R.id.delete_notifications);
+        mDeleteNotificationsButton.setOnClickListener(v -> mPresenter.clickedDeleteAllNotifications());
 
         mNotificationsRecyclerView = view.findViewById(R.id.notifications_recyclerView);
         mAdapter = new RecycleNotificationAdapter();

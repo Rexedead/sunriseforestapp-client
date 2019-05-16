@@ -15,8 +15,6 @@ public class NotificationsPresenter extends BasePresenter<NotificationsFragment>
     private static final String TAG = "NotificationPresenter";
 
 
-
-
     private static final NotificationsPresenter ourInstance = new NotificationsPresenter();
 
     public static NotificationsPresenter getInstance() {
@@ -28,6 +26,8 @@ public class NotificationsPresenter extends BasePresenter<NotificationsFragment>
 
     private boolean mNotificationsIsUpdated = false;
 
+    private boolean mViewIsUpdated = false;
+
     // ссылка по итогу будет так же храниться в адаптере.
     private List<SunriseNotification> mSunriseNotifications;
 
@@ -36,11 +36,6 @@ public class NotificationsPresenter extends BasePresenter<NotificationsFragment>
         mNavigationManager = NavigationManager.getInstance();
         mSharedPreferenceHelper = new SharedPreferenceHelper(SunriseForestApp.getAppContext());
 
-        mSunriseNotifications = SunriseNotificationsProvider
-                .getInstance(SunriseForestApp.getAppContext())
-                .getNotifications();
-
-
     }
 
 
@@ -48,8 +43,26 @@ public class NotificationsPresenter extends BasePresenter<NotificationsFragment>
     public void bindView(NotificationsFragment view) {
         super.bindView(view);
 
+        update();
+
+    }
+
+    @Override
+    public void unBindView() {
+        super.unBindView();
+
+        // потому что нет гарантии, что после unBind у нас данные не изменятся и их не нужно апдейтить
+        mNotificationsIsUpdated = false;
+        mViewIsUpdated = false;
+    }
+
+    private void update(){
         if(!mNotificationsIsUpdated){
             updateNotifications();
+        }
+
+        if(!mViewIsUpdated){
+            tryUpdateView();
         }
     }
 
@@ -78,6 +91,30 @@ public class NotificationsPresenter extends BasePresenter<NotificationsFragment>
 
     }
 
+    //todo временный метод
+    public void clickedDeleteAllNotifications(){
+        SunriseNotificationsProvider
+                .getInstance(SunriseForestApp.getAppContext())
+                .saveNotifications(new ArrayList<>());
+
+        mNotificationsIsUpdated = false;
+        mViewIsUpdated = false;
+
+        update();
+
+    }
+
+    @Override
+    protected void cameNewNotifications() {
+        log("cameNewNotifications");
+        mNotificationsIsUpdated = false;
+        mViewIsUpdated = false;
+
+        if(!isViewUnBunding()){
+            update();
+        }
+    }
+
     private void turnNotification(boolean works){
         getView().showNotificationsAreWorks(works);
         JobSchedulerHelper jobSchedulerHelper =
@@ -86,15 +123,24 @@ public class NotificationsPresenter extends BasePresenter<NotificationsFragment>
         if(works) jobSchedulerHelper.startNotificationJob();
         else jobSchedulerHelper.cancelNotificationJob();
     }
+
     private void updateNotifications(){
         log("updateNotifications()");
 
         mSunriseNotifications = SunriseNotificationsProvider
                 .getInstance(SunriseForestApp.getAppContext())
                 .getNotifications();
-
-        mView.updateNotifications(mSunriseNotifications);
         mNotificationsIsUpdated = true;
+
+    }
+
+    private void tryUpdateView(){
+        log("tryUpdateView");
+        if(mView != null){
+            mView.updateNotifications(mSunriseNotifications);
+            mViewIsUpdated = true;
+        }
+
     }
 
 

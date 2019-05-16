@@ -1,28 +1,21 @@
 package pro.sunriseforest.sunriseforestapp_client.ui;
 
-import android.app.job.JobInfo;
-import android.app.job.JobScheduler;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentSender;
+
+import android.content.IntentFilter;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.MenuItem;
+
 import android.view.View;
 import android.widget.Toast;
 
-import java.util.List;
 
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import pro.sunriseforest.sunriseforestapp_client.R;
-import pro.sunriseforest.sunriseforestapp_client.models.Task;
-import pro.sunriseforest.sunriseforestapp_client.notifications.JobBuilder;
-import pro.sunriseforest.sunriseforestapp_client.settings.SharedPreferenceHelper;
+import pro.sunriseforest.sunriseforestapp_client.notifications.NotificationReceiver;
 
 public class AppActivity extends AppCompatActivity implements IView{
 
@@ -31,27 +24,28 @@ public class AppActivity extends AppCompatActivity implements IView{
     private NavController mNavController;
     private BottomNavigationView mBottomNavigationView;
     private boolean mIsStartApp;
+    private NotificationsCameListener mNewNotificationsCameListener;
+    private boolean mNewNotificationsCameLater;
 
 
-    private BottomNavigationView.OnNavigationItemSelectedListener mNavigationItemSelectedListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-            log(String.format("onNavigationItemSelected(menuItem = %s)", menuItem));
-            switch (menuItem.getItemId()){
-                case R.id.navigation_desk:
-                    showDeskScreen();
-                    break;
-                case R.id.navigation_profile:
-                    showProfileScreen();
-                    break;
-                case R.id.navigation_notifications:
-                    showNotificationsScreen();
-                    break;
-            }
-            menuItem.setChecked(true);
-            return false;
+    private BottomNavigationView.OnNavigationItemSelectedListener mNavigationItemSelectedListener = menuItem -> {
+        log(String.format("onNavigationItemSelected(menuItem = %s)", menuItem));
+        switch (menuItem.getItemId()){
+            case R.id.navigation_desk:
+                showDeskScreen();
+                break;
+            case R.id.navigation_profile:
+                showProfileScreen();
+                break;
+            case R.id.navigation_notifications:
+                showNotificationsScreen();
+                break;
         }
+        menuItem.setChecked(true);
+        return false;
     };
+    private NotificationReceiver mNotificationReceiver;
+    private IntentFilter mIntentFilter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -67,6 +61,9 @@ public class AppActivity extends AppCompatActivity implements IView{
         mNavController = Navigation.findNavController(this, R.id.container);
         mNavigationManager = NavigationManager.getInstance();
         mNavigationManager.bindView(this);
+
+        mNotificationReceiver = new NotificationReceiver();
+        mIntentFilter = new IntentFilter(NotificationReceiver.NOTIFICATION_ACTION);
 
         if(mIsStartApp){
             mNavigationManager.startApp();
@@ -217,6 +214,7 @@ public class AppActivity extends AppCompatActivity implements IView{
 
 
 
+
     public void setCheckedItemMenu(int idx){
 
         mBottomNavigationView.getMenu().getItem(idx).setChecked(true);
@@ -244,6 +242,12 @@ public class AppActivity extends AppCompatActivity implements IView{
         if(!mNavigationManager.isBinding()){
             mNavigationManager.bindView(this);
         }
+
+        mNewNotificationsCameLater = mNotificationReceiver
+                .setListener(this::newNotificationsReceived);
+
+
+        registerReceiver(mNotificationReceiver,mIntentFilter);
     }
 
     @Override
@@ -252,6 +256,11 @@ public class AppActivity extends AppCompatActivity implements IView{
         log("lc: onPause()");
 
         mNavigationManager.unBindView();
+
+        mNotificationReceiver.unsetListener();
+        unregisterReceiver(mNotificationReceiver);
+
+        mNewNotificationsCameListener = null;
     }
 
     @Override
@@ -259,6 +268,8 @@ public class AppActivity extends AppCompatActivity implements IView{
         super.onStop();
         log("lc: onStop()");
     }
+
+
 
 
     @Override
@@ -278,6 +289,29 @@ public class AppActivity extends AppCompatActivity implements IView{
         }else{
             super.onBackPressed();
         }
+    }
+
+
+
+    private void newNotificationsReceived(){
+        log("newNotificationsReceived() ");
+
+        if(mNewNotificationsCameListener != null){
+            mNewNotificationsCameListener.notificationsCame();
+            mNewNotificationsCameLater = false;
+        }else{
+            mNewNotificationsCameLater = true;
+        }
+    }
+
+    // вернет true если новые notifications приходили до set'а
+    public boolean setNewNotificationsCameListener(NotificationsCameListener listener){
+        mNewNotificationsCameListener = listener;
+        return mNewNotificationsCameLater;
+    }
+
+    public interface NotificationsCameListener{
+        void notificationsCame();
     }
 
 
