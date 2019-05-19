@@ -24,6 +24,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="60dp"
-        app:srcCompat="@android:drawable/ic_menu_compass" />
+        app:srcCompat="@drawable/ic_add_circle_outline" />
 
 </android.support.design.widget.CoordinatorLayout>

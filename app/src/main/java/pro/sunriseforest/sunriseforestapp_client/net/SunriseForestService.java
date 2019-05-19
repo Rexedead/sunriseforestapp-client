@@ -28,6 +28,9 @@ public interface SunriseForestService {
     @GET("data/tasks/{id}")
     Observable<Task> getTask(@Path("id") int id);
 
+    @GET("data/user/{id}/get_user")
+    Observable<User> getUser(@Path("id") int id);
+
     @Headers("Cache-Control: no-cache")
     @GET("auth/login")
     Observable<User> userLoginByEmail(@Query("email_or_phone")String mail, @Query("password") String password);

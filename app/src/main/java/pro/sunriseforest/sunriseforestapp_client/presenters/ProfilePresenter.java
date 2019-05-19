@@ -11,7 +11,7 @@ import pro.sunriseforest.sunriseforestapp_client.ui.fragments.ProfileFragment;
 
 public class ProfilePresenter extends BasePresenter<ProfileFragment> {
 
-    private static final String TAG = "ProfilePresenter";
+    public static final String TAG = "ProfilePresenter";
     private User mUser;
     private SharedPreferenceHelper mSharedPreferenceHelper;
     private NavigationManager mNavigationManager;
@@ -26,14 +26,39 @@ public class ProfilePresenter extends BasePresenter<ProfileFragment> {
     private ProfilePresenter() {
         mNavigationManager = NavigationManager.getInstance();
         mSharedPreferenceHelper = new SharedPreferenceHelper(SunriseForestApp.getAppContext());
-        mUser = mSharedPreferenceHelper.getUser();
+
 
     }
+
+//todo при заходе в профиль - обновлять данные с сервера (заработано + взято тасков)
+  /*  private void updUserData(){
+        ApiFactory
+                .getSunriseForestService()
+                .getUser(
+                        Integer.parseInt(mSharedPreferenceHelper.getUser().getId())
+                )
+                .compose(new AsyncNetTransformer<>())
+                .subscribe(this::setProfile, this::handleNetworkError);
+    }
+
+    private void setProfile(User user) {
+        mSharedPreferenceHelper.saveUser(user);
+        mUser = mSharedPreferenceHelper.getUser();
+        mView.setProfile(mUser.getId(),
+                mUser.getName(),
+                mUser.getEmail(),
+                mUser.getPhoneNumber(),
+                mUser.getRole(),
+                mUser.getTasksCount(),
+                mUser.getRewardSum());
+
+    }*/
 
 
     @Override
     public void bindView(ProfileFragment view) {
         super.bindView(view);
+        mUser = mSharedPreferenceHelper.getUser();
         mView.setProfile(mUser.getId(),
                 mUser.getName(),
                 mUser.getEmail(),

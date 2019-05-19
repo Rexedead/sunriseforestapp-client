@@ -10,7 +10,7 @@ import pro.sunriseforest.sunriseforestapp_client.ui.fragments.LoginFragment;
 
 public class LoginPresenter extends BasePresenter<LoginFragment>{
     private static final LoginPresenter ourInstance = new LoginPresenter();
-    private static final String TAG = "LoginPresenter";
+    public static final String TAG = "LoginPresenter";
     public static LoginPresenter getInstance() {
         return ourInstance;
     }

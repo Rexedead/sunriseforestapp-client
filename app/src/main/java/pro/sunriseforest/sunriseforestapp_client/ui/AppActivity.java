@@ -14,6 +14,9 @@ import android.widget.Toast;
 
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+
+import java.util.Objects;
+
 import pro.sunriseforest.sunriseforestapp_client.R;
 import pro.sunriseforest.sunriseforestapp_client.notifications.NotificationReceiver;
 
@@ -55,6 +58,7 @@ public class AppActivity extends AppCompatActivity implements IView{
         mIsStartApp = savedInstanceState== null;
 
         setContentView(R.layout.app_activity);
+        Objects.requireNonNull(getSupportActionBar()).hide();
         mBottomNavigationView = findViewById(R.id.navigation);
         mBottomNavigationView.setOnNavigationItemSelectedListener(mNavigationItemSelectedListener);
 

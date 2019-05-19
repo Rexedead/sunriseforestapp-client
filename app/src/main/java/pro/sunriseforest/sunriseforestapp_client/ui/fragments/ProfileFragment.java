@@ -91,7 +91,7 @@ public class ProfileFragment extends NavigatedFragment  implements TextWatcher {
     public void setEnabledEditTexts(boolean isYes) {
         log("setEnabled( isYes = %s)", isYes);
 
-        mUserNameEditText.setEnabled(isYes);
+        mUserNameEditText.setEnabled(false);
         mUserPhoneEditText.setEnabled(isYes);
         mUserMailEditText.setEnabled(isYes);
     }

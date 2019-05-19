@@ -34,9 +34,10 @@ public class TaskFragment extends BaseFragment implements TextWatcher {
 
     private TextView mContractorNameTextView;
     private TextView mContractorPhoneTextView;
+    private TextView mClientTextView;
     private Button mBookButton;
-    private Button mCompleteTask;
-    private Button mCancelTask;
+    private Button mCompleteTaskButton;
+    private Button mCancelTaskButton;
 
     private View.OnClickListener mSaveTaskListener = view -> mPresenter.clickedSaveButton();
     private View.OnClickListener mBookListener = view -> mPresenter.clickedBookButton();
@@ -54,14 +55,15 @@ public class TaskFragment extends BaseFragment implements TextWatcher {
         mTaskStartDateEditText = view.findViewById(R.id.start_date_taskFrag_editText);
         mTaskEndDateEditText = view.findViewById(R.id.end_date_taskFrag_editText);
         mRewardEditText = view.findViewById(R.id.reward_taskFrag_editText);
+        mClientTextView = view.findViewById(R.id.singleTask_client_TextView);
         mClientPhoneEditText = view.findViewById(R.id.client_phone_taskFrag_editText);
         mClientNameEditText = view.findViewById(R.id.client_name_taskFrag_editText);
         mSaveButton = view.findViewById(R.id.save_taskFrag_button);
         mContractorNameTextView = view.findViewById(R.id.contractor_name_taskFrag_textView);
         mContractorPhoneTextView = view.findViewById(R.id.contractor_phone_taskFrag_textView);
         mBookButton = view.findViewById(R.id.book_taskFrag_button);
-        mCompleteTask = view.findViewById(R.id.complete_taskFrag_button);
-        mCancelTask = view.findViewById(R.id.cancel_taskFrag_button);
+        mCompleteTaskButton = view.findViewById(R.id.complete_taskFrag_button);
+        mCancelTaskButton = view.findViewById(R.id.cancel_taskFrag_button);
 
         addListenersForEditText();
         hideBottomNavigation();
@@ -106,6 +108,14 @@ public class TaskFragment extends BaseFragment implements TextWatcher {
         return mClientPhoneEditText.getText().toString();
     }
 
+    public void setTextOnCompleteTaskButton(String btnText) {
+        this.mCompleteTaskButton.setText(btnText);
+    }
+
+    public void setTextOnCancelTaskButton(String btnText) {
+        this.mCancelTaskButton.setText(btnText);
+    }
+
     public void setEnabledEditTexts(boolean isYes) {
         log("setEnabled( isYes = %s)", isYes);
 
@@ -122,8 +132,8 @@ public class TaskFragment extends BaseFragment implements TextWatcher {
         mSaveButton.setOnClickListener(mSaveTaskListener);
         mBookButton.setOnClickListener(mBookListener);
         //добавляем листенеры для отмены и комплита.. наверно этот метод можно переименовать в addListeners()
-        mCompleteTask.setOnClickListener(mCompleteListener);
-        mCancelTask.setOnClickListener(mCancelListener);
+        mCompleteTaskButton.setOnClickListener(mCompleteListener);
+        mCancelTaskButton.setOnClickListener(mCancelListener);
         mDescriptionEditText.addTextChangedListener(this);
         mTaskStartDateEditText.addTextChangedListener(this);
         mTaskEndDateEditText.addTextChangedListener(this);
@@ -158,15 +168,20 @@ public class TaskFragment extends BaseFragment implements TextWatcher {
     }
 
     //скрываем забронировать
-    //не вижу смысла делать замену кнопки с брони на "завершить", это только запутает
     public void bookButtonIsVisible(boolean isVisible) {
         mBookButton.setVisibility(isVisible ? View.VISIBLE : View.GONE);
     }
 
     //отображаем действия
     public void taskActionsIsVisible(boolean isVisible) {
-        mCompleteTask.setVisibility(isVisible ? View.VISIBLE : View.GONE);
-        mCancelTask.setVisibility(isVisible ? View.VISIBLE : View.GONE);
+        mCompleteTaskButton.setVisibility(isVisible ? View.VISIBLE : View.GONE);
+        mCancelTaskButton.setVisibility(isVisible ? View.VISIBLE : View.GONE);
+    }
+
+    public void clientIsVisible(boolean isVisible){
+        mClientNameEditText.setVisibility(isVisible ? View.VISIBLE : View.GONE);
+        mClientPhoneEditText.setVisibility(isVisible ? View.VISIBLE : View.GONE);
+        mClientTextView.setVisibility(isVisible ? View.VISIBLE : View.GONE);
     }
 
     @Override

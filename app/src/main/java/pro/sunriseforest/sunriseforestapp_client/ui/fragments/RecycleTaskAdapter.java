@@ -8,13 +8,18 @@ import android.graphics.Typeface;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
+import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 
 public class
@@ -41,7 +46,15 @@ RecycleTaskAdapter extends RecyclerView.Adapter<RecycleTaskAdapter.TaskViewHolde
         Task task = mTaskList.get(position);
         String reward = task.getReward()+" \u20BD";
         task_holder.mReward.setText(reward);
-        task_holder.mCreationDate.setText(task.getCreationDate());
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSS", Locale.getDefault());
+        try {
+            Date date = df.parse(task.getCreationDate());
+            String dateString = DateFormat.format("dd.MM.yyyy HH:mm", date).toString();
+            task_holder.mCreationDate.setText(dateString);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
         task_holder.mStartDate.setText(task.getStartDate());
         task_holder.mEndDate.setText(task.getDeadlineDate());
         switch (task.getStatus()) {

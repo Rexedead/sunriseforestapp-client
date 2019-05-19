@@ -62,6 +62,12 @@ public class DeskFragment extends NavigatedFragment{
         mRecycleTaskAdapter.notifyDataSetChanged();
     }
 
+    public void showFab(boolean yes){
+        if(yes)
+        mNewTaskFloatingActionButton.show();
+        else mNewTaskFloatingActionButton.hide();
+    }
+
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -83,7 +89,7 @@ public class DeskFragment extends NavigatedFragment{
                 mRecyclerView));
 
         showBottomNavigation();
-
+        showFab(mPresenter.isManager());
         return view;
     }
 

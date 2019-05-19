@@ -1,6 +1,7 @@
 package pro.sunriseforest.sunriseforestapp_client.presenters;
 
 import java.util.List;
+import java.util.Objects;
 
 import pro.sunriseforest.sunriseforestapp_client.SunriseForestApp;
 import pro.sunriseforest.sunriseforestapp_client.models.Task;
@@ -14,8 +15,7 @@ import rx.Observable;
 
 public class DeskPresenter extends BasePresenter<DeskFragment> {
 
-    public static String TAG = "DeskPresenter";
-
+    public static final String TAG = "DeskPresenter";
 
     private static final DeskPresenter ourInstance = new DeskPresenter();
 
@@ -116,6 +116,9 @@ public class DeskPresenter extends BasePresenter<DeskFragment> {
         mTasks.add(task);
     }
 
+    public boolean isManager(){
+        return Objects.requireNonNull(mSharedPreferenceHelper.getUser()).getRole().equals("manager");
+    }
 
     @Override
     public String getTAG() {

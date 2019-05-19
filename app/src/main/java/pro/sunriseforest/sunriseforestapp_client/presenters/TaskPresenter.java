@@ -12,7 +12,7 @@ public class TaskPresenter extends BasePresenter<TaskFragment> {
 
 
     private static final TaskPresenter ourInstance = new TaskPresenter();
-    private static final String TAG = "TaskPresenter";
+    public static final String TAG = "TaskPresenter";
 
     private SharedPreferenceHelper mSharedPreferenceHelper;
 
@@ -62,7 +62,7 @@ public class TaskPresenter extends BasePresenter<TaskFragment> {
 
     private void saveTask(Task task) {
         log("saveTask()");
-        //todo...реализуй пока без обновы на сервере. обнови только на клиенте. коммент по итогу не стирай
+        //todo...реализуй пока без обновы на сервере. обнови только на клиенте. коммент по итогу не стирай = DeskPresenter.getInstance().update();
         ApiFactory
                 .getSunriseForestService()
                 .updDescription(
@@ -94,23 +94,32 @@ public class TaskPresenter extends BasePresenter<TaskFragment> {
         mView.taskActionsIsVisible(true);
         mView.setTaskContractor(mSharedPreferenceHelper.getUser().getName(),
                 mSharedPreferenceHelper.getUser().getPhoneNumber());
+        mView.clientIsVisible(true);
         mView.showToast("*Задача забронирована*");
     }
 
     //отображение при создании фрагмента
     private void displayTaskActionsForUser() {
         log("displayTaskActionsForUser()");
+        boolean isManager = getUserRole().equals("manager");
         if (mTask.getStatus() == 102 &&
-                (mTask.getContractorId().equals(mSharedPreferenceHelper.getUser().getId())
-                        || getUserRole().equals("manager"))) {
+                (mTask.getContractorId().equals(mSharedPreferenceHelper.getUser().getId()) || isManager)) {
             mView.bookButtonIsVisible(false);
             mView.taskActionsIsVisible(true);
-        } else if (mTask.getStatus() == 101) {
+            mView.clientIsVisible(true);
+            if(isManager){
+                mView.setTextOnCompleteTaskButton("Завершить задачу (от Менеджера)");
+                mView.setTextOnCancelTaskButton("Отменить бронирование (от Менеджера)");
+            }
+        }
+        else if (mTask.getStatus() == 101) {
             mView.bookButtonIsVisible(true);
             mView.taskActionsIsVisible(false);
+            mView.clientIsVisible(isManager);
         } else {
             mView.bookButtonIsVisible(false);
             mView.taskActionsIsVisible(false);
+            mView.clientIsVisible(isManager || mTask.getContractorId().equals(mSharedPreferenceHelper.getUser().getId()));
         }
     }
 
@@ -123,7 +132,6 @@ public class TaskPresenter extends BasePresenter<TaskFragment> {
                 )
                 .compose(new AsyncNetTransformer<>())
                 .subscribe(this::setTask, this::handleNetworkError, this::hideButtonsAfterComplete);
-
     }
 
 
@@ -162,7 +170,6 @@ public class TaskPresenter extends BasePresenter<TaskFragment> {
         boolean yes = canChangeTask();
         mView.setEnabledEditTexts(yes);
         mView.saveButtonIsVisible(false);
-
         //логика отображения отмены и завершения
         displayTaskActionsForUser();
     }
@@ -173,9 +180,9 @@ public class TaskPresenter extends BasePresenter<TaskFragment> {
     }
 
 
-    //stackTrace выдает call/onCompleted
     private void hideButtonAfterSave() {
         log("hideButtonAfterSave");
+        DeskPresenter.getInstance().update();
         mView.saveButtonIsVisible(false);
         taskChanged = false;
         mView.showToast("Сохранено");
@@ -183,12 +190,14 @@ public class TaskPresenter extends BasePresenter<TaskFragment> {
 
     private void hideButtonsAfterComplete() {
         log("hideButtonsAfterComplete");
+        DeskPresenter.getInstance().update();
         mView.taskActionsIsVisible(false);
         mView.showToast("Задача отмечена завершенной");
     }
 
     private void hideButtonsAfterCancel() {
         log("hideButtonsAfterCancel");
+        DeskPresenter.getInstance().update();
         mView.taskActionsIsVisible(false);
         mView.showToast("Бронирование задачи отменено");
     }
