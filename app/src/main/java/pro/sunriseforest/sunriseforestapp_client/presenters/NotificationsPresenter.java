@@ -68,7 +68,7 @@ public class NotificationsPresenter extends BasePresenter<NotificationsFragment>
 
 
     @Override
-    protected String getTAG() {
+    protected String createTAG() {
         return TAG;
     }
 

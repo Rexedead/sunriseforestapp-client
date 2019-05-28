@@ -11,7 +11,6 @@ import pro.sunriseforest.sunriseforestapp_client.ui.fragments.ProfileFragment;
 
 public class ProfilePresenter extends BasePresenter<ProfileFragment> {
 
-    public static final String TAG = "ProfilePresenter";
     private User mUser;
     private SharedPreferenceHelper mSharedPreferenceHelper;
     private NavigationManager mNavigationManager;
@@ -124,8 +123,8 @@ public class ProfilePresenter extends BasePresenter<ProfileFragment> {
 
 
     @Override
-    public String getTAG() {
-        return TAG;
+    public String createTAG() {
+        return "ProfilePresenter";
     }
 
 

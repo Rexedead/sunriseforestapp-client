@@ -15,7 +15,6 @@ import rx.Observable;
 
 public class DeskPresenter extends BasePresenter<DeskFragment> {
 
-    public static final String TAG = "DeskPresenter";
 
     private static final DeskPresenter ourInstance = new DeskPresenter();
 
@@ -121,7 +120,7 @@ public class DeskPresenter extends BasePresenter<DeskFragment> {
     }
 
     @Override
-    public String getTAG() {
-        return TAG;
+    public String createTAG() {
+        return "DeskPresenter";
     }
 }

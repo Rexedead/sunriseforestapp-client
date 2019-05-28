@@ -22,7 +22,7 @@ public class SplashFragment extends BaseFragment {
 
         return new BasePresenter() {
             @Override
-            protected String getTAG() {
+            protected String createTAG() {
                 return "SplashPresenter";
             }
         };

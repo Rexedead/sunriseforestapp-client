@@ -1,7 +1,6 @@
 package pro.sunriseforest.sunriseforestapp_client.presenters;
 
 
-import android.app.Application;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 
@@ -9,14 +8,15 @@ import java.net.ConnectException;
 import java.net.SocketTimeoutException;
 
 import pro.sunriseforest.sunriseforestapp_client.net.ErrorMassageManager;
+import pro.sunriseforest.sunriseforestapp_client.net.Utils;
 import pro.sunriseforest.sunriseforestapp_client.ui.AppActivity;
 import retrofit2.HttpException;
 
 public abstract class BasePresenter <F extends Fragment> {
-    private String TAG = "%%%/presenter/" + getTAG();
+    public final String TAG = "%%%/presenter/" + createTAG();
 
 
-    protected abstract String getTAG();
+    protected abstract String createTAG();
 //
     protected F mView;
 
@@ -72,11 +72,15 @@ public abstract class BasePresenter <F extends Fragment> {
     }
 
 
-
-    //todo чет неоч
     void handleNetworkError(Throwable e) {
         if (e instanceof ConnectException) {
-            showNetworkError("Отсутствует подключение к интернету");
+            if(Utils.isNetworkAvailable()){
+                showNetworkError("Проблема с подключением к серверу." +
+                        " Связь с сервером востановится через некоторое время");
+            }else{
+                showNetworkError("Отсутствует подключение к интернету");
+            }
+
         } else if (e instanceof SocketTimeoutException) {
             showNetworkError("На сервере проблема, попробуйте еще раз через пару минут");
         } else if (e instanceof HttpException) {

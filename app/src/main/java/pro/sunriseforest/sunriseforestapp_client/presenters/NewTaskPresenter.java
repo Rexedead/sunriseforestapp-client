@@ -165,7 +165,7 @@ public class NewTaskPresenter extends BasePresenter<NewTaskFragment> {
     }
 
     @Override
-    public String getTAG() {
+    public String createTAG() {
         return TAG;
     }
 }

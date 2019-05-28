@@ -56,8 +56,8 @@ public class LoginFragment extends BaseFragment  {
 
 
     private User getUser(){
-        String login = mLoginEditText.getText().toString();
-        String password = mPasswordEditText.getText().toString();
+        String login = mLoginEditText.getText().toString().trim();
+        String password = mPasswordEditText.getText().toString().trim();
         return new User(login, password);
     }
 

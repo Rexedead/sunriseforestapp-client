@@ -11,7 +11,6 @@ import pro.sunriseforest.sunriseforestapp_client.ui.fragments.RegistrationFragme
 public class RegistrationPresenter extends BasePresenter<RegistrationFragment> {
 
     private static final RegistrationPresenter ourInstance = new RegistrationPresenter();
-    public static final String TAG = "RegistrationPresenter";
     public static RegistrationPresenter getInstance() {
         return ourInstance;
     }
@@ -25,8 +24,8 @@ public class RegistrationPresenter extends BasePresenter<RegistrationFragment> {
     }
 
     @Override
-    public String getTAG() {
-        return TAG;
+    public String createTAG() {
+        return "RegistrationPresenter";
     }
 
     public void selectedRegistration(final User user) {

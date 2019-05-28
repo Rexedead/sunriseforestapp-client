@@ -12,7 +12,6 @@ public class TaskPresenter extends BasePresenter<TaskFragment> {
 
 
     private static final TaskPresenter ourInstance = new TaskPresenter();
-    public static final String TAG = "TaskPresenter";
 
     private SharedPreferenceHelper mSharedPreferenceHelper;
 
@@ -175,8 +174,8 @@ public class TaskPresenter extends BasePresenter<TaskFragment> {
     }
 
     @Override
-    protected String getTAG() {
-        return TAG;
+    protected String createTAG() {
+        return "TaskPresenter";
     }
 
 

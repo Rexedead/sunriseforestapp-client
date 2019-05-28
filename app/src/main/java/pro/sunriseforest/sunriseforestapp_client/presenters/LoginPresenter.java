@@ -1,5 +1,10 @@
 package pro.sunriseforest.sunriseforestapp_client.presenters;
 
+
+
+import android.text.TextUtils;
+
+
 import pro.sunriseforest.sunriseforestapp_client.SunriseForestApp;
 import pro.sunriseforest.sunriseforestapp_client.models.User;
 import pro.sunriseforest.sunriseforestapp_client.net.ApiFactory;
@@ -10,7 +15,6 @@ import pro.sunriseforest.sunriseforestapp_client.ui.fragments.LoginFragment;
 
 public class LoginPresenter extends BasePresenter<LoginFragment>{
     private static final LoginPresenter ourInstance = new LoginPresenter();
-    public static final String TAG = "LoginPresenter";
     public static LoginPresenter getInstance() {
         return ourInstance;
     }
@@ -26,9 +30,24 @@ public class LoginPresenter extends BasePresenter<LoginFragment>{
 
     public void selectedLogin(User user){
         log(String.format("selectedLogin(user=%s)", user));
-
+        
         String email = user.getEmail();
         String password = user.getPassword();
+
+        if(TextUtils.isEmpty(email)){
+            getView().showError("Введите вашу почту ");
+            return;
+        }
+
+        if(TextUtils.isEmpty(password)){
+            getView().showError("Введите пароль");
+            return;
+        }
+
+        if(!checkEmail(email)){
+            getView().showError("Неверная почта");
+            return;
+        }
 
         ApiFactory
                 .getSunriseForestService()
@@ -40,8 +59,17 @@ public class LoginPresenter extends BasePresenter<LoginFragment>{
                         );
 
     }
+
+
+
     public void selectedGoToRegistration(){
         mNavigationManager.fromLoginToRegistration();
+    }
+
+
+
+    private boolean checkEmail(String email){
+       return email.split("@").length == 2;
     }
 
     private void saveUser(User user){
@@ -56,18 +84,9 @@ public class LoginPresenter extends BasePresenter<LoginFragment>{
 
     }
 
-    private void showError(String msg){
-        log(String.format("showError(String msg = %s)", msg));
-        if(!viewIsNullAndLog("showError")){
-            getView().showError(msg);
-        }
-
-    }
-
-
 
     @Override
-    protected String getTAG() {
-        return TAG;
+    protected String createTAG() {
+        return "LoginPresenter";
     }
 }

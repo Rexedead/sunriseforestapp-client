@@ -89,35 +89,21 @@ public class User {
         return mInfo;
     }
 
-    public void setId(String mId) {
-        this.mId = mId;
+    public void setId(String id) {
+        mId = id;
     }
 
-    public void setPassword(String mPassword) {
-        this.mPassword = mPassword;
+    public void setName(String name) {
+        mName = name;
     }
 
-    public void setName(String mName) {
-        this.mName = mName;
+    public void setPhoneNumber(String phoneNumber) {
+        mPhoneNumber = phoneNumber;
     }
 
-    public void setPhoneNumber(String mPhoneNumber) {
-        this.mPhoneNumber = mPhoneNumber;
+    public void setEmail(String email) {
+        mEmail = email;
     }
-
-    public void setEmail(String mMail) {
-        this.mEmail = mMail;
-    }
-
-    public void setRole(String mRole) {
-        this.mRole = mRole;
-    }
-
-    public void setToken(String mToken) {
-        this.mToken = mToken;
-    }
-
-
 
     public void setInfo(String mInfo) {
         this.mInfo = mInfo;

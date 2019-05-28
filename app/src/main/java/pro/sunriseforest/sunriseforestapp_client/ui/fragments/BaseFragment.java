@@ -24,7 +24,7 @@ public abstract class BaseFragment extends Fragment {
     private String mTAG = "%%%/fragments/" + createTag();
 
 
-    protected String getTAG(){
+    public String getTAG(){
         return mTAG;
     }
 

@@ -3,12 +3,15 @@ package pro.sunriseforest.sunriseforestapp_client.notifications;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.support.v4.app.NotificationCompat;
 
 import pro.sunriseforest.sunriseforestapp_client.R;
 import pro.sunriseforest.sunriseforestapp_client.models.SunriseNotification;
+import pro.sunriseforest.sunriseforestapp_client.ui.AppActivity;
 
 public class NotificationHelper {
 
@@ -47,7 +50,13 @@ public class NotificationHelper {
 
         NotificationCompat.Builder builder = getNotificationBuilder();
 
+        Intent intent = new Intent(mContext, AppActivity.class);
+        PendingIntent pendingIntent = PendingIntent
+                .getActivity(mContext, 2343, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+
         builder.setContentTitle(notification.getHeadline())
+                .setContentIntent(pendingIntent)
                 .setSmallIcon(R.drawable.ic_launcher_foreground);
 
         //todo hz chot: походу на сервере нужно формировать готовый текст уведомления, сохранять в SunriseNotification.msg

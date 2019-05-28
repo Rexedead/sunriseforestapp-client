@@ -1,67 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <RelativeLayout
 
-    <EditText
-        android:id="@+id/enter_login_editText"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="150dp"
-        android:layout_marginBottom="10dp"
-        android:layout_centerHorizontal="true"
-        android:layout_marginLeft="35dp"
-        android:layout_marginRight="35dp"
-        android:textSize="14sp"
-        android:hint="@string/enter_login_hint"
-        android:inputType="text"/>
+        android:layout_height="match_parent">
 
-    <EditText
-        android:id="@+id/enter_password_editText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/enter_login_editText"
-        android:layout_marginLeft="35dp"
-        android:layout_marginRight="35dp"
-        android:textSize="14sp"
-        android:hint="@string/enter_password_hint"
-        android:inputType="textPassword"/>
 
-    <Button
-        android:id="@+id/log_in_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/enter_password_editText"
-        android:layout_marginLeft="60dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="60dp"
-        android:text="@string/log_in"
-        android:background="@color/auth_button"
-        android:textColor="@color/button_text"
-        android:textAllCaps="false"
-        android:textSize="18sp" />
-    <Button
-        android:id="@+id/registration_logAct_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/log_in_button"
-        android:layout_marginLeft="60dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="60dp"
-        android:background="@color/auth_button"
-        android:textColor="@color/button_text"
-        android:textAllCaps="false"
-        android:text="@string/registration_logAct_button"
-        android:textSize="18sp"
-        />
+        <EditText
+            android:id="@+id/enter_login_editText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="150dp"
+            android:layout_marginBottom="10dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="35dp"
+            android:layout_marginRight="35dp"
+            android:textSize="14sp"
+            android:hint="@string/enter_login_hint"
+            android:inputType="textEmailAddress"/>
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        app:srcCompat="@drawable/logo"
-        android:layout_height="150dp"
-        android:layout_width="100dp" />
-</RelativeLayout>
+        <EditText
+            android:id="@+id/enter_password_editText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/enter_login_editText"
+            android:layout_marginLeft="35dp"
+            android:layout_marginRight="35dp"
+            android:textSize="14sp"
+            android:hint="@string/enter_password_hint"
+            android:inputType="textPassword"/>
+
+        <Button
+            android:id="@+id/log_in_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/enter_password_editText"
+            android:layout_marginLeft="60dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="60dp"
+            android:text="@string/log_in"
+            android:background="@color/auth_button"
+            android:textColor="@color/button_text"
+            android:textAllCaps="false"
+            android:textSize="18sp" />
+        <Button
+            android:id="@+id/registration_logAct_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/log_in_button"
+            android:layout_marginLeft="60dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="60dp"
+            android:background="@color/auth_button"
+            android:textColor="@color/button_text"
+            android:textAllCaps="false"
+            android:text="@string/registration_logAct_button"
+            android:textSize="18sp"
+            />
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            app:srcCompat="@drawable/logo"
+            android:layout_height="150dp"
+            android:layout_width="100dp" />
+    </RelativeLayout>
+</ScrollView>

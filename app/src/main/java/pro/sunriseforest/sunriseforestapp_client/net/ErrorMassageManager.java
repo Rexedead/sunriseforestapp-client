@@ -7,16 +7,9 @@ import pro.sunriseforest.sunriseforestapp_client.presenters.RegistrationPresente
 import pro.sunriseforest.sunriseforestapp_client.presenters.TaskPresenter;
 
 
-//TODO сообщения "френдли юзер"
-
 
 public class ErrorMassageManager {
 
-    private final static String LoginPresenterTag = "%%%/presenter/" + LoginPresenter.TAG;
-    private final static String RegistrationPresenterTag = "%%%/presenter/" + RegistrationPresenter.TAG;
-    private final static String DeskPresenterTag = "%%%/presenter/" + DeskPresenter.TAG;
-    private final static String ProfilePresenterTag = "%%%/presenter/" + ProfilePresenter.TAG;
-    private final static String TaskPresenterTag = "%%%/presenter/" + TaskPresenter.TAG;
 
     public static String WhatIsMyError(int code, String tag) {
         switch (code) {
@@ -24,21 +17,18 @@ public class ErrorMassageManager {
                 return "Неверный запрос или запрещенные символы";
             case 401:
 
-                switch (tag) {
-                    case LoginPresenterTag:
-                        return "Неверное имя пользователя или пароль";
-                    case RegistrationPresenterTag:
-                        return "401 при регистрации";
-                    default:
-                        return "Неавторизованный запрос, попробуйте перезайти";
-                }
+                if(LoginPresenter.getInstance().TAG.equals(tag))
+                    return "Неверный логин или пароль";
+                else if(RegistrationPresenter.getInstance().TAG.equals(tag))
+                    return "401 при регистрации";
+                else return "Неавторизованный запрос, попробуйте перезайти";
+
 
             case 403:
 
-                if (RegistrationPresenterTag.equals(tag)) {
+                if (RegistrationPresenter.getInstance().TAG.equals(tag)) {
                     return "403 при регистрации";
-                }
-                if (TaskPresenterTag.equals(tag)) {
+                }else if (TaskPresenter.getInstance().TAG.equals(tag)) {
                     return "Задача уже забронирована другим пользователем";
                 }
                 return "Пользователь заблокирован/Нет доступа";
@@ -46,18 +36,17 @@ public class ErrorMassageManager {
 
             case 404:
 
-                switch (tag) {
-                    case LoginPresenterTag:
-                        return "Запрос на авторизацию по неверной ссылке";
-                    case RegistrationPresenterTag:
-                        return "Запрос на регистрацию по неверной ссылке";
-                    case DeskPresenterTag:
-                        return "Запрос на задачи по неверной ссылке";
-                    case ProfilePresenterTag:
-                        return "Запрос на профиль по неверной ссылке";
-                    default:
-                        return "Запрос по неверной ссылке";
-                }
+
+                if(LoginPresenter.getInstance().TAG.equals(tag))
+                    return "Запрос на авторизацию по неверной ссылке";
+                else if(RegistrationPresenter.getInstance().TAG.equals(tag))
+                    return "Запрос на регистрацию по неверной ссылке";
+                else if(DeskPresenter.getInstance().TAG.equals(tag))
+                    return "Запрос на задачи по неверной ссылке";
+                else if(ProfilePresenter.getInstance().TAG.equals(tag))
+                    return "Запрос на профиль по неверной ссылке";
+                else return "Запрос по неверной ссылке";
+
 
             case 408:
                 return "Сервер перегружен, попробуйте войти через 5 минут";
@@ -65,7 +54,7 @@ public class ErrorMassageManager {
                 return "Пользователь уже существует";
             case 429:
 
-                if (LoginPresenterTag.equals(tag)) {
+                if (LoginPresenter.getInstance().TAG.equals(tag)) {
                     return "Слишком много попыток входа. Попробуйте еще раз через 5 минут";
                 }
                 return "Слишком много запросов. Попробуйте еще раз через 5 минут";
