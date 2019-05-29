@@ -24,20 +24,16 @@ public class RegistrationFragment extends BaseFragment {
     private EditText mPasswordEditText;
     private EditText mPhoneNumberEditText;
     private EditText mNameEditText;
-//    private AppPresenter mPresenter;
 
-    private View.OnClickListener mOnClickListenerRegistrationButton = view -> {
-        log("cl: RegistrationButton onClick()");
 
-        mRegistrationPresenter.selectedRegistration(getUser());
-
-    };
+    private View.OnClickListener mOnClickListenerRegistrationButton =
+            view -> mRegistrationPresenter.selectedRegistration(getUser());
 
     private User getUser(){
-        String mail = mMailEditText.getText().toString();
-        String phone = mPhoneNumberEditText.getText().toString();
-        String password = mPasswordEditText.getText().toString();
-        String name = mNameEditText.getText().toString();
+        String mail = mMailEditText.getText().toString().trim();
+        String phone = mPhoneNumberEditText.getText().toString().trim();
+        String password = mPasswordEditText.getText().toString().trim();
+        String name = mNameEditText.getText().toString().trim();
         return new User(name, password, phone, mail, "contractor");
     }
 

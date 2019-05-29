@@ -69,11 +69,11 @@ public class ApiFactory {
     private static OkHttpClient buildClient() {
         String TAG = "%%%/APIService";
         return new OkHttpClient.Builder()
-                .addInterceptor(new OfflineCacheInterceptor())
+//                .addInterceptor(new OfflineCacheInterceptor())
                 .addInterceptor(new HttpLoggingInterceptor(message -> Log.d(TAG, message))
                         .setLevel(HttpLoggingInterceptor.Level.BODY))
-                .addNetworkInterceptor(new NetworkCacheInterceptor())
-                .cache(OfflineCacheInterceptor.cacheTasks())  //todo hz
+//                .addNetworkInterceptor(new NetworkCacheInterceptor())
+//                .cache(OfflineCacheInterceptor.cacheTasks())
                 .build();
     }
 

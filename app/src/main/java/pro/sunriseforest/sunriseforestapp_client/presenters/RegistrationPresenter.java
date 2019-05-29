@@ -1,5 +1,7 @@
 package pro.sunriseforest.sunriseforestapp_client.presenters;
 
+import android.text.TextUtils;
+
 import pro.sunriseforest.sunriseforestapp_client.SunriseForestApp;
 import pro.sunriseforest.sunriseforestapp_client.models.User;
 import pro.sunriseforest.sunriseforestapp_client.net.ApiFactory;
@@ -7,6 +9,7 @@ import pro.sunriseforest.sunriseforestapp_client.net.AsyncNetTransformer;
 import pro.sunriseforest.sunriseforestapp_client.settings.SharedPreferenceHelper;
 import pro.sunriseforest.sunriseforestapp_client.ui.NavigationManager;
 import pro.sunriseforest.sunriseforestapp_client.ui.fragments.RegistrationFragment;
+import pro.sunriseforest.sunriseforestapp_client.utils.InputCheckUtils;
 
 public class RegistrationPresenter extends BasePresenter<RegistrationFragment> {
 
@@ -29,7 +32,11 @@ public class RegistrationPresenter extends BasePresenter<RegistrationFragment> {
     }
 
     public void selectedRegistration(final User user) {
-        log(String.format("selectedRegistration"));
+        log(String.format("selectedRegistration( User ): user = %s", user));
+
+
+        if(!check(user)) return;
+
 
         ApiFactory
                 .getSunriseForestService()
@@ -40,6 +47,40 @@ public class RegistrationPresenter extends BasePresenter<RegistrationFragment> {
                         this::showTasks
                 );
 
+
+    }
+
+    private boolean check(User user){
+
+        String email = user.getEmail();
+        String name = user.getName();
+        String pn = user.getPhoneNumber();
+
+        if(TextUtils.isEmpty(email)){
+            getView().showError("Введите почту");
+            return false;
+        }
+        if(TextUtils.isEmpty(user.getPassword())){
+            getView().showError("Введите пароль");
+            return false;
+        }
+
+        if(TextUtils.isEmpty(name)){
+            getView().showError("Введите имя");
+            return false;
+        }
+
+        if(TextUtils.isEmpty(pn)){
+            getView().showError("Введите номер телефона");
+            return false;
+        }
+
+        if(InputCheckUtils.checkEmail(email) != InputCheckUtils.CORRECTLY){
+            getView().showError("Адрес электронной почты введен неверно");
+            return false;
+        }
+
+        return true;
 
     }
 
@@ -54,15 +95,6 @@ public class RegistrationPresenter extends BasePresenter<RegistrationFragment> {
         mNavigationManager.fromRegistrationToDesk();
 
 
-    }
-
-    private void showError(String msg) {
-        log(String.format("showError(String msg = %s)", msg));
-        if (getView() == null) {
-            log("showError() : view is null");
-        } else {
-            getView().showError(msg);
-        }
     }
 
 

@@ -12,6 +12,7 @@ import pro.sunriseforest.sunriseforestapp_client.net.AsyncNetTransformer;
 import pro.sunriseforest.sunriseforestapp_client.settings.SharedPreferenceHelper;
 import pro.sunriseforest.sunriseforestapp_client.ui.NavigationManager;
 import pro.sunriseforest.sunriseforestapp_client.ui.fragments.LoginFragment;
+import pro.sunriseforest.sunriseforestapp_client.utils.InputCheckUtils;
 
 public class LoginPresenter extends BasePresenter<LoginFragment>{
     private static final LoginPresenter ourInstance = new LoginPresenter();
@@ -30,24 +31,12 @@ public class LoginPresenter extends BasePresenter<LoginFragment>{
 
     public void selectedLogin(User user){
         log(String.format("selectedLogin(user=%s)", user));
-        
+
+        if(!check(user)) return;
+
         String email = user.getEmail();
         String password = user.getPassword();
 
-        if(TextUtils.isEmpty(email)){
-            getView().showError("Введите вашу почту ");
-            return;
-        }
-
-        if(TextUtils.isEmpty(password)){
-            getView().showError("Введите пароль");
-            return;
-        }
-
-        if(!checkEmail(email)){
-            getView().showError("Неверная почта");
-            return;
-        }
 
         ApiFactory
                 .getSunriseForestService()
@@ -67,9 +56,29 @@ public class LoginPresenter extends BasePresenter<LoginFragment>{
     }
 
 
+    private boolean check(User user){
+        String email = user.getEmail();
+        String password = user.getPassword();
+
+        if(TextUtils.isEmpty(email)){
+            getView().showError("Введите вашу почту ");
+            return false;
+        }
+
+        if(TextUtils.isEmpty(password)){
+            getView().showError("Введите пароль");
+            return false;
+        }
+
+        if(!checkEmail(email)){
+            getView().showError("Неверная почта");
+            return false;
+        }
+        return true;
+    }
 
     private boolean checkEmail(String email){
-       return email.split("@").length == 2;
+       return InputCheckUtils.checkEmail(email) == InputCheckUtils.CORRECTLY;
     }
 
     private void saveUser(User user){

@@ -13,14 +13,14 @@ import okhttp3.Interceptor;
 import okhttp3.Request;
 import okhttp3.Response;
 import pro.sunriseforest.sunriseforestapp_client.SunriseForestApp;
-import pro.sunriseforest.sunriseforestapp_client.net.Utils;
+import pro.sunriseforest.sunriseforestapp_client.utils.NetworkUtils;
 
 public class OfflineCacheInterceptor implements Interceptor {
     @NonNull
     @Override
     public Response intercept(@NonNull Chain chain) throws IOException {
         Request request = chain.request();
-        if (!Utils.isNetworkAvailable()) {
+        if (!NetworkUtils.isNetworkAvailable()) {
             CacheControl cacheControl = new CacheControl.Builder().maxStale(1, TimeUnit.DAYS).build();
             request = request.newBuilder().header("Cache-Control", cacheControl.toString()).build();
 

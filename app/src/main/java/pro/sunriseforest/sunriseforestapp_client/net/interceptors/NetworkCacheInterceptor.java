@@ -9,7 +9,7 @@ import java.io.IOException;
 import okhttp3.Interceptor;
 import okhttp3.Request;
 import okhttp3.Response;
-import pro.sunriseforest.sunriseforestapp_client.net.Utils;
+import pro.sunriseforest.sunriseforestapp_client.utils.NetworkUtils;
 
 public class NetworkCacheInterceptor implements Interceptor {
 
@@ -24,7 +24,7 @@ public class NetworkCacheInterceptor implements Interceptor {
         Response response = chain.proceed(request);
 
         Log.i("Network", "response came from server");
-        String cacheHeaderValue = Utils.isNetworkAvailable() ? "public, max-age=" +
+        String cacheHeaderValue = NetworkUtils.isNetworkAvailable() ? "public, max-age=" +
                 MAX_AGE : "public, only-if-cached, max-stale=" + MAX_STALE;
         String cacheControl = request.cacheControl().toString();
         String cacheMethod = TextUtils.isEmpty(request.cacheControl().toString()) ?

@@ -1,12 +1,15 @@
 package pro.sunriseforest.sunriseforestapp_client.presenters;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 import pro.sunriseforest.sunriseforestapp_client.SunriseForestApp;
+import pro.sunriseforest.sunriseforestapp_client.models.SunriseNotification;
 import pro.sunriseforest.sunriseforestapp_client.models.Task;
 import pro.sunriseforest.sunriseforestapp_client.net.ApiFactory;
 import pro.sunriseforest.sunriseforestapp_client.net.AsyncNetTransformer;
+import pro.sunriseforest.sunriseforestapp_client.notifications.SunriseNotificationsProvider;
 import pro.sunriseforest.sunriseforestapp_client.settings.SharedPreferenceHelper;
 import pro.sunriseforest.sunriseforestapp_client.ui.NavigationManager;
 import pro.sunriseforest.sunriseforestapp_client.ui.fragments.DeskFragment;
@@ -25,30 +28,39 @@ public class DeskPresenter extends BasePresenter<DeskFragment> {
     private NavigationManager mNavigationManager;
     private SharedPreferenceHelper mSharedPreferenceHelper;
 
+
     private DeskPresenter() {
         mNavigationManager = NavigationManager.getInstance();
         mSharedPreferenceHelper = new SharedPreferenceHelper(SunriseForestApp.getAppContext());
     }
 
 
-    private List<Task> mTasks;
+    private List<Task> mTasks = new ArrayList<>();
 
 
-    private void showTasks(List<Task> tasks) {
-        if (!viewIsNullAndLog("showTasks()")) {
-            mView.showTasks(tasks);
+    @Override
+    public void bindView(DeskFragment view) {
+        super.bindView(view);
+
+        if(isManager()){
+            view.showFab();
+        }else{
+            view.hideFab();
         }
+
+        if(isFirst()){
+            update();
+            return;
+        }
+        tryUpdateView();
+
     }
 
-    private void showTasks() {
 
-        String token = mSharedPreferenceHelper.getToken();
-
-        loadTasks(token)
-                .subscribe(
-                        this::showTasks,
-                        this::handleNetworkError
-                );
+    private void tryUpdateView() {
+        if(mView!= null){
+            mView.showTasks(mTasks);
+        }
     }
 
     private void showTask(int position) {
@@ -68,19 +80,23 @@ public class DeskPresenter extends BasePresenter<DeskFragment> {
 
     }
 
-    public void update() {
+    private void update() {
         log("update()");
 
         String token = mSharedPreferenceHelper.getToken();
 
-        loadTasks(token)
-                .subscribe(
-                        tasks -> {
-                            mTasks = tasks;
-                            showTasks(tasks);
-                        },
-                        this::handleNetworkError
-                );
+
+        loadTasks(token).subscribe(
+                tasks -> {
+                    mTasks = tasks;
+                    tryUpdateView();
+                },
+                throwable -> {
+                    handleNetworkError(throwable);
+                    tryUpdateView();
+                }
+        );
+
 
     }
 
@@ -94,28 +110,20 @@ public class DeskPresenter extends BasePresenter<DeskFragment> {
 
     }
 
+
     private void showNewTask() {
         log("showNewTask()");
-
         mNavigationManager.fromDeskToNewTask();
     }
 
-    private void showError(String msg) {
-        log(String.format("showError(String msg = %s)", msg));
-
-        if (!viewIsNullAndLog("showError()")) {
-            getView().showError(msg);
-        }
-
-    }
 
 
-    public void addTask(Task task){
+    void addTask(Task task){
         log("addTask( task = %s)", task);
         mTasks.add(task);
     }
 
-    public boolean isManager(){
+    private boolean isManager(){
         return Objects.requireNonNull(mSharedPreferenceHelper.getUser()).getRole().equals("manager");
     }
 

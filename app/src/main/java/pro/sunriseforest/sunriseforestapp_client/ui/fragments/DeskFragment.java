@@ -1,40 +1,35 @@
 package pro.sunriseforest.sunriseforestapp_client.ui.fragments;
 
-import android.content.Context;
+
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.GestureDetector;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
-
-import java.util.ArrayList;
 import java.util.List;
 
 import pro.sunriseforest.sunriseforestapp_client.R;
+import pro.sunriseforest.sunriseforestapp_client.SunriseForestApp;
 import pro.sunriseforest.sunriseforestapp_client.models.Task;
 import pro.sunriseforest.sunriseforestapp_client.presenters.BasePresenter;
 import pro.sunriseforest.sunriseforestapp_client.presenters.DeskPresenter;
 
 
-public class DeskFragment extends NavigatedFragment{
+public class DeskFragment extends NavigatedFragment implements RecycleTaskAdapter.TaskClickListener {
     private static final int ITEM_ON_NAV = 0;
 
-    private List<Task> mTaskList = new ArrayList<>();
     private DeskPresenter mPresenter = DeskPresenter.getInstance();
-    private RecycleTaskAdapter mRecycleTaskAdapter;
+    private RecycleTaskAdapter mRecycleTaskAdapter = new RecycleTaskAdapter(this);
     private RecyclerView mRecyclerView;
     private FloatingActionButton mNewTaskFloatingActionButton;
 
-    private View.OnClickListener mOnClickListenerNewTaskFloatingActionButton = view ->{
-      mPresenter.clickedNewTask();
-    };
+    private View.OnClickListener mOnClickListenerNewTaskFloatingActionButton =
+            view -> mPresenter.clickedNewTask();
 
 
     @Override
@@ -49,23 +44,17 @@ public class DeskFragment extends NavigatedFragment{
     }
 
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        //todo hs
-        mPresenter.update();
-    }
-
     public void showTasks(List<Task> tasks){
-        mTaskList.clear();
-        mTaskList.addAll(tasks);
-        mRecycleTaskAdapter.notifyDataSetChanged();
+        mRecycleTaskAdapter.addTasks(tasks, true);
     }
 
-    public void showFab(boolean yes){
-        if(yes)
+    public void showFab(){
         mNewTaskFloatingActionButton.show();
-        else mNewTaskFloatingActionButton.hide();
+
+    }
+
+    public void hideFab(){
+        mNewTaskFloatingActionButton.hide();
     }
 
 
@@ -79,17 +68,14 @@ public class DeskFragment extends NavigatedFragment{
         mNewTaskFloatingActionButton = view.findViewById(R.id.fab);
         mNewTaskFloatingActionButton.setOnClickListener(mOnClickListenerNewTaskFloatingActionButton);
         mRecyclerView = view.findViewById(R.id.desk_recyclerView);
-        mRecycleTaskAdapter = new RecycleTaskAdapter(mTaskList);
+
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setAdapter(mRecycleTaskAdapter);
-        mRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(),DividerItemDecoration.VERTICAL));
-        mRecyclerView.addOnItemTouchListener(new RecyclerTaskTouchListener(getContext(),
-                mRecyclerView));
+        mRecyclerView.addItemDecoration(new DividerItemDecoration(SunriseForestApp.getAppContext()
+                ,DividerItemDecoration.VERTICAL));
 
-        showBottomNavigation();
-        showFab(mPresenter.isManager());
         return view;
     }
 
@@ -98,56 +84,10 @@ public class DeskFragment extends NavigatedFragment{
         return ITEM_ON_NAV;
     }
 
-
-    class RecyclerTaskTouchListener implements RecyclerView.OnItemTouchListener{
-
-        private GestureDetector gestureDetector;
-
-        RecyclerTaskTouchListener(Context context, final RecyclerView recycleView ){
-
-            gestureDetector=new GestureDetector(context,new GestureDetector.SimpleOnGestureListener(){
-
-
-                @Override
-                public boolean onSingleTapUp(MotionEvent e) {
-                    return true;
-                }
-
-                @Override
-                public void onLongPress(MotionEvent e) {
-                    View child=recycleView.findChildViewUnder(e.getX(),e.getY());
-                    if(child!=null){
-                        int position = recycleView.getChildAdapterPosition(child);
-                        log("onLongPress(). Position = " + position);
-                    }
-                }
-            });
-        }
-
-
-        @Override
-        public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
-            log("RecyclerNotificationsTouchListener onInterceptTouchEvent()");
-            View child=rv.findChildViewUnder(e.getX(),e.getY());
-            if(child!=null && gestureDetector.onTouchEvent(e)){
-                int position = rv.getChildAdapterPosition(child);
-            mPresenter.clickedSelectedTask(position);
-            }
-
-            return false;
-        }
-
-        @Override
-        public void onTouchEvent(RecyclerView rv, MotionEvent e) {
-            log("RecyclerNotificationsTouchListener onTouchEvent()");
-        }
-
-        @Override
-        public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
-            log("RecyclerNotificationsTouchListener onRequestDisallowInterceptTouchEvent" +
-                            "(disallowIntercept=%s)" ,disallowIntercept);
-
-        }
+    @Override
+    public void onClick(int id) {
+        mPresenter.clickedSelectedTask(id);
     }
+
 
 }

@@ -181,7 +181,7 @@ public class TaskPresenter extends BasePresenter<TaskFragment> {
 
     private void hideButtonAfterSave() {
         log("hideButtonAfterSave");
-        DeskPresenter.getInstance().update();
+//        DeskPresenter.getInstance().update();
         mView.saveButtonIsVisible(false);
         taskChanged = false;
         mView.showToast("Сохранено");
@@ -189,14 +189,14 @@ public class TaskPresenter extends BasePresenter<TaskFragment> {
 
     private void hideButtonsAfterComplete() {
         log("hideButtonsAfterComplete");
-        DeskPresenter.getInstance().update();
+//        DeskPresenter.getInstance().update();
         mView.taskActionsIsVisible(false);
         mView.showToast("Задача отмечена завершенной");
     }
 
     private void hideButtonsAfterCancel() {
         log("hideButtonsAfterCancel");
-        DeskPresenter.getInstance().update();
+//        DeskPresenter.getInstance().update();
         mView.taskActionsIsVisible(false);
         mView.showToast("Бронирование задачи отменено");
     }

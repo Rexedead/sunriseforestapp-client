@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -25,6 +26,15 @@ import java.util.Locale;
 public class
 RecycleTaskAdapter extends RecyclerView.Adapter<RecycleTaskAdapter.TaskViewHolder> {
     private List<Task> mTaskList;
+    private TaskClickListener mListener;
+
+
+
+    public RecycleTaskAdapter(TaskClickListener listener) {
+        this.mTaskList = new ArrayList<>();
+        mListener = listener;
+    }
+
 
     @NonNull
     @Override
@@ -34,73 +44,85 @@ RecycleTaskAdapter extends RecyclerView.Adapter<RecycleTaskAdapter.TaskViewHolde
 
         return new TaskViewHolder(view);
     }
-
-    RecycleTaskAdapter(List<Task> taskList) {
-        this.mTaskList = taskList;
-
-        notifyItemRangeChanged(0, taskList.size());
-    }
-
     @Override
-    public void onBindViewHolder(@NonNull final TaskViewHolder task_holder, int position) {
+    public void onBindViewHolder(@NonNull final TaskViewHolder taskHolder, int position) {
         Task task = mTaskList.get(position);
         String reward = task.getReward()+" \u20BD";
-        task_holder.mReward.setText(reward);
+        taskHolder.mReward.setText(reward);
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSS", Locale.getDefault());
         try {
             Date date = df.parse(task.getCreationDate());
             String dateString = DateFormat.format("dd.MM.yyyy HH:mm", date).toString();
-            task_holder.mCreationDate.setText(dateString);
+            taskHolder.mCreationDate.setText(dateString);
         } catch (ParseException e) {
             e.printStackTrace();
         }
 
-        task_holder.mStartDate.setText(task.getStartDate());
-        task_holder.mEndDate.setText(task.getDeadlineDate());
+        taskHolder.mStartDate.setText(task.getStartDate());
+        taskHolder.mEndDate.setText(task.getDeadlineDate());
         switch (task.getStatus()) {
             case 101:
-                task_holder.mStatus.setImageResource(R.drawable.status_101);
+                taskHolder.mStatus.setImageResource(R.drawable.status_101);
                 break;
             case 102:
-                task_holder.mStatus.setImageResource(R.drawable.status_102);
+                taskHolder.mStatus.setImageResource(R.drawable.status_102);
                 break;
             case 103:
-                task_holder.mStatus.setImageResource(R.drawable.status_103);
-                task_holder.mDescription.setTypeface(null, Typeface.NORMAL);
-                task_holder.mReward.setTypeface(null, Typeface.NORMAL);
-                task_holder.mCreationDate.setTypeface(null, Typeface.NORMAL);
-                task_holder.mStartDate.setTypeface(null, Typeface.NORMAL);
-                task_holder.mEndDate.setTypeface(null, Typeface.NORMAL);
-                task_holder.mCreationDateText.setTypeface(null, Typeface.NORMAL);
-                task_holder.mStartDateText.setTypeface(null, Typeface.NORMAL);
-                task_holder.mEndDateText.setTypeface(null, Typeface.NORMAL);
+                taskHolder.mStatus.setImageResource(R.drawable.status_103);
+                taskHolder.mDescription.setTypeface(null, Typeface.NORMAL);
+                taskHolder.mReward.setTypeface(null, Typeface.NORMAL);
+                taskHolder.mCreationDate.setTypeface(null, Typeface.NORMAL);
+                taskHolder.mStartDate.setTypeface(null, Typeface.NORMAL);
+                taskHolder.mEndDate.setTypeface(null, Typeface.NORMAL);
+                taskHolder.mCreationDateText.setTypeface(null, Typeface.NORMAL);
+                taskHolder.mStartDateText.setTypeface(null, Typeface.NORMAL);
+                taskHolder.mEndDateText.setTypeface(null, Typeface.NORMAL);
 
-                task_holder.mDescription.setTextColor(ContextCompat.getColor(SunriseForestApp.getAppContext(),
+                taskHolder.mDescription.setTextColor(ContextCompat.getColor(SunriseForestApp.getAppContext(),
                         R.color.secondaryText));
-                task_holder.mReward.setTextColor(ContextCompat.getColor(SunriseForestApp.getAppContext(),
+                taskHolder.mReward.setTextColor(ContextCompat.getColor(SunriseForestApp.getAppContext(),
                         R.color.secondaryText));
-                task_holder.mCreationDate.setTextColor(ContextCompat.getColor(SunriseForestApp.getAppContext(),
+                taskHolder.mCreationDate.setTextColor(ContextCompat.getColor(SunriseForestApp.getAppContext(),
                         R.color.secondaryText));
-                task_holder.mEndDate.setTextColor(ContextCompat.getColor(SunriseForestApp.getAppContext(),
+                taskHolder.mEndDate.setTextColor(ContextCompat.getColor(SunriseForestApp.getAppContext(),
                         R.color.secondaryText));
-                task_holder.mStartDate.setTextColor(ContextCompat.getColor(SunriseForestApp.getAppContext(),
+                taskHolder.mStartDate.setTextColor(ContextCompat.getColor(SunriseForestApp.getAppContext(),
                         R.color.secondaryText));
-                task_holder.mCreationDateText.setTextColor(ContextCompat.getColor(SunriseForestApp.getAppContext(),
+                taskHolder.mCreationDateText.setTextColor(ContextCompat.getColor(SunriseForestApp.getAppContext(),
                         R.color.secondaryText));
-                task_holder.mStartDateText.setTextColor(ContextCompat.getColor(SunriseForestApp.getAppContext(),
+                taskHolder.mStartDateText.setTextColor(ContextCompat.getColor(SunriseForestApp.getAppContext(),
                         R.color.secondaryText));
-                task_holder.mEndDateText.setTextColor(ContextCompat.getColor(SunriseForestApp.getAppContext(),
+                taskHolder.mEndDateText.setTextColor(ContextCompat.getColor(SunriseForestApp.getAppContext(),
                         R.color.secondaryText));
                 break;
         }
 
+
         String taskDescription = task.getTaskDescription();
-        task_holder.mDescription.setText(taskDescription);
+        taskHolder.mDescription.setText(taskDescription);
+        taskHolder.setPosition(position);
+        taskHolder.setListener(mListener);
+
     }
+
 
     @Override
     public int getItemCount() {
         return mTaskList.size();
+    }
+
+    public void addTasks(List<Task> tasks, boolean refresh){
+
+        if(refresh){
+            mTaskList.clear();
+            mTaskList.addAll(tasks);
+            notifyDataSetChanged();
+            return;
+        }
+
+        int position = mTaskList.size();
+        mTaskList.addAll(tasks);
+        notifyItemChanged(position);
     }
 
     class TaskViewHolder extends RecyclerView.ViewHolder {
@@ -108,6 +130,18 @@ RecycleTaskAdapter extends RecyclerView.Adapter<RecycleTaskAdapter.TaskViewHolde
                 mStartDateText, mEndDateText;
         ImageView mStatus;
 
+
+
+        private int mPosition;
+
+        private void setPosition(int position){
+
+            mPosition = position;
+        }
+        private void setListener(TaskClickListener listener) {
+
+            itemView.setOnClickListener( v-> listener.onClick(mPosition));
+        }
 
         TaskViewHolder(@NonNull View view) {
             super(view);
@@ -124,5 +158,11 @@ RecycleTaskAdapter extends RecyclerView.Adapter<RecycleTaskAdapter.TaskViewHolde
 
         }
 
+
+
+    }
+
+    public interface TaskClickListener{
+        void onClick(int id);
     }
 }

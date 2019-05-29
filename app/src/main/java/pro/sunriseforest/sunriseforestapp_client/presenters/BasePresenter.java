@@ -8,12 +8,14 @@ import java.net.ConnectException;
 import java.net.SocketTimeoutException;
 
 import pro.sunriseforest.sunriseforestapp_client.net.ErrorMassageManager;
-import pro.sunriseforest.sunriseforestapp_client.net.Utils;
+import pro.sunriseforest.sunriseforestapp_client.utils.NetworkUtils;
 import pro.sunriseforest.sunriseforestapp_client.ui.AppActivity;
 import retrofit2.HttpException;
 
 public abstract class BasePresenter <F extends Fragment> {
     public final String TAG = "%%%/presenter/" + createTAG();
+
+    private boolean mIsFirst = true;
 
 
     protected abstract String createTAG();
@@ -39,6 +41,7 @@ public abstract class BasePresenter <F extends Fragment> {
 
     public void unBindView(){
         log("unBindView()");
+        mIsFirst = false;
         mView = null;
     }
 
@@ -74,7 +77,7 @@ public abstract class BasePresenter <F extends Fragment> {
 
     void handleNetworkError(Throwable e) {
         if (e instanceof ConnectException) {
-            if(Utils.isNetworkAvailable()){
+            if(NetworkUtils.isNetworkAvailable()){
                 showNetworkError("Проблема с подключением к серверу." +
                         " Связь с сервером востановится через некоторое время");
             }else{
@@ -87,6 +90,12 @@ public abstract class BasePresenter <F extends Fragment> {
             showNetworkError(ErrorMassageManager.WhatIsMyError(((HttpException) e).code(),TAG));
         }
         logError(e.getMessage());
+    }
+
+
+
+    protected boolean isFirst() {
+        return mIsFirst;
     }
 
     protected void showNetworkError(String s) {

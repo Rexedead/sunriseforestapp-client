@@ -6,6 +6,7 @@ import pro.sunriseforest.sunriseforestapp_client.ui.AppActivity;
 
 public abstract class NavigatedFragment extends BaseFragment {
 
+
     @Override
     public void onStart() {
         super.onStart();
@@ -15,6 +16,7 @@ public abstract class NavigatedFragment extends BaseFragment {
         if (activity != null) {
             activity.setCheckedItemMenu(idx);
         }
+        showBottomNavigation();
     }
 
     protected abstract int getItemOnNavigationMenu();

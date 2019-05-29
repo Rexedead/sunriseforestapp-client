@@ -24,6 +24,7 @@ public abstract class BaseFragment extends Fragment {
     private String mTAG = "%%%/fragments/" + createTag();
 
 
+
     public String getTAG(){
         return mTAG;
     }
@@ -111,6 +112,7 @@ public abstract class BaseFragment extends Fragment {
         Toast.makeText(SunriseForestApp.getAppContext(), msg, Toast.LENGTH_LONG).show();
 
     }
+
     protected void log(String msg){
         Log.i( mTAG, msg);
     }

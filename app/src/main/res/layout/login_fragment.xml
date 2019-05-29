@@ -2,12 +2,13 @@
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <RelativeLayout
 
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
 
         <EditText
@@ -21,8 +22,11 @@
             android:layout_marginRight="35dp"
             android:textSize="14sp"
             android:hint="@string/enter_login_hint"
-            android:inputType="textEmailAddress"/>
+            android:inputType="textEmailAddress"
+            android:autofillHints="username"
+            tools:ignore="UnusedAttribute"/>
 
+        
         <EditText
             android:id="@+id/enter_password_editText"
             android:layout_width="match_parent"
@@ -31,8 +35,11 @@
             android:layout_marginLeft="35dp"
             android:layout_marginRight="35dp"
             android:textSize="14sp"
+
             android:hint="@string/enter_password_hint"
-            android:inputType="textPassword"/>
+            android:inputType="textPassword"
+            android:autofillHints="password"
+            tools:ignore="UnusedAttribute"/>
 
         <Button
             android:id="@+id/log_in_button"
@@ -62,12 +69,15 @@
             android:textSize="18sp"
             />
 
+        
+        
         <ImageView
             android:id="@+id/imageView"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             app:srcCompat="@drawable/logo"
             android:layout_height="150dp"
-            android:layout_width="100dp" />
+            android:layout_width="100dp"
+            android:contentDescription="@string/app_name"/>
     </RelativeLayout>
 </ScrollView>
