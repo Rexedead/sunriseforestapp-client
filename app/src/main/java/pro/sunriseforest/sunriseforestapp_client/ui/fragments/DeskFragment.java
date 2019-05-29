@@ -2,8 +2,10 @@ package pro.sunriseforest.sunriseforestapp_client.ui.fragments;
 
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -20,16 +22,17 @@ import pro.sunriseforest.sunriseforestapp_client.presenters.BasePresenter;
 import pro.sunriseforest.sunriseforestapp_client.presenters.DeskPresenter;
 
 
-public class DeskFragment extends NavigatedFragment implements RecycleTaskAdapter.TaskClickListener {
+public class DeskFragment extends NavigatedFragment
+        implements RecycleTaskAdapter.TaskClickListener, SwipeRefreshLayout.OnRefreshListener {
     private static final int ITEM_ON_NAV = 0;
 
     private DeskPresenter mPresenter = DeskPresenter.getInstance();
     private RecycleTaskAdapter mRecycleTaskAdapter = new RecycleTaskAdapter(this);
-    private RecyclerView mRecyclerView;
     private FloatingActionButton mNewTaskFloatingActionButton;
 
     private View.OnClickListener mOnClickListenerNewTaskFloatingActionButton =
             view -> mPresenter.clickedNewTask();
+    private SwipeRefreshLayout mSwipeRefreshLayout;
 
 
     @Override
@@ -53,6 +56,14 @@ public class DeskFragment extends NavigatedFragment implements RecycleTaskAdapte
 
     }
 
+    public void showLoading(){
+        mSwipeRefreshLayout.setRefreshing(true);
+    }
+
+    public void hideLoading(){
+        mSwipeRefreshLayout.setRefreshing(false);
+    }
+
     public void hideFab(){
         mNewTaskFloatingActionButton.hide();
     }
@@ -67,13 +78,15 @@ public class DeskFragment extends NavigatedFragment implements RecycleTaskAdapte
 
         mNewTaskFloatingActionButton = view.findViewById(R.id.fab);
         mNewTaskFloatingActionButton.setOnClickListener(mOnClickListenerNewTaskFloatingActionButton);
-        mRecyclerView = view.findViewById(R.id.desk_recyclerView);
+        RecyclerView recyclerView = view.findViewById(R.id.desk_recyclerView);
 
+        mSwipeRefreshLayout = view.findViewById(R.id.swipe_refresh);
+        mSwipeRefreshLayout.setOnRefreshListener(this);
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
-        mRecyclerView.setLayoutManager(layoutManager);
-        mRecyclerView.setAdapter(mRecycleTaskAdapter);
-        mRecyclerView.addItemDecoration(new DividerItemDecoration(SunriseForestApp.getAppContext()
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(mRecycleTaskAdapter);
+        recyclerView.addItemDecoration(new DividerItemDecoration(SunriseForestApp.getAppContext()
                 ,DividerItemDecoration.VERTICAL));
 
         return view;
@@ -90,4 +103,8 @@ public class DeskFragment extends NavigatedFragment implements RecycleTaskAdapte
     }
 
 
+    @Override
+    public void onRefresh() {
+        mPresenter.refresh();
+    }
 }
