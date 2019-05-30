@@ -1,51 +1,52 @@
 package pro.sunriseforest.sunriseforestapp_client.presenters;
 
+import android.text.TextUtils;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+import java.util.Objects;
+
 import pro.sunriseforest.sunriseforestapp_client.SunriseForestApp;
 import pro.sunriseforest.sunriseforestapp_client.models.Task;
 import pro.sunriseforest.sunriseforestapp_client.net.ApiFactory;
 import pro.sunriseforest.sunriseforestapp_client.net.AsyncNetTransformer;
 import pro.sunriseforest.sunriseforestapp_client.settings.SharedPreferenceHelper;
-import pro.sunriseforest.sunriseforestapp_client.ui.NavigationManager;
 import pro.sunriseforest.sunriseforestapp_client.ui.fragments.TaskFragment;
 
 public class TaskPresenter extends BasePresenter<TaskFragment> {
 
-
+    /* */
     private static final TaskPresenter ourInstance = new TaskPresenter();
 
     private SharedPreferenceHelper mSharedPreferenceHelper;
+    private boolean mIsLoading = false;
 
     public static TaskPresenter getInstance() {
         return ourInstance;
     }
 
-    private boolean taskChanged = false;
+
     private Task mTask;
-    private NavigationManager mNavigationManager;
+    private List<Task> mChangedTasks = new ArrayList<>();
+//    private boolean mIsDescriptionTaskChanged = false;
+    private boolean mIsViewUpdating = false;
 
     private TaskPresenter() {
-        mNavigationManager = NavigationManager.getInstance();
         mSharedPreferenceHelper = new SharedPreferenceHelper(SunriseForestApp.getAppContext());
     }
 
     public void setTask(Task task) {
+        log("setTask()");
         mTask = task;
     }
 
-    //забираем данные из фрагмента, и заносим их в mTask
     public void clickedSaveButton() {
         log("clickedSaveButton()");
-        mTask.setTaskID(mView.getTaskId());
-        mTask.setTaskDescription(mView.getDescription());
-        mTask.setStartDate(mView.getTaskStartDate());
-        mTask.setDeadlineDate(mView.getTaskEndDate());
-        mTask.setReward(Integer.parseInt(mView.getReward()));
-        mTask.setContractorName(mView.getContractorName());
-        mTask.setContractorPhone(mView.getContractorPhone());
-        mTask.setClientName(mView.getClientName());
-        mTask.setClientPhone(mView.getClientPhone());
-        saveTask(mTask);
 
+        Task task = getChangedTask();
+        if(task == null) tryUpdateView();
+        updateDescriptionTask(task);
     }
 
     public void clickedBookButton() {
@@ -53,15 +54,43 @@ public class TaskPresenter extends BasePresenter<TaskFragment> {
         bookTask(mView.getTaskId());
     }
 
-
     private boolean canChangeTask() {
         log("canChangeTask()");
-        return getUserRole().equals("manager") && !(mTask.getStatus() == 103);
+        return getUserRole().equals("manager") && !mTask.isDone();
     }
 
-    private void saveTask(Task task) {
-        log("saveTask()");
-        //todo...реализуй пока без обновы на сервере. обнови только на клиенте. коммент по итогу не стирай = DeskPresenter.getInstance().update();
+    public void refresh(){
+        refreshDescriptionTask();
+    }
+
+    private void refreshDescriptionTask() {
+        log("updateDescriptionTask()");
+
+        startLoading();
+        ApiFactory
+                .getSunriseForestService()
+                .getTask(
+                        mTask.getTaskID()
+                )
+                .compose(new AsyncNetTransformer<>())
+                .subscribe(
+                        tsk -> {
+                            mTask = tsk;
+                            deleteChanges();
+                            DeskPresenter.getInstance().updateTask(mTask);
+                            stopLoading();
+                        },
+                        throwable -> {
+                            handleNetworkError(throwable);
+                            stopLoading();
+                        },
+                        this::tryUpdateView
+                );
+    }
+
+    private void updateDescriptionTask(Task task) {
+        log("updateDescriptionTask()");
+        startLoading();
         ApiFactory
                 .getSunriseForestService()
                 .updDescription(
@@ -69,108 +98,199 @@ public class TaskPresenter extends BasePresenter<TaskFragment> {
                         task
                 )
                 .compose(new AsyncNetTransformer<>())
-                .subscribe(this::setTask, this::handleNetworkError, this::hideButtonAfterSave);
+                .subscribe(
+                        tsk -> {
+                            mTask = tsk;
+                            deleteChanges();
+                            DeskPresenter.getInstance().updateTask(mTask);
+                            if(mView !=null) mView.showToast("Изменения сохранены");
+                            stopLoading();
+                        },
+                        throwable -> {
+                            handleNetworkError(throwable);
+                            stopLoading();
+                        },
+                        this::tryUpdateView
+                        );
+    }
+
+    private void deleteChanges(){
+        for (int i = 0; i < mChangedTasks.size(); i++) {
+            if(mChangedTasks.get(i).getTaskID().equals(mTask.getTaskID())){
+                mChangedTasks.remove(i);
+                break;
+            }
+        }
     }
 
 
-    private void bookTask(String t_id) {
+    private void tryUpdateView() {
+        log("tryUpdateView()");
+
+        if(mView == null) return;
+
+        boolean iAmManager = getUserRole().equals("manager");
+        boolean isMyTask = isMyTask();
+
+        if(mIsLoading) mView.showLoading();
+        else mView.hideLoading();
+
+        Task task = getChangedTask();
+        //start updating view
+        mIsViewUpdating = true;
+        if(task != null){
+            mView.showSaveViews();
+            mView.showTask(task);
+        }
+        else {
+            mView.hideSaveViews();
+            mView.showTask(mTask);
+        }
+
+        if(iAmManager){
+            mView.hideBookViews();
+            mView.hideActionsTaskViews();
+            if(mTask.isFree()){
+                mView.hideContractorViews();
+            }
+            if(mTask.isBooked() || mTask.isDone()){
+                mView.showContractorViews();
+            }
+        }else{
+            if(isMyTask){
+                mView.hideContractorViews();
+                mView.hideBookViews();
+                if(mTask.isBooked()){
+                    mView.showActionsTaskViews();
+                }
+                if(mTask.isDone()){
+                    mView.hideActionsTaskViews();
+                }
+            }else{
+                mView.hideActionsTaskViews();
+                if(mTask.isFree()){
+                    mView.hideContractorViews();
+                    mView.showBookViews();
+                }
+                if(mTask.isBooked()|| mTask.isDone()){
+                    mView.showContractorViews();
+                    mView.hideBookViews();
+                }
+            }
+        }
+
+        //finish updating
+        mIsViewUpdating = false;
+    }
+
+
+    private Task getChangedTask(){
+        for (int i = 0; i < mChangedTasks.size(); i++) {
+            if(mChangedTasks.get(i).getTaskID().equals(mTask.getTaskID())) {
+                return mChangedTasks.get(i);
+            }
+        }
+        return null;
+    }
+
+
+    private boolean isMyTask() {
+        if(mTask.getContractorId()==null) return false;
+        return mTask.getContractorId()
+                .equals(Objects.requireNonNull(mSharedPreferenceHelper.getUser()).getId());
+    }
+
+
+    @Override
+    public void unBindView() {
+        mIsViewUpdating = false;
+        super.unBindView();
+    }
+
+    private void bookTask(String taskId) {
         log("bookTask()");
+        startLoading();
         ApiFactory
                 .getSunriseForestService()
                 .taskReservation(
-                        t_id,
+                        taskId,
                         mSharedPreferenceHelper.getUser()
                 )
                 .compose(new AsyncNetTransformer<>())
-                .subscribe(this::setTask, this::handleNetworkError, this::showTaskActions);
+                .subscribe(
+                        tsk->{
+                            mTask = tsk;
+                            DeskPresenter.getInstance().updateTask(mTask);
+                            if(mView !=null) mView.showToast("Вы успешно забронировали");
+                            stopLoading();
+                        },
+                        throwable -> {
+                            handleNetworkError(throwable);
+                            stopLoading();
+                        },
+                        this::tryUpdateView);
     }
 
-    //отображение при нажатии на резерв
-    //после нажатия на бронь, через subscribe on complete - отображаем кнопки действия таска
-    private void showTaskActions() {
-        log("showTaskActions()");
-        mView.bookButtonIsVisible(false);
-        mView.taskActionsIsVisible(true);
-        mView.setTaskContractor(mSharedPreferenceHelper.getUser().getName(),
-                mSharedPreferenceHelper.getUser().getPhoneNumber());
-        mView.clientIsVisible(true);
-        mView.showToast("*Задача забронирована*");
-    }
-
-    //отображение при создании фрагмента
-    private void displayTaskActionsForUser() {
-        log("displayTaskActionsForUser()");
-        boolean isManager = getUserRole().equals("manager");
-        if (mTask.getStatus() == 102 &&
-                (mTask.getContractorId().equals(mSharedPreferenceHelper.getUser().getId()) || isManager)) {
-            mView.bookButtonIsVisible(false);
-            mView.taskActionsIsVisible(true);
-            mView.clientIsVisible(true);
-            if(isManager){
-                mView.setTextOnCompleteTaskButton("Завершить задачу (от Менеджера)");
-                mView.setTextOnCancelTaskButton("Отменить бронирование (от Менеджера)");
-            }
-        }
-        else if (mTask.getStatus() == 101) {
-            mView.bookButtonIsVisible(true);
-            mView.taskActionsIsVisible(false);
-            mView.clientIsVisible(isManager);
-        } else {
-            mView.bookButtonIsVisible(false);
-            mView.taskActionsIsVisible(false);
-            mView.clientIsVisible(isManager || mTask.getContractorId().equals(mSharedPreferenceHelper.getUser().getId()));
-        }
-    }
 
     public void clickedCompleteButton() {
         log("clickedCompleteButton()");
+        startLoading();
         ApiFactory
                 .getSunriseForestService()
                 .updComplete(
                         mView.getTaskId()
                 )
                 .compose(new AsyncNetTransformer<>())
-                .subscribe(this::setTask, this::handleNetworkError, this::hideButtonsAfterComplete);
+                .subscribe(
+                        tsk -> {
+                            DeskPresenter.getInstance().updateTask(mTask);
+                            if(mView !=null) mView.showToast("Mission completed");
+                            stopLoading();
+                        },
+                        throwable -> {
+                            handleNetworkError(throwable);
+                            stopLoading();
+                        },
+                        this::tryUpdateView);
     }
 
 
-    public void clickedCancelButton() {
-        log("clickedCancelButton()");
-
+    public void clickedCancelTaskButton() {
+        log("clickedCancelTaskButton()");
+        startLoading();
         ApiFactory
                 .getSunriseForestService()
                 .updCancel(
                         mView.getTaskId()
                 )
                 .compose(new AsyncNetTransformer<>())
-                .subscribe(this::setTask, this::handleNetworkError, this::hideButtonsAfterCancel);
+                .subscribe(
+                        tsk ->{
+                            mTask = tsk;
+                            DeskPresenter.getInstance().updateTask(mTask);
+                            stopLoading();
+                            if(mView !=null) mView.showToast("Вы отменили задание");
+                        },
+                        throwable -> {
+                            handleNetworkError(throwable);
+                            stopLoading();
+                        },this::tryUpdateView);
 
     }
 
     private String getUserRole() {
-        return mSharedPreferenceHelper.getUser().getRole();
+        return Objects.requireNonNull(mSharedPreferenceHelper.getUser()).getRole();
     }
 
     @Override
     public void bindView(TaskFragment view) {
         super.bindView(view);
 
-        mView.setTask(
-                mTask.getTaskID(),
-                mTask.getTaskDescription(),
-                mTask.getStartDate(),
-                mTask.getDeadlineDate(),
-                mTask.getReward(),
-                mTask.getContractorName(),
-                mTask.getContractorPhone(),
-                mTask.getClientName(),
-                mTask.getClientPhone());
-
         boolean yes = canChangeTask();
         mView.setEnabledEditTexts(yes);
-        mView.saveButtonIsVisible(false);
-        //логика отображения отмены и завершения
-        displayTaskActionsForUser();
+
+        tryUpdateView();
+
     }
 
     @Override
@@ -179,25 +299,99 @@ public class TaskPresenter extends BasePresenter<TaskFragment> {
     }
 
 
-    private void hideButtonAfterSave() {
-        log("hideButtonAfterSave");
-//        DeskPresenter.getInstance().update();
-        mView.saveButtonIsVisible(false);
-        taskChanged = false;
-        mView.showToast("Сохранено");
+    public void changedStartDate(int year, int month, int dayOfMonth) {
+        log("changedStartDate(y = %s, m = %s, d = %s)", year,month,dayOfMonth);
+        Locale locale = Locale.getDefault();
+        String date = String.format(locale,"%02d.%02d.%d", dayOfMonth, month+1, year);
+        if(mView != null) mView.setTaskStartDate(date);
     }
 
-    private void hideButtonsAfterComplete() {
-        log("hideButtonsAfterComplete");
-//        DeskPresenter.getInstance().update();
-        mView.taskActionsIsVisible(false);
-        mView.showToast("Задача отмечена завершенной");
+    public void changedEndDate(int year, int month, int dayOfMonth) {
+        log("changedEndDate(y = %s, m = %s, d = %s)", year,month,dayOfMonth);
+        Locale locale = Locale.getDefault();
+        String date = String.format(locale, "%02d.%02d.%d", dayOfMonth, month+1, year);
+        if(mView != null) mView.setTaskEndDate(date);
     }
 
-    private void hideButtonsAfterCancel() {
-        log("hideButtonsAfterCancel");
-//        DeskPresenter.getInstance().update();
-        mView.taskActionsIsVisible(false);
-        mView.showToast("Бронирование задачи отменено");
+    public void clickedEndDate() {
+        log("clickedEndDate()");
+
+        Task task = getChangedTask();
+        if(task == null) task = mTask;
+        String endDateString = task.getDeadlineDate();
+        String[] endDate = TextUtils.split(endDateString, "\\.");
+
+        int y = Integer.parseInt(endDate[2]);
+        int m = Integer.parseInt(endDate[1]);
+        int d = Integer.parseInt(endDate[0]);
+//        int m = Integer.parseInt(String.valueOf(endDate[1].startsWith("0")? endDate[1].charAt(1) : endDate[1])); // )))0))0
+//        int d = Integer.parseInt(String.valueOf(endDate[0].startsWith("0")? endDate[0].charAt(1) : endDate[0]));
+        mView.showEndDatePickerDialog(y, m ,d);
     }
+
+    public void clickedStartDate() {
+        log("clickedStartDate()");
+        Task task = getChangedTask();
+        if(task == null) task = mTask;
+        String startDateString = task.getStartDate();
+        String[] startDate = TextUtils.split(startDateString, "\\.");
+
+        int y = Integer.parseInt(startDate[2]);
+        int m = Integer.parseInt(startDate[1]);
+        int d = Integer.parseInt(startDate[0]);
+//        int m = Integer.parseInt(String.valueOf(startDate[1].startsWith("0")? startDate[1].charAt(1) : startDate[1])); // )))0))0
+//        int d = Integer.parseInt(String.valueOf(startDate[0].startsWith("0")? startDate[0].charAt(1) : startDate[0]));
+        mView.showStartDatePickerDialog(y, m, d);
+    }
+
+    private void updateChangedTask(){
+        for (int i = 0; i < mChangedTasks.size(); i++) {
+            if(mChangedTasks.get(i).getTaskID().equals(mTask.getTaskID())){
+                setDescriptionFromUI(mChangedTasks.get(i));
+                return;
+            }
+        }
+        // if changedTask is not in mChangedTasks then create it
+        Task changedTask = mTask.getCopy();
+        setDescriptionFromUI(changedTask);
+        mChangedTasks.add(changedTask);
+    }
+    private void setDescriptionFromUI(Task task){
+
+        task.setTaskID(mView.getTaskId());
+        task.setTaskDescription(mView.getDescription());
+        task.setStartDate(mView.getTaskStartDate());
+        task.setDeadlineDate(mView.getTaskEndDate());
+        task.setReward(Integer.parseInt(mView.getReward()));
+        task.setContractorName(mView.getContractorName());
+        task.setContractorPhone(mView.getContractorPhone());
+        task.setClientName(mView.getClientName());
+        task.setClientPhone(mView.getClientPhone());
+
+    }
+
+    public void descriptionTaskIsChanged() {
+        log("descriptionTaskIsChanged()");
+        if(!mIsViewUpdating){
+            updateChangedTask();
+            mView.showSaveViews();
+
+        }
+    }
+
+    private void startLoading(){
+        mIsLoading = true;
+        if(mView != null) mView.showLoading();
+    }
+    private void stopLoading(){
+        mIsLoading = false;
+        if(mView != null) mView.hideLoading();
+    }
+
+    public void clickedCancelChangesButton() {
+        log("clickedCancelChangesButton()");
+        deleteChanges();
+        tryUpdateView();
+    }
+
 }

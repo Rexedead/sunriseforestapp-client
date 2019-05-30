@@ -126,8 +126,6 @@ public class User {
         this.mTasksCount = mTasksCount;
     }
 
-
-
     @NonNull
     @Override
     public String toString() {

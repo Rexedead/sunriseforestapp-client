@@ -4,7 +4,6 @@ package pro.sunriseforest.sunriseforestapp_client.presenters;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-
 import pro.sunriseforest.sunriseforestapp_client.SunriseForestApp;
 import pro.sunriseforest.sunriseforestapp_client.models.Task;
 import pro.sunriseforest.sunriseforestapp_client.net.ApiFactory;
@@ -14,9 +13,7 @@ import pro.sunriseforest.sunriseforestapp_client.ui.NavigationManager;
 import pro.sunriseforest.sunriseforestapp_client.ui.fragments.DeskFragment;
 import rx.Observable;
 
-
 public class DeskPresenter extends BasePresenter<DeskFragment> {
-
 
     private static final DeskPresenter ourInstance = new DeskPresenter();
 
@@ -27,15 +24,12 @@ public class DeskPresenter extends BasePresenter<DeskFragment> {
     private NavigationManager mNavigationManager;
     private boolean mLoading = false;
 
-
     private SharedPreferenceHelper mSharedPreferenceHelper;
-
 
     private DeskPresenter() {
         mNavigationManager = NavigationManager.getInstance();
         mSharedPreferenceHelper = new SharedPreferenceHelper(SunriseForestApp.getAppContext());
     }
-
 
     private List<Task> mTasks = new ArrayList<>();
 
@@ -44,7 +38,7 @@ public class DeskPresenter extends BasePresenter<DeskFragment> {
     public void bindView(DeskFragment view) {
         super.bindView(view);
 
-        if(isManager()){
+        if(iAmManager()){
             view.showFab();
         }else{
             view.hideFab();
@@ -57,7 +51,6 @@ public class DeskPresenter extends BasePresenter<DeskFragment> {
         tryUpdateView();
 
     }
-
 
     private void tryUpdateView() {
         if(mView!= null){
@@ -89,24 +82,22 @@ public class DeskPresenter extends BasePresenter<DeskFragment> {
 
         String token = mSharedPreferenceHelper.getToken();
         mLoading = true;
-        if(mView!=null) mView.showLoading();
+        if(mView!=null)
+            mView.showLoading();
 
         loadTasks(token).subscribe(
-                tasks -> {
-                    mTasks = tasks;
-                    mLoading = false;
-                    tryUpdateView();
-                },
+                tasks -> mTasks = tasks,
                 throwable -> {
                     handleNetworkError(throwable);
                     mLoading = false;
                     tryUpdateView();
+                },
+                ()->{
+                    mLoading = false;
+                    tryUpdateView();
                 }
         );
-
-
     }
-
 
     private Observable<List<Task>> loadTasks(String token) {
         log("loadTasks(token = %s)", token);
@@ -117,20 +108,17 @@ public class DeskPresenter extends BasePresenter<DeskFragment> {
 
     }
 
-
     private void showNewTask() {
         log("showNewTask()");
         mNavigationManager.fromDeskToNewTask();
     }
-
-
 
     void addTask(Task task){
         log("addTask( task = %s)", task);
         mTasks.add(task);
     }
 
-    private boolean isManager(){
+    private boolean iAmManager(){
         return Objects.requireNonNull(mSharedPreferenceHelper.getUser()).getRole().equals("manager");
     }
 
@@ -141,5 +129,19 @@ public class DeskPresenter extends BasePresenter<DeskFragment> {
 
     public void refresh() {
         update();
+    }
+
+    void updateTask(Task tsk) {
+        int idx = -1;
+        for (int i = 0; i < mTasks.size(); i++) {
+            if(mTasks.get(i).getTaskID().equals(tsk.getTaskID())){
+                idx = i;
+                break;
+            }
+        }
+        if(idx != -1){
+            mTasks.remove(idx);
+            mTasks.add(idx, tsk);
+        }
     }
 }

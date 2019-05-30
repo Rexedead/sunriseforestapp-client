@@ -1,15 +1,12 @@
 package pro.sunriseforest.sunriseforestapp_client.net.interceptors;
 
 import android.support.annotation.NonNull;
-import android.text.TextUtils;
-import android.util.Log;
-
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 import okhttp3.Interceptor;
 import okhttp3.Request;
 import okhttp3.Response;
-import pro.sunriseforest.sunriseforestapp_client.utils.NetworkUtils;
 
 public class NetworkCacheInterceptor implements Interceptor {
 
@@ -20,19 +17,27 @@ public class NetworkCacheInterceptor implements Interceptor {
     public Response intercept(@NonNull Chain chain) throws IOException {
         Request originalRequest = chain.request();
 
+//        try {
+//            TimeUnit.SECONDS.sleep(4);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+
         Request request = originalRequest.newBuilder().build();
         Response response = chain.proceed(request);
 
-        Log.i("Network", "response came from server");
-        String cacheHeaderValue = NetworkUtils.isNetworkAvailable() ? "public, max-age=" +
-                MAX_AGE : "public, only-if-cached, max-stale=" + MAX_STALE;
-        String cacheControl = request.cacheControl().toString();
-        String cacheMethod = TextUtils.isEmpty(request.cacheControl().toString()) ?
-                cacheHeaderValue : cacheControl;
-        return response.newBuilder()
-                .removeHeader("Pragma")
-                .removeHeader("Cache-Control")
-                .header("Cache-Control", cacheMethod)
-                .build();
+//        Log.i("Network", "response came from server");
+//        String cacheHeaderValue = NetworkUtils.isNetworkAvailable() ? "public, max-age=" +
+//                MAX_AGE : "public, only-if-cached, max-stale=" + MAX_STALE;
+//        String cacheControl = request.cacheControl().toString();
+//        String cacheMethod = TextUtils.isEmpty(request.cacheControl().toString()) ?
+//                cacheHeaderValue : cacheControl;
+//        return response.newBuilder()
+//                .removeHeader("Pragma")
+//                .removeHeader("Cache-Control")
+//                .header("Cache-Control", cacheMethod)
+//                .build();
+
+        return response;
     }
 }

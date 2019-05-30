@@ -153,8 +153,8 @@ public class NewTaskPresenter extends BasePresenter<NewTaskFragment> {
 
     private void showError(String msg){
         log(String.format("showError(String msg = %s)", msg));
-        if(!viewIsNullAndLog("showError")){
-            getView().showError(msg);
+        if(mView!= null){
+            mView.showError(msg);
         }
 
     }

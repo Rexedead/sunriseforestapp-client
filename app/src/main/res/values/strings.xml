@@ -25,7 +25,8 @@
     <string name="phone">Телефон</string>
     <string name="mail">Почта</string>
     <string name="role">Роль</string>
-    <string name="save">Сохранить</string>
+    <string name="save_changes_of_task">Сохранить изменения</string>
+    <string name="cancel_changes_of_task">Отменить изменения</string>
     <string name="profile_remove_token_data">Выход</string>
     <string name="profile_taken">Взято заказов</string>
     <string name="profile_reward">Заработано</string>

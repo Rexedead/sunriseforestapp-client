@@ -72,7 +72,7 @@ public class ApiFactory {
 //                .addInterceptor(new OfflineCacheInterceptor())
                 .addInterceptor(new HttpLoggingInterceptor(message -> Log.d(TAG, message))
                         .setLevel(HttpLoggingInterceptor.Level.BODY))
-//                .addNetworkInterceptor(new NetworkCacheInterceptor())
+                .addNetworkInterceptor(new NetworkCacheInterceptor())
 //                .cache(OfflineCacheInterceptor.cacheTasks())
                 .build();
     }

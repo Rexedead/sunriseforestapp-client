@@ -17,7 +17,6 @@ public abstract class BasePresenter <F extends Fragment> {
 
     private boolean mIsFirst = true;
 
-
     protected abstract String createTAG();
 //
     protected F mView;
@@ -32,6 +31,7 @@ public abstract class BasePresenter <F extends Fragment> {
         AppActivity activity =  (AppActivity)mView.getActivity();
 
         if(activity != null){
+            //todo баг?: походу всегда вызывается cameNewNotifications()
             boolean newNotificationsCameLater =  activity
                     .setNewNotificationsCameListener(this::cameNewNotifications);
 
@@ -45,19 +45,10 @@ public abstract class BasePresenter <F extends Fragment> {
         mView = null;
     }
 
-    public boolean isViewUnBunding(){
+    boolean isViewUnBunding(){
         return mView == null;
     }
 
-    protected boolean viewIsNullAndLog(String nameMethod){
-        if (getView() == null) {
-            log(nameMethod + ": view is null");
-            return true;
-        }else{
-            return false;
-        }
-
-    }
 
     protected void cameNewNotifications(){
         log("cameNewNotifications");
@@ -92,13 +83,12 @@ public abstract class BasePresenter <F extends Fragment> {
         logError(e.getMessage());
     }
 
-
-
-    protected boolean isFirst() {
+    boolean isFirst() {
         return mIsFirst;
     }
 
-    protected void showNetworkError(String s) {
-        ((AppActivity) getView().getActivity()).showInfoMessage(s);
+    private void showNetworkError(String s) {
+        AppActivity activity = (AppActivity) getView().getActivity();
+        if(activity != null)  activity.showInfoMessage(s);
     }
 }

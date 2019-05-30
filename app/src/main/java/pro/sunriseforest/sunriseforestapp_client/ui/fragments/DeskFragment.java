@@ -2,7 +2,6 @@ package pro.sunriseforest.sunriseforestapp_client.ui.fragments;
 
 
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -81,6 +80,7 @@ public class DeskFragment extends NavigatedFragment
         RecyclerView recyclerView = view.findViewById(R.id.desk_recyclerView);
 
         mSwipeRefreshLayout = view.findViewById(R.id.swipe_refresh);
+
         mSwipeRefreshLayout.setOnRefreshListener(this);
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());

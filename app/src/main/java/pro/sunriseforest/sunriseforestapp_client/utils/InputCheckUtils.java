@@ -12,4 +12,6 @@ public class InputCheckUtils {
 
         return email.split("@").length == 2 ? CORRECTLY : INCORRECTLY;
     }
+
+
 }

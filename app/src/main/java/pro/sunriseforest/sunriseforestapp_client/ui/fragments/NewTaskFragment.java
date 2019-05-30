@@ -30,10 +30,8 @@ public class NewTaskFragment extends BaseFragment {
     private EditText mTaskDescriptionEditText;
     private EditText mTaskRewardEditText;
 
-    private TextInputLayout mStartDateTextInputLayout;
     private TextInputEditText mTaskStartDateInputEditText;
 
-    private TextInputLayout mEndDateTextInputLayout;
     private TextInputEditText mTaskEndDateTextInputEditText;
 
     private EditText mTaskClientNameEditText;
@@ -71,9 +69,9 @@ public class NewTaskFragment extends BaseFragment {
 
         mTaskDescriptionEditText = view.findViewById(R.id.description_newTask_editText);
         mTaskRewardEditText = view.findViewById(R.id.reward_newTask_editText);
-        mStartDateTextInputLayout = view.findViewById(R.id.start_date_newTask_textInputLayout);
+        TextInputLayout startDateTextInputLayout = view.findViewById(R.id.start_date_newTask_textInputLayout);
         mTaskStartDateInputEditText = view.findViewById(R.id.start_date_newTask_TextInputEditText);
-        mEndDateTextInputLayout = view.findViewById(R.id.end_date_newTask_TextInputLayout);
+        TextInputLayout endDateTextInputLayout = view.findViewById(R.id.end_date_newTask_TextInputLayout);
         mTaskEndDateTextInputEditText = view.findViewById(R.id.end_date_newTask_TextInputEditText);
         mTaskClientNameEditText = view.findViewById(R.id.client_name_newTask_editText);
         mTaskClientPhoneEditText = view.findViewById(R.id.client_phone_newTask_editText);
@@ -96,6 +94,8 @@ public class NewTaskFragment extends BaseFragment {
         return view;
 
     }
+
+
 
     public void updateStartDateEdit(String date){
         log("updateDateEdits()");
@@ -141,34 +141,29 @@ public class NewTaskFragment extends BaseFragment {
 
     private Task getTask(){
         // считываем с полей и формируем таск
-        return new Task(
 
-                mTaskDescriptionEditText.getText() == null ?
-                        null : mTaskDescriptionEditText.getText().toString(),
+        Task task = new Task();
+        task.setTaskDescription(mTaskDescriptionEditText.getText() == null ?
+                null : mTaskDescriptionEditText.getText().toString());
 
-                Calendar.getInstance().getTime().toString(),
+        task.setCreationDate(Calendar.getInstance().getTime().toString());
+        task.setStartDate(mTaskStartDateInputEditText.getText() == null ?
+                null : mTaskStartDateInputEditText.getText().toString());
 
-                mTaskStartDateInputEditText.getText() == null ?
-                        null : mTaskStartDateInputEditText.getText().toString(),
-
+        task.setDeadlineDate(
                 mTaskEndDateTextInputEditText.getText() == null ?
-                        null : mTaskEndDateTextInputEditText.getText().toString(),
+                        null : mTaskEndDateTextInputEditText.getText().toString());
+        task.setStatus((byte) 101);
+        task.setReward(mTaskRewardEditText.getText().toString().equals("") ?
+                0 : Integer.parseInt(mTaskRewardEditText.getText().toString()));
 
-                (byte) 101,
+        task.setClientName( mTaskClientNameEditText.getText()==null ?
+                null : mTaskClientNameEditText.getText().toString());
 
-                mTaskRewardEditText.getText().toString().equals("") ?
-                        0 : Integer.parseInt(mTaskRewardEditText.getText().toString()),
+        task.setClientPhone(mTaskClientPhoneEditText.getText()==null ?
+                null : mTaskClientPhoneEditText.getText().toString());
 
-                null,
-                null,
-                null,
-
-                mTaskClientNameEditText.getText()==null ?
-                        null : mTaskClientNameEditText.getText().toString(),
-
-                mTaskClientPhoneEditText.getText()==null ?
-                        null : mTaskClientPhoneEditText.getText().toString()
-        );
+        return task;
     }
 
 }

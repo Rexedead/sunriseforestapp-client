@@ -22,7 +22,6 @@ import pro.sunriseforest.sunriseforestapp_client.notifications.NotificationRecei
 
 public class AppActivity extends AppCompatActivity implements IView{
 
-
     private NavigationManager mNavigationManager;
     private NavController mNavController;
     private BottomNavigationView mBottomNavigationView;
@@ -166,8 +165,6 @@ public class AppActivity extends AppCompatActivity implements IView{
         }
     }
 
-
-
     @Override
     public void showNewTask() {
         log("showNewTask()");
@@ -309,7 +306,8 @@ public class AppActivity extends AppCompatActivity implements IView{
     }
 
     // вернет true если новые notifications приходили до set'а
-    public boolean setNewNotificationsCameListener(NotificationsCameListener listener){
+    public boolean
+    setNewNotificationsCameListener(NotificationsCameListener listener){
         mNewNotificationsCameListener = listener;
         return mNewNotificationsCameLater;
     }

@@ -6,9 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Toast;
 
 import pro.sunriseforest.sunriseforestapp_client.SunriseForestApp;
@@ -21,13 +19,10 @@ public abstract class BaseFragment extends Fragment {
     protected abstract String createTag();
     protected abstract BasePresenter getPresenter();
 
-    private String mTAG = "%%%/fragments/" + createTag();
+    private final String mTAG = "%%%/fragments/" + createTag();
 
 
 
-    public String getTAG(){
-        return mTAG;
-    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -49,6 +44,11 @@ public abstract class BaseFragment extends Fragment {
     }
 
     @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        hideBottomNavigation();
+    }
+
+    @Override
     public void onStart() {
         super.onStart();
         log("lc: onStart");
@@ -58,8 +58,8 @@ public abstract class BaseFragment extends Fragment {
     public void onResume() {
         super.onResume();
         log("lc: onResume()");
-        getPresenter().bindView(this);
-
+        BasePresenter presenter = getPresenter();
+        presenter.bindView(this);
     }
 
     @Override
@@ -96,13 +96,17 @@ public abstract class BaseFragment extends Fragment {
     protected void showBottomNavigation(){
         log("showBottomNavigation()");
         IView activity = (IView)getActivity();
-        activity.showBottomNavigation();
+        if(activity != null){
+            activity.showBottomNavigation();
+        }
     }
 
     protected void hideBottomNavigation(){
         log("hideBottomNavigation()");
         IView activity = (IView)getActivity();
-        activity.hideBottomNavigation();
+        if(activity!=null){
+            activity.hideBottomNavigation();
+        }
     }
     public void showError(String msg){
         showToast(msg);

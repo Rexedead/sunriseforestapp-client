@@ -1,5 +1,6 @@
 package pro.sunriseforest.sunriseforestapp_client.models;
 
+
 import com.squareup.moshi.Json;
 
    /*
@@ -46,47 +47,43 @@ public class Task {
     @Json(name = "sr_task_reward")
     private int mReward;
 
+    public Task(){}
 
-    public Task(String mTaskID, String mTaskDescription,
-                String mCreationDate, String mStartDate,
-                String mDeadlineDate, byte mStatus,
-                int mReward, String mContractorId,
-                String mContractorName, String mContractorPhone,
-                String mClientName, String mClientPhone) {
 
-        this.mTaskID = mTaskID;
-        this.mTaskDescription = mTaskDescription;
-        this.mCreationDate = mCreationDate;
-        this.mDeadlineDate = mDeadlineDate;
-        this.mStartDate = mStartDate;
-        this.mStatus = mStatus;
-        this.mReward = mReward;
-        this.mContractorId = mContractorId;
-        this.mContractorName = mContractorName;
-        this.mContractorPhone = mContractorPhone;
-        this.mClientName = mClientName;
-        this.mClientPhone = mClientPhone;
+    public Task(String contractorId, String contractorName, String contractorPhone,
+                String clientPhone, String clientName, String taskID,
+                String taskDescription, String creationDate, String deadlineDate,
+                String startDate, byte status, int reward) {
+
+        mContractorId = contractorId;
+        mContractorName = contractorName;
+        mContractorPhone = contractorPhone;
+        mClientPhone = clientPhone;
+        mClientName = clientName;
+        mTaskID = taskID;
+        mTaskDescription = taskDescription;
+        mCreationDate = creationDate;
+        mDeadlineDate = deadlineDate;
+        mStartDate = startDate;
+        mStatus = status;
+        mReward = reward;
     }
 
-
-    public Task(String mTaskDescription,
-                String mCreationDate, String mStartDate,
-                String mDeadlineDate, byte mStatus,
-                int mReward, String mContractorId,
-                String mContractorName, String mContractorPhone,
-                String mClientName, String mClientPhone) {
-
-        this.mTaskDescription = mTaskDescription;
-        this.mCreationDate = mCreationDate;
-        this.mDeadlineDate = mDeadlineDate;
-        this.mStartDate = mStartDate;
-        this.mStatus = mStatus;
-        this.mReward = mReward;
-        this.mContractorId = mContractorId;
-        this.mContractorName = mContractorName;
-        this.mContractorPhone = mContractorPhone;
-        this.mClientName = mClientName;
-        this.mClientPhone = mClientPhone;
+    public Task(String contractorId, String contractorName, String contractorPhone,
+                String clientPhone, String clientName, String taskDescription,
+                String creationDate, String deadlineDate, String startDate,
+                byte status, int reward) {
+        mContractorId = contractorId;
+        mContractorName = contractorName;
+        mContractorPhone = contractorPhone;
+        mClientPhone = clientPhone;
+        mClientName = clientName;
+        mTaskDescription = taskDescription;
+        mCreationDate = creationDate;
+        mDeadlineDate = deadlineDate;
+        mStartDate = startDate;
+        mStatus = status;
+        mReward = reward;
     }
 
     public String getTaskID() {
@@ -136,6 +133,14 @@ public class Task {
     }
 
 
+    public void setStatus(byte status) {
+        mStatus = status;
+    }
+
+    public void setCreationDate(String creationDate) {
+        mCreationDate = creationDate;
+    }
+
     public void setTaskDescription(String taskDescription) {
         mTaskDescription = taskDescription;
     }
@@ -170,5 +175,21 @@ public class Task {
 
     public void setTaskID(String mTaskID) {
         this.mTaskID = mTaskID;
+    }
+
+    public boolean isFree(){
+        return mStatus == (byte)101;
+    }
+    public boolean isDone(){
+        return mStatus == (byte)103;
+    }
+
+    public boolean isBooked(){
+        return mStatus == (byte)102;
+    }
+
+   public Task getCopy(){
+    return  new Task(mContractorId, mContractorName, mContractorPhone, mClientPhone, mClientName,
+            mTaskID, mTaskDescription, mCreationDate, mDeadlineDate, mStartDate, mStatus, mReward);
     }
 }

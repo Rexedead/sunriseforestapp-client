@@ -26,7 +26,7 @@ public interface SunriseForestService {
     Observable<List<SunriseNotification>> getNotifications(@Query("sr_user_token") String token);
 
     @GET("data/tasks/{id}")
-    Observable<Task> getTask(@Path("id") int id);
+    Observable<Task> getTask(@Path("id") String id);
 
     @GET("data/user/{id}/get_user")
     Observable<User> getUser(@Path("id") int id);
