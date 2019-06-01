@@ -7,6 +7,7 @@ import android.support.design.widget.TextInputEditText;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -102,8 +103,6 @@ public class TaskFragment extends BaseFragment
         return view;
 
     }
-
-
 
     @Override
     public void onResume() {
@@ -205,6 +204,20 @@ public class TaskFragment extends BaseFragment
         mBookButton.setVisibility(View.VISIBLE);
     }
 
+    public void hideClientViews(){
+        log("hideClientViews()");
+        mClientTextView.setVisibility(View.GONE);
+        mClientPhoneEditText.setVisibility(View.GONE);
+        mClientNameEditText.setVisibility(View.GONE);
+    }
+
+    public void showClientViews(){
+        log("showClientViews()");
+        mClientTextView.setVisibility(View.VISIBLE);
+        mClientPhoneEditText.setVisibility(View.VISIBLE);
+        mClientNameEditText.setVisibility(View.VISIBLE);
+    }
+
     public void hideContractorViews() {
         log("hideContractorViews()");
         mContractorTextView.setVisibility(View.GONE);
@@ -278,8 +291,7 @@ public class TaskFragment extends BaseFragment
 
     public String getReward() {
         String reward =  mRewardEditText.getText().toString();
-        return reward.replace(" руб.", "");
-
+        return reward.replaceAll("[^\\d.]", "");
     }
 
     public String getContractorName() {

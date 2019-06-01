@@ -46,9 +46,8 @@ public class RegistrationPresenter extends BasePresenter<RegistrationFragment> {
                         this::handleNetworkError,
                         this::showTasks
                 );
-
-
     }
+
 
     private boolean check(User user){
 

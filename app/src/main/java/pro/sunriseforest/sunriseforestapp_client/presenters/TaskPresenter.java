@@ -150,6 +150,7 @@ public class TaskPresenter extends BasePresenter<TaskFragment> {
         if(iAmManager){
             mView.hideBookViews();
             mView.hideActionsTaskViews();
+            mView.showClientViews();
             if(mTask.isFree()){
                 mView.hideContractorViews();
             }
@@ -162,12 +163,15 @@ public class TaskPresenter extends BasePresenter<TaskFragment> {
                 mView.hideBookViews();
                 if(mTask.isBooked()){
                     mView.showActionsTaskViews();
+                    mView.showClientViews();
                 }
                 if(mTask.isDone()){
                     mView.hideActionsTaskViews();
+                    mView.showClientViews();
                 }
             }else{
                 mView.hideActionsTaskViews();
+                mView.hideClientViews();
                 if(mTask.isFree()){
                     mView.hideContractorViews();
                     mView.showBookViews();
@@ -178,7 +182,6 @@ public class TaskPresenter extends BasePresenter<TaskFragment> {
                 }
             }
         }
-
         //finish updating
         mIsViewUpdating = false;
     }
@@ -220,6 +223,7 @@ public class TaskPresenter extends BasePresenter<TaskFragment> {
                 .subscribe(
                         tsk->{
                             mTask = tsk;
+                            planeNotification(tsk);
                             DeskPresenter.getInstance().updateTask(mTask);
                             if(mView !=null) mView.showToast("Вы успешно забронировали");
                             stopLoading();
@@ -231,6 +235,9 @@ public class TaskPresenter extends BasePresenter<TaskFragment> {
                         this::tryUpdateView);
     }
 
+    private void planeNotification(Task tsk) {
+        //todo
+    }
 
     public void clickedCompleteButton() {
         log("clickedCompleteButton()");
@@ -243,6 +250,7 @@ public class TaskPresenter extends BasePresenter<TaskFragment> {
                 .compose(new AsyncNetTransformer<>())
                 .subscribe(
                         tsk -> {
+                            mTask = tsk;
                             DeskPresenter.getInstance().updateTask(mTask);
                             if(mView !=null) mView.showToast("Mission completed");
                             stopLoading();
@@ -392,6 +400,10 @@ public class TaskPresenter extends BasePresenter<TaskFragment> {
         log("clickedCancelChangesButton()");
         deleteChanges();
         tryUpdateView();
+    }
+
+    public void clearChangedTasks(){
+        mChangedTasks.clear();
     }
 
 }

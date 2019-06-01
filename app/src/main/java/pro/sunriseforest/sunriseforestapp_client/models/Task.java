@@ -189,7 +189,7 @@ public class Task {
     }
 
    public Task getCopy(){
-    return  new Task(mContractorId, mContractorName, mContractorPhone, mClientPhone, mClientName,
+    return new Task(mContractorId, mContractorName, mContractorPhone, mClientPhone, mClientName,
             mTaskID, mTaskDescription, mCreationDate, mDeadlineDate, mStartDate, mStatus, mReward);
     }
 }

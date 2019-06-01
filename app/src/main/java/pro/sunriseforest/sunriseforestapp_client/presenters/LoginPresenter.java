@@ -37,7 +37,6 @@ public class LoginPresenter extends BasePresenter<LoginFragment>{
         String email = user.getEmail();
         String password = user.getPassword();
 
-
         ApiFactory
                 .getSunriseForestService()
                 .userLoginByEmail(email, password)
@@ -61,7 +60,7 @@ public class LoginPresenter extends BasePresenter<LoginFragment>{
         String password = user.getPassword();
 
         if(TextUtils.isEmpty(email)){
-            getView().showError("Введите вашу почту ");
+            getView().showError("Введите логин");
             return false;
         }
 
@@ -70,16 +69,10 @@ public class LoginPresenter extends BasePresenter<LoginFragment>{
             return false;
         }
 
-        if(!checkEmail(email)){
-            getView().showError("Неверная почта");
-            return false;
-        }
         return true;
     }
 
-    private boolean checkEmail(String email){
-       return InputCheckUtils.checkEmail(email) == InputCheckUtils.CORRECTLY;
-    }
+
 
     private void saveUser(User user){
         log(String.format("saveUser(User user = %s)", user));

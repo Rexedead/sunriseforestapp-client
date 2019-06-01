@@ -158,8 +158,6 @@ RecycleTaskAdapter extends RecyclerView.Adapter<RecycleTaskAdapter.TaskViewHolde
 
         }
 
-
-
     }
 
     public interface TaskClickListener{

@@ -103,6 +103,7 @@ public class NewTaskPresenter extends BasePresenter<NewTaskFragment> {
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
         return sdf.format(mils);
     }
+
     private void setDate(int y, int m, int d, Calendar calendar){
         calendar.set(Calendar.YEAR, y);
         calendar.set(Calendar.MONTH, m);
@@ -156,9 +157,7 @@ public class NewTaskPresenter extends BasePresenter<NewTaskFragment> {
         if(mView!= null){
             mView.showError(msg);
         }
-
     }
-
 
     private boolean nullOrEmpty(String str){
         return str == null || str.length() == 0;

@@ -19,7 +19,6 @@ import pro.sunriseforest.sunriseforestapp_client.presenters.ProfilePresenter;
 public class ProfileFragment extends NavigatedFragment  implements TextWatcher {
     private static final int ITEM_ON_NAV = 1;
 
-
     private TextView mUserIdTextView;
     private EditText mUserNameEditText;
     private EditText mUserMailEditText;
@@ -39,7 +38,6 @@ public class ProfileFragment extends NavigatedFragment  implements TextWatcher {
     public ProfileFragment() {
         // Required empty public constructor
     }
-
 
 
     @Override

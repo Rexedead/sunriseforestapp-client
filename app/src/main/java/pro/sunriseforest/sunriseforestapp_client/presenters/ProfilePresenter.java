@@ -110,6 +110,7 @@ public class ProfilePresenter extends BasePresenter<ProfileFragment> {
 
     private void exitProfile() {
         log("exitProfile()");
+        TaskPresenter.getInstance().clearChangedTasks();
         mSharedPreferenceHelper.removeUser();
         mNavigationManager.fromProfileToLogin();
     }
