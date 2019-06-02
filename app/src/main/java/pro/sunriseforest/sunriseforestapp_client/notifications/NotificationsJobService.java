@@ -76,7 +76,10 @@ public class NotificationsJobService extends JobService {
         Log.i(TAG, "showNotifications: ");
 
         //todo костыль: нужно лист передавать
-        NotificationHelper.getInstance(this).showNotification(notifications.get(0));
+        for (int i = 0; i < notifications.size(); i++) {
+            NotificationHelper.getInstance(this).showNotification(notifications.get(i));
+        }
+
     }
 
     @Override
