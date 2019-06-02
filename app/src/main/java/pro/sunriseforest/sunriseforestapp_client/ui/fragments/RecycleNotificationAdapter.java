@@ -17,16 +17,23 @@ public class RecycleNotificationAdapter extends RecyclerView.Adapter<RecycleNoti
 
 
     private List<SunriseNotification> mSunriseNotifications;
+    private NotificationClickListener mListener;
 
-    public RecycleNotificationAdapter() {
+    public RecycleNotificationAdapter(NotificationClickListener listener) {
+        mListener = listener;
         mSunriseNotifications = new ArrayList<>();
 
-        //todo hs
-//        notifyItemRangeChanged(0, mSunriseNotifications.size());
     }
 
-    public void setSunriseNotifications(List<SunriseNotification> sunriseNotifications) {
-        mSunriseNotifications = sunriseNotifications;
+
+
+    public void addSunriseNotifications(List<SunriseNotification> sunriseNotifications, boolean refresh) {
+
+        if(refresh){
+            mSunriseNotifications.clear();
+        }
+        mSunriseNotifications.addAll(sunriseNotifications);
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -46,6 +53,8 @@ public class RecycleNotificationAdapter extends RecyclerView.Adapter<RecycleNoti
         String text = "появились новые таски, целых " + sunriseNotification.getData() + " штук))))";
 
         notificationsViewHolder.mHeadline.setText(text);
+        notificationsViewHolder.setListener(mListener);
+        notificationsViewHolder.setPosition(i);
     }
 
     @Override
@@ -56,10 +65,27 @@ public class RecycleNotificationAdapter extends RecyclerView.Adapter<RecycleNoti
     class NotificationsViewHolder extends RecyclerView.ViewHolder {
         TextView mHeadline;
 
+        private NotificationClickListener mListener;
+        private int mPosition;
+
+        public void setListener(NotificationClickListener listener) {
+            mListener = listener;
+        }
+
+        public void setPosition(int position) {
+            mPosition = position;
+        }
+
         NotificationsViewHolder(@NonNull View view) {
             super(view);
             mHeadline = view.findViewById(R.id.headline_notification_TextView);
+            view.setOnClickListener(v -> mListener.onClick(mPosition));
         }
 
+
+    }
+
+    public interface NotificationClickListener{
+        void onClick(int position);
     }
 }

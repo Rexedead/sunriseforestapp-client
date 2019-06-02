@@ -59,11 +59,12 @@ public class NotificationHelper {
                 .setContentIntent(pendingIntent)
                 .setSmallIcon(R.drawable.ic_launcher_foreground);
 
-        //todo hz chot: походу на сервере нужно формировать готовый текст уведомления, сохранять в SunriseNotification.msg
         switch (notification.getType()){
             case AMOUNT_OF_TASKS_TYPE:
-                String text = "появились новые таски, целых " + notification.getData() + " штук))))";
-                builder.setContentText(text);
+                builder.setContentText("появились новые задания. ");
+                break;
+            default:
+                builder.setContentText("бронь");
         }
 
         return builder.build();
@@ -72,9 +73,6 @@ public class NotificationHelper {
     public void showNotification(SunriseNotification notification){
 
         //не кидаем уведомление если нет новых тасков
-        /* todo а вообще в таких ситуациях нужно с сервера присылать пустую notification с type = 0,
-           todo это будет говорить что новых уведомлений для пользователя нет*/
-//        if(notification.getType() == AMOUNT_OF_TASKS_TYPE && (int)notification.getData() == 0) return;
 
         mNotificationManager.notify(123, getNotification(notification));
     }

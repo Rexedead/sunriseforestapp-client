@@ -52,7 +52,7 @@ RecycleTaskAdapter extends RecyclerView.Adapter<RecycleTaskAdapter.TaskViewHolde
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSS", Locale.getDefault());
         try {
             Date date = df.parse(task.getCreationDate());
-            String dateString = DateFormat.format("dd.MM.yyyy HH:mm", date).toString();
+            String dateString = DateFormat.format("dd.MM.yyyy", date).toString();
             taskHolder.mCreationDate.setText(dateString);
         } catch (ParseException e) {
             e.printStackTrace();

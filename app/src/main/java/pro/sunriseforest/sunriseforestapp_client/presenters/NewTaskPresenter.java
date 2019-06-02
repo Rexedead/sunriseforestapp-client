@@ -24,7 +24,7 @@ public class NewTaskPresenter extends BasePresenter<NewTaskFragment> {
     private static final int START_DATE_BEFORE_TODAY = 5;
     private static final int END_DATE_BEFORE_START_DATE = 6;
 
-    
+
 
     private static final NewTaskPresenter ourInstance = new NewTaskPresenter();
 

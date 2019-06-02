@@ -29,9 +29,10 @@ public class JobBuilder {
         JobInfo.Builder builder = new JobInfo.Builder(NOTIFICATION_JOB_ID, jobService);
 
         builder.setMinimumLatency(6000);
-        builder.setRequiredNetworkType(JobInfo.NETWORK_TYPE_UNMETERED);
+        builder.setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY);
         builder.setRequiresDeviceIdle(false);
         builder.setRequiresCharging(false);
+        builder.setPersisted(true);
         return builder;
     }
 
