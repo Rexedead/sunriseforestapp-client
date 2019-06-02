@@ -6,7 +6,8 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 
 import android.support.design.widget.TextInputEditText;
-import android.support.design.widget.TextInputLayout;
+import android.text.Editable;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,17 +50,11 @@ public class NewTaskFragment extends BaseFragment {
 
 
 
-    private View.OnClickListener mTaskStartDateOnClickListener = view -> {
-        mPresenter.clickedTaskStartDate();
-    };
+    private View.OnClickListener mTaskStartDateOnClickListener = view -> mPresenter.clickedTaskStartDate();
 
-    private View.OnClickListener mTaskEndDateOnClickListener = view -> {
-        mPresenter.clickedTaskEndDate();
-    };
+    private View.OnClickListener mTaskEndDateOnClickListener = view -> mPresenter.clickedTaskEndDate();
 
-    private View.OnClickListener mAddTaskListener = view -> {
-        mPresenter.clickedAddNewTask(getTask());
-    };
+    private View.OnClickListener mAddTaskListener = view -> mPresenter.clickedAddNewTask(getTask());
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -69,32 +64,41 @@ public class NewTaskFragment extends BaseFragment {
 
         mTaskDescriptionEditText = view.findViewById(R.id.description_newTask_editText);
         mTaskRewardEditText = view.findViewById(R.id.reward_newTask_editText);
-        TextInputLayout startDateTextInputLayout = view.findViewById(R.id.start_date_newTask_textInputLayout);
         mTaskStartDateInputEditText = view.findViewById(R.id.start_date_newTask_TextInputEditText);
-        TextInputLayout endDateTextInputLayout = view.findViewById(R.id.end_date_newTask_TextInputLayout);
         mTaskEndDateTextInputEditText = view.findViewById(R.id.end_date_newTask_TextInputEditText);
         mTaskClientNameEditText = view.findViewById(R.id.client_name_newTask_editText);
         mTaskClientPhoneEditText = view.findViewById(R.id.client_phone_newTask_editText);
         mAddNewTaskButton = view.findViewById(R.id.add_newTask_button);
 
         // set mask hint on PhoneEditText
-        final MaskedTextChangedListener listener = MaskedTextChangedListener.Companion.installOn(
+        final MaskedTextChangedListener maskedPhoneTextChangedListener = MaskedTextChangedListener
+                .Companion
+                .installOn(
                 mTaskClientPhoneEditText,
                 "+7 ([000]) [000]-[00]-[00]",
                 (maskFilled, extractedValue) -> {}
         );
-        mTaskClientPhoneEditText.setHint(listener.placeholder());
 
+        mTaskRewardEditText.setOnFocusChangeListener((v, hasFocus) -> {
+            if(hasFocus){
+                String reward = mTaskRewardEditText.getText().toString();
+                reward = reward.replaceAll("[^0-9]", "");
+                mTaskRewardEditText.setText(reward);
+            }else{
+                mTaskRewardEditText.append(" руб.");
+            }
+        });
+
+
+        mTaskClientPhoneEditText.setHint(maskedPhoneTextChangedListener.placeholder());
+
+//        mTaskRewardEditText.setHint(maskedRewardTextChangedListener.placeholder());
         mTaskStartDateInputEditText.setOnClickListener(mTaskStartDateOnClickListener);
         mTaskEndDateTextInputEditText.setOnClickListener(mTaskEndDateOnClickListener);
         mAddNewTaskButton.setOnClickListener(mAddTaskListener);
-
-        hideBottomNavigation();
-
         return view;
 
     }
-
 
 
     public void updateStartDateEdit(String date){
@@ -102,7 +106,9 @@ public class NewTaskFragment extends BaseFragment {
         mTaskStartDateInputEditText.setText(date);
  /*       дата окончания = дата старта = однодневное задание,
          при необходимости меняем окончание вручную*/
-        mTaskEndDateTextInputEditText.setText(date);
+        Editable endData = mTaskEndDateTextInputEditText.getText();
+        if(TextUtils.isEmpty(endData)) mTaskEndDateTextInputEditText.setText(date);
+
     }
 
     public void updateEndDateEdit(String date){

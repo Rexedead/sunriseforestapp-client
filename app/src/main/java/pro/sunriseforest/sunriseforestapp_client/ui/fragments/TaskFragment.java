@@ -8,7 +8,11 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.ActionMode;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -85,6 +89,15 @@ public class TaskFragment extends BaseFragment
         mCompleteTaskButton = view.findViewById(R.id.complete_taskFrag_button);
         mCancelTaskButton = view.findViewById(R.id.cancel_taskFrag_button);
 
+        mRewardEditText.setOnFocusChangeListener((v, hasFocus) -> {
+            if(hasFocus){
+                setCursorPositionForRewardEditText();
+            }
+        });
+
+        mRewardEditText.setOnClickListener(v-> setCursorPositionForRewardEditText());
+
+
         mTaskEndDateTextInputEditText.setOnClickListener(v -> mPresenter.clickedEndDate());
         mTaskStartDateTextInputEditText.setOnClickListener(v -> mPresenter.clickedStartDate());
 
@@ -98,7 +111,6 @@ public class TaskFragment extends BaseFragment
         mCompleteTaskButton.setOnClickListener(mCompleteListener);
         mCancelTaskButton.setOnClickListener(mCancelListener);
 
-//        hideBottomNavigation();
 
         return view;
 
@@ -232,6 +244,14 @@ public class TaskFragment extends BaseFragment
         mContractorPhoneTextView.setVisibility(View.VISIBLE);
     }
 
+    //utils
+    private void setCursorPositionForRewardEditText(){
+        String text = mRewardEditText.getText().toString();
+        int length =
+                text.replaceAll("[^0-9]", "").length();
+        mRewardEditText.post(()->mRewardEditText.setSelection(0,length));
+    }
+
     @Override
     protected String createTag() {
         return "TaskFragment";
@@ -291,7 +311,7 @@ public class TaskFragment extends BaseFragment
 
     public String getReward() {
         String reward =  mRewardEditText.getText().toString();
-        return reward.replaceAll("[^\\d.]", "");
+        return reward.replaceAll("[^0-9]", "");
     }
 
     public String getContractorName() {
@@ -313,6 +333,8 @@ public class TaskFragment extends BaseFragment
     public String getClientPhone() {
         return mClientPhoneEditText.getText().toString();
     }
+
+
 
 
 }

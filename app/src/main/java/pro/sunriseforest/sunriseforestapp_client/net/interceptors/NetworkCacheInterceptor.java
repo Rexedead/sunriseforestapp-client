@@ -2,7 +2,6 @@ package pro.sunriseforest.sunriseforestapp_client.net.interceptors;
 
 import android.support.annotation.NonNull;
 import java.io.IOException;
-import java.util.concurrent.TimeUnit;
 
 import okhttp3.Interceptor;
 import okhttp3.Request;

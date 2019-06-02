@@ -1,13 +1,12 @@
 package pro.sunriseforest.sunriseforestapp_client.presenters;
 
-
-
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
 import pro.sunriseforest.sunriseforestapp_client.SunriseForestApp;
 import pro.sunriseforest.sunriseforestapp_client.models.Task;
+import pro.sunriseforest.sunriseforestapp_client.models.User;
 import pro.sunriseforest.sunriseforestapp_client.net.ApiFactory;
 import pro.sunriseforest.sunriseforestapp_client.net.AsyncNetTransformer;
 import pro.sunriseforest.sunriseforestapp_client.settings.SharedPreferenceHelper;
@@ -87,14 +86,22 @@ public class NewTaskPresenter extends BasePresenter<NewTaskFragment> {
 
     private void addTask(Task task){
         String token = mSharedPreferenceHelper.getToken();
-        String managerId = mSharedPreferenceHelper.getUser().getId();
+        User user = mSharedPreferenceHelper.getUser();
+        if(user == null){
+            showError("Вы не авторизованы. Зайдите в свой профиль");
+            return;
+        }
+        String managerId = user.getId();
 
         ApiFactory.getSunriseForestService()
                 .addTask(task, token, managerId)
                 .compose(new AsyncNetTransformer<>())
                 .subscribe(this::saveTask,
                 this::handleNetworkError,
-                this::taskIsAdded
+                ()->{
+                    getView().showToast("Новый таск добавлен");
+                    mNavigationManager.back();
+                }
         );
     }
 
@@ -135,16 +142,17 @@ public class NewTaskPresenter extends BasePresenter<NewTaskFragment> {
         return TASK_IS_OK;
     }
     private void showInputError(int code){
-        //...
-        getView().showError("неверно заполнены поля");
-    }
 
-    private void taskIsAdded(){
-        log("taskIsAdded");
-
-        getView().showToast("Новый таск добавлен");
-
-        mNavigationManager.back();
+        switch (code){
+            case DESCRIPTION_TASK_IS_EMPTY:
+                showError("Отсутствует описание задачи");
+                break;
+            case START_DATE_TASK_IS_NOT_SELECTED:
+                showError("Не выбрана дата начала выполнения задачи");
+                break;
+            case END_DATE_TASK_IS_NOT_SELECTED:
+                showError("Не выбрана дата окончания задания");
+        }
     }
 
     private void saveTask(Task task){
