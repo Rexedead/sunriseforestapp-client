@@ -7,6 +7,7 @@ import pro.sunriseforest.sunriseforestapp_client.SunriseForestApp;
 import pro.sunriseforest.sunriseforestapp_client.models.SunriseNotification;
 import pro.sunriseforest.sunriseforestapp_client.notifications.JobSchedulerHelper;
 import pro.sunriseforest.sunriseforestapp_client.notifications.SunriseNotificationsProvider;
+import pro.sunriseforest.sunriseforestapp_client.settings.Settings;
 import pro.sunriseforest.sunriseforestapp_client.settings.SharedPreferenceHelper;
 import pro.sunriseforest.sunriseforestapp_client.ui.NavigationManager;
 import pro.sunriseforest.sunriseforestapp_client.ui.fragments.NotificationsFragment;
@@ -137,6 +138,10 @@ public class NotificationsPresenter extends BasePresenter<NotificationsFragment>
     private void tryUpdateView(){
         log("tryUpdateView");
         if(mView != null){
+            Settings settings =  mSharedPreferenceHelper.getSettings();
+
+            boolean works = settings.isNotificationsAreWorks();
+            turnNotification(works);
             mView.updateNotifications(mSunriseNotifications);
             mViewIsUpdated = true;
         }

@@ -370,7 +370,11 @@ public class TaskPresenter extends BasePresenter<TaskFragment> {
         task.setTaskDescription(mView.getDescription());
         task.setStartDate(mView.getTaskStartDate());
         task.setDeadlineDate(mView.getTaskEndDate());
-        task.setReward(Integer.parseInt(mView.getReward()));
+
+        task.setReward(
+                TextUtils.isEmpty(mView.getReward()) ?
+                        0 : Integer.parseInt(mView.getReward()));
+
         task.setContractorName(mView.getContractorName());
         task.setContractorPhone(mView.getContractorPhone());
         task.setClientName(mView.getClientName());

@@ -2,10 +2,18 @@ package pro.sunriseforest.sunriseforestapp_client.ui.fragments;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
+import android.util.JsonReader;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.squareup.moshi.JsonAdapter;
+import com.squareup.moshi.Moshi;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,8 +57,23 @@ public class RecycleNotificationAdapter extends RecyclerView.Adapter<RecycleNoti
     public void onBindViewHolder(@NonNull NotificationsViewHolder notificationsViewHolder, int i) {
         SunriseNotification sunriseNotification = mSunriseNotifications.get(i);
 
-        //todo костыль: исправить, когда сообщения будут готовиться на сервере
-        String text = "появились новые таски, целых " + sunriseNotification.getData() + " штук))))";
+        //todo вынести
+        String text = "";
+        if(sunriseNotification.getType() == 1){
+            text = String.format("появились %s новые задачи",sunriseNotification.getData());
+        }else if(sunriseNotification.getType() == 2){
+            try {
+                JSONObject jo = new JSONObject(String.valueOf(sunriseNotification.getData()));
+                String userName = jo.getString("sr_user_name");
+                String clientName = jo.getString("sr_client_name");
+
+                text = String.format("Исполнитель %s забронировала задачу ", userName);
+                if(!TextUtils.isEmpty(clientName)) text += "клиентом " + clientName;
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+        }
 
         notificationsViewHolder.mHeadline.setText(text);
         notificationsViewHolder.setListener(mListener);
@@ -68,11 +91,11 @@ public class RecycleNotificationAdapter extends RecyclerView.Adapter<RecycleNoti
         private NotificationClickListener mListener;
         private int mPosition;
 
-        public void setListener(NotificationClickListener listener) {
+        void setListener(NotificationClickListener listener) {
             mListener = listener;
         }
 
-        public void setPosition(int position) {
+        void setPosition(int position) {
             mPosition = position;
         }
 

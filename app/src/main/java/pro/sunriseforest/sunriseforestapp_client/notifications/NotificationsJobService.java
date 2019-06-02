@@ -17,6 +17,7 @@ import rx.Observable;
 import rx.schedulers.Schedulers;
 
 import static pro.sunriseforest.sunriseforestapp_client.notifications.NotificationHelper.AMOUNT_OF_TASKS_TYPE;
+import static pro.sunriseforest.sunriseforestapp_client.notifications.NotificationHelper.BOOK_TYPE;
 
 
 public class NotificationsJobService extends JobService {
@@ -124,7 +125,7 @@ public class NotificationsJobService extends JobService {
     }
 
     private boolean isNotEmptyNotification(SunriseNotification notification){
-        return notification.getType() == AMOUNT_OF_TASKS_TYPE &&
+        return (notification.getType() == BOOK_TYPE) || notification.getType() == AMOUNT_OF_TASKS_TYPE &&
                 Integer.parseInt(String.valueOf(notification.getData().toString().charAt(0)))!= 0;
     }
 }

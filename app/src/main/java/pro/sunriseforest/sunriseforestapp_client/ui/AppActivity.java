@@ -18,7 +18,11 @@ import androidx.navigation.Navigation;
 import java.util.Objects;
 
 import pro.sunriseforest.sunriseforestapp_client.R;
+import pro.sunriseforest.sunriseforestapp_client.SunriseForestApp;
+import pro.sunriseforest.sunriseforestapp_client.notifications.JobSchedulerHelper;
 import pro.sunriseforest.sunriseforestapp_client.notifications.NotificationReceiver;
+import pro.sunriseforest.sunriseforestapp_client.settings.Settings;
+import pro.sunriseforest.sunriseforestapp_client.settings.SharedPreferenceHelper;
 
 public class AppActivity extends AppCompatActivity implements IView{
 
@@ -69,11 +73,27 @@ public class AppActivity extends AppCompatActivity implements IView{
         mIntentFilter = new IntentFilter(NotificationReceiver.NOTIFICATION_ACTION);
 
         if(mIsStartApp){
+            prepareNotifications();
             mNavigationManager.startApp();
         }
     }
 
 
+
+    private void prepareNotifications(){
+        SharedPreferenceHelper sph = SharedPreferenceHelper.getInstance(getApplicationContext());
+        Settings settings =  sph.getSettings();
+        if(settings == null){
+            sph.setDefaultSettings();
+        }
+        settings = sph.getSettings();
+        boolean isWorks =  settings.isNotificationsAreWorks();
+        JobSchedulerHelper jobSchedulerHelper =
+                new JobSchedulerHelper(SunriseForestApp.getAppContext());
+
+        if(isWorks) jobSchedulerHelper.startNotificationJob();
+        else jobSchedulerHelper.cancelNotificationJob();
+    }
 
     @Override
     public void showLoginScreen() {

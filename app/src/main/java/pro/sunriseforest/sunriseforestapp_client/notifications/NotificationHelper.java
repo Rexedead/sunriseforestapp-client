@@ -18,19 +18,20 @@ public class NotificationHelper {
     private Context mContext;
     private NotificationManager mNotificationManager;
 
-    public static final int AMOUNT_OF_TASKS_TYPE = 1;
+    static final int AMOUNT_OF_TASKS_TYPE = 1;
+    static final int BOOK_TYPE = 2;
 
     public static NotificationHelper getInstance(Context context){
         return new NotificationHelper(context);
     }
 
-    public NotificationHelper(Context context) {
+    private NotificationHelper(Context context) {
         mContext = context;
         mNotificationManager = (NotificationManager)mContext.getSystemService(Context.NOTIFICATION_SERVICE);
 
     }
 
-    public NotificationCompat.Builder getNotificationBuilder(){
+    private NotificationCompat.Builder getNotificationBuilder(){
 
         if(Build.VERSION.SDK_INT < Build.VERSION_CODES.O){
             return new NotificationCompat.Builder(mContext);
@@ -46,7 +47,7 @@ public class NotificationHelper {
 
     }
 
-    public Notification getNotification(SunriseNotification notification){
+    private Notification getNotification(SunriseNotification notification){
 
         NotificationCompat.Builder builder = getNotificationBuilder();
 
