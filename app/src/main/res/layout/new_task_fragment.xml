@@ -164,13 +164,13 @@
 
     <Button
         android:id="@+id/add_newTask_button"
-        style="@style/Widget.AppCompat.Button.Colored"
+        style="@style/BtnInfo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
         android:text="@string/addTask"
-        android:textSize="12sp" />
+        />
 
 
 </RelativeLayout>

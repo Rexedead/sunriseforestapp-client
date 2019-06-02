@@ -74,16 +74,14 @@
 
         <Button
             android:id="@+id/registration_button"
+            style="@style/BtnSuccess"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/enter_password_regAct_editText"
+            android:layout_below="@id/enter_phone_regAct_editText"
             android:layout_marginLeft="60dp"
-            android:layout_marginTop="171dp"
+            android:layout_marginTop="20dp"
             android:layout_marginRight="60dp"
-            android:background="@color/auth_button"
-            android:textColor="@color/button_text"
             android:text="@string/log_in"
-            android:textAllCaps="false"
-            android:textSize="22sp" />
+            />
     </RelativeLayout>
 </ScrollView>

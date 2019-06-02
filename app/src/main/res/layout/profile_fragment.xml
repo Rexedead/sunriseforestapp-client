@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -7,26 +8,19 @@
     tools:context=".ui.fragments.ProfileFragment">
 
     <RelativeLayout
-        android:id="@+id/profile_top"
-        android:layout_width="match_parent"
-        android:layout_height="220dp"
-        android:background="@drawable/profile_woodie2">
-
-        <!--<ImageView-->
-        <!--android:id="@+id/profile_avatar"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_centerInParent="true"-->
-        <!--tools:srcCompat="@drawable/profile_woodie" />-->
-    </RelativeLayout>
-
-    <RelativeLayout
         android:id="@+id/profile_main"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/profile_top"
         android:paddingStart="?listPreferredItemPaddingLeft"
         android:paddingEnd="?listPreferredItemPaddingRight">
+
+        <ImageView
+            android:id="@+id/profile_img"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:contentDescription="@string/title_profile"
+            app:srcCompat="@drawable/profile_woodie2"
+            />
 
         <TextView
             android:id="@+id/profile_id_textView"
@@ -35,6 +29,7 @@
             android:gravity="start|center"
             android:text="@string/id"
             android:textSize="16sp"
+            android:layout_below="@+id/profile_img"
             />
 
         <TextView
@@ -43,7 +38,8 @@
             android:layout_height="30dp"
             android:layout_marginStart="10dp"
             android:layout_toEndOf="@+id/profile_id_textView"
-            android:gravity="start|center" />
+            android:gravity="start|center"
+            android:layout_below="@+id/profile_img"/>
 
 
         <TextView
@@ -53,22 +49,19 @@
             android:layout_below="@+id/profile_id_textView"
             android:layout_alignParentStart="true"
             android:gravity="start|center"
-            android:text="Имя"
+            android:text="@string/name"
             android:textSize="16sp"
             />
 
-        <EditText
-            android:id="@+id/user_name_profileFrag_editText"
+        <TextView
+            android:id="@+id/user_name_profileFrag_textView"
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:layout_below="@+id/profile_id_textView"
             android:layout_marginStart="10dp"
             android:layout_toEndOf="@+id/profile_phone_textView"
             android:gravity="start|center"
-            android:background="@color/field_background"
             android:maxLines="1"
-            android:inputType="text"
-            android:imeOptions="actionNext"
             android:textSize="16sp" />
 
 
@@ -97,7 +90,8 @@
             android:maxLines="1"
             android:inputType="phone"
             android:imeOptions="actionNext"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            />
 
         <TextView
             android:id="@+id/profile_mail_textView"
@@ -192,30 +186,25 @@
 
         <Button
             android:id="@+id/change_info_profileFrag_button"
-            android:layout_width="120dp"
-            android:layout_height="30dp"
+            style="@style/BtnSuccess"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_below="@+id/profile_reward_textView"
             android:layout_toEndOf="@+id/remove_token_profileFrag_button"
             android:layout_marginTop="10dp"
             android:layout_marginStart="10dp"
-            android:background="@color/auth_button"
-            android:textAllCaps="false"
             android:text="@string/save_changes_of_task"
-            android:textColor="@color/button_text"
-            android:textSize="14sp" />
+            />
 
         <Button
             android:id="@+id/remove_token_profileFrag_button"
+            style="@style/BtnDanger"
             android:layout_width="wrap_content"
-            android:layout_height="30dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:layout_below="@+id/profile_reward_textView"
-            android:background="@color/auth_button"
             android:text="@string/profile_remove_token_data"
-            android:textAllCaps="false"
-            android:textColor="@color/button_text"
-            android:textSize="14sp" />
+            />
     </RelativeLayout>
 
-
-</RelativeLayout>
+</ScrollView>

@@ -1,11 +1,32 @@
 <resources>
 
-    <!-- Base application theme. -->
     <style name="AppTheme" parent="Base.Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:textAllCaps">false</item>
+    </style>
+
+    <style name="BtnSuccess" parent="Base.Theme.AppCompat.Light.DarkActionBar">
+        <item name="android:backgroundTint">@color/colorPrimary</item>
+        <item name="android:textColor">@color/button_text</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textSize">14sp</item>
+
+    </style>
+
+    <style name="BtnDanger" parent="Base.Theme.AppCompat.Light.DarkActionBar">
+        <item name="android:backgroundTint">@color/status_101</item>
+        <item name="android:textColor">@color/button_text</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="BtnInfo" parent="Base.Theme.AppCompat.Light.DarkActionBar">
+        <item name="android:backgroundTint">@color/colorAccent</item>
+        <item name="android:textColor">@color/button_text</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textSize">14sp</item>
     </style>
 
 </resources>
