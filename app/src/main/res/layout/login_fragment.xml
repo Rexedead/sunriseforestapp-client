@@ -35,7 +35,6 @@
             android:layout_marginLeft="35dp"
             android:layout_marginRight="35dp"
             android:textSize="14sp"
-
             android:hint="@string/enter_password_hint"
             android:inputType="textPassword"
             android:autofillHints="password"
@@ -43,6 +42,7 @@
 
         <Button
             android:id="@+id/log_in_button"
+            style="@style/BtnSuccess"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/enter_password_editText"
@@ -50,23 +50,18 @@
             android:layout_marginTop="10dp"
             android:layout_marginRight="60dp"
             android:text="@string/log_in"
-            android:background="@color/auth_button"
-            android:textColor="@color/button_text"
-            android:textAllCaps="false"
-            android:textSize="18sp" />
+            android:textAllCaps="false"/>
         <Button
             android:id="@+id/registration_logAct_button"
+            style="@style/BtnInfo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/log_in_button"
             android:layout_marginLeft="60dp"
             android:layout_marginTop="10dp"
             android:layout_marginRight="60dp"
-            android:background="@color/auth_button"
-            android:textColor="@color/button_text"
-            android:textAllCaps="false"
             android:text="@string/registration_logAct_button"
-            android:textSize="18sp"
+            android:textAllCaps="false"
             />
 
         

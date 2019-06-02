@@ -5,17 +5,18 @@
     android:id="@+id/swipe_refresh_taskFrag"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <ScrollView
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content">
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:paddingStart="?listPreferredItemPaddingLeft"
         android:paddingEnd="?listPreferredItemPaddingRight"
         >
 
-            <ScrollView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                tools:ignore="UselessLeaf"/>
+
+
 
         <TextView
             android:id="@+id/singleTask_text_textView"
@@ -243,57 +244,57 @@
 
         <Button
             android:id="@+id/book_taskFrag_button"
-            style="@style/Widget.AppCompat.Button.Colored"
+            style="@style/BtnInfo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
-            android:layout_alignParentBottom="true"
+            android:layout_below="@+id/contractor_phone_taskFrag_textView"
             android:text="@string/reserve"
-            android:layout_marginBottom="150dp"
-            android:textSize="12sp" />
+            android:layout_marginTop="10dp"/>
 
         <Button
             android:id="@+id/complete_taskFrag_button"
-            style="@style/Widget.AppCompat.Button.Colored"
+            style="@style/BtnSuccess"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
-            android:layout_alignParentBottom="true"
             android:text="@string/complete"
-            android:layout_marginBottom="50dp"
-            android:textSize="12sp" />
+            android:layout_marginTop="10dp"
+            android:layout_below="@+id/book_taskFrag_button"
+             />
 
         <Button
             android:id="@+id/cancel_taskFrag_button"
-            style="@style/Widget.AppCompat.Button.Colored"
+            style="@style/BtnDanger"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
-            android:layout_alignParentBottom="true"
             android:text="@string/cancel"
-            android:layout_marginBottom="100dp"
-            android:textSize="12sp" />
+            android:layout_marginTop="10dp"
+            android:layout_below="@+id/complete_taskFrag_button"
+           />
 
         <Button
             android:id="@+id/save_taskFrag_button"
-            style="@style/Widget.AppCompat.Button.Colored"
+            style="@style/BtnSuccess"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/contractor_phone_taskFrag_textView"
             android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="100dp"
+            android:layout_marginTop="10dp"
             android:text="@string/save_changes_of_task"
-            android:textSize="12sp" />
+            />
         <Button
             android:id="@+id/cancel_changes_taskFrag_button"
-            style="@style/Widget.AppCompat.Button.Colored"
+            style="@style/BtnDanger"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="50dp"
-
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="20dp"
+            android:layout_below="@+id/save_taskFrag_button"
             android:text="@string/cancel_changes_of_task"
-            android:textSize="12sp" />
+            />
     </RelativeLayout>
+    </ScrollView>
 </android.support.v4.widget.SwipeRefreshLayout>

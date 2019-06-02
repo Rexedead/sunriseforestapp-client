@@ -69,23 +69,6 @@ public class Task {
         mReward = reward;
     }
 
-    public Task(String contractorId, String contractorName, String contractorPhone,
-                String clientPhone, String clientName, String taskDescription,
-                String creationDate, String deadlineDate, String startDate,
-                byte status, int reward) {
-        mContractorId = contractorId;
-        mContractorName = contractorName;
-        mContractorPhone = contractorPhone;
-        mClientPhone = clientPhone;
-        mClientName = clientName;
-        mTaskDescription = taskDescription;
-        mCreationDate = creationDate;
-        mDeadlineDate = deadlineDate;
-        mStartDate = startDate;
-        mStatus = status;
-        mReward = reward;
-    }
-
     public String getTaskID() {
         return mTaskID;
     }

@@ -20,7 +20,7 @@ public class ProfileFragment extends NavigatedFragment  implements TextWatcher {
     private static final int ITEM_ON_NAV = 1;
 
     private TextView mUserIdTextView;
-    private EditText mUserNameEditText;
+    private TextView mUserNameTextView;
     private EditText mUserMailEditText;
     private EditText mUserPhoneEditText;
     private TextView mUserRoleTextView;
@@ -46,7 +46,7 @@ public class ProfileFragment extends NavigatedFragment  implements TextWatcher {
         View view = inflater.inflate(R.layout.profile_fragment, container, false);
 
         mUserIdTextView = view.findViewById(R.id.id_profileFrag_textView);
-        mUserNameEditText = view.findViewById(R.id.user_name_profileFrag_editText);
+        mUserNameTextView = view.findViewById(R.id.user_name_profileFrag_textView);
         mUserMailEditText = view.findViewById(R.id.mail_profileFrag_editText);
         mUserPhoneEditText = view.findViewById(R.id.phone_profileFrag_editText);
         mUserRoleTextView = view.findViewById(R.id.role_profileFrag_textView);
@@ -68,7 +68,7 @@ public class ProfileFragment extends NavigatedFragment  implements TextWatcher {
         log("setProfile(user = %s)");
 
         mUserIdTextView.setText(uId);
-        mUserNameEditText.setText(uName);
+        mUserNameTextView.setText(uName);
         mUserMailEditText.setText(uMail);
         mUserPhoneEditText.setText(uPhone);
         mUserRoleTextView.setText(uRole);
@@ -80,7 +80,6 @@ public class ProfileFragment extends NavigatedFragment  implements TextWatcher {
     private void addListenersForEditText(){
         mExitProfileButton.setOnClickListener(mExitProfileListener);
         mSaveProfileButton.setOnClickListener(mSaveProfileListener);
-        mUserNameEditText.addTextChangedListener(this);
         mUserMailEditText.addTextChangedListener(this);
         mUserPhoneEditText.addTextChangedListener(this);
     }
@@ -89,7 +88,6 @@ public class ProfileFragment extends NavigatedFragment  implements TextWatcher {
     public void setEnabledEditTexts(boolean isYes) {
         log("setEnabled( isYes = %s)", isYes);
 
-        mUserNameEditText.setEnabled(false);
         mUserPhoneEditText.setEnabled(isYes);
         mUserMailEditText.setEnabled(isYes);
     }
@@ -116,7 +114,7 @@ public class ProfileFragment extends NavigatedFragment  implements TextWatcher {
     }
 
     public String getUserName() {
-        return mUserNameEditText.getText().toString();
+        return mUserNameTextView.getText().toString();
     }
 
     public String getUserMail() {
