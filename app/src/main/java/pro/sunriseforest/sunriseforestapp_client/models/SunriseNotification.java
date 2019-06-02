@@ -2,6 +2,7 @@ package pro.sunriseforest.sunriseforestapp_client.models;
 
 import com.squareup.moshi.Json;
 
+
 import io.reactivex.annotations.Nullable;
 
 public class SunriseNotification {
@@ -14,11 +15,11 @@ public class SunriseNotification {
 
     @Json(name = "sr_notification_type")
     private int mType;
-    
-    @Json(name = "sr_notification_data")
-    private Object data;
 
-    public SunriseNotification(String message, String headline, int type, Object data) {
+    @Json(name = "sr_notification_data")
+    private String data;
+
+    public SunriseNotification(String message, String headline, int type, String data) {
         mMessage = message;
         mHeadline = headline;
         mType = type;
@@ -47,7 +48,7 @@ public class SunriseNotification {
         return mType;
     }
 
-    public @Nullable Object getData() {
+    public @Nullable String getData() {
         return data;
     }
 

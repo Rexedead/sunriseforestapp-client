@@ -13,7 +13,6 @@ import java.util.List;
 import pro.sunriseforest.sunriseforestapp_client.models.SunriseNotification;
 import pro.sunriseforest.sunriseforestapp_client.net.ApiFactory;
 import pro.sunriseforest.sunriseforestapp_client.settings.SharedPreferenceHelper;
-import rx.Observable;
 import rx.schedulers.Schedulers;
 
 import static pro.sunriseforest.sunriseforestapp_client.notifications.NotificationHelper.AMOUNT_OF_TASKS_TYPE;
@@ -46,9 +45,9 @@ public class NotificationsJobService extends JobService {
 //                .compose(new AsyncNetTransformer<>())
                     .subscribeOn(Schedulers.io())
                     .observeOn( Schedulers.io())
-                    .flatMap(Observable::from)
-                    .filter(this::isNotEmptyNotification)
-                    .toList()
+//                    .flatMap(Observable::from)
+//                    .filter(n-> isNotEmptyNotification(n))
+//                    .toList()
                     .map(notifications -> {
                         cache(notifications);
                         return notifications;
@@ -125,7 +124,8 @@ public class NotificationsJobService extends JobService {
     }
 
     private boolean isNotEmptyNotification(SunriseNotification notification){
-        return (notification.getType() == BOOK_TYPE) || notification.getType() == AMOUNT_OF_TASKS_TYPE &&
-                Integer.parseInt(String.valueOf(notification.getData().toString().charAt(0)))!= 0;
+        int type = notification.getType();
+        return ( type== BOOK_TYPE) || type == AMOUNT_OF_TASKS_TYPE &&
+                Integer.parseInt(notification.getData())!= 0;
     }
 }

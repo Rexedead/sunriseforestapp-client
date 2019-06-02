@@ -3,19 +3,17 @@ package pro.sunriseforest.sunriseforestapp_client.ui.fragments;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.JsonReader;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.squareup.moshi.JsonAdapter;
-import com.squareup.moshi.Moshi;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import pro.sunriseforest.sunriseforestapp_client.R;
@@ -58,17 +56,19 @@ public class RecycleNotificationAdapter extends RecyclerView.Adapter<RecycleNoti
         SunriseNotification sunriseNotification = mSunriseNotifications.get(i);
 
         //todo вынести
+
         String text = "";
         if(sunriseNotification.getType() == 1){
             text = String.format("появились %s новые задачи",sunriseNotification.getData());
         }else if(sunriseNotification.getType() == 2){
             try {
-                JSONObject jo = new JSONObject(String.valueOf(sunriseNotification.getData()));
+                String json = sunriseNotification.getData();
+                JSONObject jo = new JSONObject(json);
                 String userName = jo.getString("sr_user_name");
                 String clientName = jo.getString("sr_client_name");
 
-                text = String.format("Исполнитель %s забронировала задачу ", userName);
-                if(!TextUtils.isEmpty(clientName)) text += "клиентом " + clientName;
+                text = String.format("Исполнитель %s забронировал задачу ", userName);
+                if(!TextUtils.isEmpty(clientName)) text += "клиента " + clientName;
             } catch (JSONException e) {
                 e.printStackTrace();
             }
