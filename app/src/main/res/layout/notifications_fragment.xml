@@ -24,7 +24,7 @@
     <Button
         android:id="@+id/delete_notifications"
         style="@style/BtnDanger"
-        android:layout_width="wrap_content"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/notifications_recyclerView"
         android:layout_alignParentStart="true"
@@ -36,7 +36,7 @@
     <Button
         android:id="@+id/turn_notifications"
         style="@style/BtnInfo"
-        android:layout_width="wrap_content"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         tools:text="Включить уведомления"
         android:layout_alignParentEnd="true"

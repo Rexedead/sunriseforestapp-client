@@ -12,6 +12,7 @@
     <color name="auth_button">#689F38</color>
     <color name="button_text">#fff</color>
     <color name="field_background">#e5e5e5</color>
+    <color name="button_red">#e57373</color>
 
 
 </resources>
