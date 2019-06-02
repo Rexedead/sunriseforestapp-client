@@ -21,13 +21,17 @@ public class NewTaskPresenter extends BasePresenter<NewTaskFragment> {
     private static final int DESCRIPTION_TASK_IS_EMPTY = 2;
     private static final int END_DATE_TASK_IS_NOT_SELECTED = 3;
     private static final int START_DATE_TASK_IS_NOT_SELECTED = 4;
-    private static final int INPUT_ERROR = 101;
+    private static final int START_DATE_BEFORE_TODAY = 5;
+    private static final int END_DATE_BEFORE_START_DATE = 6;
+
+    
 
     private static final NewTaskPresenter ourInstance = new NewTaskPresenter();
 
 
     private NavigationManager mNavigationManager;
     private SharedPreferenceHelper mSharedPreferenceHelper;
+
 
     private Calendar mStartTaskDate = Calendar.getInstance();
     private Calendar mEndTaskDate = Calendar.getInstance();
@@ -43,6 +47,7 @@ public class NewTaskPresenter extends BasePresenter<NewTaskFragment> {
 
 
     }
+
 
     public void setStartDate(int y, int m, int d){
         log("setStartDate( y = %s, m = %s, d = %s)", y, m, d);
@@ -100,6 +105,7 @@ public class NewTaskPresenter extends BasePresenter<NewTaskFragment> {
                 this::handleNetworkError,
                 ()->{
                     getView().showToast("Новый таск добавлен");
+                    exit();
                     mNavigationManager.back();
                 }
         );
@@ -131,13 +137,19 @@ public class NewTaskPresenter extends BasePresenter<NewTaskFragment> {
     }
 
     private int checkTask(Task task){
-
         if(nullOrEmpty(task.getTaskDescription()))
             return DESCRIPTION_TASK_IS_EMPTY;
         else if(nullOrEmpty(task.getStartDate()))
             return START_DATE_TASK_IS_NOT_SELECTED;
         else if(nullOrEmpty(task.getDeadlineDate()))
             return END_DATE_TASK_IS_NOT_SELECTED;
+
+        Calendar today = Calendar.getInstance();
+        today.set(today.get(Calendar.YEAR), today.get(Calendar.MONTH), today.get(Calendar.DAY_OF_MONTH),
+                0,0,0);
+
+        if(mStartTaskDate.before(today)) return START_DATE_BEFORE_TODAY;
+        if(mEndTaskDate.before(mStartTaskDate)) return END_DATE_BEFORE_START_DATE;
 
         return TASK_IS_OK;
     }
@@ -152,6 +164,12 @@ public class NewTaskPresenter extends BasePresenter<NewTaskFragment> {
                 break;
             case END_DATE_TASK_IS_NOT_SELECTED:
                 showError("Не выбрана дата окончания задания");
+                break;
+            case START_DATE_BEFORE_TODAY:
+                showError("Дата начала работ уже прошла");
+                break;
+            case END_DATE_BEFORE_START_DATE:
+                showError("Дата начала работ идет после даты окончания");
         }
     }
 
@@ -174,6 +192,11 @@ public class NewTaskPresenter extends BasePresenter<NewTaskFragment> {
     @Override
     public String createTAG() {
         return TAG;
+    }
+
+    private void exit(){
+        mStartTaskDate = Calendar.getInstance();
+        mEndTaskDate = Calendar.getInstance();
     }
 }
 

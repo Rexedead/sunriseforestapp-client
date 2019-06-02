@@ -48,8 +48,6 @@ public class NewTaskFragment extends BaseFragment {
             (dp, y, m, d) ->
             mPresenter.setStartDate(y, m, d);
 
-
-
     private View.OnClickListener mTaskStartDateOnClickListener = view -> mPresenter.clickedTaskStartDate();
 
     private View.OnClickListener mTaskEndDateOnClickListener = view -> mPresenter.clickedTaskEndDate();
@@ -60,7 +58,7 @@ public class NewTaskFragment extends BaseFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.new_task_fragment, container, false);
+            View view = inflater.inflate(R.layout.new_task_fragment, container, false);
 
         mTaskDescriptionEditText = view.findViewById(R.id.description_newTask_editText);
         mTaskRewardEditText = view.findViewById(R.id.reward_newTask_editText);
@@ -96,6 +94,7 @@ public class NewTaskFragment extends BaseFragment {
         mTaskStartDateInputEditText.setOnClickListener(mTaskStartDateOnClickListener);
         mTaskEndDateTextInputEditText.setOnClickListener(mTaskEndDateOnClickListener);
         mAddNewTaskButton.setOnClickListener(mAddTaskListener);
+        log(mAddNewTaskButton.toString());
         return view;
 
     }
@@ -160,8 +159,7 @@ public class NewTaskFragment extends BaseFragment {
                 mTaskEndDateTextInputEditText.getText() == null ?
                         null : mTaskEndDateTextInputEditText.getText().toString());
         task.setStatus((byte) 101);
-        task.setReward(mTaskRewardEditText.getText().toString().equals("") ?
-                0 : Integer.parseInt(mTaskRewardEditText.getText().toString()));
+        task.setReward(getReward());
 
         task.setClientName( mTaskClientNameEditText.getText()==null ?
                 null : mTaskClientNameEditText.getText().toString());
@@ -170,6 +168,15 @@ public class NewTaskFragment extends BaseFragment {
                 null : mTaskClientPhoneEditText.getText().toString());
 
         return task;
+    }
+
+    private int getReward(){
+        String rewardString = mTaskRewardEditText.getText()
+                .toString()
+                .replaceAll("[^0-9]", "");
+
+        if(rewardString.equals("")) return 0;
+        return Integer.parseInt(rewardString);
     }
 
 }
