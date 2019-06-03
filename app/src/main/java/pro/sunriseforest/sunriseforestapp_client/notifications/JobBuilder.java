@@ -36,6 +36,7 @@ public class JobBuilder {
         return builder;
     }
 
+
     public JobInfo.Builder getNotificationsJobBuilder(int type){
         PersistableBundle bundle = new PersistableBundle();
         bundle.putInt(ACTION_KEY, type);

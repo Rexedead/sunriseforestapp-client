@@ -30,8 +30,6 @@ public class AppActivity extends AppCompatActivity implements IView{
     private NavController mNavController;
     private BottomNavigationView mBottomNavigationView;
     private boolean mIsStartApp;
-    private NotificationsCameListener mNewNotificationsCameListener;
-    private boolean mNewNotificationsCameLater;
 
 
     private BottomNavigationView.OnNavigationItemSelectedListener mNavigationItemSelectedListener = menuItem -> {
@@ -264,7 +262,7 @@ public class AppActivity extends AppCompatActivity implements IView{
             mNavigationManager.bindView(this);
         }
 
-        mNewNotificationsCameLater = mNotificationReceiver
+        mNotificationReceiver
                 .setListener(this::newNotificationsReceived);
 
 
@@ -281,7 +279,6 @@ public class AppActivity extends AppCompatActivity implements IView{
         mNotificationReceiver.unsetListener();
         unregisterReceiver(mNotificationReceiver);
 
-        mNewNotificationsCameListener = null;
     }
 
     @Override
@@ -312,29 +309,13 @@ public class AppActivity extends AppCompatActivity implements IView{
         }
     }
 
-
-
     private void newNotificationsReceived(){
         log("newNotificationsReceived() ");
 
-        if(mNewNotificationsCameListener != null){
-            mNewNotificationsCameListener.notificationsCame();
-            mNewNotificationsCameLater = false;
-        }else{
-            mNewNotificationsCameLater = true;
-        }
+
     }
 
-    // вернет true если новые notifications приходили до set'а
-    public boolean
-    setNewNotificationsCameListener(NotificationsCameListener listener){
-        mNewNotificationsCameListener = listener;
-        return mNewNotificationsCameLater;
-    }
 
-    public interface NotificationsCameListener{
-        void notificationsCame();
-    }
 
 
 }

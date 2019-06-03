@@ -1,18 +1,28 @@
 package pro.sunriseforest.sunriseforestapp_client.presenters;
 
 
+
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import pro.sunriseforest.sunriseforestapp_client.SunriseForestApp;
+import pro.sunriseforest.sunriseforestapp_client.models.SunriseNotification;
 import pro.sunriseforest.sunriseforestapp_client.models.Task;
 import pro.sunriseforest.sunriseforestapp_client.net.ApiFactory;
 import pro.sunriseforest.sunriseforestapp_client.net.AsyncNetTransformer;
 import pro.sunriseforest.sunriseforestapp_client.settings.SharedPreferenceHelper;
 import pro.sunriseforest.sunriseforestapp_client.ui.NavigationManager;
 import pro.sunriseforest.sunriseforestapp_client.ui.fragments.DeskFragment;
+import pro.sunriseforest.sunriseforestapp_client.utils.TasksUtils;
 import rx.Observable;
 
+
+//todo для реализации сортировки тасков нужно реализовать компаратор в utils.TaskUtils
+//todo заюзать компаратор в rx в методе sorted или toSortedList(для начала Observable<List> нужно за флетмапить в Observable<Task>)
+//todo таким же образом добавить фильтр, который отфильтровывает (если ты контрактор) все забронированные не мной таски
+//todo фильтрация должна проходить до сортировки
+//todo теперь ты такой же бог rx'a как и я. Мои поздравления
 public class DeskPresenter extends BasePresenter<DeskFragment> {
 
     private static final DeskPresenter ourInstance = new DeskPresenter();
@@ -25,6 +35,7 @@ public class DeskPresenter extends BasePresenter<DeskFragment> {
     private boolean mLoading = false;
 
     private SharedPreferenceHelper mSharedPreferenceHelper;
+
 
     private DeskPresenter() {
         mNavigationManager = NavigationManager.getInstance();
@@ -50,6 +61,12 @@ public class DeskPresenter extends BasePresenter<DeskFragment> {
         }
         tryUpdateView();
 
+    }
+
+    @Override
+    public void cameNewNotifications(List<SunriseNotification> notifications) {
+        log("cameNewNotifications()");
+        update();
     }
 
     private void tryUpdateView() {
@@ -87,6 +104,7 @@ public class DeskPresenter extends BasePresenter<DeskFragment> {
 
         loadTasks(token).subscribe(
                 tasks -> mTasks = tasks,
+
                 throwable -> {
                     handleNetworkError(throwable);
                     mLoading = false;
@@ -116,6 +134,7 @@ public class DeskPresenter extends BasePresenter<DeskFragment> {
     void addTask(Task task){
         log("addTask( task = %s)", task);
         mTasks.add(task);
+        sortTasks(mTasks);
     }
 
     private boolean iAmManager(){
@@ -131,6 +150,11 @@ public class DeskPresenter extends BasePresenter<DeskFragment> {
         update();
     }
 
+    private void sortTasks(List<Task> tasks){
+        Collections.sort(tasks, TasksUtils.getComparatorTasks());
+    }
+
+
     void updateTask(Task tsk) {
         int idx = -1;
         for (int i = 0; i < mTasks.size(); i++) {
@@ -143,5 +167,6 @@ public class DeskPresenter extends BasePresenter<DeskFragment> {
             mTasks.remove(idx);
             mTasks.add(idx, tsk);
         }
+        sortTasks(mTasks);
     }
 }

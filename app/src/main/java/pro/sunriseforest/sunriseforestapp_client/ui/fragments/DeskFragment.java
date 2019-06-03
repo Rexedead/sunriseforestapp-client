@@ -21,6 +21,7 @@ import pro.sunriseforest.sunriseforestapp_client.presenters.BasePresenter;
 import pro.sunriseforest.sunriseforestapp_client.presenters.DeskPresenter;
 
 
+
 public class DeskFragment extends NavigatedFragment
         implements RecycleTaskAdapter.TaskClickListener, SwipeRefreshLayout.OnRefreshListener {
     private static final int ITEM_ON_NAV = 0;

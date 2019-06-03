@@ -106,7 +106,7 @@ public class NotificationsPresenter extends BasePresenter<NotificationsFragment>
     }
 
     @Override
-    protected void cameNewNotifications() {
+    public void cameNewNotifications(List<SunriseNotification> notifications) {
         log("cameNewNotifications");
         mNotificationsIsUpdated = false;
         mViewIsUpdated = false;

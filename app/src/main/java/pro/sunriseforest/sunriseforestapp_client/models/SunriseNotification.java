@@ -1,11 +1,14 @@
 package pro.sunriseforest.sunriseforestapp_client.models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.squareup.moshi.Json;
 
 
 import io.reactivex.annotations.Nullable;
 
-public class SunriseNotification {
+public class SunriseNotification  {
 
     @Json(name = "sr_notification_msg")
     private String mMessage;
@@ -51,6 +54,7 @@ public class SunriseNotification {
     public @Nullable String getData() {
         return data;
     }
+
 
 
 }

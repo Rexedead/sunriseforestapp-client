@@ -3,8 +3,13 @@ package pro.sunriseforest.sunriseforestapp_client.notifications;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 
+import pro.sunriseforest.sunriseforestapp_client.presenters.DeskPresenter;
+import pro.sunriseforest.sunriseforestapp_client.presenters.LoginPresenter;
+import pro.sunriseforest.sunriseforestapp_client.presenters.NewTaskPresenter;
 import pro.sunriseforest.sunriseforestapp_client.presenters.NotificationsPresenter;
+import pro.sunriseforest.sunriseforestapp_client.presenters.TaskPresenter;
 
 public class NotificationReceiver extends BroadcastReceiver {
 
@@ -23,12 +28,14 @@ public class NotificationReceiver extends BroadcastReceiver {
 
     //возвращаем true, в том случае, когда не удалось оповестить о том ,что пришли новые уведомления.
     // такое возможно если локальный листенер равен null в тот момент, когда пришло новое уведомление
-    public boolean setListener(Listener listener) {
+    public void setListener(Listener listener) {
         mListener = listener;
 
-        mNotificated = !mNotificated;
+        if(!mNotificated) {
+            mListener.onNotificationReceive();
+            mNotificated = true;
+        }
 
-        return mNotificated;
     }
 
     public void unsetListener(){
@@ -37,6 +44,7 @@ public class NotificationReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
+        Log.i("%%%/receiver", "onReceive: ");
 
         if(mListener != null){
             mListener.onNotificationReceive();
@@ -44,8 +52,16 @@ public class NotificationReceiver extends BroadcastReceiver {
         }else{
             mNotificated = false;
         }
+
+        notifyPresenters();
     }
 
+
+    public void notifyPresenters(){
+        DeskPresenter.getInstance().cameNewNotifications(null);
+        TaskPresenter.getInstance().cameNewNotifications(null);
+        NotificationsPresenter.getInstance().cameNewNotifications(null);
+    }
 
 
     public interface Listener{

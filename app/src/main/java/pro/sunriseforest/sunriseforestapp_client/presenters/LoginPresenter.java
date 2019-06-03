@@ -12,7 +12,6 @@ import pro.sunriseforest.sunriseforestapp_client.net.AsyncNetTransformer;
 import pro.sunriseforest.sunriseforestapp_client.settings.SharedPreferenceHelper;
 import pro.sunriseforest.sunriseforestapp_client.ui.NavigationManager;
 import pro.sunriseforest.sunriseforestapp_client.ui.fragments.LoginFragment;
-import pro.sunriseforest.sunriseforestapp_client.utils.InputCheckUtils;
 
 public class LoginPresenter extends BasePresenter<LoginFragment>{
     private static final LoginPresenter ourInstance = new LoginPresenter();
@@ -45,9 +44,7 @@ public class LoginPresenter extends BasePresenter<LoginFragment>{
                         this::handleNetworkError,
                         this::showTasks
                         );
-
     }
-
 
 
     public void selectedGoToRegistration(){
@@ -72,17 +69,15 @@ public class LoginPresenter extends BasePresenter<LoginFragment>{
         return true;
     }
 
-
-
     private void saveUser(User user){
         log(String.format("saveUser(User user = %s)", user));
         mSharedPreferenceHelper.saveUser(user);
 
     }
+
     private void showTasks(){
         log("showTasks()");
         mNavigationManager.fromLoginToDesk();
-
 
     }
 

@@ -6,7 +6,9 @@ import android.util.Log;
 
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
+import java.util.List;
 
+import pro.sunriseforest.sunriseforestapp_client.models.SunriseNotification;
 import pro.sunriseforest.sunriseforestapp_client.net.ErrorMassageManager;
 import pro.sunriseforest.sunriseforestapp_client.utils.NetworkUtils;
 import pro.sunriseforest.sunriseforestapp_client.ui.AppActivity;
@@ -28,15 +30,6 @@ public abstract class BasePresenter <F extends Fragment> {
     public void bindView(F view){
         log(String.format("bindView(view=%s)", view));
         mView = view;
-        AppActivity activity =  (AppActivity)mView.getActivity();
-
-        if(activity != null){
-            //todo баг?: походу всегда вызывается cameNewNotifications()
-            boolean newNotificationsCameLater =  activity
-                    .setNewNotificationsCameListener(this::cameNewNotifications);
-
-            if(newNotificationsCameLater) cameNewNotifications();
-        }
     }
 
     public void unBindView(){
@@ -50,7 +43,7 @@ public abstract class BasePresenter <F extends Fragment> {
     }
 
 
-    protected void cameNewNotifications(){
+    public void cameNewNotifications(List<SunriseNotification> notifications){
         log("cameNewNotifications");
     }
 
