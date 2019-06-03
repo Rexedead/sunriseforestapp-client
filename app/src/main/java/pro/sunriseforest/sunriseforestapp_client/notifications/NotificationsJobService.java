@@ -6,6 +6,7 @@ import android.app.job.JobScheduler;
 import android.app.job.JobService;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.util.Log;
 
 import java.util.List;
@@ -65,6 +66,8 @@ public class NotificationsJobService extends JobService {
                                 refreshIfWorks();
                                 jobFinished(params, false);
                             });
+        }else{
+            onDestroy();
         }
 
         return true;
@@ -75,6 +78,7 @@ public class NotificationsJobService extends JobService {
         sendBroadcast(intent);
 
     }
+
     private void cache(List<SunriseNotification> notifications ){
         Log.i(TAG, "cache: ");
         SunriseNotificationsProvider.getInstance(this).append(notifications);
@@ -99,6 +103,9 @@ public class NotificationsJobService extends JobService {
 
 
     private void refreshIfWorks(){
+        //не нужно если sdk >= n , так как юзаем setPeriodic(time)
+        if(Build.VERSION.SDK_INT < Build.VERSION_CODES.N) return;
+
         if(SharedPreferenceHelper.getInstance(this).getSettings().isNotificationsAreWorks()){
             if(!isSheduled) refreshScheduler();
 

@@ -4,6 +4,7 @@ import pro.sunriseforest.sunriseforestapp_client.R;
 import pro.sunriseforest.sunriseforestapp_client.SunriseForestApp;
 import pro.sunriseforest.sunriseforestapp_client.models.Task;
 
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
@@ -58,44 +59,54 @@ RecycleTaskAdapter extends RecyclerView.Adapter<RecycleTaskAdapter.TaskViewHolde
             e.printStackTrace();
         }
 
+
+
         taskHolder.mStartDate.setText(task.getStartDate());
         taskHolder.mEndDate.setText(task.getDeadlineDate());
         switch (task.getStatus()) {
             case 101:
                 taskHolder.mStatus.setImageResource(R.drawable.status_101);
+                taskHolder.setDefaultBackground();
                 break;
             case 102:
                 taskHolder.mStatus.setImageResource(R.drawable.status_102);
+                taskHolder.setDefaultBackground();
                 break;
             case 103:
                 taskHolder.mStatus.setImageResource(R.drawable.status_103);
-                taskHolder.mDescription.setTypeface(null, Typeface.NORMAL);
-                taskHolder.mReward.setTypeface(null, Typeface.NORMAL);
-                taskHolder.mCreationDate.setTypeface(null, Typeface.NORMAL);
-                taskHolder.mStartDate.setTypeface(null, Typeface.NORMAL);
-                taskHolder.mEndDate.setTypeface(null, Typeface.NORMAL);
-                taskHolder.mCreationDateText.setTypeface(null, Typeface.NORMAL);
-                taskHolder.mStartDateText.setTypeface(null, Typeface.NORMAL);
-                taskHolder.mEndDateText.setTypeface(null, Typeface.NORMAL);
+                taskHolder.setComplectedBackground();
 
-                taskHolder.mDescription.setTextColor(ContextCompat.getColor(SunriseForestApp.getAppContext(),
-                        R.color.secondaryText));
-                taskHolder.mReward.setTextColor(ContextCompat.getColor(SunriseForestApp.getAppContext(),
-                        R.color.secondaryText));
-                taskHolder.mCreationDate.setTextColor(ContextCompat.getColor(SunriseForestApp.getAppContext(),
-                        R.color.secondaryText));
-                taskHolder.mEndDate.setTextColor(ContextCompat.getColor(SunriseForestApp.getAppContext(),
-                        R.color.secondaryText));
-                taskHolder.mStartDate.setTextColor(ContextCompat.getColor(SunriseForestApp.getAppContext(),
-                        R.color.secondaryText));
-                taskHolder.mCreationDateText.setTextColor(ContextCompat.getColor(SunriseForestApp.getAppContext(),
-                        R.color.secondaryText));
-                taskHolder.mStartDateText.setTextColor(ContextCompat.getColor(SunriseForestApp.getAppContext(),
-                        R.color.secondaryText));
-                taskHolder.mEndDateText.setTextColor(ContextCompat.getColor(SunriseForestApp.getAppContext(),
-                        R.color.secondaryText));
+//                бага: неверно отображаетсяя стиль из за того что холдер не пересоздается а используется заново со страрыми изменениями
+//
+//                taskHolder.mDescription.setTypeface(null, Typeface.NORMAL);
+//                taskHolder.mReward.setTypeface(null, Typeface.NORMAL);
+//
+//                taskHolder.mCreationDate.setTypeface(null, Typeface.NORMAL);
+//                taskHolder.mStartDate.setTypeface(null, Typeface.NORMAL);
+//                taskHolder.mEndDate.setTypeface(null, Typeface.NORMAL);
+//                taskHolder.mCreationDateText.setTypeface(null, Typeface.NORMAL);
+//                taskHolder.mStartDateText.setTypeface(null, Typeface.NORMAL);
+//                taskHolder.mEndDateText.setTypeface(null, Typeface.NORMAL);
+//                taskHolder.mDescription.setTextColor(ContextCompat.getColor(SunriseForestApp.getAppContext(),
+//                        R.color.secondaryText));
+//                taskHolder.mReward.setTextColor(ContextCompat.getColor(SunriseForestApp.getAppContext(),
+//                        R.color.secondaryText));
+//                taskHolder.mCreationDate.setTextColor(ContextCompat.getColor(SunriseForestApp.getAppContext(),
+//                        R.color.secondaryText));
+//                taskHolder.mEndDate.setTextColor(ContextCompat.getColor(SunriseForestApp.getAppContext(),
+//                        R.color.secondaryText));
+//                taskHolder.mStartDate.setTextColor(ContextCompat.getColor(SunriseForestApp.getAppContext(),
+//                        R.color.secondaryText));
+//                taskHolder.mCreationDateText.setTextColor(ContextCompat.getColor(SunriseForestApp.getAppContext(),
+//                        R.color.secondaryText));
+//                taskHolder.mStartDateTextext.setTextColor(ContextCompat.getColor(SunriseForestApp.getAppContext(),
+//                        R.color.secondaryText));
+//                taskHolder.mEndDateText.setTextColor(ContextCompat.getColor(SunriseForestApp.getAppContext(),
+//                        R.color.secondaryText));
                 break;
         }
+
+
 
 
         String taskDescription = task.getTaskDescription();
@@ -145,6 +156,7 @@ RecycleTaskAdapter extends RecyclerView.Adapter<RecycleTaskAdapter.TaskViewHolde
 
         TaskViewHolder(@NonNull View view) {
             super(view);
+
             mDescription = view.findViewById(R.id.taskSingleRow_description_textView);
             mDescription.setSingleLine(true);
             mReward = view.findViewById(R.id.taskSingleRow_reward_textView);
@@ -158,6 +170,15 @@ RecycleTaskAdapter extends RecyclerView.Adapter<RecycleTaskAdapter.TaskViewHolde
 
         }
 
+        public void setComplectedBackground() {
+            itemView.setBackgroundColor(ContextCompat.getColor(SunriseForestApp.getAppContext(),
+                        R.color.field_background));
+        }
+
+        public void setDefaultBackground() {
+            itemView.setBackgroundColor( Color.WHITE);
+
+        }
     }
 
     public interface TaskClickListener{

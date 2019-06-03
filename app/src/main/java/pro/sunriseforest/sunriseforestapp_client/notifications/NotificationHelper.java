@@ -55,10 +55,10 @@ public class NotificationHelper {
         PendingIntent pendingIntent = PendingIntent
                 .getActivity(mContext, 2343, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-
         builder.setContentTitle(notification.getHeadline())
                 .setContentIntent(pendingIntent)
-                .setSmallIcon(R.drawable.ic_launcher_foreground);
+                .setSmallIcon(R.drawable.logo)
+                .setDefaults(Notification.DEFAULT_SOUND|Notification.DEFAULT_LIGHTS|Notification.DEFAULT_VIBRATE);
 
         switch (notification.getType()){
             case AMOUNT_OF_TASKS_TYPE:

@@ -3,6 +3,7 @@ package pro.sunriseforest.sunriseforestapp_client.notifications;
 import android.app.job.JobInfo;
 import android.content.ComponentName;
 import android.content.Context;
+import android.os.Build;
 import android.os.PersistableBundle;
 
 public class JobBuilder {
@@ -28,7 +29,12 @@ public class JobBuilder {
         ComponentName jobService = new ComponentName(mContext  , NotificationsJobService.class);
         JobInfo.Builder builder = new JobInfo.Builder(NOTIFICATION_JOB_ID, jobService);
 
-        builder.setMinimumLatency(6000);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            builder.setMinimumLatency(6000);
+
+        } else {
+            builder.setPeriodic(6000);
+        }
         builder.setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY);
         builder.setRequiresDeviceIdle(false);
         builder.setRequiresCharging(false);

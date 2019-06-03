@@ -3,6 +3,7 @@ package pro.sunriseforest.sunriseforestapp_client.notifications;
 import android.app.job.JobInfo;
 import android.app.job.JobScheduler;
 import android.content.Context;
+import android.util.Log;
 
 public class JobSchedulerHelper {
 
@@ -23,7 +24,8 @@ public class JobSchedulerHelper {
         JobInfo.Builder builder = new JobBuilder(mContext)
                 .getNotificationsJobBuilder(JobBuilder.ACTION_START_JOB);
 
-        scheduler.schedule(builder.build());
+        int result = scheduler.schedule(builder.build());
+        Log.i("JobSchedulerHelper", "startNotificationJob: result=" + result);
     }
 
     public void cancelNotificationJob(){
