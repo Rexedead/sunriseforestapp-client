@@ -1,7 +1,5 @@
 package pro.sunriseforest.sunriseforestapp_client.presenters;
 
-
-
 import android.text.TextUtils;
 
 

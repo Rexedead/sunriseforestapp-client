@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.util.Log;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import pro.sunriseforest.sunriseforestapp_client.models.SunriseNotification;
@@ -18,6 +19,7 @@ import rx.schedulers.Schedulers;
 
 import static pro.sunriseforest.sunriseforestapp_client.notifications.NotificationHelper.AMOUNT_OF_TASKS_TYPE;
 import static pro.sunriseforest.sunriseforestapp_client.notifications.NotificationHelper.BOOK_TYPE;
+import static pro.sunriseforest.sunriseforestapp_client.notifications.NotificationReceiver.NOTIFICATIONS_EXTRA_TAG;
 
 
 public class NotificationsJobService extends JobService {
@@ -57,13 +59,13 @@ public class NotificationsJobService extends JobService {
                             notifications -> {
                                 Log.i(TAG, "onStartJob: onNext");
                                 showNotifications(notifications);
-                                notifyApp();
-                                refreshIfWorks();
+                                notifyApp(notifications);
+                                refreshIfNeeds();
                                 jobFinished(params,false);
                             },
                             throwable ->{
                                 Log.i(TAG, "onStartJob: onError  " + throwable.getMessage());
-                                refreshIfWorks();
+                                refreshIfNeeds();
                                 jobFinished(params, false);
                             });
         }else{
@@ -73,8 +75,9 @@ public class NotificationsJobService extends JobService {
         return true;
     }
 
-    private void notifyApp(){
+    private void notifyApp(List<SunriseNotification> notifications){
         Intent intent = new Intent(NotificationReceiver.NOTIFICATION_ACTION);
+        intent.putParcelableArrayListExtra(NOTIFICATIONS_EXTRA_TAG, new ArrayList<>(notifications));
         sendBroadcast(intent);
 
     }
@@ -97,12 +100,12 @@ public class NotificationsJobService extends JobService {
     @Override
     public boolean onStopJob(JobParameters params) {
         Log.i(TAG, "onStopJob: ");
-        refreshIfWorks();
+        refreshIfNeeds();
         return false;
     }
 
 
-    private void refreshIfWorks(){
+    private void refreshIfNeeds(){
         //не нужно если sdk >= n , так как юзаем setPeriodic(time)
         if(Build.VERSION.SDK_INT < Build.VERSION_CODES.N) return;
 

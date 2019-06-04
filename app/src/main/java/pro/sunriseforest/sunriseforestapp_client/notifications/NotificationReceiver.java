@@ -5,9 +5,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
+import java.util.List;
+
+import pro.sunriseforest.sunriseforestapp_client.models.SunriseNotification;
 import pro.sunriseforest.sunriseforestapp_client.presenters.DeskPresenter;
-import pro.sunriseforest.sunriseforestapp_client.presenters.LoginPresenter;
-import pro.sunriseforest.sunriseforestapp_client.presenters.NewTaskPresenter;
 import pro.sunriseforest.sunriseforestapp_client.presenters.NotificationsPresenter;
 import pro.sunriseforest.sunriseforestapp_client.presenters.TaskPresenter;
 
@@ -15,9 +16,11 @@ public class NotificationReceiver extends BroadcastReceiver {
 
     public static final String NOTIFICATION_ACTION = "pro.sunriseforest.sunriseforestapp_client_notification_action";
 
+    public final static String NOTIFICATIONS_EXTRA_TAG = "notifications";
     private boolean mNotificated;
 
     private Listener mListener;
+
 
     public NotificationReceiver(Listener listener) {
         mListener = listener;
@@ -46,21 +49,23 @@ public class NotificationReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         Log.i("%%%/receiver", "onReceive: ");
 
+        List<SunriseNotification> notifications =  intent.getParcelableArrayListExtra(NOTIFICATIONS_EXTRA_TAG);
         if(mListener != null){
+
             mListener.onNotificationReceive();
             mNotificated = true;
         }else{
             mNotificated = false;
         }
 
-        notifyPresenters();
+        notifyPresenters(notifications);
     }
 
 
-    public void notifyPresenters(){
-        DeskPresenter.getInstance().cameNewNotifications(null);
-        TaskPresenter.getInstance().cameNewNotifications(null);
-        NotificationsPresenter.getInstance().cameNewNotifications(null);
+    public void notifyPresenters(List<SunriseNotification> notifications){
+        DeskPresenter.getInstance().cameNewNotifications(notifications);
+        TaskPresenter.getInstance().cameNewNotifications(notifications);
+        NotificationsPresenter.getInstance().cameNewNotifications(notifications);
     }
 
 

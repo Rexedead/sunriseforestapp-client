@@ -73,8 +73,6 @@ public class NotificationHelper {
 
     public void showNotification(SunriseNotification notification){
 
-        //не кидаем уведомление если нет новых тасков
-
         mNotificationManager.notify(123, getNotification(notification));
     }
 }

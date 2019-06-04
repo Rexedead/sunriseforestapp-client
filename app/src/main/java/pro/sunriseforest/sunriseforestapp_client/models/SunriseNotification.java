@@ -8,7 +8,7 @@ import com.squareup.moshi.Json;
 
 import io.reactivex.annotations.Nullable;
 
-public class SunriseNotification  {
+public class SunriseNotification  implements Parcelable{
 
     @Json(name = "sr_notification_msg")
     private String mMessage;
@@ -54,6 +54,40 @@ public class SunriseNotification  {
     public @Nullable String getData() {
         return data;
     }
+
+
+    protected SunriseNotification(Parcel in) {
+        mMessage = in.readString();
+        mHeadline = in.readString();
+        mType = in.readInt();
+        data = in.readString();
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(mMessage);
+        dest.writeString(mHeadline);
+        dest.writeInt(mType);
+        dest.writeString(data);
+    }
+
+
+    public static final Parcelable.Creator<SunriseNotification> CREATOR = new Parcelable.Creator<SunriseNotification>() {
+        @Override
+        public SunriseNotification createFromParcel(Parcel in) {
+            return new SunriseNotification(in);
+        }
+
+        @Override
+        public SunriseNotification[] newArray(int size) {
+            return new SunriseNotification[size];
+        }
+    };
 
 
 
