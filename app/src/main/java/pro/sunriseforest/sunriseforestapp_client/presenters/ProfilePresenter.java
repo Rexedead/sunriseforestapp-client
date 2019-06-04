@@ -9,6 +9,16 @@ import pro.sunriseforest.sunriseforestapp_client.settings.SharedPreferenceHelper
 import pro.sunriseforest.sunriseforestapp_client.ui.NavigationManager;
 import pro.sunriseforest.sunriseforestapp_client.ui.fragments.ProfileFragment;
 
+
+//todo переписать ProfilePresenter и ProfilePresenter идейно и стилистически подбно с остальными презентерами и фрагментами в проекте
+//todo fragment имеет наружу методы showSomething(), hideSomething() и геттеры
+//todo добавить swiperefreshlayout
+//todo колечко загрузки должно шоуиться и хайдиться в соответствии с работой с сетью
+//todo модель в презентере обнавляется после того как она обнавилась на сервере!
+// в байнде мы должны каждый раз тянуть юзера из преференса. (можно при первом байнде обнавляться с сервера (для этого используй метод BasePresenter.isFirstBind()));
+// при свайпе тянем из инета, если не получилось - оповещаем об ошибке сети и тянем из преференса
+//todo избегай дублирование кода
+//todo удалить все ненужное
 public class ProfilePresenter extends BasePresenter<ProfileFragment> {
 
     private User mUser;
@@ -29,7 +39,6 @@ public class ProfilePresenter extends BasePresenter<ProfileFragment> {
 
     }
 
-//todo при заходе в профиль - обновлять данные с сервера (заработано + взято тасков)
   /*  private void updUserData(){
         ApiFactory
                 .getSunriseForestService()
@@ -57,6 +66,8 @@ public class ProfilePresenter extends BasePresenter<ProfileFragment> {
     @Override
     public void bindView(ProfileFragment view) {
         super.bindView(view);
+
+        //update from
         mUser = mSharedPreferenceHelper.getUser();
         mView.setProfile(mUser.getId(),
                 mUser.getName(),
@@ -71,6 +82,7 @@ public class ProfilePresenter extends BasePresenter<ProfileFragment> {
         mView.saveIsVisible(false);
 
     }
+
 
 
     public void clickedExitProfile() {
@@ -122,6 +134,20 @@ public class ProfilePresenter extends BasePresenter<ProfileFragment> {
         return true;
     }
 
+    public void refresh(){
+        //todo
+    }
+    public void updateFromServer(){
+        //todo
+    }
+    public void updateFromPreference(){
+        //todo
+    }
+
+    public void updateUI(){
+        //todo
+    }
+    //todo мб еще чо
 
     @Override
     public String createTAG() {

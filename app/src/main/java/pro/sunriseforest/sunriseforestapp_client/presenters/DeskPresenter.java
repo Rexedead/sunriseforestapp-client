@@ -65,7 +65,7 @@ public class DeskPresenter extends BasePresenter<DeskFragment> {
 
     @Override
     public void cameNewNotifications(List<SunriseNotification> notifications) {
-
+        log("cameNewNotifications() ");
         update();
     }
 

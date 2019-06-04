@@ -89,6 +89,7 @@ public class User {
         return mInfo;
     }
 
+
     public void setId(String id) {
         mId = id;
     }
@@ -121,6 +122,19 @@ public class User {
     public int getTasksCount() {
         return mTasksCount;
     }
+    public void toSalary(int reward){
+        mRewardSum+= reward;
+    }
+    public void newTaskBooded(){
+        mTasksCount++;
+    }
+    public void taskCanceled(){
+        mTasksCount--;
+    }
+    public void taskDone(){
+        mTasksCount--;
+    }
+
 
     public void setTasksCount(int mTasksCount) {
         this.mTasksCount = mTasksCount;

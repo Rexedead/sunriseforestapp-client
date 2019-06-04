@@ -95,6 +95,20 @@ public static final String TAG = "%%%/SharedPrefHelper";
                 .apply();
     }
 
+    public void updateUser(OnUpdatedUser updater){
+
+        User user = getUser();
+        if(user != null){
+            updater.update(user);
+            saveUser(user);
+        }
+
+    }
+
+    public interface OnUpdatedUser{
+        void update(User user);
+    }
+
     public void removeUser(){
         mSharedPreferences.edit()
         .remove(MY_USER)

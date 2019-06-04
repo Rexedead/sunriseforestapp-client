@@ -9,6 +9,7 @@ import java.util.Objects;
 
 import pro.sunriseforest.sunriseforestapp_client.SunriseForestApp;
 import pro.sunriseforest.sunriseforestapp_client.models.Task;
+import pro.sunriseforest.sunriseforestapp_client.models.User;
 import pro.sunriseforest.sunriseforestapp_client.net.ApiFactory;
 import pro.sunriseforest.sunriseforestapp_client.net.AsyncNetTransformer;
 import pro.sunriseforest.sunriseforestapp_client.settings.SharedPreferenceHelper;
@@ -223,8 +224,7 @@ public class TaskPresenter extends BasePresenter<TaskFragment> {
                 .subscribe(
                         tsk->{
                             mTask = tsk;
-                            planeNotification(tsk);
-                            DeskPresenter.getInstance().updateTask(mTask);
+                            book(tsk);
                             if(mView !=null) mView.showToast("Вы успешно забронировали");
                             stopLoading();
                         },
@@ -235,7 +235,13 @@ public class TaskPresenter extends BasePresenter<TaskFragment> {
                         this::tryUpdateView);
     }
 
-    private void planeNotification(Task tsk) {
+    private void book(Task task) {
+        planeNotification(task);
+        DeskPresenter.getInstance().updateTask(task);
+        mSharedPreferenceHelper.updateUser(User::newTaskBooded);
+    }
+
+    private void planeNotification(Task task) {
         //todo
     }
 
@@ -251,7 +257,7 @@ public class TaskPresenter extends BasePresenter<TaskFragment> {
                 .subscribe(
                         tsk -> {
                             mTask = tsk;
-                            DeskPresenter.getInstance().updateTask(mTask);
+                            complete(tsk);
                             if(mView !=null) mView.showToast("Mission completed");
                             stopLoading();
                         },
@@ -260,6 +266,14 @@ public class TaskPresenter extends BasePresenter<TaskFragment> {
                             stopLoading();
                         },
                         this::tryUpdateView);
+    }
+
+    private void complete(Task task) {
+        DeskPresenter.getInstance().updateTask(task);
+        mSharedPreferenceHelper.updateUser(user -> {
+            user.taskDone();
+            user.toSalary(task.getReward());
+        });
     }
 
 
@@ -275,7 +289,7 @@ public class TaskPresenter extends BasePresenter<TaskFragment> {
                 .subscribe(
                         tsk ->{
                             mTask = tsk;
-                            DeskPresenter.getInstance().updateTask(mTask);
+                            cancel(tsk);
                             stopLoading();
                             if(mView !=null) mView.showToast("Вы отменили задание");
                         },
@@ -284,6 +298,11 @@ public class TaskPresenter extends BasePresenter<TaskFragment> {
                             stopLoading();
                         },this::tryUpdateView);
 
+    }
+
+    private void cancel(Task task) {
+        DeskPresenter.getInstance().updateTask(task);
+        mSharedPreferenceHelper.updateUser(User::taskCanceled);
     }
 
     private String getUserRole() {
