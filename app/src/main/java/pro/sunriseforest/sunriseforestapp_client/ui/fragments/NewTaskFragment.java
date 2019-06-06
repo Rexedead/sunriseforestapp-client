@@ -103,6 +103,7 @@ public class NewTaskFragment extends BaseFragment {
     public void updateStartDateEdit(String date){
         log("updateDateEdits()");
         mTaskStartDateInputEditText.setText(date);
+        // серьезный костыль приводящий к багу
  /*       дата окончания = дата старта = однодневное задание,
          при необходимости меняем окончание вручную*/
         Editable endData = mTaskEndDateTextInputEditText.getText();

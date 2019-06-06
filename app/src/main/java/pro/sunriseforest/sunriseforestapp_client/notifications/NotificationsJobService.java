@@ -17,8 +17,7 @@ import pro.sunriseforest.sunriseforestapp_client.net.ApiFactory;
 import pro.sunriseforest.sunriseforestapp_client.settings.SharedPreferenceHelper;
 import rx.schedulers.Schedulers;
 
-import static pro.sunriseforest.sunriseforestapp_client.notifications.NotificationHelper.AMOUNT_OF_TASKS_TYPE;
-import static pro.sunriseforest.sunriseforestapp_client.notifications.NotificationHelper.BOOK_TYPE;
+
 import static pro.sunriseforest.sunriseforestapp_client.notifications.NotificationReceiver.NOTIFICATIONS_EXTRA_TAG;
 
 
@@ -41,16 +40,14 @@ public class NotificationsJobService extends JobService {
         isSheduled = false;
         int action = params.getExtras().getInt(JobBuilder.ACTION_KEY);
 
+
+
         if(action == JobBuilder.ACTION_START_JOB){
 
             ApiFactory.getSunriseForestService()
                     .getNotifications(mToken)
-//                .compose(new AsyncNetTransformer<>())
                     .subscribeOn(Schedulers.io())
                     .observeOn( Schedulers.io())
-//                    .flatMap(Observable::from)
-//                    .filter(n-> isNotEmptyNotification(n))
-//                    .toList()
                     .map(notifications -> {
                         cache(notifications);
                         return notifications;
@@ -86,7 +83,7 @@ public class NotificationsJobService extends JobService {
         Log.i(TAG, "cache: ");
         SunriseNotificationsProvider.getInstance(this).append(notifications);
     }
-    // должен принмимать SunriseNotification
+
     private void showNotifications(List<SunriseNotification> notifications) {
         Log.i(TAG, "showNotifications: ");
 
@@ -133,9 +130,5 @@ public class NotificationsJobService extends JobService {
 
     }
 
-    private boolean isNotEmptyNotification(SunriseNotification notification){
-        int type = notification.getType();
-        return ( type== BOOK_TYPE) || type == AMOUNT_OF_TASKS_TYPE &&
-                Integer.parseInt(notification.getData())!= 0;
-    }
+
 }

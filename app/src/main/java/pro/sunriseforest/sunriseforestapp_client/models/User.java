@@ -125,7 +125,7 @@ public class User {
     public void toSalary(int reward){
         mRewardSum+= reward;
     }
-    public void newTaskBooded(){
+    public void newTaskBooked(){
         mTasksCount++;
     }
     public void taskCanceled(){

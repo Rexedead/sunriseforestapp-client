@@ -5,24 +5,77 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.os.Build;
 import android.os.PersistableBundle;
+import android.util.Log;
 
-public class JobBuilder {
+import java.util.Calendar;
+import java.util.concurrent.TimeUnit;
 
-    public static final String ACTION_KEY = "pro.sunriseforest.sunriseforestapp_client.notifications_action_key";
+import pro.sunriseforest.sunriseforestapp_client.models.Task;
+import pro.sunriseforest.sunriseforestapp_client.utils.TasksUtils;
 
-    public static final int ACTION_START_JOB = 1001;
+class JobBuilder {
+
+    static final String ACTION_KEY = "pro.sunriseforest.sunriseforestapp_client.notifications_action_key";
+
+    static final String DATE_KEY = "pro.sunriseforest.sunriseforestapp_client.notifications_date_key";
+
+    private static final long MILLS_PER_DAY = 1000 * 60 * 60 * 24;
+
+    static final int ACTION_START_JOB = 1001;
+    private static final int REMIND_ME = 10002;
 
 
-    public static final int NOTIFICATION_JOB_ID = 101;
+    static final int NOTIFICATION_JOB_ID = 10001;
 
 
     private Context mContext;
 
-    public JobBuilder(Context context) {
+    static int getReminderJobId(int taskId) {
+        return REMIND_ME + taskId;
+    }
+
+
+    JobBuilder(Context context) {
 
         mContext = context;
 
     }
+
+    JobInfo.Builder getReminderNotificationJobBuilder(Task task){
+
+        int taskId = Integer.parseInt(task.getTaskID());
+        long dateStartTask = TasksUtils.getStartDateInMills(task);
+        ComponentName jobService = new ComponentName(mContext, ReminderJobService.class);
+        JobInfo.Builder builder = new JobInfo.Builder(getReminderJobId(taskId), jobService);
+
+
+        long minimumLatency;
+        Calendar today = Calendar.getInstance();
+        long deltaDays = (dateStartTask - today.getTimeInMillis()) / (MILLS_PER_DAY);
+
+        if(deltaDays < 0 ) return null;
+
+        if(deltaDays == 0)   minimumLatency = 0;
+        else{
+            minimumLatency =  deltaDays * MILLS_PER_DAY + (MILLS_PER_DAY / 2) -  (today.get(Calendar.HOUR_OF_DAY) * 1000 * 60 * 60); // В 12:00 за день до старта
+        }
+
+        Log.i("%%%/JobBuilder", "getReminderNotificationJobBuilder: minimumLatency = " + minimumLatency);
+        builder.setMinimumLatency(minimumLatency)
+                .setRequiresDeviceIdle(false)
+                .setRequiresCharging(false)
+                .setPersisted(true);
+
+        if(minimumLatency != 0) builder.setOverrideDeadline(TimeUnit.HOURS.toMillis(10));
+
+        PersistableBundle bundle = new PersistableBundle();
+
+        bundle.putLong(DATE_KEY, dateStartTask);
+
+        return builder;
+    }
+
+
 
     private JobInfo.Builder getNotificationsJobBuilder(){
 

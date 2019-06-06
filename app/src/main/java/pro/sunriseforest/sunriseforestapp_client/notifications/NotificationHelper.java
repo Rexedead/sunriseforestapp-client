@@ -11,6 +11,7 @@ import android.support.v4.app.NotificationCompat;
 
 import pro.sunriseforest.sunriseforestapp_client.R;
 import pro.sunriseforest.sunriseforestapp_client.models.SunriseNotification;
+import pro.sunriseforest.sunriseforestapp_client.presenters.NotificationsPresenter;
 import pro.sunriseforest.sunriseforestapp_client.ui.AppActivity;
 
 public class NotificationHelper {
@@ -47,6 +48,25 @@ public class NotificationHelper {
 
     }
 
+    private Notification getReminderNotification(){
+
+        NotificationCompat.Builder builder = getNotificationBuilder();
+
+        Intent intent = new Intent(mContext, AppActivity.class);
+        PendingIntent pendingIntent = PendingIntent
+                .getActivity(mContext, 2343, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        builder.setContentTitle("Sunrise")
+                .setContentIntent(pendingIntent)
+                .setContentText("Просто хочу напомнить, что завтра у нас работенка. Удачи, приятель.")
+                .setSmallIcon(R.drawable.logo)
+                .setDefaults(Notification.DEFAULT_SOUND|Notification.DEFAULT_LIGHTS|Notification.DEFAULT_VIBRATE);
+
+
+        return builder.build();
+    }
+
+
     private Notification getNotification(SunriseNotification notification){
 
         NotificationCompat.Builder builder = getNotificationBuilder();
@@ -55,20 +75,24 @@ public class NotificationHelper {
         PendingIntent pendingIntent = PendingIntent
                 .getActivity(mContext, 2343, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-        builder.setContentTitle(notification.getHeadline())
+        builder.setContentTitle("Sunrise")
                 .setContentIntent(pendingIntent)
                 .setSmallIcon(R.drawable.logo)
                 .setDefaults(Notification.DEFAULT_SOUND|Notification.DEFAULT_LIGHTS|Notification.DEFAULT_VIBRATE);
 
         switch (notification.getType()){
             case AMOUNT_OF_TASKS_TYPE:
-                builder.setContentText("появились новые задания. ");
+                builder.setContentText("Появились новые задания.");
                 break;
             default:
                 builder.setContentText("бронь");
         }
 
         return builder.build();
+    }
+
+    public void showReminderNotification(){
+        mNotificationManager.notify(123, getReminderNotification());
     }
 
     public void showNotification(SunriseNotification notification){

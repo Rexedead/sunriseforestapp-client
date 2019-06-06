@@ -10,7 +10,7 @@ import pro.sunriseforest.sunriseforestapp_client.ui.NavigationManager;
 import pro.sunriseforest.sunriseforestapp_client.ui.fragments.ProfileFragment;
 
 
-//todo переписать ProfilePresenter и ProfilePresenter идейно и стилистически подбно с остальными презентерами и фрагментами в проекте
+//todo переписать ProfilePresenter и ProfileFragment идейно и стилистически подбно с остальными презентерами и фрагментами в проекте
 //todo fragment имеет наружу методы showSomething(), hideSomething() и геттеры
 //todo добавить swiperefreshlayout
 //todo колечко загрузки должно шоуиться и хайдиться в соответствии с работой с сетью

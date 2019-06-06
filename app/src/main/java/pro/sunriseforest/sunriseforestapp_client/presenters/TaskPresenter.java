@@ -12,6 +12,7 @@ import pro.sunriseforest.sunriseforestapp_client.models.Task;
 import pro.sunriseforest.sunriseforestapp_client.models.User;
 import pro.sunriseforest.sunriseforestapp_client.net.ApiFactory;
 import pro.sunriseforest.sunriseforestapp_client.net.AsyncNetTransformer;
+import pro.sunriseforest.sunriseforestapp_client.notifications.JobSchedulerHelper;
 import pro.sunriseforest.sunriseforestapp_client.settings.SharedPreferenceHelper;
 import pro.sunriseforest.sunriseforestapp_client.ui.fragments.TaskFragment;
 
@@ -238,7 +239,8 @@ public class TaskPresenter extends BasePresenter<TaskFragment> {
     private void book(Task task) {
         planeNotification(task);
         DeskPresenter.getInstance().updateTask(task);
-        mSharedPreferenceHelper.updateUser(User::newTaskBooded);
+        JobSchedulerHelper.getInstance(SunriseForestApp.getAppContext()).startReminderJob(task);
+        mSharedPreferenceHelper.updateUser(User::newTaskBooked);
     }
 
     private void planeNotification(Task task) {
@@ -303,6 +305,7 @@ public class TaskPresenter extends BasePresenter<TaskFragment> {
     private void cancel(Task task) {
         DeskPresenter.getInstance().updateTask(task);
         mSharedPreferenceHelper.updateUser(User::taskCanceled);
+        JobSchedulerHelper.getInstance(SunriseForestApp.getAppContext()).cancelReminderJob(task);
     }
 
     private String getUserRole() {

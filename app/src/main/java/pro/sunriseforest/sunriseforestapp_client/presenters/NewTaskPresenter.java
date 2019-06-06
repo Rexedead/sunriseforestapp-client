@@ -25,7 +25,6 @@ public class NewTaskPresenter extends BasePresenter<NewTaskFragment> {
     private static final int END_DATE_BEFORE_START_DATE = 6;
 
 
-
     private static final NewTaskPresenter ourInstance = new NewTaskPresenter();
 
 
@@ -44,8 +43,6 @@ public class NewTaskPresenter extends BasePresenter<NewTaskFragment> {
     private NewTaskPresenter() {
         mNavigationManager = NavigationManager.getInstance();
         mSharedPreferenceHelper = new SharedPreferenceHelper(SunriseForestApp.getAppContext());
-
-
     }
 
 
