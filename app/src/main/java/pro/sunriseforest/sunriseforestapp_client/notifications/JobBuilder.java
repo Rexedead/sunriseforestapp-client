@@ -1,6 +1,7 @@
 package pro.sunriseforest.sunriseforestapp_client.notifications;
 
 import android.app.job.JobInfo;
+import android.app.job.JobScheduler;
 import android.content.ComponentName;
 import android.content.Context;
 import android.os.Build;
@@ -19,13 +20,14 @@ class JobBuilder {
 
     static final String DATE_KEY = "pro.sunriseforest.sunriseforestapp_client.notifications_date_key";
 
-    private static final long MILLS_PER_DAY = 1000 * 60 * 60 * 24;
 
     static final int ACTION_START_JOB = 1001;
     private static final int REMIND_ME = 10002;
 
 
     static final int NOTIFICATION_JOB_ID = 10001;
+
+
 
 
     private Context mContext;
@@ -44,33 +46,28 @@ class JobBuilder {
     JobInfo.Builder getReminderNotificationJobBuilder(Task task){
 
         int taskId = Integer.parseInt(task.getTaskID());
-        long dateStartTask = TasksUtils.getStartDateInMills(task);
+
         ComponentName jobService = new ComponentName(mContext, ReminderJobService.class);
         JobInfo.Builder builder = new JobInfo.Builder(getReminderJobId(taskId), jobService);
 
-
         long minimumLatency;
-        Calendar today = Calendar.getInstance();
-        long deltaDays = (dateStartTask - today.getTimeInMillis()) / (MILLS_PER_DAY);
-
-        if(deltaDays < 0 ) return null;
-
-        if(deltaDays == 0)   minimumLatency = 0;
-        else{
-            minimumLatency =  deltaDays * MILLS_PER_DAY + (MILLS_PER_DAY / 2) -  (today.get(Calendar.HOUR_OF_DAY) * 1000 * 60 * 60); // В 12:00 за день до старта
-        }
-
+        minimumLatency = TasksUtils.getMinimumLatencyForRemindAboutStartTask(task);
         Log.i("%%%/JobBuilder", "getReminderNotificationJobBuilder: minimumLatency = " + minimumLatency);
+
+        if(minimumLatency < 0) return null;
+
+
         builder.setMinimumLatency(minimumLatency)
                 .setRequiresDeviceIdle(false)
                 .setRequiresCharging(false)
                 .setPersisted(true);
 
-        if(minimumLatency != 0) builder.setOverrideDeadline(TimeUnit.HOURS.toMillis(10));
+        if(minimumLatency != 0) builder.setOverrideDeadline(TimeUnit.HOURS.toMillis(24));
 
         PersistableBundle bundle = new PersistableBundle();
 
-        bundle.putLong(DATE_KEY, dateStartTask);
+        bundle.putString(DATE_KEY, task.getStartDate());
+        builder.setExtras(bundle);
 
         return builder;
     }
@@ -102,5 +99,6 @@ class JobBuilder {
 
         return getNotificationsJobBuilder().setExtras(bundle);
     }
+
 
 }

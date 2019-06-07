@@ -45,11 +45,15 @@ public class JobSchedulerHelper {
         JobInfo.Builder builder = new JobBuilder(mContext)
                 .getReminderNotificationJobBuilder(task);
 
+
         int result = scheduler.schedule(builder.build());
         Log.i("JobSchedulerHelper", "startNotificationJob: result=" + result);
 
-
     }
+
+
+
+
 
     public void cancelReminderJob(Task task){
         JobScheduler scheduler =  (JobScheduler) mContext
