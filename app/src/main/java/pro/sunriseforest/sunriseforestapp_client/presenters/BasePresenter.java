@@ -69,7 +69,7 @@ public abstract class BasePresenter <F extends Fragment> {
             }
 
         } else if (e instanceof SocketTimeoutException) {
-            showNetworkError("На сервере проблема, попробуйте еще раз через пару минут");
+            showNetworkError("Не удалось опросить сервер. Проверьте сетевое соединение");
         } else if (e instanceof HttpException) {
             showNetworkError(ErrorMassageManager.WhatIsMyError(((HttpException) e).code(),TAG));
         }

@@ -102,7 +102,12 @@ public class DeskPresenter extends BasePresenter<DeskFragment> {
         if(mView!=null)
             mView.showLoading();
 
-        loadTasks(token).subscribe(
+        loadTasks(token)
+                .flatMap(Observable::from)
+                .filter(iAmManager()? Task::listForManager :
+                        this::listForContractor)
+                .toSortedList(this::compareRemoteTasks)
+                .subscribe(
                 tasks -> mTasks = tasks,
 
                 throwable -> {
@@ -168,5 +173,17 @@ public class DeskPresenter extends BasePresenter<DeskFragment> {
             mTasks.add(idx, tsk);
         }
         sortTasks(mTasks);
+    }
+
+    private boolean listForContractor(Task t){
+        if(t.getContractorId()==null) return false;
+        return t.isFree()||(t.isBooked() && t.getContractorId().equals(Objects.requireNonNull
+                (mSharedPreferenceHelper.getUser()).getId()));
+    }
+
+    private int compareRemoteTasks(Task task1, Task task2){
+        return iAmManager()?
+                (Integer.compare(task1.getStatus(), task2.getStatus()))
+                :Integer.compare(task2.getStatus(), task1.getStatus());
     }
 }
