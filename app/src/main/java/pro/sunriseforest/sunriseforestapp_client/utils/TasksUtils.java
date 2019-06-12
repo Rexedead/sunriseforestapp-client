@@ -15,10 +15,9 @@ public class TasksUtils {
     public static final String FORMAT_START_AND_DEADLINE_DATE = "dd.MM.yyyy";
 
     public static Comparator<Task> getComparatorTasks(){
-            return Comparator.comparingInt(Task::getStatus).reversed()
-                    .thenComparing(Task::getCreationDate).reversed();
-
-    }
+        return (t1, t2) ->
+            Byte.compare(t1.getStatus(), t2.getStatus());
+        }
 
     public static long getStartDateInMills(Task task){
         return getDateInMillsFromString(task.getStartDate()).getTime();

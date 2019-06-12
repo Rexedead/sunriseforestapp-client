@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.SwipeRefreshLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/swipe_refresh_profileFrag"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:id="@+id/profile_fragment"
-    tools:context=".ui.fragments.ProfileFragment">
+    android:layout_height="match_parent">
+    <ScrollView
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content">
 
     <RelativeLayout
         android:id="@+id/profile_main"
@@ -190,10 +192,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/profile_reward_textView"
-            android:layout_toEndOf="@+id/remove_token_profileFrag_button"
+            android:layout_alignParentEnd="true"
             android:layout_marginTop="10dp"
-            android:layout_marginStart="10dp"
             android:text="@string/save_changes_of_task"
+            />
+        <Button
+            android:id="@+id/cancel_changes_profileFrag_button"
+            style="@style/BtnDanger"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@+id/change_info_profileFrag_button"
+            android:text="@string/cancel_changes_of_task"
             />
 
         <Button
@@ -206,5 +216,5 @@
             android:text="@string/profile_remove_token_data"
             />
     </RelativeLayout>
-
-</ScrollView>
+    </ScrollView>
+</android.support.v4.widget.SwipeRefreshLayout>

@@ -171,10 +171,6 @@ public class Task {
         return mStatus == (byte)102;
     }
 
-    public boolean listForManager(){
-        return mStatus > (byte)100;
-    }
-
    public Task getCopy(){
     return new Task(mContractorId, mContractorName, mContractorPhone, mClientPhone, mClientName,
             mTaskID, mTaskDescription, mCreationDate, mDeadlineDate, mStartDate, mStatus, mReward);

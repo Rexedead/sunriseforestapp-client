@@ -104,9 +104,8 @@ public class DeskPresenter extends BasePresenter<DeskFragment> {
 
         loadTasks(token)
                 .flatMap(Observable::from)
-                .filter(iAmManager()? Task::listForManager :
-                        this::listForContractor)
-                .toSortedList(this::compareRemoteTasks)
+                .filter(this::filterByRole)
+                .toSortedList((t1,t2)->TasksUtils.getComparatorTasks().compare(t1,t2))
                 .subscribe(
                 tasks -> mTasks = tasks,
 
@@ -175,15 +174,12 @@ public class DeskPresenter extends BasePresenter<DeskFragment> {
         sortTasks(mTasks);
     }
 
-    private boolean listForContractor(Task t){
-        if(t.getContractorId()==null) return false;
-        return t.isFree()||(t.isBooked() && t.getContractorId().equals(Objects.requireNonNull
-                (mSharedPreferenceHelper.getUser()).getId()));
-    }
-
-    private int compareRemoteTasks(Task task1, Task task2){
-        return iAmManager()?
-                (Integer.compare(task1.getStatus(), task2.getStatus()))
-                :Integer.compare(task2.getStatus(), task1.getStatus());
+    private boolean filterByRole(Task t){
+        if(mSharedPreferenceHelper.getUser()==null) return false;
+        if (iAmManager()) {
+            return t.isFree()||t.isBooked()||t.isDone();
+        }
+        return t.isFree()||(t.isBooked() && t.getContractorId().equals(
+                mSharedPreferenceHelper.getUser().getId()));
     }
 }
