@@ -42,6 +42,12 @@ public class ProfileFragment extends NavigatedFragment  implements TextWatcher, 
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        addListenersForEditText();
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.profile_fragment, container, false);
 
@@ -63,7 +69,6 @@ public class ProfileFragment extends NavigatedFragment  implements TextWatcher, 
         mCancelChangesButton.setOnClickListener(mCancelChangesListener);
 
         showBottomNavigation();
-        addListenersForEditText();
         return view;
     }
 
