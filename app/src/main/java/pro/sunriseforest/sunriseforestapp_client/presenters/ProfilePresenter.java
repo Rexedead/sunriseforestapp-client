@@ -78,8 +78,6 @@ public class ProfilePresenter extends BasePresenter<ProfileFragment> {
 
     public void clickedSaveButton() {
         log("clickedSaveButton()");
-        mUser.setEmail(mView.getUserMail());
-        mUser.setPhoneNumber(mView.getUserPhone());
         updateUserData(mUser);
     }
 
@@ -140,12 +138,12 @@ public class ProfilePresenter extends BasePresenter<ProfileFragment> {
     /**
      * Network
      * PATCH method for profile
-     *
      * @param user the changed user in UI
      */
     private void updateUserData(User user) {
         log("updateUserData()" + user);
-
+        user.setEmail(mView.getUserMail());
+        user.setPhoneNumber(mView.getUserPhone());
         ApiFactory
                 .getSunriseForestService()
                 .updProfile(user.getId(), user)
