@@ -16,7 +16,7 @@ public class TasksUtils {
 
     public static Comparator<Task> getComparatorTasks(){
         return (t1, t2) ->
-            Byte.compare(t1.getStatus(), t2.getStatus());
+            Byte.compare(t2.getStatus(),t1.getStatus());
         }
 
     public static long getStartDateInMills(Task task){

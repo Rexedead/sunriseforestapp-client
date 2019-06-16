@@ -30,4 +30,11 @@
         <item name="android:textSize">14sp</item>
     </style>
 
+    <style name="SignScreen" parent="Base.Theme.AppCompat.Light.DarkActionBar">
+        <item name="android:backgroundTint">@color/field_background</item>
+        <item name="android:textSize">25sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColorHint">#99EEEEEE</item>
+    </style>
+
 </resources>

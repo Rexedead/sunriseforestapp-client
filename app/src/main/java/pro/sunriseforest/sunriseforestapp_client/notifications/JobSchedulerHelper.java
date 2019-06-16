@@ -44,7 +44,7 @@ public class JobSchedulerHelper {
 
         JobInfo.Builder builder = new JobBuilder(mContext)
                 .getReminderNotificationJobBuilder(task);
-
+        if (builder == null) return;
 
         int result = scheduler.schedule(builder.build());
         Log.i("JobSchedulerHelper", "startNotificationJob: result=" + result);

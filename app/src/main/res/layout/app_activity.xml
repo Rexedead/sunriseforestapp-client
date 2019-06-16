@@ -15,7 +15,7 @@
         android:layout_height="match_parent"
         app:defaultNavHost="true"
         app:navGraph="@navigation/nav_graph"
-        android:layout_marginBottom="58dp"/>
+        />
 
 
     <android.support.design.widget.BottomNavigationView
@@ -23,7 +23,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:background="?android:attr/windowBackground"
+        android:background="@drawable/transparent"
         android:foreground="?attr/selectableItemBackground"
         app:menu="@menu/navigation" />
 

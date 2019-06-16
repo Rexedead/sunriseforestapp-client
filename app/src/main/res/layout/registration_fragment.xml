@@ -1,87 +1,148 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <RelativeLayout
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/sign2_background" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/image_visivility" />
+
+    <ScrollView
+        android:layout_height="match_parent"
+        android:layout_width="match_parent">
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:context=".ui.fragments.RegistrationFragment">
-
-
+        android:orientation="vertical">
 
         <EditText
             android:id="@+id/enter_mail_regAct_editText"
-            android:textSize="22sp"
-            android:hint="@string/enter_login_hint"
-            android:inputType="text"
+            style="@style/SignScreen"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="100dp"
-            android:layout_marginBottom="10dp"
             android:layout_centerHorizontal="true"
-            android:layout_marginLeft="35dp"
-            android:layout_marginRight="35dp"
-            android:importantForAutofill="no"
-            tools:ignore="UnusedAttribute"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:autofillHints="username"
+            android:hint="@string/enter_login_hint"
+            android:inputType="textEmailAddress"
+            android:textAlignment="center"
+            android:textColor="@color/field_background"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.109"
+            tools:ignore="UnusedAttribute" />
 
-            />
 
         <EditText
             android:id="@+id/enter_password_regAct_editText"
-            android:textSize="22sp"
-            android:hint="@string/enter_password_hint"
-            android:inputType="textPassword"
+            style="@style/SignScreen"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/enter_mail_regAct_editText"
-            android:layout_marginLeft="35dp"
-            android:layout_marginRight="35dp"
-            android:layout_marginBottom="10dp"
-            tools:ignore="UnusedAttribute"
-            android:importantForAutofill="no"/>
+            android:layout_centerHorizontal="true"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:autofillHints="password"
+            android:hint="@string/enter_password_hint"
+            android:inputType="textPassword"
+            android:textAlignment="center"
+            android:textColor="@color/field_background"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/enter_mail_regAct_editText"
+            app:layout_constraintVertical_bias="0.058"
+            tools:ignore="UnusedAttribute" />
+
+
 
         <EditText
             android:id="@+id/enter_name_regAct_editText"
+            style="@style/SignScreen"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/enter_password_regAct_editText"
-            android:layout_marginLeft="35dp"
-            android:layout_marginRight="35dp"
-            android:layout_marginBottom="10dp"
-            android:textSize="22sp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
             android:hint="@string/enter_name_hint"
-            tools:ignore="UnusedAttribute"
+            android:textAlignment="center"
+            android:inputType="textPersonName"
             android:importantForAutofill="no"
-            android:inputType="text"/>
+            android:textColor="@color/field_background"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/enter_password_regAct_editText"
+            app:layout_constraintVertical_bias="0.058"
+            tools:ignore="UnusedAttribute" />
+
+
+
 
         <EditText
             android:id="@+id/enter_phone_regAct_editText"
+            style="@style/SignScreen"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/enter_name_regAct_editText"
-            android:layout_marginLeft="35dp"
-            android:layout_marginRight="35dp"
-            android:layout_marginBottom="10dp"
-            android:textSize="22sp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
             android:hint="@string/enter_phone_hint"
             android:inputType="phone"
-            tools:ignore="UnusedAttribute"
             android:importantForAutofill="no"
-            />
+            android:textAlignment="center"
+            android:textColor="@color/field_background"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/enter_name_regAct_editText"
+            app:layout_constraintVertical_bias="0.058"
+            tools:ignore="UnusedAttribute" />
+
 
         <Button
             android:id="@+id/registration_button"
-            style="@style/BtnSuccess"
-            android:layout_width="match_parent"
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:layout_below="@id/enter_phone_regAct_editText"
-            android:layout_marginLeft="60dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginRight="60dp"
-            android:text="@string/log_in"
-            />
-    </RelativeLayout>
-</ScrollView>
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginBottom="50dp"
+            android:background="@drawable/profile_buttons"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:text="@string/registration_logAct_button"
+            android:textColor="#FFF"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.50"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/enter_phone_regAct_editText"
+            app:layout_constraintVertical_bias="0.3" />
+
+    </android.support.constraint.ConstraintLayout>
+    </ScrollView>
+</RelativeLayout>

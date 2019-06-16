@@ -99,7 +99,7 @@ public class NewTaskFragment extends BaseFragment {
 
     }
 
-
+//todo -> presenter
     public void updateStartDateEdit(String date){
         log("updateDateEdits()");
         mTaskStartDateInputEditText.setText(date);

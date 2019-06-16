@@ -11,7 +11,6 @@ import android.support.v4.app.NotificationCompat;
 
 import pro.sunriseforest.sunriseforestapp_client.R;
 import pro.sunriseforest.sunriseforestapp_client.models.SunriseNotification;
-import pro.sunriseforest.sunriseforestapp_client.presenters.NotificationsPresenter;
 import pro.sunriseforest.sunriseforestapp_client.ui.AppActivity;
 
 public class NotificationHelper {
@@ -58,7 +57,7 @@ public class NotificationHelper {
 
         builder.setContentTitle("Sunrise")
                 .setContentIntent(pendingIntent)
-                .setContentText("Просто хочу напомнить, что завтра у нас работенка. Удачи, приятель.")
+                .setContentText("Просто хочу напомнить, что завтра у нас работенка.\n Удачи, приятель.")
                 .setSmallIcon(R.drawable.logo)
                 .setDefaults(Notification.DEFAULT_SOUND|Notification.DEFAULT_LIGHTS|Notification.DEFAULT_VIBRATE);
 

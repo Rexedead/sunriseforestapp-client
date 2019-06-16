@@ -2,6 +2,7 @@ package pro.sunriseforest.sunriseforestapp_client.ui.fragments;
 
 
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -12,28 +13,29 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import pro.sunriseforest.sunriseforestapp_client.R;
+import pro.sunriseforest.sunriseforestapp_client.models.User;
 import pro.sunriseforest.sunriseforestapp_client.presenters.BasePresenter;
 import pro.sunriseforest.sunriseforestapp_client.presenters.ProfilePresenter;
 
 
-public class ProfileFragment extends NavigatedFragment  implements TextWatcher {
+public class ProfileFragment extends NavigatedFragment  implements TextWatcher, SwipeRefreshLayout.OnRefreshListener {
     private static final int ITEM_ON_NAV = 1;
 
-    private TextView mUserIdTextView;
+
     private TextView mUserNameTextView;
     private EditText mUserMailEditText;
     private EditText mUserPhoneEditText;
-    private TextView mUserRoleTextView;
     private TextView mUserTasksTakenStatsTextView;
     private TextView mUserRewardInfoTextView;
-    private Button mSaveProfileButton;
+    private Button mSaveButton;
+    private Button mCancelChangesButton;
     private Button mExitProfileButton;
-
+    private SwipeRefreshLayout mSwipeRefreshLayout;
     private ProfilePresenter mPresenter = ProfilePresenter.getInstance();
-
 
     private View.OnClickListener mExitProfileListener = view -> mPresenter.clickedExitProfile();
     private View.OnClickListener mSaveProfileListener = view -> mPresenter.clickedSaveButton();
+    private View.OnClickListener mCancelChangesListener = view -> mPresenter.clickedCancelChangesButton();
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -41,61 +43,54 @@ public class ProfileFragment extends NavigatedFragment  implements TextWatcher {
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public void onResume() {
+        super.onResume();
+        addListenersForEditText();
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.profile_fragment, container, false);
 
-        mUserIdTextView = view.findViewById(R.id.id_profileFrag_textView);
-        mUserNameTextView = view.findViewById(R.id.user_name_profileFrag_textView);
+
+        mUserNameTextView = view.findViewById(R.id.userName_profileFrag_textView);
         mUserMailEditText = view.findViewById(R.id.mail_profileFrag_editText);
         mUserPhoneEditText = view.findViewById(R.id.phone_profileFrag_editText);
-        mUserRoleTextView = view.findViewById(R.id.role_profileFrag_textView);
         mUserTasksTakenStatsTextView = view.findViewById(R.id.tasks_taken_stats_profileFrag_textView);
         mUserRewardInfoTextView = view.findViewById(R.id.reward_profileFrag_textView);
         mExitProfileButton = view.findViewById(R.id.remove_token_profileFrag_button);
-        mSaveProfileButton = view.findViewById(R.id.change_info_profileFrag_button);
+        mSaveButton = view.findViewById(R.id.change_info_profileFrag_button);
+        mCancelChangesButton = view.findViewById(R.id.cancel_changes_profileFrag_button);
+        mSwipeRefreshLayout = view.findViewById(R.id.swipe_refresh_profileFrag);
+        mSwipeRefreshLayout.setOnRefreshListener(this);
 
-        addListenersForEditText();
+
+        mExitProfileButton.setOnClickListener(mExitProfileListener);
+        mSaveButton.setOnClickListener(mSaveProfileListener);
+        mCancelChangesButton.setOnClickListener(mCancelChangesListener);
+
         showBottomNavigation();
 
         return view;
     }
 
-    public void setProfile(String uId,String uName,
-                            String uMail,String uPhone,
-                            String uRole,int uTasksTaken,
-                            int uReward) {
-        log("setProfile(user = %s)");
+    public void showProfile(User u) {
+        log("showProfile(user = %s)");
 
-        mUserIdTextView.setText(uId);
-        mUserNameTextView.setText(uName);
-        mUserMailEditText.setText(uMail);
-        mUserPhoneEditText.setText(uPhone);
-        mUserRoleTextView.setText(uRole);
-        mUserTasksTakenStatsTextView.setText(String.valueOf(uTasksTaken));
-        mUserRewardInfoTextView.setText(String.valueOf(uReward));
+        mUserNameTextView.setText(u.getName());
+        mUserMailEditText.setText(u.getEmail());
+        mUserMailEditText.setSelection(mUserMailEditText.getText().toString().length());
+        mUserPhoneEditText.setText(u.getPhoneNumber());
+        mUserPhoneEditText.setSelection(mUserPhoneEditText.getText().toString().length());
+        mUserTasksTakenStatsTextView.setText(String.valueOf(u.getTasksCount()));
+        mUserRewardInfoTextView.setText(String.valueOf(u.getRewardSum()));
     }
 
 
     private void addListenersForEditText(){
-        mExitProfileButton.setOnClickListener(mExitProfileListener);
-        mSaveProfileButton.setOnClickListener(mSaveProfileListener);
         mUserMailEditText.addTextChangedListener(this);
         mUserPhoneEditText.addTextChangedListener(this);
     }
-
-
-    public void setEnabledEditTexts(boolean isYes) {
-        log("setEnabled( isYes = %s)", isYes);
-
-        mUserPhoneEditText.setEnabled(isYes);
-        mUserMailEditText.setEnabled(isYes);
-    }
-
-
-    public void saveIsVisible(boolean showSaveButton){
-        mSaveProfileButton.setVisibility(showSaveButton ? View.VISIBLE : View.GONE);
-        }
 
 
     @Override
@@ -111,10 +106,6 @@ public class ProfileFragment extends NavigatedFragment  implements TextWatcher {
     @Override
     public int getItemOnNavigationMenu() {
         return ITEM_ON_NAV;
-    }
-
-    public String getUserName() {
-        return mUserNameTextView.getText().toString();
     }
 
     public String getUserMail() {
@@ -137,8 +128,33 @@ public class ProfileFragment extends NavigatedFragment  implements TextWatcher {
 
     @Override
     public void afterTextChanged(Editable editable) {
-        String changedText = editable.toString();
-        log("afterTextChanged: "+changedText);
-        this.saveIsVisible(true);
+        mPresenter.descriptionProfileIsChanged();
+    }
+
+    //swipe refresh listener
+    @Override
+    public void onRefresh() {
+        mPresenter.refresh();
+    }
+
+    public void showLoading(){
+        mSwipeRefreshLayout.setRefreshing(true);
+    }
+
+    public void hideLoading(){
+        mSwipeRefreshLayout.setRefreshing(false);
+    }
+
+
+    public void showSaveViews() {
+        log("showSaveViews()");
+        mCancelChangesButton.setVisibility(View.VISIBLE);
+        mSaveButton.setVisibility(View.VISIBLE);
+    }
+
+    public void hideSaveViews(){
+        log("hideSaveViews()");
+        mCancelChangesButton.setVisibility(View.GONE);
+        mSaveButton.setVisibility(View.GONE);
     }
 }

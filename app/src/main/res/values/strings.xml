@@ -5,7 +5,7 @@
     <string name="title_notifications">Уведомления</string>
     <string name="enter_login_hint">Введите почту</string>
     <string name="enter_password_hint">Введите пароль</string>
-    <string name="log_in">Войти</string>
+    <string name="log_in">Вход</string>
     <string name="registration_logAct_button">Регистрация</string>
     <string name="title_activity_profile">ProfileActivity</string>
     <string name="name">Имя</string>
@@ -25,19 +25,24 @@
     <string name="phone">Телефон</string>
     <string name="mail">Почта</string>
     <string name="role">Роль</string>
-    <string name="save_changes_of_task">Сохранить изменения</string>
-    <string name="cancel_changes_of_task">Отменить изменения</string>
+    <string name="save_changes_of_task">Сохранить</string>
+    <string name="cancel_changes_of_task">Отменить</string>
     <string name="profile_remove_token_data">Выход</string>
-    <string name="profile_taken">Взято заказов</string>
+    <string name="profile_taken">Взято</string>
+    <string name="profile_done">Завершено</string>
+    <string name="profile_cancel">Отменено</string>
     <string name="profile_reward">Заработано</string>
     <string name="recycler_startDate">Старт</string>
     <string name="recycler_endDate">Финиш</string>
     <string name="recycler_creationDate">Создано</string>
     <string name="ruble">₽</string>
+    <string name="zero">0</string>
     <string name="no_notifications">Уведомлений нет</string>
     <string name="complete">Завершить задачу</string>
     <string name="cancel">Отказаться от задачи</string>
     <string name="remove_notifications">Очистить уведомления</string>
+    <string name="proflile_background">Main Background Image in Profile</string>
+    <string name="proflile_gradient">Gradient</string>
 
 
 </resources>

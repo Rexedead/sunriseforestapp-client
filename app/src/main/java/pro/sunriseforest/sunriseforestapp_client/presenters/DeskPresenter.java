@@ -18,11 +18,6 @@ import pro.sunriseforest.sunriseforestapp_client.utils.TasksUtils;
 import rx.Observable;
 
 
-//todo для реализации сортировки тасков нужно реализовать компаратор в utils.TaskUtils
-//todo заюзать компаратор в rx в методе sorted или toSortedList(для начала Observable<List> нужно за флетмапить в Observable<Task>)
-//todo таким же образом добавить фильтр, который отфильтровывает (если ты контрактор) все забронированные не мной таски
-//todo фильтрация должна проходить до сортировки
-//todo теперь ты такой же бог rx'a как и я. Мои поздравления
 public class DeskPresenter extends BasePresenter<DeskFragment> {
 
     private static final DeskPresenter ourInstance = new DeskPresenter();
@@ -104,7 +99,7 @@ public class DeskPresenter extends BasePresenter<DeskFragment> {
 
         loadTasks(token)
                 .flatMap(Observable::from)
-                .filter(this::filterByRole)
+                .filter(this::isVisibleTaskByRole)
                 .toSortedList((t1,t2)->TasksUtils.getComparatorTasks().compare(t1,t2))
                 .subscribe(
                 tasks -> mTasks = tasks,
@@ -174,7 +169,7 @@ public class DeskPresenter extends BasePresenter<DeskFragment> {
         sortTasks(mTasks);
     }
 
-    private boolean filterByRole(Task t){
+    private boolean isVisibleTaskByRole(Task t){
         if(mSharedPreferenceHelper.getUser()==null) return false;
         if (iAmManager()) {
             return t.isFree()||t.isBooked()||t.isDone();

@@ -1,220 +1,331 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.SwipeRefreshLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/swipe_refresh_profileFrag"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <ScrollView
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content">
 
-    <RelativeLayout
-        android:id="@+id/profile_main"
+
+    <ImageView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingStart="?listPreferredItemPaddingLeft"
-        android:paddingEnd="?listPreferredItemPaddingRight">
+        android:layout_height="match_parent"
+        android:contentDescription="@string/proflile_background"
+        android:scaleType="centerCrop"
+        android:src="@drawable/profile_background" />
 
-        <ImageView
-            android:id="@+id/profile_img"
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:contentDescription="@string/proflile_gradient"
+        android:src="@drawable/image_visivility" />
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_refresh_profileFrag"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="250dp"
-            android:contentDescription="@string/title_profile"
-            app:srcCompat="@drawable/profile_woodie2"
-            />
+            android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/profile_id_textView"
-            android:layout_width="wrap_content"
-            android:layout_height="30dp"
-            android:gravity="start|center"
-            android:text="@string/id"
-            android:textSize="16sp"
-            android:layout_below="@+id/profile_img"
-            />
-
-        <TextView
-            android:id="@+id/id_profileFrag_textView"
-            android:layout_width="wrap_content"
-            android:layout_height="30dp"
-            android:layout_marginStart="10dp"
-            android:layout_toEndOf="@+id/profile_id_textView"
-            android:gravity="start|center"
-            android:layout_below="@+id/profile_img"/>
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
 
-        <TextView
-            android:id="@+id/profile_name_textView"
-            android:layout_width="wrap_content"
-            android:layout_height="30dp"
-            android:layout_below="@+id/profile_id_textView"
-            android:layout_alignParentStart="true"
-            android:gravity="start|center"
-            android:text="@string/name"
-            android:textSize="16sp"
-            />
-
-        <TextView
-            android:id="@+id/user_name_profileFrag_textView"
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:layout_below="@+id/profile_id_textView"
-            android:layout_marginStart="10dp"
-            android:layout_toEndOf="@+id/profile_phone_textView"
-            android:gravity="start|center"
-            android:maxLines="1"
-            android:textSize="16sp" />
+                <Button
+                    android:id="@+id/cancel_changes_profileFrag_button"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:background="@drawable/profile_buttons"
+                    android:foreground="?android:attr/selectableItemBackground"
+                    android:text="@string/cancel_changes_of_task"
+                    android:textColor="#fff"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.032"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
 
-        <TextView
-            android:id="@+id/profile_phone_textView"
-            android:layout_width="wrap_content"
-            android:layout_height="30dp"
-            android:layout_below="@+id/profile_name_textView"
-            android:layout_alignParentStart="true"
-            android:layout_marginTop="5dp"
-            android:gravity="start|center"
-            android:text="@string/phone"
-            android:textSize="16sp"
-            />
-
-        <EditText
-            android:id="@+id/phone_profileFrag_editText"
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:layout_below="@+id/profile_name_textView"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="5dp"
-            android:layout_toEndOf="@+id/profile_phone_textView"
-            android:gravity="start|center"
-            android:background="@color/field_background"
-            android:maxLines="1"
-            android:inputType="phone"
-            android:imeOptions="actionNext"
-            android:textSize="16sp"
-            />
-
-        <TextView
-            android:id="@+id/profile_mail_textView"
-            android:layout_width="wrap_content"
-            android:layout_height="30dp"
-            android:layout_below="@+id/profile_phone_textView"
-            android:layout_alignParentStart="true"
-            android:layout_marginTop="5dp"
-            android:gravity="start|center"
-            android:text="@string/mail"
-            android:textSize="16sp" />
-
-        <EditText
-            android:id="@+id/mail_profileFrag_editText"
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:layout_alignBottom="@+id/profile_mail_textView"
-            android:layout_marginStart="10dp"
-            android:layout_toEndOf="@+id/profile_phone_textView"
-            android:gravity="start|center"
-            android:background="@color/field_background"
-            android:singleLine="true"
-            android:imeOptions="actionDone"
-            android:layout_marginTop="5dp"
-            android:textSize="16sp" />
-
-        <TextView
-            android:id="@+id/profile_role_textView"
-            android:layout_width="wrap_content"
-            android:layout_height="30dp"
-            android:layout_below="@+id/profile_mail_textView"
-            android:layout_alignParentStart="true"
-            android:gravity="start|center"
-            android:text="@string/role"
-            android:textSize="16sp"
-            />
-
-        <TextView
-            android:id="@+id/role_profileFrag_textView"
-            android:layout_width="wrap_content"
-            android:layout_height="30dp"
-            android:layout_alignBottom="@+id/profile_role_textView"
-            android:layout_marginStart="10dp"
-            android:layout_toEndOf="@+id/profile_phone_textView"
-            android:gravity="start|center"
-            android:textSize="16sp" />
+                <Button
+                    android:id="@+id/change_info_profileFrag_button"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:background="@drawable/profile_buttons"
+                    android:foreground="?android:attr/selectableItemBackground"
+                    android:text="@string/save_changes_of_task"
+                    android:textColor="#fff"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.967"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
 
-        <TextView
-            android:id="@+id/profile_tasksTaken_textView"
-            android:layout_width="wrap_content"
-            android:layout_height="30dp"
-            android:layout_below="@+id/profile_role_textView"
-            android:layout_alignParentStart="true"
-            android:gravity="start|center"
-            android:text="@string/profile_taken"
-            android:textSize="16sp"
-            />
-
-        <TextView
-            android:id="@+id/tasks_taken_stats_profileFrag_textView"
-            android:layout_width="wrap_content"
-            android:layout_height="30dp"
-            android:layout_alignBottom="@+id/profile_tasksTaken_textView"
-            android:layout_marginStart="10dp"
-            android:layout_toEndOf="@+id/profile_tasksTaken_textView"
-            android:gravity="start|center"
-            android:textSize="16sp" />
-
-
-        <TextView
-            android:id="@+id/profile_reward_textView"
-            android:layout_width="wrap_content"
-            android:layout_height="30dp"
-            android:layout_below="@+id/profile_tasksTaken_textView"
-            android:layout_alignParentStart="true"
-            android:gravity="start|center"
-            android:text="@string/profile_reward"
-            android:textSize="16sp"
-            />
-
-        <TextView
-            android:id="@+id/reward_profileFrag_textView"
-            android:layout_width="wrap_content"
-            android:layout_height="30dp"
-            android:layout_alignBottom="@+id/profile_reward_textView"
-            android:layout_marginStart="30dp"
-            android:layout_toEndOf="@+id/profile_reward_textView"
-            android:gravity="start|center"
-            android:textSize="16sp" />
+                <TextView
+                    android:id="@+id/userName_profileFrag_textView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:text="Фамилия Имя Отчество"
+                    android:textAlignment="center"
+                    android:textColor="#fff"
+                    android:textSize="35sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.112" />
 
 
-        <Button
-            android:id="@+id/change_info_profileFrag_button"
-            style="@style/BtnSuccess"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/profile_reward_textView"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="10dp"
-            android:text="@string/save_changes_of_task"
-            />
-        <Button
-            android:id="@+id/cancel_changes_profileFrag_button"
-            style="@style/BtnDanger"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_below="@+id/change_info_profileFrag_button"
-            android:text="@string/cancel_changes_of_task"
-            />
+                <RelativeLayout
+                    android:id="@+id/relativeLayout"
+                    android:layout_width="130dp"
+                    android:layout_height="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:background="@color/field_background"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/userName_profileFrag_textView"
+                    app:layout_constraintVertical_bias="0.0" />
 
-        <Button
-            android:id="@+id/remove_token_profileFrag_button"
-            style="@style/BtnDanger"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_below="@+id/profile_reward_textView"
-            android:text="@string/profile_remove_token_data"
-            />
-    </RelativeLayout>
-    </ScrollView>
-</android.support.v4.widget.SwipeRefreshLayout>
+                <LinearLayout
+                    android:id="@+id/linearLayout2"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/relativeLayout"
+                    app:layout_constraintVertical_bias="0.056">
+
+                    <LinearLayout
+                        android:layout_width="100dp"
+                        android:layout_height="80dp"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tasks_taken_stats_profileFrag_textView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/zero"
+                            android:textColor="@color/field_background"
+                            android:textSize="22sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/profile_taken"
+                            android:textColor="#fff"
+                            android:textSize="12sp" />
+
+                        <RelativeLayout
+                            android:layout_width="70dp"
+                            android:layout_height="4dp"
+                            android:layout_marginTop="8dp"
+                            android:background="@color/field_background" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="100dp"
+                        android:layout_height="80dp"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/reward_profileFrag_textView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/zero"
+                            android:textColor="#fff"
+                            android:textSize="22sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/profile_reward"
+                            android:textColor="#fff"
+                            android:textSize="12sp" />
+
+                        <RelativeLayout
+                            android:layout_width="70dp"
+                            android:layout_height="4dp"
+                            android:layout_marginTop="8dp"
+                            android:background="@color/field_background" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="100dp"
+                        android:layout_height="80dp"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/zero"
+                            android:textColor="#fff"
+                            android:textSize="22sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/profile_done"
+                            android:textColor="#fff"
+                            android:textSize="12sp" />
+
+                        <RelativeLayout
+                            android:layout_width="70dp"
+                            android:layout_height="4dp"
+                            android:layout_marginTop="8dp"
+                            android:background="@color/field_background" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/linearLayout3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="30dp"
+                    android:orientation="vertical"
+                    app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/mail"
+                            android:textColor="@color/field_background"
+                            android:textSize="12sp"
+                            android:textStyle="bold" />
+
+                        <EditText
+                            android:id="@+id/mail_profileFrag_editText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@null"
+                            android:fontFamily="sans-serif-light"
+                            android:singleLine="true"
+                            android:text="mail@mail.ru"
+                            android:textColor="@color/field_background"
+                            android:textSize="22sp"
+                            android:textStyle="bold" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginTop="15dp"
+                            android:background="@color/field_background" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/phone"
+                            android:textColor="@color/field_background"
+                            android:textSize="12sp"
+                            android:textStyle="bold" />
+
+                        <EditText
+                            android:id="@+id/phone_profileFrag_editText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@null"
+                            android:fontFamily="sans-serif-light"
+                            android:singleLine="true"
+                            android:text="+7-111-222-33-44"
+                            android:textColor="@color/field_background"
+                            android:textSize="22sp"
+                            android:textStyle="bold" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginTop="15dp"
+                            android:background="@color/field_background" />
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+
+                <Button
+                    android:id="@+id/remove_token_profileFrag_button"
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="60dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="56dp"
+                    android:background="@drawable/profile_buttons"
+                    android:foreground="?android:attr/selectableItemBackground"
+                    android:text="@string/profile_remove_token_data"
+                    android:textColor="#fff"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.505"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/linearLayout3"
+                    app:layout_constraintVertical_bias="0.0" />
+
+            </android.support.constraint.ConstraintLayout>
+
+        </ScrollView>
+    </android.support.v4.widget.SwipeRefreshLayout>
+</RelativeLayout>

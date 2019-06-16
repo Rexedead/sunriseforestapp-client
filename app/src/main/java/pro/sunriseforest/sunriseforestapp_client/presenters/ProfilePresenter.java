@@ -1,6 +1,8 @@
 package pro.sunriseforest.sunriseforestapp_client.presenters;
 
 
+import java.util.Objects;
+
 import pro.sunriseforest.sunriseforestapp_client.SunriseForestApp;
 import pro.sunriseforest.sunriseforestapp_client.models.User;
 import pro.sunriseforest.sunriseforestapp_client.net.ApiFactory;
@@ -9,21 +11,13 @@ import pro.sunriseforest.sunriseforestapp_client.settings.SharedPreferenceHelper
 import pro.sunriseforest.sunriseforestapp_client.ui.NavigationManager;
 import pro.sunriseforest.sunriseforestapp_client.ui.fragments.ProfileFragment;
 
-
-//todo переписать ProfilePresenter и ProfileFragment идейно и стилистически подбно с остальными презентерами и фрагментами в проекте
-//todo fragment имеет наружу методы showSomething(), hideSomething() и геттеры
-//todo добавить swiperefreshlayout
-//todo колечко загрузки должно шоуиться и хайдиться в соответствии с работой с сетью
-//todo модель в презентере обнавляется после того как она обнавилась на сервере!
-// в байнде мы должны каждый раз тянуть юзера из преференса. (можно при первом байнде обнавляться с сервера (для этого используй метод BasePresenter.isFirstBind()));
-// при свайпе тянем из инета, если не получилось - оповещаем об ошибке сети и тянем из преференса
-//todo избегай дублирование кода
-//todo удалить все ненужное
+//todo exit from presenters
 public class ProfilePresenter extends BasePresenter<ProfileFragment> {
 
     private User mUser;
     private SharedPreferenceHelper mSharedPreferenceHelper;
     private NavigationManager mNavigationManager;
+    private boolean mIsLoading;
 
     private static final ProfilePresenter ourInstance = new ProfilePresenter();
 
@@ -32,6 +26,20 @@ public class ProfilePresenter extends BasePresenter<ProfileFragment> {
     }
 
 
+    @Override
+    public String createTAG() {
+        return "ProfilePresenter";
+    }
+
+    @Override
+    public void bindView(ProfileFragment view) {
+        super.bindView(view);
+        if (isFirst()) {
+            refreshUserData();
+        } else updateViewFromPreference();
+
+    }
+
     private ProfilePresenter() {
         mNavigationManager = NavigationManager.getInstance();
         mSharedPreferenceHelper = new SharedPreferenceHelper(SunriseForestApp.getAppContext());
@@ -39,51 +47,29 @@ public class ProfilePresenter extends BasePresenter<ProfileFragment> {
 
     }
 
-  /*  private void updUserData(){
-        ApiFactory
-                .getSunriseForestService()
-                .getUser(
-                        Integer.parseInt(mSharedPreferenceHelper.getUser().getId())
-                )
-                .compose(new AsyncNetTransformer<>())
-                .subscribe(this::setProfile, this::handleNetworkError);
-    }
+    private void tryUpdateView() {
+        log("tryUpdateView()");
+        if (mView == null) return;
+        if (mIsLoading) mView.showLoading();
+        else mView.hideLoading();
 
-    private void setProfile(User user) {
-        mSharedPreferenceHelper.saveUser(user);
-        mUser = mSharedPreferenceHelper.getUser();
-        mView.setProfile(mUser.getId(),
-                mUser.getName(),
-                mUser.getEmail(),
-                mUser.getPhoneNumber(),
-                mUser.getRole(),
-                mUser.getTasksCount(),
-                mUser.getRewardSum());
-
-    }*/
-
-
-    @Override
-    public void bindView(ProfileFragment view) {
-        super.bindView(view);
-
-        //update from
-        mUser = mSharedPreferenceHelper.getUser();
-        mView.setProfile(mUser.getId(),
-                mUser.getName(),
-                mUser.getEmail(),
-                mUser.getPhoneNumber(),
-                mUser.getRole(),
-                mUser.getTasksCount(),
-                mUser.getRewardSum());
-
-        boolean yes = canChangeProfile();
-        mView.setEnabledEditTexts(yes);
-        mView.saveIsVisible(false);
-
+        mView.showProfile(mUser);
+        mView.hideSaveViews();
     }
 
 
+    private void updateViewFromPreference() {
+        mUser = mSharedPreferenceHelper.getUser();
+        tryUpdateView();
+    }
+
+
+    /**
+     * UI features
+     */
+    public void refresh() {
+        refreshUserData();
+    }
 
     public void clickedExitProfile() {
         log("clickedExitProfile()");
@@ -92,32 +78,14 @@ public class ProfilePresenter extends BasePresenter<ProfileFragment> {
 
     public void clickedSaveButton() {
         log("clickedSaveButton()");
-        mUser.setName(mView.getUserName());
         mUser.setEmail(mView.getUserMail());
         mUser.setPhoneNumber(mView.getUserPhone());
-        saveProfileToServer(mUser);
+        updateUserData(mUser);
     }
 
-    private void saveProfileToServer(User user) {
-        log("saveProfileToServer()"+user);
-
-         ApiFactory
-                .getSunriseForestService()
-                .updProfile(user.getId(), user)
-                .compose(new AsyncNetTransformer<>())
-                 .subscribe(this::saveProfileIntoPreference,this::handleNetworkError,this::saveComplete);
-    }
-
-    private void saveComplete() {
-        mView.showToast("Сохранено");
-        mView.saveIsVisible(false);
-
-    }
-
-    private void saveProfileIntoPreference(User user){
-        log(String.format("saveProfileIntoPreference(User user = %s)", user));
-        mSharedPreferenceHelper.saveUser(user);
-
+    public void clickedCancelChangesButton() {
+        log("clickedCancelChangesButton()");
+        tryUpdateView();
     }
 
     private void exitProfile() {
@@ -127,31 +95,74 @@ public class ProfilePresenter extends BasePresenter<ProfileFragment> {
         mNavigationManager.fromProfileToLogin();
     }
 
-
-    private boolean canChangeProfile() {
-        log("canChangeProfile()");
-        //...этот метод походу уже и не нужен, если все изначально можно редактировать
-        return true;
+    private void startLoading() {
+        mIsLoading = true;
+        if (mView != null) mView.showLoading();
     }
 
-    public void refresh(){
-        //todo
-    }
-    public void updateFromServer(){
-        //todo
-    }
-    public void updateFromPreference(){
-        //todo
+    private void stopLoading() {
+        mIsLoading = false;
+        if (mView != null) mView.hideLoading();
     }
 
-    public void updateUI(){
-        //todo
+    public void descriptionProfileIsChanged() {
+        log("descriptionTaskIsChanged()");
+        mView.showSaveViews();
     }
-    //todo мб еще чо
 
-    @Override
-    public String createTAG() {
-        return "ProfilePresenter";
+
+    /**
+     * Network
+     * GET method for force update or first bind
+     **/
+    private void refreshUserData() {
+        log("refreshUserData()");
+        startLoading();
+        ApiFactory
+                .getSunriseForestService()
+                .getUser(
+                        Integer.parseInt(Objects.requireNonNull(mSharedPreferenceHelper.getUser()).getId()))
+                .compose(new AsyncNetTransformer<>())
+                .subscribe(u -> {
+                            mUser = u;
+                            mSharedPreferenceHelper.saveUser(u);
+                            stopLoading();
+                        },
+                        throwable -> {
+                            handleNetworkError(throwable);
+                            stopLoading();
+                            updateViewFromPreference();
+                        },
+                        this::tryUpdateView);
+    }
+
+
+    /**
+     * Network
+     * PATCH method for profile
+     *
+     * @param user the changed user in UI
+     */
+    private void updateUserData(User user) {
+        log("updateUserData()" + user);
+
+        ApiFactory
+                .getSunriseForestService()
+                .updProfile(user.getId(), user)
+                .compose(new AsyncNetTransformer<>())
+                .subscribe(u -> {
+                            mUser = u;
+                            mSharedPreferenceHelper.saveUser(u);
+                            if (mView != null) mView.showToast("Изменения сохранены");
+                            stopLoading();
+                        },
+                        throwable -> {
+                            handleNetworkError(throwable);
+                            stopLoading();
+                        },
+
+                        this::tryUpdateView);
+
     }
 
 
