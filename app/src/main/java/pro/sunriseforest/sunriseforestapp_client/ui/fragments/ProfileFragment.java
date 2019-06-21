@@ -12,6 +12,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.redmadrobot.inputmask.MaskedTextChangedListener;
+
 import pro.sunriseforest.sunriseforestapp_client.R;
 import pro.sunriseforest.sunriseforestapp_client.models.User;
 import pro.sunriseforest.sunriseforestapp_client.presenters.BasePresenter;
@@ -26,13 +28,13 @@ public class ProfileFragment extends NavigatedFragment  implements TextWatcher, 
     private EditText mUserMailEditText;
     private EditText mUserPhoneEditText;
     private TextView mUserTasksTakenStatsTextView;
+    private TextView mUserTasksCompleteStatsTextView;
     private TextView mUserRewardInfoTextView;
     private Button mSaveButton;
     private Button mCancelChangesButton;
     private Button mExitProfileButton;
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private ProfilePresenter mPresenter = ProfilePresenter.getInstance();
-
     private View.OnClickListener mExitProfileListener = view -> mPresenter.clickedExitProfile();
     private View.OnClickListener mSaveProfileListener = view -> mPresenter.clickedSaveButton();
     private View.OnClickListener mCancelChangesListener = view -> mPresenter.clickedCancelChangesButton();
@@ -45,6 +47,13 @@ public class ProfileFragment extends NavigatedFragment  implements TextWatcher, 
     public void onResume() {
         super.onResume();
         addListenersForEditText();
+
+    }
+
+    @Override public void onPause() {
+        super.onPause();
+        mUserMailEditText.removeTextChangedListener(this);
+        mUserPhoneEditText.removeTextChangedListener(this);
     }
 
     @Override
@@ -56,12 +65,21 @@ public class ProfileFragment extends NavigatedFragment  implements TextWatcher, 
         mUserMailEditText = view.findViewById(R.id.mail_profileFrag_editText);
         mUserPhoneEditText = view.findViewById(R.id.phone_profileFrag_editText);
         mUserTasksTakenStatsTextView = view.findViewById(R.id.tasks_taken_stats_profileFrag_textView);
+        mUserTasksCompleteStatsTextView = view.findViewById(R.id.tasks_complete_stats_profileFrag_textView);
         mUserRewardInfoTextView = view.findViewById(R.id.reward_profileFrag_textView);
         mExitProfileButton = view.findViewById(R.id.remove_token_profileFrag_button);
         mSaveButton = view.findViewById(R.id.change_info_profileFrag_button);
         mCancelChangesButton = view.findViewById(R.id.cancel_changes_profileFrag_button);
         mSwipeRefreshLayout = view.findViewById(R.id.swipe_refresh_profileFrag);
         mSwipeRefreshLayout.setOnRefreshListener(this);
+
+       MaskedTextChangedListener
+                .Companion
+                .installOn(
+                        mUserPhoneEditText,
+                        "+7 ([000]) [000]-[00]-[00]",
+                        (maskFilled, extractedValue) -> {}
+                );
 
 
         mExitProfileButton.setOnClickListener(mExitProfileListener);
@@ -74,14 +92,15 @@ public class ProfileFragment extends NavigatedFragment  implements TextWatcher, 
 
     public void showProfile(User u) {
         log("showProfile(user = %s)");
-
+        mUserPhoneEditText.setText(u.getPhoneNumber());
         mUserNameTextView.setText(u.getName());
         mUserMailEditText.setText(u.getEmail());
         mUserMailEditText.setSelection(mUserMailEditText.getText().toString().length());
-        mUserPhoneEditText.setText(u.getPhoneNumber());
         mUserPhoneEditText.setSelection(mUserPhoneEditText.getText().toString().length());
-        mUserTasksTakenStatsTextView.setText(String.valueOf(u.getTasksCount()));
+        mUserTasksTakenStatsTextView.setText(String.valueOf(u.getTasksTakenCount()));
+        mUserTasksCompleteStatsTextView.setText(String.valueOf(u.getTasksCompleteCount()));
         mUserRewardInfoTextView.setText(String.valueOf(u.getRewardSum()));
+
     }
 
 

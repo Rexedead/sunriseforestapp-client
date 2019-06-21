@@ -86,9 +86,9 @@ implements RecycleNotificationAdapter.NotificationClickListener {
     // todo временный метод
     public void showNotificationsAreWorks(boolean areWorks) {
         if(areWorks){
-            mTurnNotificationButton.setText("Выключить уведомления");
+            mTurnNotificationButton.setText("Выключить");
         }else{
-            mTurnNotificationButton.setText("Включить уведомления");
+            mTurnNotificationButton.setText("Включить");
         }
     }
 

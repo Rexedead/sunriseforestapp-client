@@ -30,7 +30,9 @@
         android:layout_below="@+id/notifications_recyclerView"
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="5dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginBottom="4dp"
+        android:layout_marginEnd="4dp"
         android:text="@string/remove_notifications"
         />
 
@@ -42,6 +44,10 @@
         tools:text="Включить уведомления"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
+        android:layout_marginStart="4dp"
+        android:layout_marginBottom="4dp"
+        android:layout_marginEnd="4dp"
+
         />
 
 

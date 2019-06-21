@@ -40,7 +40,10 @@ public class User {
     private int mRewardSum;
 
     @Json(name = "sr_user_tasks_taken")
-    private int mTasksCount;
+    private int mTasksTakenCount;
+
+    @Json(name = "sr_user_tasks_complete")
+    private int mTasksCompleteCount;
 
     public User(String email, String password) {
         mPassword = password;
@@ -119,25 +122,30 @@ public class User {
         this.mRewardSum = mRewardSum;
     }
 
-    public int getTasksCount() {
-        return mTasksCount;
+    public int getTasksTakenCount() {
+        return mTasksTakenCount;
     }
+
+    public int getTasksCompleteCount() {
+        return mTasksCompleteCount;
+    }
+
     public void toSalary(int reward){
         mRewardSum+= reward;
     }
     public void newTaskBooked(){
-        mTasksCount++;
+        mTasksTakenCount++;
     }
     public void taskCanceled(){
-        mTasksCount--;
+        mTasksTakenCount--;
     }
     public void taskDone(){
-        mTasksCount--;
+        mTasksCompleteCount++;
     }
 
 
-    public void setTasksCount(int mTasksCount) {
-        this.mTasksCount = mTasksCount;
+    public void setTasksTakenCount(int mTasksCount) {
+        this.mTasksTakenCount = mTasksCount;
     }
 
     @NonNull

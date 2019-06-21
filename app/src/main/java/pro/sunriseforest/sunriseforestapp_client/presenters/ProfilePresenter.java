@@ -18,7 +18,8 @@ public class ProfilePresenter extends BasePresenter<ProfileFragment> {
     private SharedPreferenceHelper mSharedPreferenceHelper;
     private NavigationManager mNavigationManager;
     private boolean mIsLoading;
-
+    private boolean profileChanged = false;
+    private User tempUser;
     private static final ProfilePresenter ourInstance = new ProfilePresenter();
 
     public static ProfilePresenter getInstance() {
@@ -53,8 +54,15 @@ public class ProfilePresenter extends BasePresenter<ProfileFragment> {
         if (mIsLoading) mView.showLoading();
         else mView.hideLoading();
 
-        mView.showProfile(mUser);
-        mView.hideSaveViews();
+        if (profileChanged) {
+            mView.showProfile(tempUser);
+            mView.showSaveViews();
+        } else {
+            mView.hideSaveViews();
+            mView.showProfile(mUser);
+            profileChanged = false;
+        }
+
     }
 
 
@@ -79,11 +87,18 @@ public class ProfilePresenter extends BasePresenter<ProfileFragment> {
     public void clickedSaveButton() {
         log("clickedSaveButton()");
         updateUserData(mUser);
+        buttonsAction();
     }
 
     public void clickedCancelChangesButton() {
         log("clickedCancelChangesButton()");
-        tryUpdateView();
+        mView.showProfile(mSharedPreferenceHelper.getUser());
+        buttonsAction();
+    }
+
+    private void buttonsAction(){
+        profileChanged = false;
+        mView.hideSaveViews();
     }
 
     private void exitProfile() {
@@ -105,7 +120,16 @@ public class ProfilePresenter extends BasePresenter<ProfileFragment> {
 
     public void descriptionProfileIsChanged() {
         log("descriptionTaskIsChanged()");
-        mView.showSaveViews();
+        if (!isFirst()
+                && (!mUser.getEmail().equals(mView.getUserMail()))
+                || (!mUser.getPhoneNumber().equals(mView.getUserPhone()))) {
+            profileChanged = true;
+            tempUser = mUser;
+            tempUser.setPhoneNumber(mView.getUserPhone());
+            tempUser.setEmail(mView.getUserMail());
+            mView.showSaveViews();
+        }
+
     }
 
 
@@ -138,6 +162,7 @@ public class ProfilePresenter extends BasePresenter<ProfileFragment> {
     /**
      * Network
      * PATCH method for profile
+     *
      * @param user the changed user in UI
      */
     private void updateUserData(User user) {

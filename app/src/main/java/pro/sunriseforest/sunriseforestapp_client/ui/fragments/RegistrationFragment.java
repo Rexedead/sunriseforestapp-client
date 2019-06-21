@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.redmadrobot.inputmask.MaskedTextChangedListener;
+
 import pro.sunriseforest.sunriseforestapp_client.R;
 import pro.sunriseforest.sunriseforestapp_client.models.User;
 import pro.sunriseforest.sunriseforestapp_client.presenters.BasePresenter;
@@ -48,6 +50,16 @@ public class RegistrationFragment extends BaseFragment {
         mPasswordEditText = view.findViewById(R.id.enter_password_regAct_editText);
         mPhoneNumberEditText = view.findViewById(R.id.enter_phone_regAct_editText);
         mNameEditText = view.findViewById(R.id.enter_name_regAct_editText);
+
+        final MaskedTextChangedListener maskedPhoneTextChangedListener = MaskedTextChangedListener
+                .Companion
+                .installOn(
+                        mPhoneNumberEditText,
+                        "+7 ([000]) [000]-[00]-[00]",
+                        (maskFilled, extractedValue) -> {}
+                );
+
+        mPhoneNumberEditText.setHint(maskedPhoneTextChangedListener.placeholder());
         hideBottomNavigation();
         return view;
     }
