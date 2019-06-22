@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/profile_fragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -82,15 +81,15 @@
                     android:layout_width="380dp"
                     android:layout_height="100dp"
                     android:layout_marginStart="8dp"
-                    android:layout_marginTop="40dp"
+                    android:layout_marginTop="200dp"
                     android:layout_marginEnd="8dp"
                     android:background="@drawable/linear_radius"
                     android:gravity="center"
                     android:orientation="horizontal"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.466"
+                    app:layout_constraintHorizontal_bias="1.0"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/userName_profileFrag_textView">
+                    app:layout_constraintTop_toTopOf="@+id/linearLayout">
 
                     <LinearLayout
                         android:layout_width="100dp"
@@ -181,9 +180,9 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
-                    android:layout_marginStart="30dp"
-                    android:layout_marginTop="30dp"
-                    android:layout_marginEnd="30dp"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginEnd="24dp"
                     android:orientation="vertical"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -199,6 +198,7 @@
                         <ImageView
                             android:layout_width="36dp"
                             android:layout_height="36dp"
+                            android:contentDescription="@string/mail"
                             android:src="@drawable/ic_email_black_24dp" />
 
                         <EditText
@@ -207,16 +207,18 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:background="@null"
-                            android:textColor="@color/secondaryText"
+                            android:inputType="textEmailAddress"
                             android:paddingStart="20dp"
-                            android:inputType="" android:paddingEnd="20dp"
-                            android:textStyle="bold" />
+                            android:paddingEnd="20dp"
+                            android:textColor="@color/secondaryText"
+                            android:textStyle="bold"
+                            android:autofillHints="@string/mail" />
                     </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="25dp"
+                        android:layout_marginTop="24dp"
                         android:orientation="horizontal"
                         android:paddingStart="25dp"
                         android:paddingEnd="25dp">
@@ -224,6 +226,7 @@
                         <ImageView
                             android:layout_width="36dp"
                             android:layout_height="36dp"
+                            android:contentDescription="@string/phone"
                             android:src="@drawable/ic_phone_black_24dp" />
 
                         <EditText
@@ -236,7 +239,8 @@
                             android:paddingStart="20dp"
                             android:inputType="phone"
                             android:paddingEnd="20dp"
-                            android:textStyle="bold" />
+                            android:textStyle="bold"
+                            android:autofillHints="@string/phone" />
                     </LinearLayout>
 
 
@@ -247,17 +251,14 @@
                     android:id="@+id/remove_token_profileFrag_button"
                     style="@style/BtnInfo"
                     android:layout_marginStart="8dp"
-                    android:layout_marginTop="60dp"
+                    android:layout_marginTop="24dp"
                     android:layout_marginEnd="8dp"
-                    android:layout_marginBottom="56dp"
                     android:background="@color/colorAccent"
                     android:text="@string/profile_remove_token_data"
-                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.505"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/linearLayout3"
-                    app:layout_constraintVertical_bias="0.0" />
+                    app:layout_constraintTop_toBottomOf="@+id/linearLayout3" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

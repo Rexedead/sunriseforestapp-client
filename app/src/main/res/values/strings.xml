@@ -43,6 +43,7 @@
     <string name="remove_notifications">Очистить</string>
     <string name="profile_background">Main Background Image in Profile</string>
     <string name="profile_gradient">Gradient</string>
+    <string name="logo">Logo</string>
 
 
 </resources>
