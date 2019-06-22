@@ -1,12 +1,11 @@
 package pro.sunriseforest.sunriseforestapp_client.net;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import android.util.Log;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import pro.sunriseforest.sunriseforestapp_client.net.interceptors.NetworkCacheInterceptor;
-import pro.sunriseforest.sunriseforestapp_client.net.interceptors.OfflineCacheInterceptor;
 import retrofit2.Converter;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;

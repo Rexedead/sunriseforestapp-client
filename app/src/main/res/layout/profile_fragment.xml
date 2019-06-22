@@ -8,7 +8,7 @@
     android:layout_marginBottom="56dp"
     >
 
-    <android.support.v4.widget.SwipeRefreshLayout
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipe_refresh_profileFrag"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -17,7 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <android.support.constraint.ConstraintLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/field_background_light"
@@ -34,7 +34,7 @@
                     app:layout_constraintTop_toTopOf="parent">
                 </LinearLayout>
 
-                <Button
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/cancel_changes_profileFrag_button"
                     style="@style/BtnDanger"
                     android:layout_marginStart="8dp"
@@ -47,13 +47,12 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
 
-                <Button
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/change_info_profileFrag_button"
                     style="@style/BtnSuccess"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="8dp"
-                    android:background="@drawable/buttons_view"
                     android:text="@string/save_changes_of_task"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.967"
@@ -210,7 +209,7 @@
                             android:background="@null"
                             android:textColor="@color/secondaryText"
                             android:paddingStart="20dp"
-                            android:paddingEnd="20dp"
+                            android:inputType="" android:paddingEnd="20dp"
                             android:textStyle="bold" />
                     </LinearLayout>
 
@@ -235,6 +234,7 @@
                             android:background="@null"
                             android:textColor="@color/secondaryText"
                             android:paddingStart="20dp"
+                            android:inputType="phone"
                             android:paddingEnd="20dp"
                             android:textStyle="bold" />
                     </LinearLayout>
@@ -243,14 +243,14 @@
                 </LinearLayout>
 
 
-                <Button
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/remove_token_profileFrag_button"
                     style="@style/BtnInfo"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="60dp"
                     android:layout_marginEnd="8dp"
                     android:layout_marginBottom="56dp"
-                    android:background="@drawable/buttons_view"
+                    android:background="@color/colorAccent"
                     android:text="@string/profile_remove_token_data"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -259,8 +259,8 @@
                     app:layout_constraintTop_toBottomOf="@+id/linearLayout3"
                     app:layout_constraintVertical_bias="0.0" />
 
-            </android.support.constraint.ConstraintLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </ScrollView>
-    </android.support.v4.widget.SwipeRefreshLayout>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </RelativeLayout>

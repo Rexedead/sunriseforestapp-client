@@ -1,6 +1,6 @@
 package pro.sunriseforest.sunriseforestapp_client.models;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.squareup.moshi.Json;
 

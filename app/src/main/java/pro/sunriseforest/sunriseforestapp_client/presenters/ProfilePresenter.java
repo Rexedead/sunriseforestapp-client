@@ -21,7 +21,7 @@ public class ProfilePresenter extends BasePresenter<ProfileFragment> {
     private boolean profileChanged = false;
     private User tempUser;
     private static final ProfilePresenter ourInstance = new ProfilePresenter();
-
+    private int numOfFieldsFirstBind = 3;
     public static ProfilePresenter getInstance() {
         return ourInstance;
     }
@@ -96,7 +96,7 @@ public class ProfilePresenter extends BasePresenter<ProfileFragment> {
         buttonsAction();
     }
 
-    private void buttonsAction(){
+    private void buttonsAction() {
         profileChanged = false;
         mView.hideSaveViews();
     }
@@ -120,7 +120,12 @@ public class ProfilePresenter extends BasePresenter<ProfileFragment> {
 
     public void descriptionProfileIsChanged() {
         log("descriptionTaskIsChanged()");
-        if (!isFirst()
+
+        if (isFirst()) {
+            numOfFieldsFirstBind--;
+        }else numOfFieldsFirstBind=0;
+
+        if (numOfFieldsFirstBind <= 0
                 && (!mUser.getEmail().equals(mView.getUserMail()))
                 || (!mUser.getPhoneNumber().equals(mView.getUserPhone()))) {
             profileChanged = true;

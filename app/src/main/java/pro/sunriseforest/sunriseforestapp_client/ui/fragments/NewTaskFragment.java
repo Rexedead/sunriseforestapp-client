@@ -3,9 +3,9 @@ package pro.sunriseforest.sunriseforestapp_client.ui.fragments;
 
 import android.app.DatePickerDialog;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
-import android.support.design.widget.TextInputEditText;
+import com.google.android.material.textfield.TextInputEditText;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.view.LayoutInflater;

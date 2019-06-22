@@ -1,6 +1,6 @@
 package pro.sunriseforest.sunriseforestapp_client.net.interceptors;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import java.io.IOException;
 
 import okhttp3.Interceptor;
