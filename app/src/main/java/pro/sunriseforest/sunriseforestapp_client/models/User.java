@@ -137,7 +137,7 @@ public class User {
         mTasksTakenCount++;
     }
     public void taskCanceled(){
-        mTasksTakenCount--;
+//        mTasksTakenCount--;
     }
     public void taskDone(){
         mTasksCompleteCount++;
